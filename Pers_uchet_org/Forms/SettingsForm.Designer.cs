@@ -56,7 +56,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
-            this.orgTableAdapter1 = new Pers_uchet_org.orgDBDataSetTableAdapters.OrgTableAdapter();
+            //this.orgTableAdapter1 = new Pers_uchet_org.orgDBDataSetTableAdapters.OrgTableAdapter();
             this.tabControl1.SuspendLayout();
             this.otherPage.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -363,7 +363,7 @@
             // 
             // orgTableAdapter1
             // 
-            this.orgTableAdapter1.ClearBeforeFill = true;
+            //this.orgTableAdapter1.ClearBeforeFill = true;
             // 
             // SettingsForm
             // 
@@ -425,6 +425,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown maxreservBox;
         private System.Windows.Forms.CheckBox autoreservCheckBox;
-        private orgDBDataSetTableAdapters.OrgTableAdapter orgTableAdapter1;
+        //private orgDBDataSetTableAdapters.OrgTableAdapter orgTableAdapter1;
     }
 }
