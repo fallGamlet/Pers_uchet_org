@@ -143,7 +143,7 @@ namespace Pers_uchet_org
                 oper.idVal = (long)reader[id];
                 oper.nameVal = reader[name] as string;
                 oper.passwordVal = reader[password] as string;
-                oper.candeleteVal = (byte)reader[candelete];
+                oper.candeleteVal = (int)reader[candelete];
             }
             command.Connection.Close();
             //
@@ -165,7 +165,7 @@ namespace Pers_uchet_org
                 oper.idVal = (long)reader[Operator.id];
                 oper.nameVal = reader[Operator.name] as string;
                 oper.passwordVal = reader[Operator.password] as string;
-                oper.candeleteVal = (int)reader[Operator.candelete];
+                oper.candeleteVal = (int)reader[candelete];
             }
             else
             {
