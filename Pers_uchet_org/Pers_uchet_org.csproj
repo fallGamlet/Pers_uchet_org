@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{037C7AF3-B219-4D82-B700-532E1BC9CD0E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pers_uchet_org</RootNamespace>
+    <AssemblyName>Pers_uchet_org</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.85.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditAdditionalPeriodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditAdditionalPeriodForm.Designer.cs">
+      <DependentUpon>AddEditAdditionalPeriodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditDocumentSzv1Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditDocumentSzv1Form.Designer.cs">
+      <DependentUpon>AddEditDocumentSzv1Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditGeneralPeriodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditGeneralPeriodForm.Designer.cs">
+      <DependentUpon>AddEditGeneralPeriodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditSpecialPeriodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditSpecialPeriodForm.Designer.cs">
+      <DependentUpon>AddEditSpecialPeriodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnketaDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnketaDataForm.Designer.cs">
+      <DependentUpon>AnketaDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnketaPersonOrgForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnketaPersonOrgForm.Designer.cs">
+      <DependentUpon>AnketaPersonOrgForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnketaPrintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnketaPrintForm.Designer.cs">
+      <DependentUpon>AnketaPrintForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnketaUvolitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnketaUvolitForm.Designer.cs">
+      <DependentUpon>AnketaUvolitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordForm.Designer.cs">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChoicePersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChoicePersonForm.Designer.cs">
+      <DependentUpon>ChoicePersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ClassifierCategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ClassifierCategoriesForm.Designer.cs">
+      <DependentUpon>ClassifierCategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DocPreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DocPreviewForm.Designer.cs">
+      <DependentUpon>DocPreviewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DoctypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DoctypeForm.Designer.cs">
+      <DependentUpon>DoctypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditPersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditPersonForm.Designer.cs">
+      <DependentUpon>EditPersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExchangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExchangeForm.Designer.cs">
+      <DependentUpon>ExchangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MoveDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MoveDocumentForm.Designer.cs">
+      <DependentUpon>MoveDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MovePacketForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MovePacketForm.Designer.cs">
+      <DependentUpon>MovePacketForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MovePacketOtherYearForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MovePacketOtherYearForm.Designer.cs">
+      <DependentUpon>MovePacketOtherYearForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OperatorEnterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OperatorEnterForm.Designer.cs">
+      <DependentUpon>OperatorEnterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OperatorsEditPersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OperatorsEditPersonForm.Designer.cs">
+      <DependentUpon>OperatorsEditPersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OperatorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OperatorsForm.Designer.cs">
+      <DependentUpon>OperatorsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OrgForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OrgForm.Designer.cs">
+      <DependentUpon>OrgForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PacketDopInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PacketDopInfoForm.Designer.cs">
+      <DependentUpon>PacketDopInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PrintDocBlanksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PrintDocBlanksForm.Designer.cs">
+      <DependentUpon>PrintDocBlanksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PrintStajForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PrintStajForm.Designer.cs">
+      <DependentUpon>PrintStajForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RemovePersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RemovePersonForm.Designer.cs">
+      <DependentUpon>RemovePersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReplaceDocTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReplaceDocTypeForm.Designer.cs">
+      <DependentUpon>ReplaceDocTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RestoreDBForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RestoreDBForm.Designer.cs">
+      <DependentUpon>RestoreDBForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SearchIndividualForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SearchIndividualForm.Designer.cs">
+      <DependentUpon>SearchIndividualForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsEditDepForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsEditDepForm.Designer.cs">
+      <DependentUpon>SettingsEditDepForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditOrgForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditOrgForm.Designer.cs">
+      <DependentUpon>EditOrgForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsPrinterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsPrinterForm.Designer.cs">
+      <DependentUpon>SettingsPrinterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StajDohodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StajDohodForm.Designer.cs">
+      <DependentUpon>StajDohodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostEditDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostEditDocumentForm.Designer.cs">
+      <DependentUpon>SvodVedomostEditDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostForm.Designer.cs">
+      <DependentUpon>SvodVedomostForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostPrintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostPrintForm.Designer.cs">
+      <DependentUpon>SvodVedomostPrintForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalVars.cs" />
+    <Compile Include="Gost.cs" />
+    <Compile Include="orgDBDataSet.cs">
+      <DependentUpon>orgDBDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="orgDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>orgDBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadKey.cs" />
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditAdditionalPeriodForm.resx">
+      <DependentUpon>AddEditAdditionalPeriodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditDocumentSzv1Form.resx">
+      <DependentUpon>AddEditDocumentSzv1Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditGeneralPeriodForm.resx">
+      <DependentUpon>AddEditGeneralPeriodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditSpecialPeriodForm.resx">
+      <DependentUpon>AddEditSpecialPeriodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnketaDataForm.resx">
+      <DependentUpon>AnketaDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnketaPersonOrgForm.resx">
+      <DependentUpon>AnketaPersonOrgForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnketaPrintForm.resx">
+      <DependentUpon>AnketaPrintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnketaUvolitForm.resx">
+      <DependentUpon>AnketaUvolitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChoicePersonForm.resx">
+      <DependentUpon>ChoicePersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ClassifierCategoriesForm.resx">
+      <DependentUpon>ClassifierCategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DocPreviewForm.resx">
+      <DependentUpon>DocPreviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DoctypeForm.resx">
+      <DependentUpon>DoctypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditPersonForm.resx">
+      <DependentUpon>EditPersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExchangeForm.resx">
+      <DependentUpon>ExchangeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MoveDocumentForm.resx">
+      <DependentUpon>MoveDocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MovePacketForm.resx">
+      <DependentUpon>MovePacketForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MovePacketOtherYearForm.resx">
+      <DependentUpon>MovePacketOtherYearForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OperatorEnterForm.resx">
+      <DependentUpon>OperatorEnterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OperatorsEditPersonForm.resx">
+      <DependentUpon>OperatorsEditPersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OperatorsForm.resx">
+      <DependentUpon>OperatorsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OrgForm.resx">
+      <DependentUpon>OrgForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PacketDopInfoForm.resx">
+      <DependentUpon>PacketDopInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PrintDocBlanksForm.resx">
+      <DependentUpon>PrintDocBlanksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PrintStajForm.resx">
+      <DependentUpon>PrintStajForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RemovePersonForm.resx">
+      <DependentUpon>RemovePersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReplaceDocTypeForm.resx">
+      <DependentUpon>ReplaceDocTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RestoreDBForm.resx">
+      <DependentUpon>RestoreDBForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SearchIndividualForm.resx">
+      <DependentUpon>SearchIndividualForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsEditDepForm.resx">
+      <DependentUpon>SettingsEditDepForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditOrgForm.resx">
+      <DependentUpon>EditOrgForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsPrinterForm.resx">
+      <DependentUpon>SettingsPrinterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StajDohodForm.resx">
+      <DependentUpon>StajDohodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SvodVedomostEditDocumentForm.resx">
+      <DependentUpon>SvodVedomostEditDocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SvodVedomostForm.resx">
+      <DependentUpon>SvodVedomostForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SvodVedomostPrintForm.resx">
+      <DependentUpon>SvodVedomostPrintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="orgDBDataSet.xsc">
+      <DependentUpon>orgDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="orgDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>orgDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="orgDBDataSet.xss">
+      <DependentUpon>orgDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
