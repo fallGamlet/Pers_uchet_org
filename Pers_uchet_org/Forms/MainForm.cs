@@ -28,6 +28,9 @@ namespace Pers_uchet_org
         public static DataTable ClassificatorTable = Classificator.CreateTable();
         public static DataTable ClassgroupTable = Classgroup.CreateTable();
         public static DataTable ClasspercentTable = Classpercent.CreateTable();
+
+        // переменная содержит текущий используемый год
+        public static int RepYear;
         #endregion
 
         #region Конструктор и инициализатор
@@ -37,6 +40,8 @@ namespace Pers_uchet_org
 
             _mainConnection = "data source = " + Application.StartupPath + "\\orgDB.db ;datetimeformat=ISO8601; pragma foreign_keys = 1;";
             this.Location = new Point(0, 0);
+
+            MainForm.RepYear = DateTime.Now.Year;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -101,7 +106,7 @@ namespace Pers_uchet_org
                 this.elobmenMenuItem.Enabled = isAdmin || int.Parse(code[4].ToString()) > 0;
             }
         }
-        
+
         private int Login()
         {
             OperatorEnterForm enterForm = new OperatorEnterForm();
@@ -133,11 +138,11 @@ namespace Pers_uchet_org
 
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectText, _mainConnection);
                 _orgTable.Rows.Clear();
-                
+
                 adapter.Fill(_orgTable);
                 foreach (DataRow rowItem in _orgTable.Rows)
                 {
-                    rowItem[viewCol] = string.Format("{0}    {1}",rowItem[Org.regnum], rowItem[Org.name]);
+                    rowItem[viewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
                 }
                 _orgTable.AcceptChanges();
                 this.SetPrivilege();
@@ -167,7 +172,7 @@ namespace Pers_uchet_org
         private void anketadataMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView orgRow = _orgBS.Current as DataRowView;
-            if(orgRow == null)
+            if (orgRow == null)
             {
                 MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
                 return;
@@ -185,7 +190,20 @@ namespace Pers_uchet_org
         // открытие формы для работы со стажем и доходом сотрудников
         private void stajidohodMenuItem_Click(object sender, EventArgs e)
         {
-            StajDohodForm tmpForm = new StajDohodForm();
+            DataRowView orgRow = _orgBS.Current as DataRowView;
+            if (orgRow == null)
+            {
+                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                return;
+            }
+            Org org = new Org();
+            org.idVal = (long)orgRow[Org.id];
+            org.regnumVal = orgRow[Org.regnum] as string;
+            org.nameVal = orgRow[Org.name] as string;
+            org.chiefpostVal = orgRow[Org.chief_post] as string;
+            org.chieffioVal = orgRow[Org.chief_fio] as string;
+            org.bookerfioVal = orgRow[Org.booker_fio] as string;
+            StajDohodForm tmpForm = new StajDohodForm(_operator, org, _mainConnection);
             tmpForm.Show();
         }
         // открытие формы для работы со сводными ведомостями
