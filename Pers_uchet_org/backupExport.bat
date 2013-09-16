@@ -1,1 +1,0 @@
-sqlite3.exe orgDB.db .dump >file.sql

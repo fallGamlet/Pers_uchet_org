@@ -38,7 +38,8 @@ namespace Pers_uchet_org
         {
             InitializeComponent();
 
-            _mainConnection = "data source = " + Application.StartupPath + "\\orgDB.db ;datetimeformat=ISO8601; pragma foreign_keys = 1;";
+            _mainConnection = @"data source = //SRV3-STATEPF/e$/Programmers Archive/Db_for_orgs/orgDB.db;";
+            //_mainConnection = "data source = SRV3-STATEPF\\e$\\Programmers Archive\\Db_for_orgs\\orgDB.db ;";
             this.Location = new Point(0, 0);
 
             MainForm.RepYear = DateTime.Now.Year;
