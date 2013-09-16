@@ -25,7 +25,7 @@ namespace Pers_uchet_org
         DataTable _personTable;
         // биндинг сорс для таблицы
         BindingSource _personBS;
-        // адаптер для чтения данныхъ из БД
+        // адаптер для чтения данных из БД
         SQLiteDataAdapter _personAdapter;
         // названия добавочного виртуального столбца
         const string check = "check";
