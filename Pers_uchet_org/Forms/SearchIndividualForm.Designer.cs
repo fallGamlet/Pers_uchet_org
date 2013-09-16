@@ -28,91 +28,136 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.searchButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.categorysearchBox = new System.Windows.Forms.ComboBox();
-            this.valuesearchBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.orgView = new System.Windows.Forms.DataGridView();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.searchView = new System.Windows.Forms.DataGridView();
-            this.departmentView = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.orgregnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orgnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PersonGroupBox = new System.Windows.Forms.GroupBox();
+            this.personView = new System.Windows.Forms.DataGridView();
             this.strahnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.depnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox1.SuspendLayout();
+            this.lnameBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.orgView = new System.Windows.Forms.DataGridView();
+            this.orgregnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orgnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrgGroupBox = new System.Windows.Forms.GroupBox();
+            this.ValueGroupBox = new System.Windows.Forms.GroupBox();
+            this.mnameBox = new System.Windows.Forms.TextBox();
+            this.fnameBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.socnumBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.PersonGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.searchView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.departmentView)).BeginInit();
+            this.OrgGroupBox.SuspendLayout();
+            this.ValueGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(313, 139);
+            this.searchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchButton.Location = new System.Drawing.Point(154, 139);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(75, 23);
-            this.searchButton.TabIndex = 0;
+            this.searchButton.TabIndex = 3;
             this.searchButton.Text = "Найти";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
-            // groupBox1
+            // PersonGroupBox
             // 
-            this.groupBox1.Controls.Add(this.searchView);
-            this.groupBox1.Location = new System.Drawing.Point(412, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(345, 168);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Результат поиска";
+            this.PersonGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.PersonGroupBox.Controls.Add(this.personView);
+            this.PersonGroupBox.Location = new System.Drawing.Point(263, 9);
+            this.PersonGroupBox.Margin = new System.Windows.Forms.Padding(0);
+            this.PersonGroupBox.Name = "PersonGroupBox";
+            this.PersonGroupBox.Size = new System.Drawing.Size(420, 168);
+            this.PersonGroupBox.TabIndex = 2;
+            this.PersonGroupBox.TabStop = false;
+            this.PersonGroupBox.Text = "Результат поиска";
             // 
-            // categorysearchBox
+            // personView
             // 
-            this.categorysearchBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.categorysearchBox.FormattingEnabled = true;
-            this.categorysearchBox.Location = new System.Drawing.Point(106, 19);
-            this.categorysearchBox.Name = "categorysearchBox";
-            this.categorysearchBox.Size = new System.Drawing.Size(282, 21);
-            this.categorysearchBox.TabIndex = 2;
+            this.personView.AllowUserToAddRows = false;
+            this.personView.AllowUserToDeleteRows = false;
+            this.personView.AllowUserToResizeRows = false;
+            this.personView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.personView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.personView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.strahnumColumn,
+            this.fioColumn});
+            this.personView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.personView.Location = new System.Drawing.Point(3, 16);
+            this.personView.Name = "personView";
+            this.personView.ReadOnly = true;
+            this.personView.RowHeadersVisible = false;
+            this.personView.Size = new System.Drawing.Size(414, 149);
+            this.personView.TabIndex = 1;
             // 
-            // valuesearchBox
+            // strahnumColumn
             // 
-            this.valuesearchBox.Location = new System.Drawing.Point(106, 58);
-            this.valuesearchBox.Name = "valuesearchBox";
-            this.valuesearchBox.Size = new System.Drawing.Size(282, 20);
-            this.valuesearchBox.TabIndex = 3;
+            this.strahnumColumn.DataPropertyName = "soc_number";
+            this.strahnumColumn.HeaderText = "Страховой №";
+            this.strahnumColumn.MaxInputLength = 50;
+            this.strahnumColumn.MinimumWidth = 100;
+            this.strahnumColumn.Name = "strahnumColumn";
+            this.strahnumColumn.ReadOnly = true;
+            // 
+            // fioColumn
+            // 
+            this.fioColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.fioColumn.DataPropertyName = "fio";
+            this.fioColumn.HeaderText = "ФИО";
+            this.fioColumn.MaxInputLength = 200;
+            this.fioColumn.MinimumWidth = 200;
+            this.fioColumn.Name = "fioColumn";
+            this.fioColumn.ReadOnly = true;
+            // 
+            // lnameBox
+            // 
+            this.lnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnameBox.Location = new System.Drawing.Point(86, 54);
+            this.lnameBox.Name = "lnameBox";
+            this.lnameBox.Size = new System.Drawing.Size(143, 20);
+            this.lnameBox.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 13);
+            this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Критерий поиска";
+            this.label1.Text = "Страховой №";
             // 
             // orgView
             // 
+            this.orgView.AllowUserToAddRows = false;
+            this.orgView.AllowUserToDeleteRows = false;
+            this.orgView.AllowUserToResizeRows = false;
             this.orgView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.orgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.orgView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.orgView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.orgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.orgregnumColumn,
@@ -122,100 +167,12 @@
             this.orgView.Name = "orgView";
             this.orgView.ReadOnly = true;
             this.orgView.RowHeadersVisible = false;
-            this.orgView.Size = new System.Drawing.Size(388, 177);
-            this.orgView.TabIndex = 5;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.orgView);
-            this.groupBox2.Location = new System.Drawing.Point(12, 186);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(394, 196);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Список организаций";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.departmentView);
-            this.groupBox3.Location = new System.Drawing.Point(412, 186);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(345, 196);
-            this.groupBox3.TabIndex = 7;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Список структурных подразделений";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Controls.Add(this.categorysearchBox);
-            this.groupBox4.Controls.Add(this.searchButton);
-            this.groupBox4.Controls.Add(this.valuesearchBox);
-            this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Location = new System.Drawing.Point(12, 12);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(394, 168);
-            this.groupBox4.TabIndex = 8;
-            this.groupBox4.TabStop = false;
-            // 
-            // searchView
-            // 
-            this.searchView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.searchView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.searchView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.searchView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.searchView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.strahnumColumn,
-            this.fioColumn});
-            this.searchView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchView.Location = new System.Drawing.Point(3, 16);
-            this.searchView.Name = "searchView";
-            this.searchView.ReadOnly = true;
-            this.searchView.RowHeadersVisible = false;
-            this.searchView.Size = new System.Drawing.Size(339, 149);
-            this.searchView.TabIndex = 6;
-            // 
-            // departmentView
-            // 
-            this.departmentView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.departmentView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.departmentView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.departmentView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.departmentView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.depnameColumn});
-            this.departmentView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.departmentView.Location = new System.Drawing.Point(3, 16);
-            this.departmentView.Name = "departmentView";
-            this.departmentView.ReadOnly = true;
-            this.departmentView.RowHeadersVisible = false;
-            this.departmentView.Size = new System.Drawing.Size(339, 177);
-            this.departmentView.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 61);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Условие поиска";
+            this.orgView.Size = new System.Drawing.Size(668, 179);
+            this.orgView.TabIndex = 1;
             // 
             // orgregnumColumn
             // 
+            this.orgregnumColumn.DataPropertyName = "regnum";
             this.orgregnumColumn.HeaderText = "Рег. №";
             this.orgregnumColumn.MaxInputLength = 100;
             this.orgregnumColumn.MinimumWidth = 70;
@@ -224,59 +181,117 @@
             // 
             // orgnameColumn
             // 
+            this.orgnameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.orgnameColumn.DataPropertyName = "name";
             this.orgnameColumn.HeaderText = "Наименование организации";
             this.orgnameColumn.MaxInputLength = 300;
             this.orgnameColumn.MinimumWidth = 200;
             this.orgnameColumn.Name = "orgnameColumn";
             this.orgnameColumn.ReadOnly = true;
-            this.orgnameColumn.Width = 280;
             // 
-            // strahnumColumn
+            // OrgGroupBox
             // 
-            this.strahnumColumn.HeaderText = "Страховой №";
-            this.strahnumColumn.MaxInputLength = 50;
-            this.strahnumColumn.MinimumWidth = 100;
-            this.strahnumColumn.Name = "strahnumColumn";
-            this.strahnumColumn.ReadOnly = true;
-            this.strahnumColumn.Width = 110;
+            this.OrgGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.OrgGroupBox.Controls.Add(this.orgView);
+            this.OrgGroupBox.Location = new System.Drawing.Point(9, 187);
+            this.OrgGroupBox.Margin = new System.Windows.Forms.Padding(0);
+            this.OrgGroupBox.Name = "OrgGroupBox";
+            this.OrgGroupBox.Size = new System.Drawing.Size(674, 198);
+            this.OrgGroupBox.TabIndex = 3;
+            this.OrgGroupBox.TabStop = false;
+            this.OrgGroupBox.Text = "Список организаций";
             // 
-            // fioColumn
+            // ValueGroupBox
             // 
-            this.fioColumn.HeaderText = "ФИО";
-            this.fioColumn.MaxInputLength = 200;
-            this.fioColumn.MinimumWidth = 200;
-            this.fioColumn.Name = "fioColumn";
-            this.fioColumn.ReadOnly = true;
-            this.fioColumn.Width = 200;
+            this.ValueGroupBox.Controls.Add(this.mnameBox);
+            this.ValueGroupBox.Controls.Add(this.fnameBox);
+            this.ValueGroupBox.Controls.Add(this.label4);
+            this.ValueGroupBox.Controls.Add(this.label3);
+            this.ValueGroupBox.Controls.Add(this.socnumBox);
+            this.ValueGroupBox.Controls.Add(this.label2);
+            this.ValueGroupBox.Controls.Add(this.searchButton);
+            this.ValueGroupBox.Controls.Add(this.lnameBox);
+            this.ValueGroupBox.Controls.Add(this.label1);
+            this.ValueGroupBox.Location = new System.Drawing.Point(9, 9);
+            this.ValueGroupBox.Margin = new System.Windows.Forms.Padding(0);
+            this.ValueGroupBox.Name = "ValueGroupBox";
+            this.ValueGroupBox.Size = new System.Drawing.Size(235, 168);
+            this.ValueGroupBox.TabIndex = 1;
+            this.ValueGroupBox.TabStop = false;
             // 
-            // depnameColumn
+            // mnameBox
             // 
-            this.depnameColumn.HeaderText = "Наименование отдела (цеха)";
-            this.depnameColumn.MaxInputLength = 300;
-            this.depnameColumn.MinimumWidth = 300;
-            this.depnameColumn.Name = "depnameColumn";
-            this.depnameColumn.ReadOnly = true;
-            this.depnameColumn.Width = 310;
+            this.mnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.mnameBox.Location = new System.Drawing.Point(86, 106);
+            this.mnameBox.Name = "mnameBox";
+            this.mnameBox.Size = new System.Drawing.Size(143, 20);
+            this.mnameBox.TabIndex = 10;
+            // 
+            // fnameBox
+            // 
+            this.fnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.fnameBox.Location = new System.Drawing.Point(86, 80);
+            this.fnameBox.Name = "fnameBox";
+            this.fnameBox.Size = new System.Drawing.Size(143, 20);
+            this.fnameBox.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 109);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Отчество";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 83);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Имя";
+            // 
+            // socnumBox
+            // 
+            this.socnumBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.socnumBox.Location = new System.Drawing.Point(86, 19);
+            this.socnumBox.Name = "socnumBox";
+            this.socnumBox.Size = new System.Drawing.Size(143, 20);
+            this.socnumBox.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Фамилия";
             // 
             // SearchIndividualForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 394);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(692, 394);
+            this.Controls.Add(this.ValueGroupBox);
+            this.Controls.Add(this.OrgGroupBox);
+            this.Controls.Add(this.PersonGroupBox);
             this.Name = "SearchIndividualForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Поиск физического лица";
-            this.groupBox1.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.SearchIndividualForm_Load);
+            this.PersonGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.personView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.searchView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.departmentView)).EndInit();
+            this.OrgGroupBox.ResumeLayout(false);
+            this.ValueGroupBox.ResumeLayout(false);
+            this.ValueGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -284,21 +299,22 @@
         #endregion
 
         private System.Windows.Forms.Button searchButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox categorysearchBox;
-        private System.Windows.Forms.TextBox valuesearchBox;
+        private System.Windows.Forms.GroupBox PersonGroupBox;
+        private System.Windows.Forms.TextBox lnameBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView orgView;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.DataGridView searchView;
-        private System.Windows.Forms.DataGridView departmentView;
+        private System.Windows.Forms.GroupBox OrgGroupBox;
+        private System.Windows.Forms.GroupBox ValueGroupBox;
+        private System.Windows.Forms.DataGridView personView;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn orgregnumColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orgnameColumn;
+        private System.Windows.Forms.TextBox mnameBox;
+        private System.Windows.Forms.TextBox fnameBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox socnumBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn strahnumColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fioColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn depnameColumn;
     }
 }
