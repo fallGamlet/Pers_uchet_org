@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Форма АДВ-1</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setArrayValues = function(selectorStr, valStr) {
+			var valStr = valStr.toUpperCase();
+	 		var strLen = valStr.length;
+			var liArray = $(selectorStr);  
+			var liLen = liArray.length;
+			for(var i=0; i<liLen; i++)
+			{
+				if(i < strLen)
+					liArray[i].innerText  = valStr.charAt(i);
+				else
+					liArray[i].innerText  = "";
+			};
+		};
+		var setFName = function(fnameStr) {
+			setArrayValues('#f_name li', fnameStr);
+		};
+		var setLName = function(lnameStr) {
+			setArrayValues("#l_name li", lnameStr);
+		};
+		var setMName = function(mnameStr) {
+			setArrayValues("#m_name li", mnameStr);
+		};
+		var setSex = function(sexStr){
+			var sex = $("#sex li");
+			sex.text(sexStr.toUpperCase());
+		};
+		var setBornDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			var mnum = parseInt(darr[1], 10);
+			var mname = months[mnum-1];
+			setArrayValues("#born_day li", darr[0]);
+			setArrayValues("#born_month li", mname);
+			setArrayValues("#born_year li", darr[2]);
+		};
+		var setBornPlace = function(valStr) {
+			$("#born_place").text(valStr);
+		};
+		var setBornRegion = function(valStr) {
+			$("#born_region").text(valStr);
+		};
+		var setBornArea = function(valStr) {
+			$("#born_area").text(valStr);
+		};
+		var setBornCountry = function(valStr) {
+			$("#born_country").text(valStr);
+		};
+		var setRegIndex = function(valStr) {
+			setArrayValues("#reg_index li", valStr);
+		};
+		var setRegAddress = function(valStr) {
+			var i = valStr.lastIndexOf(' ', 45)
+			$("#reg_address1").text(valStr.slice(0, i));
+			$("#reg_address2").text(valStr.slice(i));
+		};
+		var setRegPhones = function(valStr) {
+			$("#reg_phones").text(valStr);
+		};
+		var setFactIndex = function(valStr) {
+			setArrayValues("#fact_index li", valStr);
+		};
+		var setFactAddress = function(valStr) {
+			var i = valStr.lastIndexOf(' ', 45)
+			$("#fact_address1").text(valStr.slice(0, i));
+			$("#fact_address2").text(valStr.slice(i));
+		};
+		var setDocType = function(valStr) {
+			$("#doc_type").text(valStr);
+		};
+		var setDocSeries = function(valStr) {
+			setArrayValues("#doc_series li", valStr);
+		};
+		var setDocNumber = function(valStr) {
+			setArrayValues("#doc_number li", valStr);
+		};
+		var setDocDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			setArrayValues("#doc_day li", darr[0]);
+			setArrayValues("#doc_month li", months[parseInt(darr[1])-1]);
+			setArrayValues("#doc_year li", darr[2]);
+		};
+		var setDocOrg = function(valStr) {
+			$("#doc_org").text(valStr);
+		};
+		var setCitizen1 = function(valStr) {
+			$("#citizen1").text(valStr);
+		};
+		var setCitizen2 = function(valStr) {
+			$("#citizen2").text(valStr);
+		};
+		var setPrintDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			$("#print_day").text(darr[0]);
+			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_year").text(darr[2]);
+		};
+	</script>
+	<style type="text/css">
+		body { background: #def; text-align: center; }
+		#main_container { background: #fff; width: 8.27in; height: 11.69in; /*The A4 size print measures 21.0 x 29.7cm,   8.27 x 11.69 inches*/ margin: 0px auto; /* Выравниваем по центру */ position:relative; }
+		#top {}
+		#title {}
+		#data {	text-align: left; padding:0; position: relative; margin:0 auto; }
+		#evolument {}
+		#footer {}
+		
+		td { border-top: solid 1px #777; border-left:solid 1px #777; min-width: 2em; width:2em;}
+		table#alphabet td {	min-width: 0px;	 width:2em; font-weight: bold;	padding: 0;	margin: 0; }
+		
+		ul { padding: 0px; }
+		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
+		
+		#data1, #data2, #data3, #data4, #data5, #data6 { border:solid 1px #999;	margin: 5px 0; padding: 1.2em 0 5px 0; position: relative; }
+		#data1 ul li span, #data2 ul li span, #data3 ul li span, #data4 ul li span, #data5 ul li span {
+			min-width: 4.5em;
+			width: 4.5em;
+			display: inline-block;
+			position: relative;
+			vertical-align: bottom;
+			zoom: 1;
+			*display: inline;
+		}
+		.data_title { position:absolute; top:2px; left:2px;	}
+		
+		ul.numlist { display: inline-block;	margin:0; padding:0; position: relative; zoom: 1; *display: inline;}
+		ul.numlist li { display:inline-block; border:solid 1px #555; margin:1px; height:1.5em; width:1.5em; text-align:center; font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+				
+		.field_underline {	
+			display: inline-block;	
+			margin: 0 0.2em; 
+			border-bottom: solid 1px #555; 
+			position: relative;	
+			vertical-align: bottom;
+			text-align: center;
+			min-width: 1em;
+			font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center; 
+			zoom: 1;
+			*display: inline;
+		}
+	</style>
+</head>
+<body>
+	<div id="main_container">
+		<div id="top">
+			<p style="text-align:right; margin:0px; padding:0 1em 0 0; font-size:small;">
+				Приложение №1 <br/>
+				к приказу министра социальной защиты и труда <br/>
+				Приднестровской Молдавской Республики от _____ г. №____
+			</p>
+			<p style="margin:0.3em auto;">
+				Единый государственный фонд социального страхования<br/>
+				Приднестровской Молдавской Республики
+			</p>
+			<p style="position:absolute; top:2em; left:2em;;font-size:small;"><u>Форма АДВ-1</u></p>
+		</div>
+		
+		<div id="title">
+			<p style="margin: 5px"><b>Анкета застрахованного лица</b></p>
+			<div id="right_div" style="float: right; font-size:small; padding: 5px 1em;  margin:0; width:2.3in; position: relative;">
+				Заполняется сотрудником Фонда<br/>
+				<div style="text-align:left; border: solid 1px #555; padding: 5px 10px 1.1em 10px; font-size: 1.1em;">
+					Отделение Фонда <br/>
+					Дата приема<br/>
+					Входящий номер<br/>
+					Принял<br/>
+				</div>
+			</div>
+			<div id="left_div" style="margin-right: 2.6in; margin-left: 0.2in; font-size: small;  position: relative;">
+				<p style="text-align: justify; margin: 0px;">
+					Конфиденциальность информации гарантируется получателем<br/>
+					Документ заполняется застрахованным лицом шариковой или перьевой ручкой СИНИМИ 
+					или ЧЕРНЫМИ чернилами, разборчиво, ЗАГЛАВНЫМИ ПЕЧАТНЫМИ БУКВАМИ 
+					по нижеприведенным образцам. Документ, содержащий и исправления, а так же без 
+					подписи застрахованного лица считается недействительным.
+				</p>
+				<table id="alphabet" style="width:100%; font-size: madium; position: relation; border-right:solid 1px #555; border-bottom:solid 1px #555;" cellspacing=0  cellpadding=1>
+					<tbody>
+						<tr>
+							<td>А</td><td>Б</td><td>В</td><td>Г</td><td>Д</td><td>Е</td><td>Ж</td><td>З</td><td>И</td><td>Й</td><td>К</td>
+							<td>Л</td><td>М</td><td>Н</td><td>О</td><td>П</td><td>Р</td><td>С</td><td>Т</td><td>У</td><td>Ф</td><td>Х</td>
+						</tr>
+						<tr>
+							<td>Ц</td><td>Ч</td><td>Ш</td><td>Щ</td><td>Ъ</td><td>Ы</td><td>Ь</td><td>Э</td><td>Ю</td><td>Я</td><td>-</td>
+							<td>_</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>0</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div id="data" style="padding:0; margin:1em;";>
+			<div id="data1">
+				<b class="data_title">1.</b>
+				<ul style="margin: 0 0 0 0.5em;">
+					<li>
+						<span>Фамилия</span>
+						<ul id="l_name" class="numlist">
+							<li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span>Имя</span>
+						<ul id="f_name" class="numlist">
+							<li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span>Отчество</span>
+						<ul id="m_name" class="numlist">
+							<li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span style="min-width:2.5em; width:2.5em;">Пол</span> <ul id="sex" class="numlist"><li/></ul> 
+						<span style="min-width: 3.5em; width:3.5em;">(м/ж)</span>
+						<span style="min-width:7em; width:7em;">Дата рождения</span>
+								  <ul id="born_day" class="numlist"><li/><li/></ul> <span style="min-width:1em; width:1em;"></span>
+								  <ul id="born_month" class="numlist"><li/><li/><li/><li/><li/><li/><li/><li/></ul> <span style="min-width:1em; width:1em;"></span>
+								  <ul id="born_year" class="numlist"><li/><li/><li/><li/></ul>
+					    <span style="min-width:3em; width:3em; margin-left:5px;">года</span>
+					</li>
+				</ul>
+			</div>
+			
+			<div id="data2">
+				<b class="data_title">2. Место рождения:</b>
+				<ul style="margin: 0 0 0 0.5em;">
+					<li>
+						нас. пункт: <div id="born_place" class="field_underline" style="min-width:17em;"></div> 
+						район <div id="born_region" class="field_underline" style="min-width:19em;"></div> 
+					</li>
+					<li>
+						область (крый): <div id="born_area" class="field_underline" style="min-width:19em;"></div> 
+						страна <div id="born_country" class="field_underline" style="min-width:15em;"></div> 
+					</li>
+				</ul>
+			</div>
+			
+			<div id="data3">
+				<b class="data_title">3. Адрес по прописке:</b>
+				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">Указывается последовательно страна, область(край), район, нас.пункт, улица, №дома, №квартиры</span>
+				<ul style="margin: 0 0 0 0.5em;">
+					<li>
+						<span style="min-width:3em; width:3em;">индекс</span> <ul id="reg_index" class="numlist"><li/><li/><li/><li/><li/><li/></ul>
+						<span style="min-width:2em; width:2em; margin-left:10px;">адрес</span> <div id="reg_address1" class="field_underline" style="margin:0; min-width:30em;"></div>
+					</li>
+					<li>
+						<div id="reg_address2" class="field_underline" style="width:100%; margin:0; padding:0;"></div>
+					</li>
+					<li>
+						<span>Телефоны</span> <div id="reg_phones" class="field_underline" style="width:25em; margin:0; padding:0;"></div>
+						<span style="font-size:small; width:19em;">(домашний, рабочий и/или дополнительный)</span>
+					</li>
+				</ul>
+			</div>
+			
+			<div id="data4">
+				<b class="data_title">4. Адрес места жительства фактический:</b>
+				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">Заполняется при отличии от адреса по прописке</span>
+				<ul style="margin: 0 0 0 0.5em;">
+					<li>
+						<span style="min-width:3em; width:3em;">индекс</span> <ul id="fact_index" class="numlist"><li/><li/><li/><li/><li/><li/></ul>
+						<span style="min-width:2em; width:2em; padding-left:5px;">адрес</span> <div id="fact_address1" class="field_underline" style="margin:0; min-width:30em;"></div>
+					</li>
+					<li>
+						<div id="fact_address2" class="field_underline" style="width:100%; margin:0; padding:0;"></div>
+					</li>
+				</ul>
+			</div>
+			
+			<div id="data5">
+				<b class="data_title">5. Документ, удостоверяющий личность:</b>
+				<ul style="margin: 0 0 0 0.5em;">
+					<li>
+						 <div id="doc_type" class="field_underline" style="margin:0; width: 99%;"></div>
+					</li>
+					<li>
+						<span style="min-width:3em; width:3em;">серия</span> <ul id="doc_series" class="numlist"><li/><li/><li/><li/><li/><li/><li/><li/><li/></ul>
+						<span style="margin-left:2em; min-width:3em; width:3em;">номер</span> <ul id="doc_number" class="numlist"><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/></ul>
+					</li>
+					<li>
+						<span style="min-width: 7em;">дата выдачи</span>
+									  <ul id="doc_day" class="numlist"><li/><li/></ul> <span style="min-width:1em; width:1em;"></span>
+									  <ul id="doc_month" class="numlist"><li/><li/><li/><li/><li/><li/><li/><li/></ul> <span style="min-width:1em; width:1em;"></span>
+									  <ul id="doc_year" class="numlist"><li/><li/><li/><li/></ul>
+						<span style="min-width: 3em; width:3em; margin-left:5px;">года</span>
+					</li>
+					<li>
+						<span>кем выдан</span> <div id="doc_org" class="field_underline" style="margin:0; width: 89%;"></div>
+					</li>
+					<li>
+						<span style="margin-right:1em;">Гражданство</span> 
+						1. <div id="citizen1" class="field_underline" style="margin:0; width: 40%;"></div>
+						2. <div id="citizen2" class="field_underline" style="margin:0; width: 40%;"></div>
+					</li>
+				</ul>
+			</div>
+		
+			<div id="print_date" >
+				<span style="margin-right:1em;">Дата заполнения</span>
+				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
+				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 
+				<div id="print_year" class="field_underline" style="min-width: 5em;"></div> г.
+				<div class="field_wrapper">
+					<div id="print_sign" class="field_underline" style="min-width: 15em;"></div>
+					<br/><span style="font-size:small;">Подпись застрахованного лица</span>
+				</div>
+			</div>
+			
+			<div id="data6" style="margin-top: 1.5em; padding-bottom: 2em;">
+				<b class="data_title">Для анкеты, заверенной страхователем</b>
+				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">
+					Заполняется страхователем
+				</span>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 15em;"></div>
+					<br/><span style="font-size:small;">Наименование должности руководителя</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 15em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 15em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+		</div>
+		
+		<div id="footer" style="margin:0; position:relative; padding: 0 1.5em; text-align:left; border-top: dashed 1px #555;">
+			<div style="position:relative; top:-0.75em; margin-botton:0; text-align:center;">
+				линия отреза
+			</div>
+			<div style="position:relative; top: -0.75em;text-align:center;">
+				<b>Расписка Фонда в приеме документа</b>
+			</div>
+			<span style="position:absolute; top:2px; right:2em; display:inline-block; width:25em; font-size:small; text-align:right;">
+					Заполняется сотрудником фонда
+			</span>
+			<div style="display:inline-block; text-align: left; zoom:1; *display:inline;">
+				Застрахованное лицо:<br/>
+				передал(а) документ<br/>
+				Документ принят отделением Фонда:<br/>
+				Подпись работника Фонда <div class="field_underline" style="width:12em;"></div>
+			</div>
+			
+			<div style="display:inline-block; text-align: right; margin-left: 1em; zoom:1; *display:inline;">
+				Дата приема<br/>
+				Входящий номер документа
+			</div>
+		</div>
+	</div>
+</body>
+</html>
