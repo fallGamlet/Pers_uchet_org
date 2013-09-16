@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Форма СЗВ-3</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+	<style type="text/css">
+		body {
+			background: #def;
+			text-align: center;
+		}
+		#main_container {
+			background: #fff;
+			width: 8.27in;
+			height: 11.69in;
+			/*The A4 size print measures 21.0 x 29.7cm,   8.27 x 11.69 inches*/
+			margin: 0px auto; /* Выравниваем по центру */
+			position:relative;
+		}
+		#top {
+		}
+		#title {
+		}
+		#data {
+			text-align: left;
+			padding: 0px 30px;
+		}
+		#evolument {
+		}
+		#footer {
+		}
+		
+		td {
+			border-top: solid 1px #777;
+			border-left: solid 1px #777;
+			min-width: 2em;
+		}
+		td p {
+			padding: 0px;
+			margin: -3px auto;
+		}
+		
+		ul {
+			padding: 0px;
+		}
+		li {
+			margin: 10px auto;
+			list-style-type: none;
+			vertical-align: middle;
+		}
+		
+		ul.hr {
+			margin: 0 1.5em; /* Обнуляем значение отступов */
+			padding: 4px; /* Значение полей */
+			min-height: 4em;
+		}
+		ul.hr li {
+			float: right;
+			display: block; /* Отображать как строчный элемент */
+			margin-right: 5px; /* Отступ слева */
+			padding: 3px 1em; /* Поля вокруг текста */
+		}
+		ul.hr li:last-of-type {
+			float: left;
+		}
+		
+		ul.numlist {
+			display: inline-block;
+			margin: 0 0.5em 0 1em ;
+			bottom: -5px;
+			position: relative;
+		}
+		ul.numlist li {
+			float: left;
+			display: inline;
+			border: solid 1px #555;
+			margin: 1px;
+			padding: 3px;
+			min-height: 1.2em;
+			min-width: 1.2em;
+		}
+		
+		div .number {
+			display: inline-block;
+			min-height: 1em;
+			min-width: 5em;
+			margin: 0px 2em;
+			border-bottom: solid 1px #555;
+			position: relative;
+			bottom: -5px;
+		}
+		div#org_sname {
+			display: inline-block;
+			min-height: 2em;
+			min-width:30em; 
+			margin:0px; 
+			padding:0px; 
+			bottom:0px;
+			border-bottom: solid 1px #555;
+			position: relative;
+		}
+		div#print-day, div#print-month, div#print-year {
+			display: inline-block;
+			margin: 0 0.2em;
+			border-bottom: solid 1px #555;
+			position: relative;
+			bottom: -5px;
+		}
+		div#print-day {
+		min-width: 2em;
+		}
+		div#print-month{
+			min-width: 8em;
+		}
+		div#print-year {
+			min-width: 4em;
+		}
+	</style>
+</head>
+<body>
+	<div id="main_container">
+		<div id="top">
+			<p style="text-align:right; margin:0px; padding:1em 1em 0em 0em; font-size:small;">
+				Приложение №14 <br/>
+				к приказу министра социальной защиты и труда <br/>
+				Приднестровской Молдавской Республики от _____ г. №____
+			</p>
+			<p style="">
+				Единый государственный фонд социального страхования<br/>
+				Приднестровской Молдавской Республики
+			</p>
+			<p style="position:absolute; top:2em; left:2em;;font-size:small;"><u>Форма СЗВ-3</u></p>
+		</div>
+		
+		<div id="title">
+			<p><b>
+			Сводная ведомость<br/>
+			форм документов СЗВ-1, передаваемых страхователем в Фонд
+			</b></p>
+		</div>
+		
+		<div id="data">
+			<ul>
+				<li>Реквизиты страхователя, передающего документы:
+					<ul style="list-style-type: none; padding-left: 3em;">
+						<li>
+							Регистрацтонный номер в Фонде 
+							<ul id="regnum" class="numlist">
+								<li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+							</ul>
+						</li>
+						<li>
+							Наименование страхователя <br/>
+							<div id="org_sname"></div> <br/>
+							<span style="margin-left:20em;">(краткое)</span>
+						</li>
+					</ul>
+				</li>
+				<li>
+					Отчетный период 
+					<ul id="year" class="numlist">
+						<li></li><li></li><li></li><li></li>
+					</ul> 
+					год
+				</li>
+				<li>Количество пакетов с документами СЗВ-1: <div id="packet_count" class="number"></div></li>
+				<li>Количество исходных документов СЗВ-1:&nbsp&nbsp <div id="doc_count" class="number"></div></li>
+			</ul>
+		</div>
+		
+		<div id="evolument">
+			<p>
+				Сведения о доходе за отчетный период<br/>
+			</p>
+			<table style="width:95%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;" cellspacing=0 cellpadding=1>
+			<tbody>
+				<tr>
+					<td rowspan=3 ><p>М</p><p>е</p>с<p>я</p>ц</td>
+					<td rowspan=2 width='110px'>Сумма дохода, на который начислены страховые взносы</td>
+					<td rowspan=2 width='110px'>Сумма выплат, учитываемых для назначения пенсий</td>
+					<td colspan=2>Сумма единого социального налога</td>
+					<td colspan=2>Сумма обязательных страховых взносов</td>
+					<td rowspan=3 width='90px'>Средняя численность работников (застрахованных лиц)</td>
+				</tr>
+				<tr>
+					<td>начисленных страхователем</td>
+					<td>уплаченных страхователем</td>
+					<td>начисленных страхователем</td>
+					<td>уплаченных страхователем</td>
+				</tr>
+				<tr>
+					<td>Руб.</td>
+					<td>Руб.</td>
+					<td>Руб.</td>
+					<td>Руб.</td>
+					<td>Руб.</td>
+					<td>Руб.</td>
+				</tr>
+				<tr>
+					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		
+		<div id="footer">
+			<div style="margin: 1em 0 2em 3em; text-align: left;">Дата заполнения <span style="padding:1em;"></span>"<div id="print-day"></div>" <div id="print-month"></div> <div id="print-year"></div> года</div>
+			<ul class="hr">
+				<li>
+					______________________<br/>
+					Расшифровка
+				</li>
+				<li>
+					________________<br/>
+					Подпись
+				</li>
+				<li>
+					______________________________________<br/>
+					Наименование должности руководителя
+				</li>
+			</ul>
+			<ul class="hr">
+				<li>
+					______________________<br/>
+					Расшифровка
+				</li>
+				<li>
+					________________<br/>
+					Подпись
+				</li>
+				<li>
+					Бухгалтер
+				</li>
+			</ul>
+			<p style="width: 100%;position:absolute; bottom:1em;">М.П.</p>
+		</div>	
+	</div>
+</body>
+</html>

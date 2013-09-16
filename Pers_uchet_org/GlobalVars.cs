@@ -228,6 +228,14 @@ namespace Pers_uchet_org
                             id, regnum, name, chief_post, chief_fio, booker_fio, tablename, org_id);
         }
 
+        static public string GetSelectByPerson(long person_id)
+        {
+            return string.Format("{0} WHERE {1} in ({2})", 
+                                GetSelectCommandText(), 
+                                id, 
+                                PersonOrg.GetSelectOrgIDText(person_id));
+        }
+
         static public string GetSelectTextByOperator(long oper_id)
         {
             return string.Format(@"{0} WHERE {1} IN (SELECT DISTINCT {2} FROM {3} WHERE {4} = {5}) ",
@@ -1140,6 +1148,51 @@ namespace Pers_uchet_org
         static public string GetSelectText(long org_id, int rep_year)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1) AND {2} = {3}", orgID, org_id, repYear, rep_year);
+        }
+        #endregion
+    }
+
+    public class PersonShortView
+    {
+        static public string tablename = "Person_info";
+
+        #region Названия полей
+        static public string id = PersonInfo.id;
+        static public string socNumber = PersonInfo.socNumber;
+        static public string fio = "fio";
+        #endregion
+
+        #region
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(socNumber, typeof(string));
+            table.Columns.Add(fio, typeof(string));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format(@"SELECT {0},{1},(IFNULL({2},'') ||' '|| IFNULL({3},'') ||' '|| IFNULL({4},'')) as {5} FROM {6} ",
+                    id, socNumber, 
+                    PersonInfo.lname, PersonInfo.fname, PersonInfo.mname, fio,
+                    tablename);
+        }
+
+        static public string GetSelectText(string soc_number)
+        {
+            return string.Format("{0} WHERE {1} like '%{2}%' ", GetSelectText(), socNumber, soc_number);
+        }
+
+        static public string GetSelectText(string soc_number, string fname, string mname, string lname)
+        {
+            return string.Format("{0} WHERE {1} like '%{2}%' AND {3} like '%{4}%' AND {5} like '%{6}%' AND {7} like '%{8}%'", 
+                                GetSelectText(), 
+                                socNumber, soc_number, 
+                                PersonInfo.fname, fname, 
+                                PersonInfo.mname, mname, 
+                                PersonInfo.lname, lname);
         }
         #endregion
     }

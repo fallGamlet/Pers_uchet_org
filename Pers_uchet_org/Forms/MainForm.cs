@@ -241,7 +241,7 @@ namespace Pers_uchet_org
         // открыть форму для поиска сотрудников из общего списка вне зависимости от привязки к организациям
         private void poiskfizlicaMenuItem_Click(object sender, EventArgs e)
         {
-            SearchIndividualForm tmpForm = new SearchIndividualForm();
+            SearchIndividualForm tmpForm = new SearchIndividualForm(_mainConnection);
             tmpForm.Show();
         }
         // открыть форму для смены пароля текущего оператора
