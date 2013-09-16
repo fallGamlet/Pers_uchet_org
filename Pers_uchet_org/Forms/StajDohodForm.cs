@@ -6,16 +6,63 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace Pers_uchet_org
 {
     public partial class StajDohodForm : Form
     {
-        public StajDohodForm()
+        #region Поля
+        // строка подключения к БД
+        string _connection;
+        // активный оператор
+        Operator _operator;
+        // активная организация
+        Org _org;
+        // привилегия
+        string _privilege;
+        // таблица пакетов
+        DataTable _listsTable;
+        // таблица документов
+        DataTable _docsTable;
+        // биндинг сорс для таблиц
+        BindingSource _listsBS;
+        BindingSource _docsBS;
+        // адаптер для чтения данных из БД
+        SQLiteDataAdapter _listsAdapter;
+        SQLiteDataAdapter _docsAdapter;
+        // названия добавочного виртуального столбца
+        //const string check = "check";
+        // переменная содержит текущий используемый год
+        int RepYear;
+        #endregion
+
+        #region Конструктор и инициализатор
+        public StajDohodForm(Operator oper, Org org, string connection)
         {
             InitializeComponent();
+            _operator = oper;
+            _org = org;
+            _connection = connection;
         }
 
+        private void StajDohodForm_Load(object sender, EventArgs e)
+        {
+            RepYear = MainForm.RepYear;
+            yearBox.Maximum = RepYear + 10;
+            yearBox.Value = RepYear;
+        }
+
+        private void StajDohodForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MainForm.RepYear = RepYear;
+        }
+        #endregion
+
+        #region Методы - свои
+        #endregion
+
+        #region Методы - обработчики событий
         private void addButton_Click(object sender, EventArgs e)
         {
             PacketDopInfoForm packetDopInfoForm = new PacketDopInfoForm();
@@ -93,6 +140,10 @@ namespace Pers_uchet_org
             { }
         }
 
-
+        private void yearBox_ValueChanged(object sender, EventArgs e)
+        {
+            RepYear = (int)yearBox.Value;
+        }
+        #endregion
     }
 }

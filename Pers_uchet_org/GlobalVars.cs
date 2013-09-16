@@ -1098,7 +1098,56 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(long org_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} IN ({1}) ",orgID, org_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ",orgID, org_id);
+        }
+        #endregion
+    }
+
+    public class ListsView
+    {
+        static public string tablename = "Lists_View";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string listTypeId = "list_type_id";
+        static public string nameType = "name";
+        static public string orgID = "org_id";
+        static public string operatorIdReg = "oper_id_reg";
+        static public string operatorNameReg = "name_reg";
+        static public string regDate = "reg_date";
+        static public string operatorIdChange = "oper_id_change";
+        static public string operatorNameChange = "name_change";
+        static public string changeDate = "change_date";
+        static public string repYear = "rep_year";
+        #endregion
+
+        #region Статические методы
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(listTypeId, typeof(int));
+            table.Columns.Add(nameType, typeof(string));
+            table.Columns.Add(orgID, typeof(long));
+            table.Columns.Add(operatorIdReg, typeof(long));
+            table.Columns.Add(operatorNameReg, typeof(string));
+            table.Columns.Add(regDate, typeof(DateTime));
+            table.Columns.Add(operatorIdChange, typeof(long));
+            table.Columns.Add(operatorNameChange, typeof(string));
+            table.Columns.Add(changeDate, typeof(DateTime));
+            table.Columns.Add(repYear, typeof(int));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10} FROM {11} ",
+                                id, listTypeId, nameType, orgID, operatorIdReg, operatorNameReg, regDate, operatorIdChange, operatorNameChange, changeDate, repYear, tablename);
+        }
+
+        static public string GetSelectText(long org_id, int rep_year)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1) AND {2} = {3}", orgID, org_id, repYear, rep_year);
         }
         #endregion
     }

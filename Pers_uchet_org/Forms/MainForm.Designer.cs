@@ -90,8 +90,8 @@
             this.toolStripSeparator4,
             this.exitMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(51, 20);
-            this.toolStripMenuItem1.Text = ">><<";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(53, 20);
+            this.toolStripMenuItem1.Text = "Меню";
             // 
             // changeoperatorMenuItem
             // 
@@ -334,6 +334,7 @@
             this.statusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 68);
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.statusStrip1.Size = new System.Drawing.Size(544, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
