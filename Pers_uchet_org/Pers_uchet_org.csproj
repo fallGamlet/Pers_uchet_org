@@ -125,12 +125,6 @@
     <Compile Include="Forms\ClassifierCategoriesForm.Designer.cs">
       <DependentUpon>ClassifierCategoriesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DocPreviewForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DocPreviewForm.Designer.cs">
-      <DependentUpon>DocPreviewForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\DoctypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -328,9 +322,6 @@
     <EmbeddedResource Include="Forms\ClassifierCategoriesForm.resx">
       <DependentUpon>ClassifierCategoriesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DocPreviewForm.resx">
-      <DependentUpon>DocPreviewForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DoctypeForm.resx">
       <DependentUpon>DoctypeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -419,9 +410,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="orgDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

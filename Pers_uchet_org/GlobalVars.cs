@@ -4,9 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SQLite;
+using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace Pers_uchet_org
 {
+    public class MyPrinter
+    {
+        static public void SetPrintSettings()
+        {
+            using (var saveKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Internet Explorer\PageSetup", true))
+            {
+                saveKey.SetValue("margin_top", "0.39", RegistryValueKind.String);
+                saveKey.SetValue("margin_bottom", "0.39", RegistryValueKind.String);
+                saveKey.SetValue("margin_left", "0.39", RegistryValueKind.String);
+                saveKey.SetValue("margin_right", "0.39", RegistryValueKind.String);
+            }
+            /*using (var saveKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3", true))
+            {
+                saveKey.SetValue("1400 ", "3", RegistryValueKind.DWord);
+            }*/
+        }
+    }
+
     public class Operator
     {
         // Название таблицы в БД
@@ -1061,6 +1081,11 @@ namespace Pers_uchet_org
         static public string orgID = "org_id";
         #endregion
 
+
+        #region Времменные статические переменные
+        static IEnumerable<DataRow> PrintRows;
+        #endregion
+
         #region Статические методы
         static public DataTable CreatetTable()
         {
@@ -1099,6 +1124,55 @@ namespace Pers_uchet_org
         static public string GetSelectText(long org_id)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1} ",orgID, org_id);
+        }
+
+        static public void Print(IEnumerable<DataRow> printRows)
+        {
+            string file = Application.StartupPath + @"\static\template\report_(форма АДВ-1).html";
+            WebBrowser webBrowser = new WebBrowser();
+            webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
+            webBrowser.ScriptErrorsSuppressed = true;
+            webBrowser.Navigate(file);
+            PrintRows = printRows;
+        }
+
+        static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            if (PrintRows != null)
+            {
+                WebBrowser wb = (sender as WebBrowser);
+                if (wb == null)
+                {
+                    return;
+                }
+                List<string> htmlDivList = new List<string>();
+                HtmlDocument htmlDoc = wb.Document;
+                foreach (DataRow personRow in PrintRows)
+                {
+                    htmlDoc.InvokeScript("setFName", new object[] { personRow[PersonView.fName] });
+                    htmlDoc.InvokeScript("setMName", new object[] { personRow[PersonView.mName] });
+                    htmlDoc.InvokeScript("setLName", new object[] { personRow[PersonView.lName] });
+                    object sexObj = personRow[PersonView.sex];
+                    string sexStr = sexObj is DBNull ? "не определено" : (int)sexObj == 1 ? "м" : "ж";
+                    htmlDoc.InvokeScript("setSex", new object[] { sexStr });
+                    htmlDoc.InvokeScript("setBornDate", new object[] { personRow[PersonView.birthday].ToString() });
+                    htmlDoc.InvokeScript("setCitizen1", new object[] { personRow[PersonView.citizen1].ToString() });
+                    htmlDoc.InvokeScript("setCitizen2", new object[] { personRow[PersonView.citizen2].ToString() });
+                    htmlDoc.InvokeScript("setRegAddress", new object[] { personRow[PersonView.regAdress].ToString() });
+
+                    htmlDivList.Add(htmlDoc.Body.InnerHtml);
+                }
+                if (htmlDivList.Count > 0)
+                {
+                    string htmlBody = "";
+                    foreach (string div in htmlDivList)
+                        htmlBody += div;
+                    htmlDoc.Body.InnerHtml = htmlBody;
+                }
+
+                MyPrinter.SetPrintSettings();
+                wb.ShowPrintPreviewDialog();
+            }
         }
         #endregion
     }

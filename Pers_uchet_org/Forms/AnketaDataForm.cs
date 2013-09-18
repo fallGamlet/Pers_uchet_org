@@ -28,7 +28,7 @@ namespace Pers_uchet_org
         // адаптер для чтения данных из БД
         SQLiteDataAdapter _personAdapter;
         // названия добавочного виртуального столбца
-        const string check = "check";
+        const string CHECK = "check";
         #endregion
 
         #region Конструктор и инициализатор
@@ -46,8 +46,8 @@ namespace Pers_uchet_org
             // иництализация таблицы персон (записи с анкетными данными)
             _personTable = PersonView.CreatetTable();
             // добавление виртуального столбца для возможности отмечать записи
-            _personTable.Columns.Add(check, typeof(bool));
-            _personTable.Columns[check].DefaultValue = false;
+            _personTable.Columns.Add(CHECK, typeof(bool));
+            _personTable.Columns[CHECK].DefaultValue = false;
 
             // инициализация биндинг сорса к таблице персон
             _personBS = new BindingSource();
@@ -81,7 +81,7 @@ namespace Pers_uchet_org
         {
             List<DataRowView> list = new List<DataRowView>();
             foreach (DataRowView personRow in _personBS)
-                if ((bool)personRow[check])
+                if ((bool)personRow[CHECK])
                     list.Add(personRow);
             return list;
         }
@@ -155,13 +155,13 @@ namespace Pers_uchet_org
         {
             bool allchecked = true;
             foreach (DataRowView row in _personBS)
-                if (!(bool)row[check])
+                if (!(bool)row[CHECK])
                 {
                     allchecked = false;
                     break;
                 }
             foreach (DataRowView row in _personBS)
-                row[check] = !allchecked;
+                row[CHECK] = !allchecked;
             this.personView.Refresh();
         }
 
@@ -198,7 +198,7 @@ namespace Pers_uchet_org
             List<long> personIdList = new List<long>();
             List<DataRowView> personList = new List<DataRowView>();
             foreach (DataRowView personRow in _personBS)
-                if ((bool)personRow[check])
+                if ((bool)personRow[CHECK])
                 {
                     personList.Add(personRow);
                     personIdList.Add((long)personRow[PersonView.id]);
@@ -214,7 +214,7 @@ namespace Pers_uchet_org
                 PersonInfo.Delete(personIdList, _connection);
                 foreach (DataRowView rowItem in personList)
                 {
-                    rowItem[check] = false;
+                    rowItem[CHECK] = false;
                     rowItem.Delete();
                 }
             }
@@ -240,7 +240,7 @@ namespace Pers_uchet_org
                 foreach (DataRowView rowItem in persons)
                 {
                     rowItem[PersonView.state] = (int)PersonView.PersonState.Uvolen;
-                    rowItem[check] = false;
+                    rowItem[CHECK] = false;
                     rowItem.EndEdit();
                 }
             }
@@ -275,16 +275,25 @@ namespace Pers_uchet_org
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            //AnketaPrintForm tmpform = new AnketaPrintForm();
-            //tmpform.Owner = this;
-            //tmpform.ShowDialog(this);
-            DataRowView personRow = _personBS.Current as DataRowView;
-            if (personRow == null)
+            List<DataRowView> selectedRowList = this.GetSelectedRows();
+            if (selectedRowList.Count <= 0)
             {
+                DataRowView personRow = _personBS.Current as DataRowView;
+                if (personRow != null)
+                {
+                    selectedRowList.Add(personRow);
+                }
+            }
+            if (selectedRowList.Count <= 0)
+            {
+                MainForm.ShowInfoMessage("Необходимо отметить или выделить хотя бы одну запись!", "Внимание");
                 return;
             }
-            Forms.DocPreviewForm tmpForm = new Forms.DocPreviewForm(personRow.Row);
-            tmpForm.Show(this);
+            List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
+            foreach (DataRowView rowItem in selectedRowList)
+                rowList.Add(rowItem.Row);
+
+            PersonView.Print(rowList);
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -339,9 +348,9 @@ namespace Pers_uchet_org
         private void stateRButton_CheckedChanged(object sender, EventArgs e)
         {
             foreach (DataRowView personRow in _personBS)
-                if ((bool)personRow[check])
+                if ((bool)personRow[CHECK])
                 {
-                    personRow[check] = false;
+                    personRow[CHECK] = false;
                     personRow.EndEdit();
                 }
             if (sender == this.uvolenRButton)
