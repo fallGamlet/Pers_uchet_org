@@ -113,13 +113,19 @@
 		#title {}
 		#data {	text-align: left; padding:0; position: relative; margin:0 1em;}
 		#evolument {}
-		#footer {margin:1em 0 0; position:relative; padding:0 1.5em; text-align:left; border-top:dashed 1px #555;}
+		#footer {position:absolute; margin:1em 0 0; padding:0 1.5em; text-align:left; border-top:dashed 1px #555; bottom:0; left:0; width:7.77in;}
 		
 		td { border-top: solid 1px #777; border-left:solid 1px #777; min-width: 2em; width:2em;}
+		#alphabet {width:100%; font-size: medium; position: relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
 		table#alphabet td {	min-width: 0px;	 width:2em; font-weight: bold;	padding: 0;	margin: 0; }
 		
-		ul { padding: 0px; }
-		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
+		#doctable {width:100%; margin:5px auto; font-size:medium; position:relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
+		#doctable td {padding:2px 0 2px 5px;}
+		#doctable td.caption {text-align:center;}
+		
+		ul { padding:0px; margin:0px; }
+		li { margin:1px auto; list-style-type:none; vertical-align:middle; }
+		li.myli { margin:10px auto; }
 		
 		#data1, #data2, #data3, #data4, #data5, #data6, .container { border:solid 1px #999;	margin:5px 0; padding: 1.2em 0 5px; position: relative; }
 		#data1 ul li span, #data2 ul li span, #data3 ul li span, #data4 ul li span, #data5 ul li span, .myspan {
@@ -181,7 +187,7 @@
 				Единый государственный фонд социального страхования<br/>
 				Приднестровской Молдавской Республики
 			</p>
-			<p style="position:absolute; top:2em; left:2em;;font-size:small;"><u>Форма АДВ-6</u></p>
+			<p style="position:absolute; top:2em; left:2em; font-size:small;"><u>Форма АДВ-6</u></p>
 		</div>
 		
 		<div id="title">
@@ -203,7 +209,7 @@
 					по нижеприведенным образцам. Документ, содержащий и исправления, а так же без 
 					подписи застрахованного лица считается недействительным.
 				</p>
-				<table id="alphabet" style="width:100%; font-size: madium; position: relation; border-right:solid 1px #555; border-bottom:solid 1px #555;" cellspacing=0  cellpadding=1>
+				<table id="alphabet" cellspacing=0 cellpadding=1>
 					<tbody>
 						<tr>
 							<td>А</td><td>Б</td><td>В</td><td>Г</td><td>Д</td><td>Е</td><td>Ж</td><td>З</td><td>И</td><td>Й</td><td>К</td>
@@ -220,12 +226,39 @@
 		
 		<div id="data">
 			<div id="data1" style="padding:1em 1em 5px; border:none;">
-				<b>Реквизиты страхователя, предоставляющего справку:</b> <br/>
-				<span class="myspan" style="margin-left:1em; width:11em;">Регистрационный номер</span> <ul id="org_regnum" class="numlist"><li/><li/><li/><li/><li/><li/><li/></ul> <br/>
-				<span class="myspan" style="margin-left:1em; width:7em;">Наименование</span> <div id="org_name" class="field_underline" style="width:80%;"></div> <br/>
-				<span class="myspan" style="margin-left:1em; width:7em;">Примечание</span> <div class="field_underline" style="width:80%;"></div>
+				<b>Реквизиты страхователя, предоставляющего справку:</b>
+				<ul style="margin:0 0 0 1em;">
+					<li class="myli"> <span class="myspan" style="width:11em;">Регистрационный номер</span> <ul id="org_regnum" class="numlist"><li/><li/><li/><li/><li/><li/><li/></ul> </li>
+					<li class="myli"> <span class="myspan" style="width:7em;">Наименование</span> <div id="org_name" class="field_underline" style="width:80%;"></div> </li>
+					<li class="myli"> <span class="myspan" style="width:7em;">Примечание</span> <div class="field_underline" style="width:80%;"></div> </li>
+				</ul>
 			</div>
 			
+			<table id="doctable" cellspacing=0  cellpadding=1>
+				<col style="width:14em;">
+				<col>
+				<tr>
+					<td class="caption">Наименование входящего документа</td><td class="caption">Количество документов данного наименования в пакете</td>
+				</tr>
+				<tr>
+					<td>"Анкета застрахованного лица" (Форма АПВ-1)</td><td></td>
+				</tr>
+				<tr>
+					<td>"Заявление об изменении анкетных данных" (Форма АДВ-2)</td><td></td>
+				</tr>
+				<tr>
+					<td>"Заявление о восстановлении страхового свидетельства" (Форма АДВ-3)</td><td></td>
+				</tr>
+				<tr>
+					<td>"Листок исправлений" (АДВ-4)</td><td></td>
+				</tr>
+				<tr>
+					<td>"Справка о смерти" (АДВ-5)</td><td></td>
+				</tr>
+				<tr>
+					<td>Итого документов всех наименований:</td><td></td>
+				</tr>
+			</table>
 			
 			<div id="print_date" style="position:relative; margin:0 1em; height:3em;">
 				<span style="margin-right:1em;">Дата заполнения</span>
@@ -237,7 +270,11 @@
 					<br/><span style="font-size:small;">Подпись застрахованного лица</span>
 				</div>
 			</div>
-		
+			
+			<div id="data5" style="padding:0 2em; border:none;">
+				Заверяю, что содержание всех документов, входящих в пакет, состоящих из вышеперечисленного числа форм, верно
+			</div>
+			
 			<div id="data7" style="padding-bottom:1em; text-align:center;">
 				<div class="field_wrapper">
 					<div class="field_underline" style="min-width: 17em;"></div>

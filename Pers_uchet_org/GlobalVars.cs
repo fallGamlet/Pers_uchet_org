@@ -1135,7 +1135,6 @@ namespace Pers_uchet_org
             webBrowser.Navigate(file);
             PrintRows = printRows;
         }
-
         static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (PrintRows != null)
@@ -1171,6 +1170,13 @@ namespace Pers_uchet_org
                 }
 
                 MyPrinter.SetPrintSettings();
+                //Form webForm = new Form();
+                //webForm.Width = 700;
+                //webForm.Height = 600;
+                //webForm.Controls.Add(wb);
+                //wb.Dock = DockStyle.Fill;
+                //wb.Show();
+                //webForm.Show();
                 wb.ShowPrintPreviewDialog();
             }
         }

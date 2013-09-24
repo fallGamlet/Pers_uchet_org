@@ -433,6 +433,9 @@
     <Content Include="Static\template\report_%28форма АДВ-3%29.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Static\template\report_%28форма АДВ-4%29.html" />
+    <Content Include="Static\template\report_%28форма АДВ-5%29.html" />
+    <Content Include="Static\template\report_%28форма АДВ-6%29.html" />
     <Content Include="Static\template\report_%28форма СЗВ-3%29.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

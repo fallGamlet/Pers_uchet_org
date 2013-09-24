@@ -108,12 +108,12 @@
 	</script>
 	<style type="text/css">
 		body { background: #def; text-align: center; padding:0.1in;}
-		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin: 0.2em auto; position:relative; }
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin:0.2em auto 0.5em; position:relative; }
 		#top {}
 		#title {}
 		#data {	text-align: left; padding:0; position: relative; margin:0 1em;}
 		#evolument {}
-		#footer {margin:2em 0 0; position:relative; padding: 0 1.5em; text-align:left; border-top: dashed 1px #555;}
+		#footer {position:absolute; margin:1em 0 0; padding:0 1.5em; text-align:left; border-top:dashed 1px #555; bottom:0; left:0; width:7.77in;}
 		
 		td { border-top: solid 1px #777; border-left:solid 1px #777; min-width: 2em; width:2em;}
 		table#alphabet td {	min-width: 0px;	 width:2em; font-weight: bold;	padding: 0;	margin: 0; }
@@ -159,7 +159,7 @@
 	<style media="print">
     .main_container {
 		margin-bottom:999em;
-		page-break-after:always;
+		/*page-break-after:always;*/
 		/*page-break-before:avoid;*/
 		/*page-break-inside:avoid;*/
 		width:8.27in; 
@@ -266,7 +266,7 @@
 			
 			<div id="data3">
 				<b class="data_title">3. Адрес по прописке:</b>
-				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">Указывается последовательно страна, область(край), район, нас.пункт, улица, №дома, №квартиры</span>
+				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:45em; font-size:small; text-align:right;">Указывается последовательно страна, область(край), район, нас.пункт, улица, №дома, №квартиры</span>
 				<ul style="margin: 0 0 0 0.5em;">
 					<li>
 						<span style="min-width:3em; width:3em;">индекс</span> <ul id="reg_index" class="numlist"><li/><li/><li/><li/><li/><li/></ul>
@@ -336,7 +336,7 @@
 			</div>
 			
 			<div id="data6" style="margin-top: 1.5em; padding-bottom: 2em;">
-				<b class="data_title">Для анкеты, заверенной страхователем</b>
+				<b class="data_title">&nbsp;&nbsp; Для анкеты, заверенной страхователем</b>
 				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">
 					Заполняется страхователем
 				</span>
@@ -359,7 +359,7 @@
 			<div style="position:relative; top:-0.75em; margin-botton:0; text-align:center;">
 				линия отреза
 			</div>
-			<div style="position:relative; top: -0.75em;text-align:center;">
+			<div style="position:relative; text-align:center;">
 				<b>Расписка Фонда в приеме документа</b>
 			</div>
 			<span style="position:absolute; top:2px; right:2em; display:inline-block; width:25em; font-size:small; text-align:right;">
