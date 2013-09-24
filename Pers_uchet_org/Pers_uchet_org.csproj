@@ -161,11 +161,11 @@
     <Compile Include="Forms\MoveDocumentForm.Designer.cs">
       <DependentUpon>MoveDocumentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MovePacketForm.cs">
+    <Compile Include="Forms\MovePacketOtherOrgForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MovePacketForm.Designer.cs">
-      <DependentUpon>MovePacketForm.cs</DependentUpon>
+    <Compile Include="Forms\MovePacketOtherOrgForm.Designer.cs">
+      <DependentUpon>MovePacketOtherOrgForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MovePacketOtherYearForm.cs">
       <SubType>Form</SubType>
@@ -346,8 +346,8 @@
     <EmbeddedResource Include="Forms\MoveDocumentForm.resx">
       <DependentUpon>MoveDocumentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MovePacketForm.resx">
-      <DependentUpon>MovePacketForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MovePacketOtherOrgForm.resx">
+      <DependentUpon>MovePacketOtherOrgForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MovePacketOtherYearForm.resx">
       <DependentUpon>MovePacketOtherYearForm.cs</DependentUpon>
@@ -419,9 +419,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="orgDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

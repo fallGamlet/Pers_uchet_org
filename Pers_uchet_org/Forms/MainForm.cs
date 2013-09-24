@@ -79,9 +79,9 @@ namespace Pers_uchet_org
             ShowErrorMessage("Возникла непредвиденная ошибка в работе программы.\n" + err, "Ошибка в работе программы");
         }
 
-        static public void ShowQuestionMessage(string message, string caption)
+        static public DialogResult ShowQuestionMessage(string message, string caption)
         {
-            MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
 
         private void SetPrivilege()

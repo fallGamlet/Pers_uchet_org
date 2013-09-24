@@ -431,6 +431,8 @@ namespace Pers_uchet_org
             }
 
             this.orgView.ReadOnly = false;
+            this.regnumColumn.ReadOnly = true;
+            this.orgnameColumn.ReadOnly = true;
             this.removeButton.Enabled = true;
             this.editButton.Enabled = true;
             // добавить записи пересечений операторов и организаций для указания привелегий.
