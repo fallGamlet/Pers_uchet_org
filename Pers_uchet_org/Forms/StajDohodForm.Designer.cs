@@ -424,6 +424,7 @@
             this.removeDocButton.TabIndex = 5;
             this.removeDocButton.Text = "Удалить";
             this.removeDocButton.UseVisualStyleBackColor = true;
+            this.removeDocButton.Click += new System.EventHandler(this.removeDocButton_Click);
             // 
             // editDocButton
             // 
@@ -503,7 +504,7 @@
             this.socNumColumn.Name = "socNumColumn";
             this.socNumColumn.ReadOnly = true;
             this.socNumColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.socNumColumn.Width = 99;
+            this.socNumColumn.Width = 91;
             // 
             // fioColumn
             // 

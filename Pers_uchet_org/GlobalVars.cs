@@ -679,7 +679,7 @@ namespace Pers_uchet_org
 
         static public string GetInsertPersonOrgText(long person_id, long org_id)
         {
-            return string.Format(@" INSERT OR IGNORE INTO {0} ({1}, {2}, {3}) VALUES ( ({4}), {5}, {6}) ",
+            return string.Format(@"INSERT OR IGNORE INTO {0} ({1}, {2}, {3}) VALUES ( ({4}), {5}, {6}) ",
                                 tablename,
                                 id, orgID, personID,
                                 GetSelectRowIDText(person_id, org_id), org_id, person_id);
@@ -756,6 +756,23 @@ namespace Pers_uchet_org
             command.Connection.Close();
         }
 
+        static public void InsertPersonOrg(List<long> person_idArr, long org_id, string connectionStr)
+        {
+            string commantText = String.Empty;
+            foreach (long person_id in person_idArr)
+                commantText += GetInsertPersonOrgText(person_id, org_id) + "; \n";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                SQLiteTransaction trans = connection.BeginTransaction();
+                SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+                int count = command.ExecuteNonQuery();
+                trans.Commit();
+            }
+        }
+
         static public void DeletePersonOrg(long person_id, long[] org_idArray, string connectionStr)
         {
             string commantText = GetDeletePersonOrgText(person_id, org_idArray);
@@ -803,7 +820,7 @@ namespace Pers_uchet_org
             ChangeState(person_id, org_id, 1, "", connectionStr);
         }
 
-        static public void SetStateToRaboraet(IEnumerable<long> personIDArr, long org_id, string connectionStr)
+        static public void SetStateToRabotaet(IEnumerable<long> personIDArr, long org_id, string connectionStr)
         {
             ChangeState(personIDArr, org_id, 1, "", connectionStr);
         }
@@ -1675,7 +1692,6 @@ namespace Pers_uchet_org
             return string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7}) VALUES ({8},{9},{10},'{11}',{12},'{13}',{14})", tablename, listTypeId, orgID, operatorIdReg, regDate, operatorIdChange, changeDate, repYear,
                 list_type_id, org_id, operator_id_reg, reg_date, operator_id_change, change_date, rep_year);
         }
-        #endregion
 
         static public string GetDeleteText(long list_id)
         {
@@ -1686,6 +1702,17 @@ namespace Pers_uchet_org
         {
             return string.Format("UPDATE {0} SET {1} = {2} WHERE {3} = {4}", tablename, repYear, new_rep_year, id, list_id);
         }
+
+        static public string GetUpdateOrgText(long list_id, long new_org_id)
+        {
+            return string.Format("UPDATE {0} SET {1} = {2} WHERE {3} = {4}", tablename, orgID, new_org_id, id, list_id);
+        }
+
+        static public string GetSelectPersonIdsText(long list_id)
+        {
+            return string.Format("SELECT person_id FROM Docs WHERE list_id = {0}", list_id);
+        }
+        #endregion
     }
 
     public class DocsView
@@ -1738,6 +1765,58 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1}", listId, list_id);
         }
         #endregion
+    }
+
+    public class Docs
+    {
+        static public string tablename = "Docs";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docTypeId = "doc_type_id";
+        //static public string nameType = "name";
+        static public string listId = "list_id";
+        static public string personID = "person_id";
+        //static public string socNumber = "soc_number";
+        //static public string fio = "fio";
+        //static public string operIdReg = "oper_id_reg";
+        //static public string operNameReg = "name_reg";
+        //static public string regDate = "reg_date";
+        //static public string operIdChange = "oper_id_change";
+        //static public string operNameChange = "name_change";
+        //static public string changeDate = "change_date";
+        #endregion
+
+        //#region Методы - статические
+        //static public DataTable CreatetTable()
+        //{
+        //    DataTable table = new DataTable(tablename);
+        //    table.Columns.Add(id, typeof(long));
+        //    table.Columns.Add(docTypeId, typeof(int));
+        //    table.Columns.Add(nameType, typeof(string));
+        //    table.Columns.Add(listId, typeof(long));
+        //    table.Columns.Add(personID, typeof(long));
+        //    table.Columns.Add(socNumber, typeof(string));
+        //    table.Columns.Add(fio, typeof(string));
+        //    table.Columns.Add(operIdReg, typeof(long));
+        //    table.Columns.Add(operNameReg, typeof(string));
+        //    table.Columns.Add(regDate, typeof(DateTime));
+        //    table.Columns.Add(operIdChange, typeof(long));
+        //    table.Columns.Add(operNameChange, typeof(string));
+        //    table.Columns.Add(changeDate, typeof(DateTime));
+        //    return table;
+        //}
+
+        //static public string GetSelectText()
+        //{
+        //    return string.Format("SELECT * FROM {0} ", tablename);
+        //}
+
+        //static public string GetSelectText(long list_id)
+        //{
+        //    return GetSelectText() + string.Format(" WHERE {0} = {1}", listId, list_id);
+        //}
+        //#endregion
     }
 
 }

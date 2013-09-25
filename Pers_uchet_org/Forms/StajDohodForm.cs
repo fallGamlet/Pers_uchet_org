@@ -31,12 +31,15 @@ namespace Pers_uchet_org
         // адаптер для чтения данных из БД
         SQLiteDataAdapter _listsAdapter;
         SQLiteDataAdapter _docsAdapter;
+        // названия добавочного виртуального столбца
+        const string CHECK = "check";
         // переменная содержит текущий используемый год
         int RepYear;
         // переменная содержит год, в который будет перемещен пакет
         public static int newRepYear;
-        // названия добавочного виртуального столбца
-        const string CHECK = "check";
+        // переменная содержит id организации, в которую будет перемещен пакет
+        public static long newOrgId;
+
         #endregion
 
         #region Конструктор и инициализатор
@@ -174,12 +177,10 @@ namespace Pers_uchet_org
                 printFormButton.Enabled = true;
                 changeTypedDocButton.Enabled = true;
             }
-            //throw new NotImplementedException();
         }
 
         void _docsBS_CurrentChanged(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
         }
 
 
@@ -226,7 +227,6 @@ namespace Pers_uchet_org
             {
                 cmd.Connection.Close();
                 ShowErrorMessage("Не удалось удалить пакет.", "Ошибка удаления пакета");
-                return;
             }
             //Перезагрузка данных
             ReloadDataAfterChanges();
@@ -237,20 +237,32 @@ namespace Pers_uchet_org
             if (listsView.CurrentRow == null)
                 return;
             long listId = (long)listsView.CurrentRow.Cells["id"].Value;
-            MovePacketForm movePacketForm = new MovePacketForm(listId);
+            MovePacketForm movePacketForm = new MovePacketForm(_operator, _connection, listId);
             if (movePacketForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (ShowQuestionMessage("Вы действительно хотите переместить текущий пакет\n документов \"СЗВ-1\" № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                     return;
-                //TOFO: доделать перемещение в др организацию
-                string commandText = Lists.GetUpdateYearText((long)listsView.CurrentRow.Cells["id"].Value, newRepYear);
+                List<long> personIdList = new List<long>();
+                long list_id = (long)listsView.CurrentRow.Cells["id"].Value;
+                string commandText = Lists.GetSelectPersonIdsText(list_id);
                 SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
-                cmd.Connection.Open();
+                if (cmd.Connection.State != ConnectionState.Open)
+                    cmd.Connection.Open();
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        personIdList.Add((long)reader[Docs.personID]);
+                    }
+                cmd.Connection.Close();
+                PersonOrg.InsertPersonOrg(personIdList, newOrgId, _connection);
+                commandText = Lists.GetUpdateOrgText(list_id, newOrgId);
+                cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
+                if (cmd.Connection.State != ConnectionState.Open)
+                    cmd.Connection.Open();
                 if (cmd.ExecuteNonQuery() < 1)
                 {
                     cmd.Connection.Close();
                     ShowErrorMessage("Не удалось переместить пакет.", "Ошибка перемещения пакета");
-                    return;
                 }
                 //Перезагрузка данных
                 ReloadDataAfterChanges();
@@ -275,7 +287,7 @@ namespace Pers_uchet_org
                 {
                     cmd.Connection.Close();
                     ShowErrorMessage("Не удалось переместить пакет.", "Ошибка перемещения пакета");
-                    return;
+                    //return;
                 }
                 //Перезагрузка данных
                 ReloadDataAfterChanges();
@@ -294,6 +306,11 @@ namespace Pers_uchet_org
             AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
             if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             { }
+        }
+
+        private void removeDocButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void moveDocButton_Click(object sender, EventArgs e)
@@ -377,5 +394,7 @@ namespace Pers_uchet_org
             _listsAdapter.Fill(_listsTable);
         }
         #endregion
+
+       
     }
 }

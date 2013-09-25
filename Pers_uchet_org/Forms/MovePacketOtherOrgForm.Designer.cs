@@ -125,6 +125,7 @@
             this.moveButton.TabIndex = 9;
             this.moveButton.Text = "Переместить пакет";
             this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
             // 
             // panel1
             // 
