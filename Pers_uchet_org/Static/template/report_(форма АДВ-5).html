@@ -101,11 +101,6 @@
 			$("#print_year").text(darr[2]);
 		};
 	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".main_container").last().css("page-break-after", "auto");
-		});
-	</script>
 	<style type="text/css">
 		body { background: #def; text-align: center; padding:0.1in;}
 		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin: 0.2em auto; position:relative; }
@@ -116,6 +111,7 @@
 		#footer {position:absolute; margin:1em 0 0; padding:0 1.5em; text-align:left; border-top:dashed 1px #555; bottom:0; left:0; width:7.77in;}
 		
 		td { border-top: solid 1px #777; border-left:solid 1px #777; min-width: 2em; width:2em;}
+		#alphabet {width:100%; font-size: medium; position: relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
 		table#alphabet td {	min-width: 0px;	 width:2em; font-weight: bold;	padding: 0;	margin: 0; }
 		
 		ul { padding: 0px; }
@@ -203,7 +199,7 @@
 					по нижеприведенным образцам. Документ, содержащий и исправления, а так же без 
 					подписи застрахованного лица считается недействительным.
 				</p>
-				<table id="alphabet" style="width:100%; font-size: madium; position: relation; border-right:solid 1px #555; border-bottom:solid 1px #555;" cellspacing=0  cellpadding=1>
+				<table id="alphabet" cellspacing=0  cellpadding=1>
 					<tbody>
 						<tr>
 							<td>А</td><td>Б</td><td>В</td><td>Г</td><td>Д</td><td>Е</td><td>Ж</td><td>З</td><td>И</td><td>Й</td><td>К</td>
