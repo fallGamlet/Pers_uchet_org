@@ -45,13 +45,14 @@
 		#top {}
 		#title {}
 		#data {	text-align: left; padding:0; position: relative; margin:0;}
-		#evolument {}
 		#footer {position:relative; margin:0; padding:0; text-align:left; border:none;}
 		
-		td { border-top:solid 1px #777; border-left:solid 1px #777; min-width:1.5em; text-align:center;}
-		th { border-top:solid 1px #777; border-left:solid 1px #777; min-width:1.5em; text-align:center; font-weight:normal;}
-		th p { padding:0px; margin:-3px auto;
-		}
+		td, th {border-top:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
+		th {font-weight:normal;}
+		th p {padding:0px; margin:-3px auto;}
+		tr.cvartal > td {border-top:solid 1px #000;}
+		.mytable {width:100%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;}
+		
 		
 		ul { padding: 0px; }
 		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
@@ -103,13 +104,11 @@
 	<style media="print">
     .main_container {
 		margin-bottom:999em;
-		page-break-after:always;
-		/*page-break-before:avoid;*/
-		/*page-break-inside:avoid;*/
 		width:8.27in; 
 		height:11.69in;
 	}
   </style>
+
 </head>
 <body>
 	<div class="main_container">
@@ -203,7 +202,7 @@
 				</div>
 			</div>
 			
-			<table style="width:100%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;" cellspacing=0 cellpadding=1>
+			<table class="mytable" cellspacing=0 cellpadding=1>
 				<tr style="border-top:solid 3px #3b3;">
 					<th rowspan=2 style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
 					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
@@ -219,7 +218,7 @@
 					<th style="width:7em;">Руб.</th>
 					<th style="width:3em;">Коп.</th>
 				</tr>
-				<tr>
+				<tr class="cvartal">
 					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -228,7 +227,7 @@
 				<tr>
 					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr>
+				<tr class="cvartal">
 					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -237,7 +236,7 @@
 				<tr>
 					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr>
+				<tr class="cvartal">
 					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -246,7 +245,7 @@
 				<tr>
 					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr>
+				<tr class="cvartal">
 					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -255,7 +254,7 @@
 				<tr>
 					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr>
+				<tr class="cvartal">
 					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 			</table>		
@@ -266,7 +265,7 @@
 			
 			<b>Специальный стаж работы за отчетный период</b>
 			
-			<table style="width:100%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;" cellspacing=0 cellpadding=1>
+			<table class="mytable" cellspacing=0 cellpadding=1>
 			<thead style='display:table-header-group'>
 				<tr>
 					<th rowspan=2 style="min-width:1em; width:2em; padding:5px;"><p>№</p><p>п/п</p></th>
@@ -296,19 +295,17 @@
 				<tr>
 					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr>
-					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-
 			</tbody>
 			</table>
 			
 			Сведения за иной период, засчитываемые в страховой стаж:<br/>
-			<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
-			<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
-			<br/>
-			<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
-			<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
+			<small>
+				<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
+				<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
+				<br/>
+				<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
+				<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
+			</small>
 		</div>
 			
 		<div id="footer">		

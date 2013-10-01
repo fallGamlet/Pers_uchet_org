@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SQLite;
 using Microsoft.Win32;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Pers_uchet_org
 {
@@ -20,10 +21,6 @@ namespace Pers_uchet_org
                 saveKey.SetValue("margin_left", "0.39", RegistryValueKind.String);
                 saveKey.SetValue("margin_right", "0.39", RegistryValueKind.String);
             }
-            /*using (var saveKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3", true))
-            {
-                saveKey.SetValue("1400 ", "3", RegistryValueKind.DWord);
-            }*/
         }
     }
 
@@ -1128,7 +1125,7 @@ namespace Pers_uchet_org
 
         static public void Print(IEnumerable<DataRow> printRows)
         {
-            string file = Application.StartupPath + @"\static\template\report_(форма АДВ-1).html";
+            string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
             WebBrowser webBrowser = new WebBrowser();
             webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
             webBrowser.ScriptErrorsSuppressed = true;

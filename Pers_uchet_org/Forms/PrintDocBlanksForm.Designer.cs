@@ -89,7 +89,6 @@
             this.tabControl1.Controls.Add(this.regPage);
             this.tabControl1.Controls.Add(this.stajdohodPage);
             this.tabControl1.Controls.Add(this.otherPage);
-            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl1.Location = new System.Drawing.Point(10, 10);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(1);
             this.tabControl1.Name = "tabControl1";
