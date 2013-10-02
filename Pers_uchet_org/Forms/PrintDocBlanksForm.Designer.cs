@@ -149,6 +149,7 @@
             this.viewADV6Button.TabIndex = 32;
             this.viewADV6Button.Text = "Просмотреть";
             this.viewADV6Button.UseVisualStyleBackColor = true;
+            this.viewADV6Button.Click += new System.EventHandler(this.viewADV6Button_Click);
             // 
             // adv4Box
             // 
@@ -176,6 +177,7 @@
             this.viewADV4Button.TabIndex = 29;
             this.viewADV4Button.Text = "Просмотреть";
             this.viewADV4Button.UseVisualStyleBackColor = true;
+            this.viewADV4Button.Click += new System.EventHandler(this.viewADV4Button_Click);
             // 
             // adv3Box
             // 
@@ -203,6 +205,7 @@
             this.viewADV3Button.TabIndex = 26;
             this.viewADV3Button.Text = "Просмотреть";
             this.viewADV3Button.UseVisualStyleBackColor = true;
+            this.viewADV3Button.Click += new System.EventHandler(this.viewADV3Button_Click);
             // 
             // adv2Box
             // 
@@ -230,6 +233,7 @@
             this.viewADV2Button.TabIndex = 23;
             this.viewADV2Button.Text = "Просмотреть";
             this.viewADV2Button.UseVisualStyleBackColor = true;
+            this.viewADV2Button.Click += new System.EventHandler(this.viewADV2Button_Click);
             // 
             // adv1Box
             // 
@@ -257,6 +261,7 @@
             this.viewADV1Button.TabIndex = 20;
             this.viewADV1Button.Text = "Просмотреть";
             this.viewADV1Button.UseVisualStyleBackColor = true;
+            this.viewADV1Button.Click += new System.EventHandler(this.viewADV1Button_Click);
             // 
             // label2
             // 
@@ -324,6 +329,7 @@
             this.viewSZV3Button.TabIndex = 29;
             this.viewSZV3Button.Text = "Просмотреть";
             this.viewSZV3Button.UseVisualStyleBackColor = true;
+            this.viewSZV3Button.Click += new System.EventHandler(this.viewSZV3Button_Click);
             // 
             // szv2Box
             // 
@@ -351,6 +357,7 @@
             this.viewSZV2Button.TabIndex = 26;
             this.viewSZV2Button.Text = "Просмотреть";
             this.viewSZV2Button.UseVisualStyleBackColor = true;
+            this.viewSZV2Button.Click += new System.EventHandler(this.viewSZV2Button_Click);
             // 
             // szv1Box
             // 
@@ -377,6 +384,7 @@
             this.viewSZV1Button.TabIndex = 23;
             this.viewSZV1Button.Text = "Просмотреть";
             this.viewSZV1Button.UseVisualStyleBackColor = true;
+            this.viewSZV1Button.Click += new System.EventHandler(this.viewSZV1Button_Click);
             // 
             // label3
             // 
@@ -447,6 +455,7 @@
             this.viewRDV3Button.TabIndex = 32;
             this.viewRDV3Button.Text = "Просмотреть";
             this.viewRDV3Button.UseVisualStyleBackColor = true;
+            this.viewRDV3Button.Click += new System.EventHandler(this.viewRDV3Button_Click);
             // 
             // rdv22Box
             // 
@@ -474,6 +483,7 @@
             this.viewRDV22Button.TabIndex = 29;
             this.viewRDV22Button.Text = "Просмотреть";
             this.viewRDV22Button.UseVisualStyleBackColor = true;
+            this.viewRDV22Button.Click += new System.EventHandler(this.viewRDV22Button_Click);
             // 
             // rdv21Box
             // 
@@ -501,6 +511,7 @@
             this.viewRDV21Button.TabIndex = 26;
             this.viewRDV21Button.Text = "Просмотреть";
             this.viewRDV21Button.UseVisualStyleBackColor = true;
+            this.viewRDV21Button.Click += new System.EventHandler(this.viewRDV21Button_Click);
             // 
             // rdv1Box
             // 
@@ -528,6 +539,7 @@
             this.viewRDV1Button.TabIndex = 23;
             this.viewRDV1Button.Text = "Просмотреть";
             this.viewRDV1Button.UseVisualStyleBackColor = true;
+            this.viewRDV1Button.Click += new System.EventHandler(this.viewRDV1Button_Click);
             // 
             // label5
             // 

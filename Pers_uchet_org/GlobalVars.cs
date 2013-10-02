@@ -7,9 +7,66 @@ using System.Data.SQLite;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml;
 
 namespace Pers_uchet_org
 {
+    public class MyXml
+    {
+        static public XmlDocument PersonXml(DataRow row)
+        {
+            XmlDocument xml = new XmlDocument();
+            XmlElement doc_info = xml.CreateElement("doc_info");
+            XmlElement person = xml.CreateElement("person");
+            XmlElement lname = xml.CreateElement("lname");
+            XmlElement fname = xml.CreateElement("fname");
+            XmlElement mname = xml.CreateElement("mname");
+            XmlElement citizen = xml.CreateElement("citizen");
+            XmlElement citizen1 = xml.CreateElement("first");
+            XmlElement citizen2 = xml.CreateElement("second");
+            XmlElement citizen1ID = xml.CreateElement("id");
+            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
+            XmlElement citizen1Name = xml.CreateElement("name");
+            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
+            XmlElement categoryID = xml.CreateElement("category_id");
+            XmlElement categoryName = xml.CreateElement("category_name");
+            XmlElement privelegeID = xml.CreateElement("privelege_id");
+            XmlElement privelegeName = xml.CreateElement("privelege_name");
+
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xml.AppendChild(doc_info);
+            doc_info.AppendChild(person);
+            person.AppendChild(lname);
+            person.AppendChild(fname);
+            person.AppendChild(mname);
+            person.AppendChild(citizen);
+            citizen.AppendChild(citizen1);
+            citizen.AppendChild(citizen2);
+            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Name);
+            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Name);
+            person.AppendChild(categoryID);
+            person.AppendChild(categoryName);
+            person.AppendChild(privelegeID);
+            person.AppendChild(privelegeName);
+
+            lname.InnerText = row[PersonView.lName] as string;
+            fname.InnerText = row[PersonView.fName] as string;
+            mname.InnerText = row[PersonView.mName] as string;
+            citizen1ID.InnerText = row["citizen1_id"].ToString();
+            citizen2ID.InnerText = row["citizen2_id"].ToString();
+            citizen1Name.InnerText = row["citizen1_name"] as string;
+            citizen2Name.InnerText = row["citizen2_name"] as string;
+            categoryID.InnerText = row["category_id"].ToString();
+            categoryName.InnerText = row["category_name"] as string;
+            privelegeID.InnerText = row["privelege_id"].ToString();
+            privelegeName.InnerText = row["privelege_name"] as string;
+            //
+            return xml;
+        }
+    }
+
     public class MyPrinter
     {
         static public void SetPrintSettings()
@@ -1080,7 +1137,7 @@ namespace Pers_uchet_org
 
 
         #region Времменные статические переменные
-        static IEnumerable<DataRow> PrintRows;
+        //static IEnumerable<DataRow> PrintRows;
         #endregion
 
         #region Статические методы
@@ -1127,14 +1184,15 @@ namespace Pers_uchet_org
         {
             string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
             WebBrowser webBrowser = new WebBrowser();
+            webBrowser.Tag = printRows;
             webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
             webBrowser.ScriptErrorsSuppressed = true;
             webBrowser.Navigate(file);
-            PrintRows = printRows;
+            //PrintRows = printRows;
         }
         static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            if (PrintRows != null)
+            if (true /*PrintRows != null*/)
             {
                 WebBrowser wb = (sender as WebBrowser);
                 if (wb == null)
@@ -1143,6 +1201,7 @@ namespace Pers_uchet_org
                 }
                 List<string> htmlDivList = new List<string>();
                 HtmlDocument htmlDoc = wb.Document;
+                IEnumerable<DataRow> PrintRows = wb.Tag as IEnumerable<DataRow>;
                 foreach (DataRow personRow in PrintRows)
                 {
                     htmlDoc.InvokeScript("setFName", new object[] { personRow[PersonView.fName] });
