@@ -252,7 +252,7 @@ namespace Pers_uchet_org
             List<long> personIDList = new List<long>();
             foreach (DataRowView rowItem in persons)
                 personIDList.Add((long)rowItem[PersonView.id]);
-            PersonOrg.SetStateToRaboraet(personIDList, _org.idVal, _connection);
+            PersonOrg.SetStateToRabotaet(personIDList, _org.idVal, _connection);
             foreach (DataRowView rowItem in persons)
             {
                 rowItem[PersonView.state] = (int)PersonView.PersonState.Rabotaet;

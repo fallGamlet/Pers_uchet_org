@@ -73,7 +73,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.Color.Firebrick;
-            this.label3.Location = new System.Drawing.Point(122, 83);
+            this.label3.Location = new System.Drawing.Point(128, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(102, 18);
             this.label3.TabIndex = 3;
@@ -108,7 +108,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(266, 296);
+            this.cancelButton.Location = new System.Drawing.Point(264, 279);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 8;
@@ -119,21 +119,22 @@
             // 
             this.moveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.moveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.moveButton.Location = new System.Drawing.Point(131, 296);
+            this.moveButton.Location = new System.Drawing.Point(129, 279);
             this.moveButton.Name = "moveButton";
             this.moveButton.Size = new System.Drawing.Size(129, 23);
             this.moveButton.TabIndex = 9;
             this.moveButton.Text = "Переместить пакет";
             this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(12, 104);
+            this.panel1.Location = new System.Drawing.Point(12, 94);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(329, 177);
+            this.panel1.Size = new System.Drawing.Size(326, 177);
             this.panel1.TabIndex = 10;
             // 
             // MovePacketForm
@@ -142,7 +143,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(353, 331);
+            this.ClientSize = new System.Drawing.Size(349, 314);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.cancelButton);
@@ -157,6 +158,7 @@
             this.Name = "MovePacketForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Перемещение пакета документов \"СЗВ-1\"";
+            this.Load += new System.EventHandler(this.MovePacketForm_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

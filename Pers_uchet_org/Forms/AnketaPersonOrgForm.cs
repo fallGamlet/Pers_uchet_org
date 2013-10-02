@@ -115,7 +115,7 @@ namespace Pers_uchet_org
             // сменить контейнеры хранения ID организаций
             long[] checkedOrgs = checkedOrgList.ToArray();
             long[] uncheckedOrgs = uncheckedOrgList.ToArray();
-            // получить ID Организаций из БД, за которыми сейчас закреплена Пермона
+            // получить ID Организаций из БД, за которыми сейчас закреплена Перcона
             long[] orgs = PersonOrg.GetOrgID((long)_personRow[PersonView.id], _connection);
             // объединить множества ID Организаций выбранных из БД и отмеченных пользователем
             orgs = (long[])orgs.Union(checkedOrgs).Distinct().ToArray();

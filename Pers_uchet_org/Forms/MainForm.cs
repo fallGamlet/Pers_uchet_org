@@ -53,8 +53,12 @@ namespace Pers_uchet_org
             _orgBS.DataSource = _orgTable;
             this.orgBox.DataSource = _orgBS;
             this.orgBox.DisplayMember = viewCol;
-
-            for (int i = 0; i < 3 && this.Login() == 0; i++) { }
+            int isLogedin = 0;
+            for (int i = 0; i < 3 && isLogedin == 0; i++) {
+                isLogedin = this.Login();
+            }
+            if (isLogedin != 2)
+                this.Close();
         }
         #endregion
 
@@ -79,9 +83,9 @@ namespace Pers_uchet_org
             ShowErrorMessage("Возникла непредвиденная ошибка в работе программы.\n" + err, "Ошибка в работе программы");
         }
 
-        static public void ShowQuestionMessage(string message, string caption)
+        static public DialogResult ShowQuestionMessage(string message, string caption)
         {
-            MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
 
         private void SetPrivilege()
@@ -162,6 +166,7 @@ namespace Pers_uchet_org
         // сменить оператора
         private void changeoperatorMenuItem_Click(object sender, EventArgs e)
         {
+            //TODO: в случае ввода неправильных данных текущий пользователь остается в программе, возможно нужно сделать запрос пароля заново. ???
             this.Login();
         }
         // выход из программы

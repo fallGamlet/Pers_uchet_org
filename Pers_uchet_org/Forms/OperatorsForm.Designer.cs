@@ -37,9 +37,6 @@
             this.operatorBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.orgView = new System.Windows.Forms.DataGridView();
-            this.org_checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.regnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orgnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accessGroupBox = new System.Windows.Forms.GroupBox();
             this.importanketaCheckBox = new System.Windows.Forms.CheckBox();
             this.paystajaccesslevelBox = new System.Windows.Forms.ComboBox();
@@ -51,6 +48,9 @@
             this.anketaaccessCheckBox = new System.Windows.Forms.CheckBox();
             this.closeButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.org_checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.regnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orgnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).BeginInit();
@@ -59,8 +59,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.editButton);
             this.groupBox1.Controls.Add(this.addButton);
             this.groupBox1.Controls.Add(this.removeButton);
@@ -125,9 +125,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.orgView);
             this.groupBox2.Location = new System.Drawing.Point(9, 112);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(0);
@@ -165,38 +165,8 @@
             this.orgView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.orgView.Size = new System.Drawing.Size(424, 155);
             this.orgView.TabIndex = 0;
-            this.orgView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
             this.orgView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
-            // 
-            // org_checkColumn
-            // 
-            this.org_checkColumn.DataPropertyName = "check";
-            this.org_checkColumn.HeaderText = "*";
-            this.org_checkColumn.MinimumWidth = 20;
-            this.org_checkColumn.Name = "org_checkColumn";
-            this.org_checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.org_checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.org_checkColumn.Width = 20;
-            // 
-            // regnumColumn
-            // 
-            this.regnumColumn.DataPropertyName = "regnum";
-            this.regnumColumn.HeaderText = "Рег. №";
-            this.regnumColumn.MaxInputLength = 50;
-            this.regnumColumn.MinimumWidth = 50;
-            this.regnumColumn.Name = "regnumColumn";
-            this.regnumColumn.ReadOnly = true;
-            this.regnumColumn.Width = 70;
-            // 
-            // orgnameColumn
-            // 
-            this.orgnameColumn.DataPropertyName = "name";
-            this.orgnameColumn.HeaderText = "Наименование организации";
-            this.orgnameColumn.MaxInputLength = 300;
-            this.orgnameColumn.MinimumWidth = 150;
-            this.orgnameColumn.Name = "orgnameColumn";
-            this.orgnameColumn.ReadOnly = true;
-            this.orgnameColumn.Width = 310;
+            this.orgView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
             // 
             // accessGroupBox
             // 
@@ -322,6 +292,36 @@
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // org_checkColumn
+            // 
+            this.org_checkColumn.DataPropertyName = "check";
+            this.org_checkColumn.HeaderText = "*";
+            this.org_checkColumn.MinimumWidth = 20;
+            this.org_checkColumn.Name = "org_checkColumn";
+            this.org_checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.org_checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.org_checkColumn.Width = 20;
+            // 
+            // regnumColumn
+            // 
+            this.regnumColumn.DataPropertyName = "regnum";
+            this.regnumColumn.HeaderText = "Рег. №";
+            this.regnumColumn.MaxInputLength = 50;
+            this.regnumColumn.MinimumWidth = 50;
+            this.regnumColumn.Name = "regnumColumn";
+            this.regnumColumn.ReadOnly = true;
+            this.regnumColumn.Width = 70;
+            // 
+            // orgnameColumn
+            // 
+            this.orgnameColumn.DataPropertyName = "name";
+            this.orgnameColumn.HeaderText = "Наименование организации";
+            this.orgnameColumn.MaxInputLength = 300;
+            this.orgnameColumn.MinimumWidth = 150;
+            this.orgnameColumn.Name = "orgnameColumn";
+            this.orgnameColumn.ReadOnly = true;
+            this.orgnameColumn.Width = 310;
             // 
             // OperatorsForm
             // 
