@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Форма АДВ-1</title>
+    <title>Форма АДВ-3</title>
 	<script type="text/javascript" src="./lib/jquery.min.js"></script>
 	<script type="text/javascript">
 		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
@@ -102,8 +102,8 @@
 		};
 	</script>
 	<style type="text/css">
-		body { background: #def; text-align: center; padding:0;}
-		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin:0.5em auto; position:relative; }
+		body { background: #def; text-align: center; padding:0.1in;}
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin: 0.2em auto; position:relative; }
 		#top {}
 		#title {}
 		#data {	text-align: left; padding:0; position: relative; margin:0 1em;}
@@ -117,8 +117,8 @@
 		ul { padding: 0px; }
 		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
 		
-		#data1, #data2, #data3, #data4, #data5, #data6 { border:solid 1px #999;	margin: 5px 0; padding: 1.2em 0 5px 0; position: relative; }
-		#data1 ul li span, #data2 ul li span, #data3 ul li span, #data4 ul li span, #data5 ul li span {
+		#data1, #data2, #data3, #data4, #data5 { border:solid 1px #999;	margin: 5px 0; padding: 1.2em 0 5px 0; position: relative; }
+		#data1 ul li span, #data2 ul li span, #data4 ul li span, #data3 ul li span {
 			min-width: 4.5em;
 			width: 4.5em;
 			display: inline-block;
@@ -127,7 +127,7 @@
 			zoom: 1;
 			*display: inline;
 		}
-		.data_title { position:absolute; top:2px; left:2px;	}
+		.data_title { position:absolute; top:0px; left:2px;	}
 		
 		ul.numlist { display: inline-block;	margin:0; padding:0; position: relative; zoom: 1; *display: inline;}
 		ul.numlist li { display:inline-block; border:solid 1px #555; margin:1px; height:1.5em; width:1.5em; text-align:center; font-weight:bold;
@@ -147,7 +147,7 @@
 			zoom: 1;
 			*display: inline;
 		}
-		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center; 
+		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center;
 			zoom: 1;
 			*display: inline;
 		}
@@ -167,7 +167,7 @@
 	<div class="main_container">
 		<div id="top">
 			<p style="text-align:right; margin:0px; padding:0 1em 0 0; font-size:small;">
-				Приложение №1 <br/>
+				Приложение №4 <br/>
 				к приказу министра социальной защиты и труда <br/>
 				Приднестровской Молдавской Республики от _____ г. №____
 			</p>
@@ -175,11 +175,11 @@
 				Единый государственный фонд социального страхования<br/>
 				Приднестровской Молдавской Республики
 			</p>
-			<p style="position:absolute; top:2em; left:2em;;font-size:small;"><u>Форма АДВ-1</u></p>
+			<p style="position:absolute; top:2em; left:2em;;font-size:small;"><u>Форма АДВ-3</u></p>
 		</div>
 		
 		<div id="title">
-			<p style="margin: 5px"><b>Анкета застрахованного лица</b></p>
+			<p style="margin: 5px"><b>Заявление о восстановлении страхового свидетельства</b></p>
 			<div id="right_div" style="float: right; font-size:small; padding: 5px 1em;  margin:0; width:2.3in; position: relative;">
 				Заполняется сотрудником Фонда<br/>
 				<div style="text-align:left; border: solid 1px #555; padding: 5px 10px 1.1em 10px; font-size: 1.1em;">
@@ -213,8 +213,8 @@
 		</div>
 		
 		<div id="data";>
-			<div id="data1">
-				<b class="data_title">1.</b>
+			<span style="display:block; font-weight:bold; margin:10px 1em 0px;">Данные, указанные в страховом свидетельстве:</span>
+			<div id="data1" style="padding-top:5px;">
 				<ul style="margin: 0 0 0 0.5em;">
 					<li>
 						<span>Фамилия</span>
@@ -247,7 +247,7 @@
 			</div>
 			
 			<div id="data2">
-				<b class="data_title">2. Место рождения:</b>
+				<b class="data_title">&nbsp;&nbsp; Место рождения:</b>
 				<ul style="margin: 0 0 0 0.5em;">
 					<li>
 						нас. пункт: <div id="born_place" class="field_underline" style="min-width:17em;"></div> 
@@ -260,40 +260,8 @@
 				</ul>
 			</div>
 			
-			<div id="data3">
-				<b class="data_title">3. Адрес по прописке:</b>
-				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:45em; font-size:small; text-align:right;">Указывается последовательно страна, область(край), район, нас.пункт, улица, №дома, №квартиры</span>
-				<ul style="margin: 0 0 0 0.5em;">
-					<li>
-						<span style="min-width:3em; width:3em;">индекс</span> <ul id="reg_index" class="numlist"><li/><li/><li/><li/><li/><li/></ul>
-						<span style="min-width:2em; width:2em; margin-left:10px;">адрес</span> <div id="reg_address1" class="field_underline" style="margin:0; min-width:30em;"></div>
-					</li>
-					<li>
-						<div id="reg_address2" class="field_underline" style="width:100%; margin:0; padding:0;"></div>
-					</li>
-					<li>
-						<span>Телефоны</span> <div id="reg_phones" class="field_underline" style="width:25em; margin:0; padding:0;"></div>
-						<span style="font-size:small; width:20em;">(домашний, рабочий и/или дополнительный)</span>
-					</li>
-				</ul>
-			</div>
-			
-			<div id="data4">
-				<b class="data_title">4. Адрес места жительства фактический:</b>
-				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">Заполняется при отличии от адреса по прописке</span>
-				<ul style="margin: 0 0 0 0.5em;">
-					<li>
-						<span style="min-width:3em; width:3em;">индекс</span> <ul id="fact_index" class="numlist"><li/><li/><li/><li/><li/><li/></ul>
-						<span style="min-width:2em; width:2em; padding-left:5px;">адрес</span> <div id="fact_address1" class="field_underline" style="margin:0; min-width:30em;"></div>
-					</li>
-					<li>
-						<div id="fact_address2" class="field_underline" style="width:100%; margin:0; padding:0;"></div>
-					</li>
-				</ul>
-			</div>
-			
-			<div id="data5" style="padding-top:0;">
-				<b class="data_title">5. Документ, удостоверяющий личность:</b>
+			<div id="data3" style="padding-top:0;">
+				<b class="data_title">&nbsp;&nbsp; Документ, удостоверяющий личность:</b>
 				<div id="doc_type" class="field_underline" style="margin:0 1em 0 19em; width:58%; height:1.4em;"></div>
 				<ul style="margin: 0 0 0 0.5em;">
 					<li>
@@ -317,8 +285,14 @@
 					</li>
 				</ul>
 			</div>
-		
-			<div id="print_date" >
+			
+			<div id="data4" style="padding:0 1em; margin-bottom:0; border:none;">
+				Причина восстановления: <i>утеря, непригодность к использованию</i> <span style="font-size:small;">(нужное подчеркнуть)</span> <br/>
+				При непригодности к использованию страховое свидетельство должно быть возвращено в Фонд <br/>
+				Заявление об изменении анкетных данных прилагается: <i>да, нет</i> <span style="font-size:small;">(нужное подчеркнуть)</span> <br/>
+			</div>
+			
+			<div id="print_date" style="margin:0 1em;">
 				<span style="margin-right:1em;">Дата заполнения</span>
 				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
 				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 
@@ -329,10 +303,25 @@
 				</div>
 			</div>
 			
-			<div id="data6" style="margin-top: 1.5em; padding-bottom: 2em;">
-				<b class="data_title">&nbsp;&nbsp; Для анкеты, заверенной страхователем</b>
+			<div id="data5" style="margin-top: 1.5em; padding-bottom:1em;">
+				<b class="data_title">&nbsp;&nbsp; Для заявления, заверенного страхователем</b>
 				<span style="position:absolute; top:2px; right:1em; display:inline-block; width:25em; font-size:small; text-align:right;">
 					Заполняется страхователем
+				</span>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 15em;"></div>
+					<br/><span style="font-size:small;">регистрационный номер</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 30.9em;"></div>
+					<br/><span style="font-size:small;">наименование организации</span>
+				</div>
+				<span style="display:block; position:relative; margin:1.5em 1em 0;">
+					Заверяю, что застрахованное лицо имело страховое свидетельство с номером лицевого счета
+					<ul id="soc_num" class="numlist">
+						<li/><li/> <li style="border:none; margin">&#151</li> </li> <li/><li/><li/><li/><li/><li/><li/><li/>
+					</ul>
+					, на основании которого сведения о его стаже и доходе предоставлялись (будут предоставлены) в Фонд.
 				</span>
 				<div class="field_wrapper">
 					<div class="field_underline" style="min-width: 15em;"></div>

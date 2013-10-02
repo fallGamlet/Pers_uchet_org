@@ -144,12 +144,6 @@
     <Compile Include="Forms\ClassifierCategoriesForm.Designer.cs">
       <DependentUpon>ClassifierCategoriesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DocPreviewForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DocPreviewForm.Designer.cs">
-      <DependentUpon>DocPreviewForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\DoctypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,9 +342,6 @@
     <EmbeddedResource Include="Forms\ClassifierCategoriesForm.resx">
       <DependentUpon>ClassifierCategoriesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DocPreviewForm.resx">
-      <DependentUpon>DocPreviewForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DoctypeForm.resx">
       <DependentUpon>DoctypeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -448,6 +439,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="account_and_control.ico" />
@@ -457,6 +449,17 @@
     <Content Include="Static\template\report_%28форма АДВ-1%29.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Static\template\report_%28форма АДВ-2%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\template\report_%28форма АДВ-3%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\template\report_%28форма АДВ-4%29.html" />
+    <Content Include="Static\template\report_%28форма АДВ-5%29.html" />
+    <Content Include="Static\template\report_%28форма АДВ-6%29.html" />
+    <Content Include="Static\template\report_%28форма СЗВ-1%29.html" />
+    <Content Include="Static\template\report_%28форма СЗВ-2%29.html" />
     <Content Include="Static\template\report_%28форма СЗВ-3%29.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -464,7 +467,22 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -474,7 +492,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
-      <ProductName>Установщик Windows 3.1</ProductName>
+      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>

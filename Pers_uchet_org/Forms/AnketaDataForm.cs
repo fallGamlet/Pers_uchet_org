@@ -275,16 +275,25 @@ namespace Pers_uchet_org
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            //AnketaPrintForm tmpform = new AnketaPrintForm();
-            //tmpform.Owner = this;
-            //tmpform.ShowDialog(this);
-            DataRowView personRow = _personBS.Current as DataRowView;
-            if (personRow == null)
+            List<DataRowView> selectedRowList = this.GetSelectedRows();
+            if (selectedRowList.Count <= 0)
             {
+                DataRowView personRow = _personBS.Current as DataRowView;
+                if (personRow != null)
+                {
+                    selectedRowList.Add(personRow);
+                }
+            }
+            if (selectedRowList.Count <= 0)
+            {
+                MainForm.ShowInfoMessage("Необходимо отметить или выделить хотя бы одну запись!", "Внимание");
                 return;
             }
-            Forms.DocPreviewForm tmpForm = new Forms.DocPreviewForm(personRow.Row);
-            tmpForm.Show(this);
+            List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
+            foreach (DataRowView rowItem in selectedRowList)
+                rowList.Add(rowItem.Row);
+
+            PersonView.Print(rowList);
         }
 
         private void closeButton_Click(object sender, EventArgs e)

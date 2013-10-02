@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Форма СЗВ-2</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setArrayValues = function(selectorStr, valStr) {
+			var valStr = valStr.toUpperCase();
+	 		var strLen = valStr.length;
+			var liArray = $(selectorStr);  
+			var liLen = liArray.length;
+			for(var i=0; i<liLen; i++) {
+				if(i < strLen)
+					liArray[i].innerText  = valStr.charAt(i);
+				else
+					liArray[i].innerText  = "";
+			};
+		};
+		
+		var setDocDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			setArrayValues("#doc_day li", darr[0]);
+			setArrayValues("#doc_month li", months[parseInt(darr[1])-1]);
+			setArrayValues("#doc_year li", darr[2]);
+		};
+		var setDocOrg = function(valStr) {
+			$("#doc_org").text(valStr);
+		};
+		var setPrintDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			$("#print_day").text(darr[0]);
+			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_year").text(darr[2]);
+		};
+	</script>
+	<style type="text/css">
+		body {background: #def; text-align: center; padding:0.1in;}
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin: 0.2em auto 0.5em; position:relative;}
+		#top {}
+		#title {}
+		#data {	text-align: left; padding:0; position: relative; margin:0;}
+		#footer {position:absolute; margin:1em 0 0; padding:0; text-align:left; border-top:dashed 1px #555; bottom:0; left:0; width:7.77in;}
+		
+		td, th { border-top: solid 1px #777; border-left:solid 1px #777; min-width:1em; width:1em;}
+		#alphabet {width:100%; font-size:medium; position:relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
+		#alphabet td {min-width:0px; padding:0; margin:0; }
+		
+		.doctable, .evolument {width:100%; margin:1em auto; font-size:small; position:relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
+		.doctable td, .evolument td {padding:2px 1em; text-align:center;}
+		.doctable th, .evolument th {text-align:center; font-weight:normal;}
+		
+		ul { padding:0px; margin:0px; }
+		li { margin:1px auto; list-style-type:none; vertical-align:middle; }
+		li.myli { margin:10px auto; }
+		
+		.container {border:solid 1px #999; margin:5px 0; padding:0; position:relative;}
+		.myspan {
+			min-width: 4.5em;
+			width: 4.5em;
+			display: inline-block;
+			position: relative;
+			vertical-align: bottom;
+			zoom: 1;
+			*display: inline;
+		}
+		.data_title { position:absolute; top:0px; left:2px;	}
+		
+		ul.numlist { display: inline-block;	margin:0; padding:0; position: relative; zoom: 1; *display: inline;}
+		ul.numlist li { display:inline-block; border:solid 1px #555; margin:1px; height:1.5em; width:1.5em; text-align:center; font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+				
+		.field_underline {	
+			display: inline-block;	
+			margin: 0 0.2em; 
+			padding:0;
+			border-bottom: solid 1px #555; 
+			position: relative;	
+			vertical-align: bottom;
+			text-align: center;
+			min-width: 1em;
+			height: 1em;
+			font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center;
+			zoom: 1;
+			*display: inline;
+		}
+	</style>
+	<style media="print">
+    .main_container {
+		margin-bottom:999em;
+		width:8.27in; 
+		height:11.69in;
+	}
+  </style>
+</head>
+<body>
+	<div class="main_container">
+		<div id="top">
+			<p style="text-align:right; margin:0px; padding:0; font-size:small;">
+				Приложение №12 <br/>
+				к приказу министра социальной защиты и труда <br/>
+				Приднестровской Молдавской Республики от _____ г. №____
+			</p>
+			<p style="margin:0.3em auto;">
+				Единый государственный фонд социального страхования<br/>
+				Приднестровской Молдавской Республики
+			</p>
+			<p style="position:absolute; top:2em; left:0em; font-size:small;"><u>Форма СЗВ-2</u></p>
+		</div>
+		
+		<div id="title">
+			<p style="margin:5px"><b>Опись документов, передаваемых страхователем в Фонд</b></p>
+			<div id="right_div" style="float:right; font-size:small; padding:0em;  margin:0; width:2.3in; position:relative;">
+				Заполняется сотрудником Фонда<br/>
+				<div style="text-align:left; border:solid 1px #555; padding:5px 10px; font-size:1.1em;">
+					Отделение Фонда <br/>
+					Дата приема<br/>
+					Входящий номер<br/>
+					Принял<br/>
+				</div>
+			</div>
+			<div id="left_div" style="margin-right:2.6in; font-size:small; position:relative;">
+				<p style="text-align:justify; margin:0px;">
+					Конфиденциальность информации гарантируется получателем<br/>
+					Документ заполняется застрахованным лицом шариковой или перьевой ручкой СИНИМИ 
+					или ЧЕРНЫМИ чернилами, разборчиво, ЗАГЛАВНЫМИ ПЕЧАТНЫМИ БУКВАМИ 
+					по нижеприведенным образцам. Документ, содержащий и исправления, а так же без 
+					подписи застрахованного лица считается недействительным.
+				</p>
+				<table id="alphabet" cellspacing=0 cellpadding=1>
+					<tbody>
+						<tr>
+							<td>А</td><td>Б</td><td>В</td><td>Г</td><td>Д</td><td>Е</td><td>Ж</td><td>З</td><td>И</td><td>Й</td><td>К</td>
+							<td>Л</td><td>М</td><td>Н</td><td>О</td><td>П</td><td>Р</td><td>С</td><td>Т</td><td>У</td><td>Ф</td><td>Х</td>
+						</tr>
+						<tr>
+							<td>Ц</td><td>Ч</td><td>Ш</td><td>Щ</td><td>Ъ</td><td>Ы</td><td>Ь</td><td>Э</td><td>Ю</td><td>Я</td><td>-</td>
+							<td>_</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>0</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div id="data">
+			<div class="container" style="border:none;">
+				<b>Реквизиты страхователя, предоставляющего документы:</b>
+				<ul style="margin:0 0 0 1em;">
+					<li class="myli"> <span class="myspan" style="width:11em;">Регистрационный номер</span> <ul id="org_regnum" class="numlist"><li/><li/><li/><li/><li/><li/><li/></ul> </li>
+					<li class="myli"> <span class="myspan" style="width:7em;">Наименование</span> <div id="org_name" class="field_underline" style="width:40em;"></div> </li>
+				</ul>
+				<ul>
+					<li class="myli"> <span class="myspan" style="width:8.5em;">Отчетный период</span> <ul id="rep_year" class="numlist"><li/><li/><li/><li/></ul> <span class="myspan">год</span></li>
+					<li class="myli"> <span class="myspan" style="width:6em;">Примечание</span> <div class="field_underline" style="width:42em;"></div> </li>
+				</ul>
+			</div>
+			
+			<table class="doctable" cellspacing=0  cellpadding=1>
+				<col style="width:14em;">
+				<col style="width:5em;">
+				<thead>
+					<tr>
+						<th>Тип формы документа "Индивидуальные сведения" (Форма СЗВ-1)</th><th>Количество документов данного наименования в пакете</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>исходная форма</td><td></td>
+					</tr>
+					<tr>
+						<td>корректирующая форма</td><td></td>
+					</tr>
+					<tr>
+						<td>отменяющая форма</td><td></td>
+					</tr>
+					<tr>
+						<td>назначение пенсии</td><td></td>
+					</tr>
+					<tr>
+						<td>итого документов всех наименований</td><td></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table class="evolument" cellspacing=0  cellpadding=1>
+				<caption style="font-size:large; font-weight:bold;">Сведения о доходе за отчетный год<br/> (итого по пакету)</caption>
+				<col style="width:5em;">
+				<col style="width:9em;">
+				<col style="width:9em;">
+				<col style="width:9em;">
+				<col style="width:9em;">
+				<thead>
+					<tr>
+						<th rowspan=2>Тип формы</th>
+						<th rowspan=2>Сумма дохода, на который начислены страховые взносы</th>
+						<th rowspan=2>Сумма выплат, учитываемых для назначения пенсии</th>
+						<th colspan=2>Сумма обязательного страховошо взноса</th>
+					</tr>
+					<tr>
+						<th>начисленного страхователем</th>
+						<th>уплаченного страхователем</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="text-align:left;">исходная форма</td><td></td><td></td><td></td><td></td>
+					</tr>
+					<tr>
+						<td style="text-align:left;">корректирующая форма</td><td></td><td></td><td></td><td></td>
+					</tr>
+					<tr>
+						<td style="text-align:left;">назначение пенсии</td><td></td><td></td><td></td><td></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div id="print_date" style="position:relative; margin:0 1em; height:3em;">
+				<span style="margin-right:1em;">Дата заполнения</span>
+				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
+				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 
+				<div id="print_year" class="field_underline" style="min-width: 5em;"></div> г.
+				<div class="field_wrapper">
+					<div id="print_sign" class="field_underline" style="min-width: 15em;"></div>
+					<br/><span style="font-size:small;">Подпись застрахованного лица</span>
+				</div>
+			</div>
+			
+			<div id="data5" style="padding:0 2em; border:none;">
+				Заверяю, что содержание всех документов, входящих в пакет, состоящих из вышеперечисленного числа форм, верно
+			</div>
+			
+			<div id="data7" style="padding-bottom:1em; text-align:center;">
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 17em;"></div>
+					<br/><span style="font-size:small;">Наименование должности руководителя</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+		</div>
+		
+		<div id="footer">
+			<div style="position:relative; top:-0.75em; margin-botton:0; text-align:center;">
+				линия отреза
+			</div>
+			<div style="position:relative; text-align:center;">
+				<b>Расписка Фонда в приеме документа</b>
+			</div>
+			<span style="position:absolute; top:2px; right:2em; display:inline-block; width:25em; font-size:small; text-align:right;">
+					Заполняется сотрудником фонда
+			</span>
+			<div style="display:inline-block; text-align:left; zoom:1; *display:inline;">
+				Страхователь:<br/>
+				передал(а) пакет документов<br/>
+				Пакет документов принят отделением Фонда:<br/>
+				Подпись работника Фонда <div class="field_underline" style="width:12em;"></div>
+			</div>
+			
+			<div style="display:inline-block; text-align: right; margin-left: 1em; zoom:1; *display:inline;">
+				Дата приема<br/>
+				Входящий номер документа
+			</div>
+		</div>
+	</div>
+</body>
+</html>
