@@ -96,8 +96,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.editButton);
             this.groupBox2.Controls.Add(this.removeButton);
             this.groupBox2.Controls.Add(this.addButton);
@@ -172,10 +172,10 @@
             this.personView.AllowUserToDeleteRows = false;
             this.personView.AllowUserToOrderColumns = true;
             this.personView.AllowUserToResizeRows = false;
-            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.personView.BackgroundColor = System.Drawing.SystemColors.Info;
+            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.personView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -263,9 +263,9 @@
             // checkallButton
             // 
             this.checkallButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkallButton.Location = new System.Drawing.Point(7, 29);
+            this.checkallButton.Location = new System.Drawing.Point(7, 33);
             this.checkallButton.Name = "checkallButton";
-            this.checkallButton.Size = new System.Drawing.Size(36, 25);
+            this.checkallButton.Size = new System.Drawing.Size(36, 20);
             this.checkallButton.TabIndex = 1;
             this.checkallButton.Text = "***";
             this.checkallButton.UseVisualStyleBackColor = true;
@@ -394,8 +394,8 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.zakrepButton);
             this.groupBox6.Controls.Add(this.printButton);
             this.groupBox6.Controls.Add(this.groupBox1);
@@ -429,8 +429,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.documentBox);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.docseriaBox);
@@ -593,8 +593,8 @@
             // 
             // adressprojivBox
             // 
-            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.adressprojivBox.Location = new System.Drawing.Point(10, 240);
             this.adressprojivBox.MaxLength = 500;
             this.adressprojivBox.Multiline = true;
@@ -605,8 +605,8 @@
             // 
             // adrespropiskiBox
             // 
-            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.adrespropiskiBox.Location = new System.Drawing.Point(10, 187);
             this.adrespropiskiBox.MaxLength = 500;
             this.adrespropiskiBox.Multiline = true;
@@ -617,8 +617,8 @@
             // 
             // mestorojdBox
             // 
-            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mestorojdBox.Location = new System.Drawing.Point(10, 136);
             this.mestorojdBox.MaxLength = 500;
             this.mestorojdBox.Multiline = true;
@@ -629,8 +629,8 @@
             // 
             // grajdanstvoBox
             // 
-            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grajdanstvoBox.Location = new System.Drawing.Point(205, 83);
             this.grajdanstvoBox.MaxLength = 200;
             this.grajdanstvoBox.Name = "grajdanstvoBox";
@@ -658,8 +658,8 @@
             // 
             // fioBox
             // 
-            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fioBox.Location = new System.Drawing.Point(10, 33);
             this.fioBox.MaxLength = 200;
             this.fioBox.Name = "fioBox";

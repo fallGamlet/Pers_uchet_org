@@ -87,6 +87,7 @@
             this.allDocsRadioButton.TabIndex = 6;
             this.allDocsRadioButton.Text = "Всех документов пакета";
             this.allDocsRadioButton.UseVisualStyleBackColor = true;
+            this.allDocsRadioButton.CheckedChanged += new System.EventHandler(this.DocRadioButton_CheckedChanged);
             // 
             // checkedDocsRadioButton
             // 
@@ -97,24 +98,24 @@
             this.checkedDocsRadioButton.TabIndex = 5;
             this.checkedDocsRadioButton.Text = "Отмеченных документов";
             this.checkedDocsRadioButton.UseVisualStyleBackColor = true;
+            this.checkedDocsRadioButton.CheckedChanged += new System.EventHandler(this.DocRadioButton_CheckedChanged);
             // 
             // curDocRadioButton
             // 
             this.curDocRadioButton.AutoSize = true;
-            this.curDocRadioButton.Checked = true;
             this.curDocRadioButton.Location = new System.Drawing.Point(6, 19);
             this.curDocRadioButton.Name = "curDocRadioButton";
             this.curDocRadioButton.Size = new System.Drawing.Size(132, 17);
             this.curDocRadioButton.TabIndex = 4;
-            this.curDocRadioButton.TabStop = true;
             this.curDocRadioButton.Text = "Текущего документа";
             this.curDocRadioButton.UseVisualStyleBackColor = true;
+            this.curDocRadioButton.CheckedChanged += new System.EventHandler(this.DocRadioButton_CheckedChanged);
             // 
             // replaceButton
             // 
             this.replaceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.replaceButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.replaceButton.Location = new System.Drawing.Point(69, 172);
+            this.replaceButton.Location = new System.Drawing.Point(69, 171);
             this.replaceButton.Name = "replaceButton";
             this.replaceButton.Size = new System.Drawing.Size(75, 23);
             this.replaceButton.TabIndex = 4;
@@ -125,7 +126,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(150, 172);
+            this.cancelButton.Location = new System.Drawing.Point(150, 171);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 5;
@@ -138,7 +139,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(237, 207);
+            this.ClientSize = new System.Drawing.Size(237, 206);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.replaceButton);
             this.Controls.Add(this.groupBox1);
@@ -151,6 +152,7 @@
             this.Name = "ReplaceDocTypeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Замена типа формы документов \"СЗВ-1\"";
+            this.Load += new System.EventHandler(this.ReplaceDocTypeForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

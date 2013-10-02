@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.listsComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.fioLabel = new System.Windows.Forms.Label();
             this.regNumLabel = new System.Windows.Forms.Label();
@@ -46,14 +46,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Укажите № пакета";
             // 
-            // comboBox1
+            // listsComboBox
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(122, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(136, 21);
-            this.comboBox1.TabIndex = 1;
+            this.listsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.listsComboBox.FormattingEnabled = true;
+            this.listsComboBox.Location = new System.Drawing.Point(122, 6);
+            this.listsComboBox.Name = "listsComboBox";
+            this.listsComboBox.Size = new System.Drawing.Size(136, 21);
+            this.listsComboBox.TabIndex = 1;
             // 
             // label2
             // 
@@ -116,7 +116,7 @@
             this.Controls.Add(this.regNumLabel);
             this.Controls.Add(this.fioLabel);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.listsComboBox);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -124,6 +124,7 @@
             this.Name = "MoveDocumentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Перемещение документа \"СЗВ-1\"";
+            this.Load += new System.EventHandler(this.MoveDocumentForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,7 +133,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox listsComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label fioLabel;
         private System.Windows.Forms.Label regNumLabel;

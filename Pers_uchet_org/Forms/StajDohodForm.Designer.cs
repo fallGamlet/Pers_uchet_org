@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -80,9 +83,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox1.Controls.Add(this.yearBox);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(10, 1);
+            this.groupBox1.Location = new System.Drawing.Point(327, 1);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(166, 43);
@@ -141,7 +145,7 @@
             this.groupBox2.Location = new System.Drawing.Point(10, 46);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(913, 177);
+            this.groupBox2.Size = new System.Drawing.Size(910, 177);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Пакеты документов СЗВ-1";
@@ -149,7 +153,7 @@
             // packetcountBox
             // 
             this.packetcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.packetcountBox.Location = new System.Drawing.Point(585, 161);
+            this.packetcountBox.Location = new System.Drawing.Point(93, 161);
             this.packetcountBox.Name = "packetcountBox";
             this.packetcountBox.Size = new System.Drawing.Size(28, 13);
             this.packetcountBox.TabIndex = 10;
@@ -160,7 +164,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(495, 161);
+            this.label2.Location = new System.Drawing.Point(3, 161);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 9;
@@ -169,7 +173,7 @@
             // movePacketYearButton
             // 
             this.movePacketYearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.movePacketYearButton.Location = new System.Drawing.Point(713, 106);
+            this.movePacketYearButton.Location = new System.Drawing.Point(710, 106);
             this.movePacketYearButton.Name = "movePacketYearButton";
             this.movePacketYearButton.Size = new System.Drawing.Size(194, 23);
             this.movePacketYearButton.TabIndex = 8;
@@ -181,7 +185,7 @@
             // printButton
             // 
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.printButton.Location = new System.Drawing.Point(713, 77);
+            this.printButton.Location = new System.Drawing.Point(710, 77);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(194, 23);
             this.printButton.TabIndex = 7;
@@ -192,7 +196,7 @@
             // calculateButton
             // 
             this.calculateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.calculateButton.Location = new System.Drawing.Point(713, 48);
+            this.calculateButton.Location = new System.Drawing.Point(710, 48);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(194, 23);
             this.calculateButton.TabIndex = 6;
@@ -203,7 +207,7 @@
             // reestrButton
             // 
             this.reestrButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.reestrButton.Location = new System.Drawing.Point(713, 19);
+            this.reestrButton.Location = new System.Drawing.Point(710, 19);
             this.reestrButton.Name = "reestrButton";
             this.reestrButton.Size = new System.Drawing.Size(194, 23);
             this.reestrButton.TabIndex = 5;
@@ -214,7 +218,7 @@
             // movePacketOrgButton
             // 
             this.movePacketOrgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.movePacketOrgButton.Location = new System.Drawing.Point(713, 135);
+            this.movePacketOrgButton.Location = new System.Drawing.Point(710, 135);
             this.movePacketOrgButton.Name = "movePacketOrgButton";
             this.movePacketOrgButton.Size = new System.Drawing.Size(194, 23);
             this.movePacketOrgButton.TabIndex = 4;
@@ -226,7 +230,7 @@
             // removeButton
             // 
             this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.removeButton.Location = new System.Drawing.Point(619, 48);
+            this.removeButton.Location = new System.Drawing.Point(616, 48);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(88, 23);
             this.removeButton.TabIndex = 3;
@@ -237,7 +241,7 @@
             // addButton
             // 
             this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.Location = new System.Drawing.Point(619, 19);
+            this.addButton.Location = new System.Drawing.Point(616, 19);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(88, 23);
             this.addButton.TabIndex = 1;
@@ -254,14 +258,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listsView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.listsView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.listsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.listsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.listsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -270,22 +274,30 @@
             this.datecreateColumn,
             this.operatorEditColumn,
             this.dateredactColumn});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.listsView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.listsView.DefaultCellStyle = dataGridViewCellStyle14;
             this.listsView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.listsView.Location = new System.Drawing.Point(6, 19);
             this.listsView.MultiSelect = false;
             this.listsView.Name = "listsView";
             this.listsView.ReadOnly = true;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.listsView.RowHeadersVisible = false;
             this.listsView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.listsView.Size = new System.Drawing.Size(607, 139);
+            this.listsView.Size = new System.Drawing.Size(604, 139);
             this.listsView.TabIndex = 0;
             this.listsView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetView_CellDoubleClick);
             // 
@@ -357,15 +369,15 @@
             this.groupBox3.Location = new System.Drawing.Point(10, 225);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(914, 294);
+            this.groupBox3.Size = new System.Drawing.Size(911, 294);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Документы СЗВ-1";
             // 
             // docCountBox
             // 
-            this.docCountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.docCountBox.Location = new System.Drawing.Point(786, 262);
+            this.docCountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.docCountBox.Location = new System.Drawing.Point(129, 262);
             this.docCountBox.Name = "docCountBox";
             this.docCountBox.Size = new System.Drawing.Size(28, 13);
             this.docCountBox.TabIndex = 12;
@@ -374,9 +386,9 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(660, 262);
+            this.label4.Location = new System.Drawing.Point(3, 262);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(120, 13);
             this.label4.TabIndex = 11;
@@ -384,8 +396,8 @@
             // 
             // changeTypedDocButton
             // 
-            this.changeTypedDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.changeTypedDocButton.Location = new System.Drawing.Point(6, 265);
+            this.changeTypedDocButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.changeTypedDocButton.Location = new System.Drawing.Point(200, 265);
             this.changeTypedDocButton.Name = "changeTypedDocButton";
             this.changeTypedDocButton.Size = new System.Drawing.Size(209, 23);
             this.changeTypedDocButton.TabIndex = 8;
@@ -395,8 +407,8 @@
             // 
             // printFormButton
             // 
-            this.printFormButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.printFormButton.Location = new System.Drawing.Point(221, 265);
+            this.printFormButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.printFormButton.Location = new System.Drawing.Point(415, 265);
             this.printFormButton.Name = "printFormButton";
             this.printFormButton.Size = new System.Drawing.Size(209, 23);
             this.printFormButton.TabIndex = 7;
@@ -407,7 +419,7 @@
             // moveDocButton
             // 
             this.moveDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.moveDocButton.Location = new System.Drawing.Point(820, 146);
+            this.moveDocButton.Location = new System.Drawing.Point(817, 146);
             this.moveDocButton.Name = "moveDocButton";
             this.moveDocButton.Size = new System.Drawing.Size(88, 23);
             this.moveDocButton.TabIndex = 6;
@@ -418,7 +430,7 @@
             // removeDocButton
             // 
             this.removeDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.removeDocButton.Location = new System.Drawing.Point(820, 77);
+            this.removeDocButton.Location = new System.Drawing.Point(817, 77);
             this.removeDocButton.Name = "removeDocButton";
             this.removeDocButton.Size = new System.Drawing.Size(88, 23);
             this.removeDocButton.TabIndex = 5;
@@ -429,7 +441,7 @@
             // editDocButton
             // 
             this.editDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.editDocButton.Location = new System.Drawing.Point(820, 48);
+            this.editDocButton.Location = new System.Drawing.Point(817, 48);
             this.editDocButton.Name = "editDocButton";
             this.editDocButton.Size = new System.Drawing.Size(88, 23);
             this.editDocButton.TabIndex = 4;
@@ -440,7 +452,7 @@
             // addDocButton
             // 
             this.addDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addDocButton.Location = new System.Drawing.Point(820, 19);
+            this.addDocButton.Location = new System.Drawing.Point(817, 19);
             this.addDocButton.Name = "addDocButton";
             this.addDocButton.Size = new System.Drawing.Size(88, 23);
             this.addDocButton.TabIndex = 3;
@@ -459,14 +471,14 @@
             this.docView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.docView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.docView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.docView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.docView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.docView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.docView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
@@ -478,12 +490,28 @@
             this.regDateColumn,
             this.operChangeColumn,
             this.changeDateColumn});
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.docView.DefaultCellStyle = dataGridViewCellStyle17;
             this.docView.Location = new System.Drawing.Point(6, 19);
             this.docView.Name = "docView";
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.docView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.docView.RowHeadersVisible = false;
             this.docView.RowHeadersWidth = 12;
             this.docView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.docView.Size = new System.Drawing.Size(808, 240);
+            this.docView.Size = new System.Drawing.Size(805, 240);
             this.docView.TabIndex = 0;
             this.docView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.documentView_CellDoubleClick);
             // 
@@ -577,7 +605,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(933, 529);
+            this.ClientSize = new System.Drawing.Size(930, 529);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
