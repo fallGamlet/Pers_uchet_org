@@ -65,6 +65,98 @@ namespace Pers_uchet_org
             //
             return xml;
         }
+
+        static public XmlDocument Adv1Xml(DataRow personViewRow)
+        {
+            XmlDocument xml = new XmlDocument();
+            XmlElement person = xml.CreateElement("person");
+            XmlElement lname = xml.CreateElement("lname");
+            XmlElement fname = xml.CreateElement("fname");
+            XmlElement mname = xml.CreateElement("mname");
+            XmlElement regnum = xml.CreateElement("regnum");
+            XmlElement birthday = xml.CreateElement("birthday");
+            XmlElement sex = xml.CreateElement("sex");
+            XmlElement doctype = xml.CreateElement("doctype");
+            XmlElement docseries = xml.CreateElement("docseries");
+            XmlElement docnumber = xml.CreateElement("docnumber");
+            XmlElement docdate = xml.CreateElement("docdate");
+            XmlElement docorg = xml.CreateElement("docorg");
+            XmlElement regaddressZipcode = xml.CreateElement("regaddress_zipcode");
+            XmlElement regaddress = xml.CreateElement("regaddress");
+            XmlElement factaddressZipcode = xml.CreateElement("factaddress_zipcode");
+            XmlElement factaddress = xml.CreateElement("factaddress");
+            XmlElement bornaddress = xml.CreateElement("bornaddress");
+            XmlElement bornCountry = xml.CreateElement("borncountry");
+            XmlElement bornArea = xml.CreateElement("bornarea");
+            XmlElement bornRegion = xml.CreateElement("bornregion");
+            XmlElement bornCity = xml.CreateElement("borncity");
+            XmlElement bornZipcode = xml.CreateElement("bornzipcode");
+            XmlElement citizen = xml.CreateElement("citizen");
+            XmlElement citizen1 = xml.CreateElement("first");
+            XmlElement citizen2 = xml.CreateElement("second");
+            XmlElement citizen1ID = xml.CreateElement("id");
+            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
+            XmlElement citizen1Name = xml.CreateElement("name");
+            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
+
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xml.AppendChild(person);
+            person.AppendChild(lname);
+            person.AppendChild(fname);
+            person.AppendChild(mname);
+            person.AppendChild(regnum);
+            person.AppendChild(birthday);
+            person.AppendChild(sex);
+            person.AppendChild(doctype);
+            person.AppendChild(docseries);
+            person.AppendChild(docnumber);
+            person.AppendChild(docdate);
+            person.AppendChild(docorg);
+            person.AppendChild(regaddressZipcode);
+            person.AppendChild(regaddress);
+            person.AppendChild(factaddressZipcode);
+            person.AppendChild(factaddress);
+            bornaddress.AppendChild(bornCountry);
+            bornaddress.AppendChild(bornArea);
+            bornaddress.AppendChild(bornRegion);
+            bornaddress.AppendChild(bornCity);
+            bornaddress.AppendChild(bornZipcode);
+            person.AppendChild(bornaddress);
+            person.AppendChild(citizen);
+            citizen.AppendChild(citizen1);
+            citizen.AppendChild(citizen2);
+            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Name);
+            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Name);
+
+            lname.InnerText = personViewRow[PersonView.lName] as string;
+            fname.InnerText = personViewRow[PersonView.fName] as string;
+            mname.InnerText = personViewRow[PersonView.mName] as string;
+            regnum.InnerText = personViewRow[PersonView.socNumber] as string;
+            birthday.InnerText = ((DateTime)personViewRow[PersonView.birthday]).ToShortDateString();
+            sex.InnerText = (int)personViewRow[PersonView.sex]==1? "м": "ж";
+            doctype.InnerText = personViewRow[PersonView.docType] as string;
+            docseries.InnerText = personViewRow[PersonView.docSeries] as string;
+            docnumber.InnerText = personViewRow[PersonView.docNumber] as string;
+            docdate.InnerText = ((DateTime)personViewRow[PersonView.docDate]).ToShortDateString();
+            docorg.InnerText = personViewRow[PersonView.docOrg] as string;
+            regaddressZipcode.InnerText = personViewRow[PersonView.regAdressZipcode] as string;
+            regaddress.InnerText = personViewRow[PersonView.regAdress] as string;
+            factaddressZipcode.InnerText = personViewRow[PersonView.factAdressZipcode] as string;
+            factaddress.InnerText = personViewRow[PersonView.factAdress] as string;
+            bornCountry.InnerText = personViewRow[PersonView.bornAdressCountry] as string;
+            bornArea.InnerText = personViewRow[PersonView.bornAdressArea] as string;
+            bornRegion.InnerText = personViewRow[PersonView.bornAdressRegion] as string;
+            bornCity.InnerText = personViewRow[PersonView.bornAdressCity] as string;
+            bornZipcode.InnerText = personViewRow[PersonView.bornAdressZipcode] as string;
+            citizen1ID.InnerText = personViewRow["citizen1_id"].ToString();
+            citizen2ID.InnerText = personViewRow["citizen2_id"].ToString();
+            citizen1Name.InnerText = personViewRow["citizen1"] as string;
+            citizen2Name.InnerText = personViewRow["citizen2"] as string;
+            //
+            return xml;
+        }
     }
 
     public class MyPrinter
@@ -1143,11 +1235,20 @@ namespace Pers_uchet_org
         static public string docNumber = "doc_number";
         static public string docDate = "doc_date";
         static public string docOrg = "doc_org";
-        static public string regAdress = "regAdress";
-        static public string factAdress = "factAdress";
-        static public string bornAdress = "bornAdress";
+        static public string regAdress = "regAddress";
+        static public string regAdressZipcode = "regAddress_zipcode";
+        static public string factAdress = "factAddress";
+        static public string factAdressZipcode = "factAddress_zipcode";
+        static public string bornAdress = "bornAddress";
+        static public string bornAdressZipcode = "bornAddress_zipcode";
+        static public string bornAdressCountry = "bornAddress_country";
+        static public string bornAdressArea = "bornAddress_area";
+        static public string bornAdressRegion = "bornAddress_region";
+        static public string bornAdressCity = "bornAddress_city";
         static public string citizen1 = "citizen1";
         static public string citizen2 = "citizen2";
+        static public string citizen1ID = "citizen1_id";
+        static public string citizen2ID = "citizen2_id";
         static public string state = "state";
         static public string dismissDate = "dismiss_date";
         static public string orgID = "org_id";
@@ -1180,6 +1281,8 @@ namespace Pers_uchet_org
             table.Columns.Add(bornAdress, typeof(string));
             table.Columns.Add(citizen1, typeof(string));
             table.Columns.Add(citizen2, typeof(string));
+            table.Columns.Add(citizen1ID, typeof(long));
+            table.Columns.Add(citizen2ID, typeof(long));
             table.Columns.Add(state, typeof(int));
             table.Columns.Add(dismissDate, typeof(DateTime));
             table.Columns.Add(orgID, typeof(long));
@@ -1188,11 +1291,13 @@ namespace Pers_uchet_org
 
         static public string GetSelectText()
         {
-            return string.Format("SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20} FROM {21} ",
+            return string.Format("SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29} FROM {30} ",
                                 id, socNumber, fName, mName, lName, fio, birthday, sex,
                                 docType, docSeries, docNumber, docDate, docOrg,
-                                regAdress, factAdress, bornAdress,
-                                citizen1, citizen2, state, dismissDate, orgID, tablename);
+                                regAdressZipcode, regAdress, factAdressZipcode, factAdress, 
+                                bornAdress, bornAdressCountry, bornAdressArea, bornAdressRegion, bornAdressCity, bornAdressZipcode,
+                                citizen1, citizen2, citizen1ID, citizen2ID,
+                                state, dismissDate, orgID, tablename);
         }
 
         static public string GetSelectText(long org_id)
@@ -1215,51 +1320,43 @@ namespace Pers_uchet_org
             webBrowser.Navigate(file);
             //PrintRows = printRows;
         }
+
         static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            if (true /*PrintRows != null*/)
+            WebBrowser wb = (sender as WebBrowser);
+            if (wb == null)
             {
-                WebBrowser wb = (sender as WebBrowser);
-                if (wb == null)
-                {
-                    return;
-                }
-                List<string> htmlDivList = new List<string>();
-                HtmlDocument htmlDoc = wb.Document;
-                IEnumerable<DataRow> PrintRows = wb.Tag as IEnumerable<DataRow>;
-                foreach (DataRow personRow in PrintRows)
-                {
-                    htmlDoc.InvokeScript("setFName", new object[] { personRow[PersonView.fName] });
-                    htmlDoc.InvokeScript("setMName", new object[] { personRow[PersonView.mName] });
-                    htmlDoc.InvokeScript("setLName", new object[] { personRow[PersonView.lName] });
-                    object sexObj = personRow[PersonView.sex];
-                    string sexStr = sexObj is DBNull ? "не определено" : (int)sexObj == 1 ? "м" : "ж";
-                    htmlDoc.InvokeScript("setSex", new object[] { sexStr });
-                    htmlDoc.InvokeScript("setBornDate", new object[] { personRow[PersonView.birthday].ToString() });
-                    htmlDoc.InvokeScript("setCitizen1", new object[] { personRow[PersonView.citizen1].ToString() });
-                    htmlDoc.InvokeScript("setCitizen2", new object[] { personRow[PersonView.citizen2].ToString() });
-                    htmlDoc.InvokeScript("setRegAddress", new object[] { personRow[PersonView.regAdress].ToString() });
-
-                    htmlDivList.Add(htmlDoc.Body.InnerHtml);
-                }
-                if (htmlDivList.Count > 0)
-                {
-                    string htmlBody = "";
-                    foreach (string div in htmlDivList)
-                        htmlBody += div;
-                    htmlDoc.Body.InnerHtml = htmlBody;
-                }
-
-                MyPrinter.SetPrintSettings();
-                //Form webForm = new Form();
-                //webForm.Width = 700;
-                //webForm.Height = 600;
-                //webForm.Controls.Add(wb);
-                //wb.Dock = DockStyle.Fill;
-                //wb.Show();
-                //webForm.Show();
-                wb.ShowPrintPreviewDialog();
+                return;
             }
+            List<string> htmlDivList = new List<string>();
+            HtmlDocument htmlDoc = wb.Document;
+            IEnumerable<DataRow> PrintRows = wb.Tag as IEnumerable<DataRow>;
+            foreach (DataRow personRow in PrintRows)
+            {
+                string xmlStr = MyXml.Adv1Xml(personRow).InnerXml;
+                htmlDoc.InvokeScript("setAllData", new object[] { xmlStr });
+                htmlDivList.Add(htmlDoc.Body.InnerHtml);
+            }
+            if (htmlDivList.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder(htmlDivList.Count * htmlDivList[0].Length);
+                //string htmlBody = "";
+                foreach (string div in htmlDivList)
+                    //htmlBody += div;
+                    sb.Append(div);
+                //htmlDoc.Body.InnerHtml = htmlBody;
+                htmlDoc.Body.InnerHtml = sb.ToString();
+            }
+
+            MyPrinter.SetPrintSettings();
+            //Form webForm = new Form();
+            //webForm.Width = 700;
+            //webForm.Height = 600;
+            //webForm.Controls.Add(wb);
+            //wb.Dock = DockStyle.Fill;
+            //wb.Show();
+            //webForm.Show();
+            wb.ShowPrintPreviewDialog();
         }
         #endregion
     }

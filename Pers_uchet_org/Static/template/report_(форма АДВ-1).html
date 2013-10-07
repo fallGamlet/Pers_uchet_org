@@ -100,6 +100,30 @@
 			$("#print_month").text(months[parseInt(darr[1])-1]);
 			$("#print_year").text(darr[2]);
 		};
+		var setAllData = function(xmlStr) {
+			var doc = $($.parseXML(xmlStr));
+			var person = doc.find("person");
+			setLName(person.find('lname').text());
+			setFName(person.find('fname').text());
+			setMName(person.find('mname').text());
+			setSex(person.find('sex').text());
+			setBornDate(person.find('birthday').text());
+			setBornPlace(person.find('borncity').text());
+			setBornRegion(person.find('bornregion').text());
+			setBornArea(person.find('bornarea').text());
+			setBornCountry(person.find('borncountry').text());
+			setRegIndex(person.find('regaddress_zipcode').text());
+			setRegAddress(person.find('regaddress').text());
+			setFactIndex(person.find('factaddress_zipcode').text());
+			setFactAddress(person.find('factaddress').text());
+			setDocType(person.find('doctype').text());
+			setDocSeries(person.find('docseries').text());
+			setDocNumber(person.find('docnumber').text());
+			setDocOrg(person.find('docorg').text());
+			setDocDate(person.find('docdate').text());
+			setCitizen1(person.find('citizen first name').text());
+			setCitizen1(person.find('citizen second name').text());
+		};
 	</script>
 	<style type="text/css">
 		body { background: #def; text-align: center; padding:0;}
@@ -155,9 +179,6 @@
 	<style media="print">
     .main_container {
 		margin-bottom:999em;
-		/*page-break-after:always;*/
-		/*page-break-before:avoid;*/
-		/*page-break-inside:avoid;*/
 		width:8.27in; 
 		height:11.69in;
 	}
