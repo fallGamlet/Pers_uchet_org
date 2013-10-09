@@ -1142,7 +1142,7 @@ namespace Pers_uchet_org
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1}", orgID, org_id);
         }
-        
+
         static public string GetSelectText(long org_id, int rep_year)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1} AND ({2} = 1 or ( {2} = 0 AND ({3} IS NUll OR strftime('%Y',{3}) >= {4}))) ", orgID, org_id, state, dismissDate, rep_year);
@@ -1651,7 +1651,7 @@ namespace Pers_uchet_org
             table.Columns.Add(id, typeof(long));
             table.Columns.Add(classificatorID, typeof(long));
             table.Columns.Add(privilegeID, typeof(long));
-            table.Columns.Add(value, typeof(string));
+            table.Columns.Add(value, typeof(double));
             table.Columns.Add(dateBegin, typeof(string));
             table.Columns.Add(dateEnd, typeof(string));
             return table;
@@ -1659,8 +1659,79 @@ namespace Pers_uchet_org
 
         static public string GetSelectText()
         {
-            return string.Format(@" SELECT {7}.{0} as {0},{1},{2}, {8}.{10} as {3},{4},{5},{6} FROM {7} LEFT JOIN {8} ON {7}.{2} = {8}.{9} ",
+            return string.Format(@" SELECT {7}.{0} as {0},{1},{2}, {8}.{10} as {3}, round(CAST(REPLACE({4},',','.') AS real) * 100 , 2) as {4},{5},{6} FROM {7} LEFT JOIN {8} ON {7}.{2} = {8}.{9} ",
                                 id, classificatorID, privilegeID, privilegeName, value, dateBegin, dateEnd, tablename, Privilege.tablename, Privilege.id, Privilege.name);
+        }
+        #endregion
+    }
+
+    public class ClasspercentView
+    {
+        // название таблицы в БД
+        static public string tablename = "Classpercent_View";
+
+        #region Название полей таблицы в БД
+        static public string id = "id";
+        static public string classificatorID = "classificator_id";
+        static public string code = "code";
+        static public string name = "name";
+        static public string description = "description";
+        static public string privilegeID = "privilege_id";
+        static public string privilegeName = "privilege_name";
+        static public string value = "value";
+        static public string dateBegin = "date_begin";
+        static public string dateEnd = "date_end";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(classificatorID, typeof(long));
+            table.Columns.Add(code, typeof(string));
+            table.Columns.Add(name, typeof(string));
+            table.Columns.Add(description, typeof(string));
+            table.Columns.Add(privilegeID, typeof(long));
+            table.Columns.Add(privilegeName, typeof(string));
+            table.Columns.Add(value, typeof(double));
+            table.Columns.Add(dateBegin, typeof(DateTime));
+            table.Columns.Add(dateEnd, typeof(DateTime));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format(@" SELECT * FROM {0}", tablename);
+        }
+
+        static public DataTable CreateTableForClassgroupOne()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(classificatorID, typeof(long));
+            table.Columns.Add(code, typeof(string));
+            table.Columns.Add(name, typeof(string));
+            table.Columns.Add(description, typeof(string));
+            return table;
+        }
+
+        static public DataTable CreateTableForClassgroupOnePriviledge()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(classificatorID, typeof(long));
+            table.Columns.Add(privilegeID, typeof(long));
+            table.Columns.Add(privilegeName, typeof(string));
+            table.Columns.Add(value, typeof(string));
+            return table;
+        }
+
+        static public string GetSelectClassgroupOneText(DateTime now)
+        {
+           string commandStr = string.Format(@"SELECT DISTINCT {0},{1},{2},{3} FROM {4} WHERE (strftime('%s',ifnull({5},'1990-01-01')) - strftime('%s','{6}') < 0) 
+                AND (strftime('%s',ifnull({7},'2999-01-01')) - strftime('%s','{6}') > 0)
+                AND {0} >=100 AND {0} < 200", classificatorID, code, name, description, tablename, dateBegin, now.ToString("yyyy-MM-dd"), dateEnd );
+
+            return commandStr;
         }
         #endregion
     }

@@ -133,17 +133,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.codeGroupBox = new System.Windows.Forms.GroupBox();
             this.percentLabel = new System.Windows.Forms.Label();
-            this.benefitComboBox = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.codeComboBox = new System.Windows.Forms.ComboBox();
             this.workPlaceGroupBox = new System.Windows.Forms.GroupBox();
             this.mainRadioButton = new System.Windows.Forms.RadioButton();
             this.additionalRadioButton = new System.Windows.Forms.RadioButton();
             this.citizenshipGroupBox = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.citizenship2ComboBox = new System.Windows.Forms.ComboBox();
+            this.citizen2Box = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.citizenship1ComboBox = new System.Windows.Forms.ComboBox();
+            this.citizen1Box = new System.Windows.Forms.ComboBox();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -1224,8 +1222,6 @@
             this.codeGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeGroupBox.Controls.Add(this.percentLabel);
-            this.codeGroupBox.Controls.Add(this.benefitComboBox);
-            this.codeGroupBox.Controls.Add(this.label5);
             this.codeGroupBox.Controls.Add(this.codeComboBox);
             this.codeGroupBox.Location = new System.Drawing.Point(136, 6);
             this.codeGroupBox.Name = "codeGroupBox";
@@ -1236,32 +1232,14 @@
             // 
             // percentLabel
             // 
-            this.percentLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.percentLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.percentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.percentLabel.Location = new System.Drawing.Point(223, 32);
+            this.percentLabel.Location = new System.Drawing.Point(120, 43);
             this.percentLabel.Name = "percentLabel";
             this.percentLabel.Size = new System.Drawing.Size(74, 24);
             this.percentLabel.TabIndex = 6;
             this.percentLabel.Text = "27,0 %";
             this.percentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // benefitComboBox
-            // 
-            this.benefitComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.benefitComboBox.FormattingEnabled = true;
-            this.benefitComboBox.Location = new System.Drawing.Point(55, 46);
-            this.benefitComboBox.Name = "benefitComboBox";
-            this.benefitComboBox.Size = new System.Drawing.Size(106, 21);
-            this.benefitComboBox.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 49);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Льгота";
             // 
             // codeComboBox
             // 
@@ -1271,7 +1249,7 @@
             this.codeComboBox.FormattingEnabled = true;
             this.codeComboBox.Location = new System.Drawing.Point(6, 19);
             this.codeComboBox.Name = "codeComboBox";
-            this.codeComboBox.Size = new System.Drawing.Size(182, 21);
+            this.codeComboBox.Size = new System.Drawing.Size(306, 21);
             this.codeComboBox.TabIndex = 4;
             // 
             // workPlaceGroupBox
@@ -1311,9 +1289,9 @@
             // 
             this.citizenshipGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.citizenshipGroupBox.Controls.Add(this.label4);
-            this.citizenshipGroupBox.Controls.Add(this.citizenship2ComboBox);
+            this.citizenshipGroupBox.Controls.Add(this.citizen2Box);
             this.citizenshipGroupBox.Controls.Add(this.label3);
-            this.citizenshipGroupBox.Controls.Add(this.citizenship1ComboBox);
+            this.citizenshipGroupBox.Controls.Add(this.citizen1Box);
             this.citizenshipGroupBox.Location = new System.Drawing.Point(460, 6);
             this.citizenshipGroupBox.Name = "citizenshipGroupBox";
             this.citizenshipGroupBox.Size = new System.Drawing.Size(181, 75);
@@ -1330,14 +1308,14 @@
             this.label4.TabIndex = 2;
             this.label4.Text = "2";
             // 
-            // citizenship2ComboBox
+            // citizen2Box
             // 
-            this.citizenship2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.citizenship2ComboBox.FormattingEnabled = true;
-            this.citizenship2ComboBox.Location = new System.Drawing.Point(23, 46);
-            this.citizenship2ComboBox.Name = "citizenship2ComboBox";
-            this.citizenship2ComboBox.Size = new System.Drawing.Size(152, 21);
-            this.citizenship2ComboBox.TabIndex = 3;
+            this.citizen2Box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.citizen2Box.FormattingEnabled = true;
+            this.citizen2Box.Location = new System.Drawing.Point(23, 46);
+            this.citizen2Box.Name = "citizen2Box";
+            this.citizen2Box.Size = new System.Drawing.Size(152, 21);
+            this.citizen2Box.TabIndex = 3;
             // 
             // label3
             // 
@@ -1348,14 +1326,14 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "1";
             // 
-            // citizenship1ComboBox
+            // citizen1Box
             // 
-            this.citizenship1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.citizenship1ComboBox.FormattingEnabled = true;
-            this.citizenship1ComboBox.Location = new System.Drawing.Point(23, 19);
-            this.citizenship1ComboBox.Name = "citizenship1ComboBox";
-            this.citizenship1ComboBox.Size = new System.Drawing.Size(152, 21);
-            this.citizenship1ComboBox.TabIndex = 1;
+            this.citizen1Box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.citizen1Box.FormattingEnabled = true;
+            this.citizen1Box.Location = new System.Drawing.Point(23, 19);
+            this.citizen1Box.Name = "citizen1Box";
+            this.citizen1Box.Size = new System.Drawing.Size(152, 21);
+            this.citizen1Box.TabIndex = 1;
             // 
             // tabControlMain
             // 
@@ -1388,6 +1366,7 @@
             this.Name = "AddEditDocumentSzv1Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление\\редактирование документа \"СЗВ-1\" - исходная форма";
+            this.Load += new System.EventHandler(this.AddEditDocumentSzv1Form_Load);
             this.tabPage3.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.generalPeriodGroupBox.ResumeLayout(false);
@@ -1406,7 +1385,6 @@
             this.infoGroupBox.ResumeLayout(false);
             this.infoGroupBox.PerformLayout();
             this.codeGroupBox.ResumeLayout(false);
-            this.codeGroupBox.PerformLayout();
             this.workPlaceGroupBox.ResumeLayout(false);
             this.workPlaceGroupBox.PerformLayout();
             this.citizenshipGroupBox.ResumeLayout(false);
@@ -1487,17 +1465,15 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox codeGroupBox;
         private System.Windows.Forms.Label percentLabel;
-        private System.Windows.Forms.ComboBox benefitComboBox;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox codeComboBox;
         private System.Windows.Forms.GroupBox workPlaceGroupBox;
         private System.Windows.Forms.RadioButton mainRadioButton;
         private System.Windows.Forms.RadioButton additionalRadioButton;
         private System.Windows.Forms.GroupBox citizenshipGroupBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox citizenship2ComboBox;
+        private System.Windows.Forms.ComboBox citizen2Box;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox citizenship1ComboBox;
+        private System.Windows.Forms.ComboBox citizen1Box;
         private System.Windows.Forms.TabControl tabControlMain;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn beginGeneralPeriodColumn;

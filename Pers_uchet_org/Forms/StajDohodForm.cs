@@ -298,7 +298,8 @@ namespace Pers_uchet_org
             ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, RepYear, _connection);
             if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
+                bool isNew = true;
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, RepYear, personId, flagDoc, isNew, _connection);
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 { }
             }
