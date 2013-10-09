@@ -13,6 +13,8 @@ namespace Pers_uchet_org
 {
     public class MyXml
     {
+        public enum ReportType { ADV1=0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3}
+
         static public XmlDocument PersonXml(DataRow row)
         {
             XmlDocument xml = new XmlDocument();
@@ -171,6 +173,80 @@ namespace Pers_uchet_org
                 saveKey.SetValue("margin_right", "0.39", RegistryValueKind.String);
             }
         }
+
+        static public void PrintWebPage(WebBrowser wb)
+        {
+            MyPrinter.SetPrintSettings();
+            wb.ShowPrintPreviewDialog();
+        }
+
+        static public void ShowWebPage(WebBrowser wb)
+        {
+            Form webForm = new Form();
+            webForm.Width = 750;
+            webForm.Height = 600;
+            webForm.Controls.Add(wb);
+            wb.Dock = DockStyle.Fill;
+            wb.Show();
+            webForm.Show();
+        }
+
+        static public void ShowWebPage(WebBrowser wb, string url)
+        {
+            if (wb == null)
+                wb = new WebBrowser();
+            wb.Navigate(url);
+            ShowWebPage(wb);
+        }
+
+        static public void ShowWebPage(WebBrowser wb, MyXml.ReportType type)
+        {
+            string url;
+            switch (type)
+            {
+                case MyXml.ReportType.ADV1:
+                    url = Properties.Settings.Default.report_adv1;
+                    break;
+                case MyXml.ReportType.ADV2:
+                    url = Properties.Settings.Default.report_adv2;
+                    break;
+                case MyXml.ReportType.ADV3:
+                    url = Properties.Settings.Default.report_adv3;
+                    break;
+                case MyXml.ReportType.ADV4:
+                    url = Properties.Settings.Default.report_adv4;
+                    break;
+                case MyXml.ReportType.ADV5:
+                    url = Properties.Settings.Default.report_adv5;
+                    break;
+                case MyXml.ReportType.ADV6:
+                    url = Properties.Settings.Default.report_adv6;
+                    break;
+                case MyXml.ReportType.SZV1:
+                    url = Properties.Settings.Default.report_szv1;
+                    break;
+                case MyXml.ReportType.SZV2:
+                    url = Properties.Settings.Default.report_szv2;
+                    break;
+                case MyXml.ReportType.SZV3:
+                    url = Properties.Settings.Default.report_szv3;
+                    break;
+                default:
+                    url = "/";
+                    break;
+            }
+            if (File.Exists(url))
+            {
+                url = Path.GetFullPath(url);
+                ShowWebPage(wb, url);
+            }
+            else
+            {
+                MainForm.ShowWarningMessage("Не удалось найти файл отчета!","Внимание");
+            }
+        }
+
+        
     }
 
     public class Operator
@@ -1318,7 +1394,6 @@ namespace Pers_uchet_org
             webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
             webBrowser.ScriptErrorsSuppressed = true;
             webBrowser.Navigate(file);
-            //PrintRows = printRows;
         }
 
         static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
