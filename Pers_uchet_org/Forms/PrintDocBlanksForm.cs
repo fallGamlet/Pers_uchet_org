@@ -12,19 +12,17 @@ namespace Pers_uchet_org
     public partial class PrintDocBlanksForm : Form
     {
         #region Поля
-        WebBrowser wbrowser;
 
         #endregion
 
+        #region Конструктор
         public PrintDocBlanksForm()
         {
             InitializeComponent();
-
-            wbrowser = new WebBrowser();
-            //Stack<HtmlDocument
-            
         }
+        #endregion
 
+        #region Методы - обработчики событий
         private void viewRDV1Button_Click(object sender, EventArgs e)
         {
             MyPrinter.ShowWebPage(null, MyXml.ReportType.RDV1);
@@ -88,19 +86,37 @@ namespace Pers_uchet_org
 
         private void printButton_Click(object sender, EventArgs e)
         {
-
+            int[] counts = new int[] { (int)this.countADV1Box.Value, (int)MyXml.ReportType.ADV1,
+                                       (int)this.countADV2Box.Value, (int)MyXml.ReportType.ADV2,
+                                       (int)this.countADV3Box.Value, (int)MyXml.ReportType.ADV3,
+                                       (int)this.countADV4Box.Value, (int)MyXml.ReportType.ADV4,
+                                       (int)this.countADV6Box.Value,(int)MyXml.ReportType.ADV6,
+                                       (int)this.countSZV1Box.Value, (int)MyXml.ReportType.SZV1,
+                                       (int)this.countSZV2Box.Value, (int)MyXml.ReportType.SZV2,
+                                       (int)this.countSZV1Box.Value,(int)MyXml.ReportType.SZV3,
+                                       (int)this.countRDV1Box.Value, (int)MyXml.ReportType.RDV1,
+                                       (int)this.countRDV21Box.Value, (int)MyXml.ReportType.RDV21,
+                                       (int)this.countRDV22Box.Value, (int)MyXml.ReportType.RDV22,
+                                       (int)this.countRDV3Box.Value, (int)MyXml.ReportType.RDV3
+                                     };
+            for (int i = 0; i < counts.Length-1; i += 2)
+            {
+                this.Print(new WebBrowser(), (MyXml.ReportType)counts[i + 1], counts[i]);
+            }
         }
 
-        static public void Print(IEnumerable<DataRow> printRows)
+        private void Print(WebBrowser wb, MyXml.ReportType type, int count)
         {
-            //string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
-            WebBrowser webBrowser = new WebBrowser();
-            webBrowser.Tag = printRows;
-            webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
-            webBrowser.ScriptErrorsSuppressed = true;
-            //webBrowser.Navigate(file);
-            
-            
+            if (wb == null || count <= 0)
+                return;
+            string url = MyXml.GetReportUrl(type);
+            if (url != null)
+            {
+                wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
+                wb.ScriptErrorsSuppressed = true;
+                wb.Tag = count;
+                wb.Navigate(url);
+            }
         }
 
         static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -110,35 +126,13 @@ namespace Pers_uchet_org
             {
                 return;
             }
-            List<string> htmlDivList = new List<string>();
-            HtmlDocument htmlDoc = wb.Document;
-            IEnumerable<DataRow> PrintRows = wb.Tag as IEnumerable<DataRow>;
-            foreach (DataRow personRow in PrintRows)
-            {
-                string xmlStr = MyXml.Adv1Xml(personRow).InnerXml;
-                htmlDoc.InvokeScript("setAllData", new object[] { xmlStr });
-                htmlDivList.Add(htmlDoc.Body.InnerHtml);
-            }
-            if (htmlDivList.Count > 0)
-            {
-                StringBuilder sb = new StringBuilder(htmlDivList.Count * htmlDivList[0].Length);
-                //string htmlBody = "";
-                foreach (string div in htmlDivList)
-                    //htmlBody += div;
-                    sb.Append(div);
-                //htmlDoc.Body.InnerHtml = htmlBody;
-                htmlDoc.Body.InnerHtml = sb.ToString();
-            }
-
-            MyPrinter.SetPrintSettings();
-            //Form webForm = new Form();
-            //webForm.Width = 700;
-            //webForm.Height = 600;
-            //webForm.Controls.Add(wb);
-            //wb.Dock = DockStyle.Fill;
-            //wb.Show();
-            //webForm.Show();
-            wb.ShowPrintPreviewDialog();
+            int count = (int)wb.Tag;
+            StringBuilder sb = new StringBuilder();
+            for (; count > 0; count--)
+                sb.AppendLine(wb.Document.Body.InnerHtml);
+            wb.Document.Body.InnerHtml = sb.ToString();
+            MyPrinter.PrintWebPage(wb);
         }
+        #endregion
     }
 }

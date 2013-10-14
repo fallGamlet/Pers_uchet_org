@@ -277,8 +277,7 @@ namespace Pers_uchet_org
                 command.Parameters[IDocInfo.pDocTypeID].Value = doctype[IDocType.id];
             command.Parameters[IDocInfo.pSeries].Value = this.docseriesBox.Text.Trim();
             command.Parameters[IDocInfo.pNumber].Value = this.docnumBox.Text.Trim();
-            string dateStr = this.docdateBox.Value.ToShortDateString();
-            command.Parameters[IDocInfo.pDate].Value = dateStr;
+            command.Parameters[IDocInfo.pDate].Value = this.docdateBox.Value.ToString("yyyy-MM-dd");
             command.Parameters[IDocInfo.pOrg].Value = this.docorgBox.Text.Trim();
         }
 
@@ -349,7 +348,7 @@ namespace Pers_uchet_org
             command.Parameters[PersonInfo.pFname].Value = this.fNameBox.Text.Trim();
             command.Parameters[PersonInfo.pMname].Value = this.mNameBox.Text.Trim();
             command.Parameters[PersonInfo.pLname].Value = this.lNameBox.Text.Trim();
-            command.Parameters[PersonInfo.pBirthday].Value = this.birthdayBox.Value.ToShortDateString();
+            command.Parameters[PersonInfo.pBirthday].Value = this.birthdayBox.Value.ToString("yyyy-MM-dd"); ;
             command.Parameters[PersonInfo.pCitizen1].Value = citizen1ID;
             command.Parameters[PersonInfo.pCitizen2].Value = citizen2ID;
             command.Parameters[PersonInfo.pDocID].Value = _idocID;

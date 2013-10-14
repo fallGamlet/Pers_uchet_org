@@ -29,17 +29,15 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.editButton = new System.Windows.Forms.Button();
             this.removeButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.vostanovitButton = new System.Windows.Forms.Button();
             this.personView = new System.Windows.Forms.DataGridView();
-            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uvolitButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.checkallButton = new System.Windows.Forms.Button();
@@ -66,8 +64,8 @@
             this.label23 = new System.Windows.Forms.Label();
             this.docvidanBox = new System.Windows.Forms.TextBox();
             this.operatorBox = new System.Windows.Forms.TextBox();
-            this.izmenenoBox = new System.Windows.Forms.TextBox();
-            this.vnesenoBox = new System.Windows.Forms.TextBox();
+            this.editdateBox = new System.Windows.Forms.TextBox();
+            this.newdateBox = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -86,6 +84,10 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
+            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -96,8 +98,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.editButton);
             this.groupBox2.Controls.Add(this.removeButton);
             this.groupBox2.Controls.Add(this.addButton);
@@ -113,7 +115,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox2.Size = new System.Drawing.Size(369, 445);
+            this.groupBox2.Size = new System.Drawing.Size(408, 445);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
@@ -156,7 +158,7 @@
             // vostanovitButton
             // 
             this.vostanovitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.vostanovitButton.Location = new System.Drawing.Point(279, 419);
+            this.vostanovitButton.Location = new System.Drawing.Point(316, 419);
             this.vostanovitButton.Margin = new System.Windows.Forms.Padding(0);
             this.vostanovitButton.Name = "vostanovitButton";
             this.vostanovitButton.Size = new System.Drawing.Size(86, 23);
@@ -172,9 +174,9 @@
             this.personView.AllowUserToDeleteRows = false;
             this.personView.AllowUserToOrderColumns = true;
             this.personView.AllowUserToResizeRows = false;
-            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.personView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -189,60 +191,33 @@
             this.personView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
             this.numColumn,
-            this.fioColumn});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.personView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.fioColumn,
+            this.dismissdateColumn});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.personView.DefaultCellStyle = dataGridViewCellStyle3;
             this.personView.Location = new System.Drawing.Point(7, 67);
+            this.personView.MultiSelect = false;
             this.personView.Name = "personView";
             this.personView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.personView.RowHeadersVisible = false;
             this.personView.RowHeadersWidth = 15;
             this.personView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Info;
-            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.personView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.personView.Size = new System.Drawing.Size(358, 349);
+            this.personView.Size = new System.Drawing.Size(397, 349);
             this.personView.TabIndex = 4;
-            // 
-            // checkColumn
-            // 
-            this.checkColumn.DataPropertyName = "check";
-            this.checkColumn.Frozen = true;
-            this.checkColumn.HeaderText = "*";
-            this.checkColumn.Name = "checkColumn";
-            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.checkColumn.Width = 24;
-            // 
-            // numColumn
-            // 
-            this.numColumn.DataPropertyName = "soc_number";
-            this.numColumn.HeaderText = "Страховой №";
-            this.numColumn.MaxInputLength = 100;
-            this.numColumn.MinimumWidth = 80;
-            this.numColumn.Name = "numColumn";
-            this.numColumn.ReadOnly = true;
-            // 
-            // fioColumn
-            // 
-            this.fioColumn.DataPropertyName = "fio";
-            this.fioColumn.HeaderText = "Фамилия И.О.";
-            this.fioColumn.MaxInputLength = 150;
-            this.fioColumn.MinimumWidth = 200;
-            this.fioColumn.Name = "fioColumn";
-            this.fioColumn.ReadOnly = true;
-            this.fioColumn.Width = 210;
             // 
             // uvolitButton
             // 
             this.uvolitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.uvolitButton.Location = new System.Drawing.Point(215, 419);
+            this.uvolitButton.Location = new System.Drawing.Point(252, 419);
             this.uvolitButton.Margin = new System.Windows.Forms.Padding(0);
             this.uvolitButton.Name = "uvolitButton";
             this.uvolitButton.Size = new System.Drawing.Size(64, 23);
@@ -313,7 +288,7 @@
             // printButton
             // 
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.printButton.Location = new System.Drawing.Point(337, 419);
+            this.printButton.Location = new System.Drawing.Point(286, 419);
             this.printButton.Margin = new System.Windows.Forms.Padding(0);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(70, 23);
@@ -325,7 +300,7 @@
             // rabotaRButton
             // 
             this.rabotaRButton.AutoSize = true;
-            this.rabotaRButton.Location = new System.Drawing.Point(4, 17);
+            this.rabotaRButton.Location = new System.Drawing.Point(9, 17);
             this.rabotaRButton.Name = "rabotaRButton";
             this.rabotaRButton.Size = new System.Drawing.Size(90, 17);
             this.rabotaRButton.TabIndex = 3;
@@ -373,7 +348,7 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox4.Controls.Add(this.countBox);
             this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Location = new System.Drawing.Point(229, 457);
+            this.groupBox4.Location = new System.Drawing.Point(268, 457);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(143, 43);
@@ -384,7 +359,7 @@
             // 
             this.countBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.countBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.countBox.Location = new System.Drawing.Point(55, 19);
+            this.countBox.Location = new System.Drawing.Point(53, 19);
             this.countBox.MaxLength = 200;
             this.countBox.Name = "countBox";
             this.countBox.ReadOnly = true;
@@ -394,14 +369,14 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.zakrepButton);
             this.groupBox6.Controls.Add(this.printButton);
             this.groupBox6.Controls.Add(this.groupBox1);
             this.groupBox6.Controls.Add(this.operatorBox);
-            this.groupBox6.Controls.Add(this.izmenenoBox);
-            this.groupBox6.Controls.Add(this.vnesenoBox);
+            this.groupBox6.Controls.Add(this.editdateBox);
+            this.groupBox6.Controls.Add(this.newdateBox);
             this.groupBox6.Controls.Add(this.label20);
             this.groupBox6.Controls.Add(this.label16);
             this.groupBox6.Controls.Add(this.label15);
@@ -419,18 +394,18 @@
             this.groupBox6.Controls.Add(this.label10);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label6);
-            this.groupBox6.Location = new System.Drawing.Point(374, 10);
+            this.groupBox6.Location = new System.Drawing.Point(413, 10);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox6.Size = new System.Drawing.Size(416, 490);
+            this.groupBox6.Size = new System.Drawing.Size(365, 490);
             this.groupBox6.TabIndex = 4;
             this.groupBox6.TabStop = false;
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.documentBox);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.docseriaBox);
@@ -442,18 +417,20 @@
             this.groupBox1.Controls.Add(this.docvidanBox);
             this.groupBox1.Location = new System.Drawing.Point(4, 278);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(409, 127);
+            this.groupBox1.Size = new System.Drawing.Size(358, 127);
             this.groupBox1.TabIndex = 56;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Документ, удостоверяющий личность";
             // 
             // documentBox
             // 
+            this.documentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.documentBox.Location = new System.Drawing.Point(6, 19);
             this.documentBox.MaxLength = 200;
             this.documentBox.Name = "documentBox";
             this.documentBox.ReadOnly = true;
-            this.documentBox.Size = new System.Drawing.Size(397, 20);
+            this.documentBox.Size = new System.Drawing.Size(346, 20);
             this.documentBox.TabIndex = 12;
             // 
             // label18
@@ -521,17 +498,19 @@
             // 
             // docvidanBox
             // 
+            this.docvidanBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.docvidanBox.Location = new System.Drawing.Point(6, 98);
             this.docvidanBox.MaxLength = 200;
             this.docvidanBox.Name = "docvidanBox";
             this.docvidanBox.ReadOnly = true;
-            this.docvidanBox.Size = new System.Drawing.Size(397, 20);
+            this.docvidanBox.Size = new System.Drawing.Size(346, 20);
             this.docvidanBox.TabIndex = 16;
             // 
             // operatorBox
             // 
             this.operatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.operatorBox.Location = new System.Drawing.Point(253, 466);
+            this.operatorBox.Location = new System.Drawing.Point(202, 466);
             this.operatorBox.MaxLength = 200;
             this.operatorBox.Name = "operatorBox";
             this.operatorBox.ReadOnly = true;
@@ -539,33 +518,33 @@
             this.operatorBox.TabIndex = 19;
             this.operatorBox.Text = "Оператор";
             // 
-            // izmenenoBox
+            // editdateBox
             // 
-            this.izmenenoBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.izmenenoBox.Location = new System.Drawing.Point(172, 466);
-            this.izmenenoBox.MaxLength = 200;
-            this.izmenenoBox.Name = "izmenenoBox";
-            this.izmenenoBox.ReadOnly = true;
-            this.izmenenoBox.Size = new System.Drawing.Size(75, 20);
-            this.izmenenoBox.TabIndex = 18;
-            this.izmenenoBox.Text = "15.04.2013";
+            this.editdateBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.editdateBox.Location = new System.Drawing.Point(121, 466);
+            this.editdateBox.MaxLength = 200;
+            this.editdateBox.Name = "editdateBox";
+            this.editdateBox.ReadOnly = true;
+            this.editdateBox.Size = new System.Drawing.Size(75, 20);
+            this.editdateBox.TabIndex = 18;
+            this.editdateBox.Text = "15.04.2013";
             // 
-            // vnesenoBox
+            // newdateBox
             // 
-            this.vnesenoBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.vnesenoBox.Location = new System.Drawing.Point(91, 466);
-            this.vnesenoBox.MaxLength = 200;
-            this.vnesenoBox.Name = "vnesenoBox";
-            this.vnesenoBox.ReadOnly = true;
-            this.vnesenoBox.Size = new System.Drawing.Size(75, 20);
-            this.vnesenoBox.TabIndex = 17;
-            this.vnesenoBox.Text = "15.04.2013";
+            this.newdateBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.newdateBox.Location = new System.Drawing.Point(40, 466);
+            this.newdateBox.MaxLength = 200;
+            this.newdateBox.Name = "newdateBox";
+            this.newdateBox.ReadOnly = true;
+            this.newdateBox.Size = new System.Drawing.Size(75, 20);
+            this.newdateBox.TabIndex = 17;
+            this.newdateBox.Text = "15.04.2013";
             // 
             // label20
             // 
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(256, 450);
+            this.label20.Location = new System.Drawing.Point(205, 450);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(56, 13);
             this.label20.TabIndex = 54;
@@ -575,7 +554,7 @@
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(175, 450);
+            this.label16.Location = new System.Drawing.Point(124, 450);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 53;
@@ -585,7 +564,7 @@
             // 
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(97, 450);
+            this.label15.Location = new System.Drawing.Point(46, 450);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(50, 13);
             this.label15.TabIndex = 52;
@@ -593,49 +572,49 @@
             // 
             // adressprojivBox
             // 
-            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.adressprojivBox.Location = new System.Drawing.Point(10, 240);
             this.adressprojivBox.MaxLength = 500;
             this.adressprojivBox.Multiline = true;
             this.adressprojivBox.Name = "adressprojivBox";
             this.adressprojivBox.ReadOnly = true;
-            this.adressprojivBox.Size = new System.Drawing.Size(397, 32);
+            this.adressprojivBox.Size = new System.Drawing.Size(346, 32);
             this.adressprojivBox.TabIndex = 11;
             // 
             // adrespropiskiBox
             // 
-            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.adrespropiskiBox.Location = new System.Drawing.Point(10, 187);
             this.adrespropiskiBox.MaxLength = 500;
             this.adrespropiskiBox.Multiline = true;
             this.adrespropiskiBox.Name = "adrespropiskiBox";
             this.adrespropiskiBox.ReadOnly = true;
-            this.adrespropiskiBox.Size = new System.Drawing.Size(397, 34);
+            this.adrespropiskiBox.Size = new System.Drawing.Size(346, 34);
             this.adrespropiskiBox.TabIndex = 10;
             // 
             // mestorojdBox
             // 
-            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.mestorojdBox.Location = new System.Drawing.Point(10, 136);
             this.mestorojdBox.MaxLength = 500;
             this.mestorojdBox.Multiline = true;
             this.mestorojdBox.Name = "mestorojdBox";
             this.mestorojdBox.ReadOnly = true;
-            this.mestorojdBox.Size = new System.Drawing.Size(397, 32);
+            this.mestorojdBox.Size = new System.Drawing.Size(346, 32);
             this.mestorojdBox.TabIndex = 9;
             // 
             // grajdanstvoBox
             // 
-            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.grajdanstvoBox.Location = new System.Drawing.Point(205, 83);
             this.grajdanstvoBox.MaxLength = 200;
             this.grajdanstvoBox.Name = "grajdanstvoBox";
             this.grajdanstvoBox.ReadOnly = true;
-            this.grajdanstvoBox.Size = new System.Drawing.Size(202, 20);
+            this.grajdanstvoBox.Size = new System.Drawing.Size(151, 20);
             this.grajdanstvoBox.TabIndex = 8;
             // 
             // polBox
@@ -658,13 +637,13 @@
             // 
             // fioBox
             // 
-            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.fioBox.Location = new System.Drawing.Point(10, 33);
             this.fioBox.MaxLength = 200;
             this.fioBox.Name = "fioBox";
             this.fioBox.ReadOnly = true;
-            this.fioBox.Size = new System.Drawing.Size(397, 20);
+            this.fioBox.Size = new System.Drawing.Size(346, 20);
             this.fioBox.TabIndex = 5;
             // 
             // label17
@@ -733,7 +712,7 @@
             // closeButton
             // 
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.closeButton.Location = new System.Drawing.Point(697, 540);
+            this.closeButton.Location = new System.Drawing.Point(685, 540);
             this.closeButton.Margin = new System.Windows.Forms.Padding(0);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(93, 23);
@@ -742,11 +721,54 @@
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
+            // checkColumn
+            // 
+            this.checkColumn.DataPropertyName = "check";
+            this.checkColumn.Frozen = true;
+            this.checkColumn.HeaderText = "*";
+            this.checkColumn.Name = "checkColumn";
+            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.checkColumn.Width = 24;
+            // 
+            // numColumn
+            // 
+            this.numColumn.DataPropertyName = "soc_number";
+            this.numColumn.HeaderText = "Страховой №";
+            this.numColumn.MaxInputLength = 25;
+            this.numColumn.MinimumWidth = 80;
+            this.numColumn.Name = "numColumn";
+            this.numColumn.ReadOnly = true;
+            this.numColumn.Width = 90;
+            // 
+            // fioColumn
+            // 
+            this.fioColumn.DataPropertyName = "fio";
+            this.fioColumn.HeaderText = "Фамилия И.О.";
+            this.fioColumn.MaxInputLength = 150;
+            this.fioColumn.MinimumWidth = 190;
+            this.fioColumn.Name = "fioColumn";
+            this.fioColumn.ReadOnly = true;
+            this.fioColumn.Width = 210;
+            // 
+            // dismissdateColumn
+            // 
+            this.dismissdateColumn.DataPropertyName = "dismiss_date";
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dismissdateColumn.HeaderText = "Дата увольнения";
+            this.dismissdateColumn.MaxInputLength = 25;
+            this.dismissdateColumn.MinimumWidth = 50;
+            this.dismissdateColumn.Name = "dismissdateColumn";
+            this.dismissdateColumn.ReadOnly = true;
+            this.dismissdateColumn.Width = 70;
+            // 
             // AnketadataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(796, 572);
+            this.ClientSize = new System.Drawing.Size(784, 572);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox4);
@@ -820,8 +842,8 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button vostanovitButton;
         private System.Windows.Forms.Button uvolitButton;
-        private System.Windows.Forms.TextBox izmenenoBox;
-        private System.Windows.Forms.TextBox vnesenoBox;
+        private System.Windows.Forms.TextBox editdateBox;
+        private System.Windows.Forms.TextBox newdateBox;
         private System.Windows.Forms.TextBox operatorBox;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -829,5 +851,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn numColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fioColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dismissdateColumn;
     }
 }

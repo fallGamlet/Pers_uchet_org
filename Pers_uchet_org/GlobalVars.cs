@@ -15,6 +15,49 @@ namespace Pers_uchet_org
     {
         public enum ReportType { ADV1=0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3}
 
+        public static string GetReportUrl(ReportType type)
+        {
+            string url;
+            switch (type)
+            {
+                case MyXml.ReportType.ADV1:
+                    url = Properties.Settings.Default.report_adv1;
+                    break;
+                case MyXml.ReportType.ADV2:
+                    url = Properties.Settings.Default.report_adv2;
+                    break;
+                case MyXml.ReportType.ADV3:
+                    url = Properties.Settings.Default.report_adv3;
+                    break;
+                case MyXml.ReportType.ADV4:
+                    url = Properties.Settings.Default.report_adv4;
+                    break;
+                case MyXml.ReportType.ADV5:
+                    url = Properties.Settings.Default.report_adv5;
+                    break;
+                case MyXml.ReportType.ADV6:
+                    url = Properties.Settings.Default.report_adv6;
+                    break;
+                case MyXml.ReportType.SZV1:
+                    url = Properties.Settings.Default.report_szv1;
+                    break;
+                case MyXml.ReportType.SZV2:
+                    url = Properties.Settings.Default.report_szv2;
+                    break;
+                case MyXml.ReportType.SZV3:
+                    url = Properties.Settings.Default.report_szv3;
+                    break;
+                default:
+                    url = "/";
+                    break;
+            }
+            url = Path.GetFullPath(url);
+            if (File.Exists(url))
+                return url;
+            else
+                return null;
+        }
+
         static public XmlDocument PersonXml(DataRow row)
         {
             XmlDocument xml = new XmlDocument();
@@ -159,6 +202,8 @@ namespace Pers_uchet_org
             //
             return xml;
         }
+
+
     }
 
     public class MyPrinter
@@ -174,7 +219,7 @@ namespace Pers_uchet_org
             }
         }
 
-        static public void PrintWebPage(WebBrowser wb)
+        static public void ShowPrintPreviewWebPage(WebBrowser wb)
         {
             MyPrinter.SetPrintSettings();
             wb.ShowPrintPreviewDialog();
@@ -183,7 +228,7 @@ namespace Pers_uchet_org
         static public void ShowWebPage(WebBrowser wb)
         {
             Form webForm = new Form();
-            webForm.Width = 750;
+            webForm.Width = 850;
             webForm.Height = 600;
             webForm.Controls.Add(wb);
             wb.Dock = DockStyle.Fill;
@@ -201,43 +246,9 @@ namespace Pers_uchet_org
 
         static public void ShowWebPage(WebBrowser wb, MyXml.ReportType type)
         {
-            string url;
-            switch (type)
+            string url = MyXml.GetReportUrl(type);
+            if (url != null)
             {
-                case MyXml.ReportType.ADV1:
-                    url = Properties.Settings.Default.report_adv1;
-                    break;
-                case MyXml.ReportType.ADV2:
-                    url = Properties.Settings.Default.report_adv2;
-                    break;
-                case MyXml.ReportType.ADV3:
-                    url = Properties.Settings.Default.report_adv3;
-                    break;
-                case MyXml.ReportType.ADV4:
-                    url = Properties.Settings.Default.report_adv4;
-                    break;
-                case MyXml.ReportType.ADV5:
-                    url = Properties.Settings.Default.report_adv5;
-                    break;
-                case MyXml.ReportType.ADV6:
-                    url = Properties.Settings.Default.report_adv6;
-                    break;
-                case MyXml.ReportType.SZV1:
-                    url = Properties.Settings.Default.report_szv1;
-                    break;
-                case MyXml.ReportType.SZV2:
-                    url = Properties.Settings.Default.report_szv2;
-                    break;
-                case MyXml.ReportType.SZV3:
-                    url = Properties.Settings.Default.report_szv3;
-                    break;
-                default:
-                    url = "/";
-                    break;
-            }
-            if (File.Exists(url))
-            {
-                url = Path.GetFullPath(url);
                 ShowWebPage(wb, url);
             }
             else
@@ -246,7 +257,11 @@ namespace Pers_uchet_org
             }
         }
 
-        
+        static public void PrintWebPage(WebBrowser wb)
+        {
+            MyPrinter.SetPrintSettings();
+            wb.Print();
+        }
     }
 
     public class Operator
@@ -1049,22 +1064,22 @@ namespace Pers_uchet_org
 
         static public void SetStateToUvolit(long person_id, long org_id, DateTime date, string connectionStr)
         {
-            ChangeState(person_id, org_id, 0, date.ToShortDateString(), connectionStr);
+            ChangeState(person_id, org_id, 0, date.ToString("yyyy-MM-dd"), connectionStr);
         }
 
         static public void SetStateToUvolit(IEnumerable<long> personIDArr, long org_id, DateTime date, string connectionStr)
         {
-            ChangeState(personIDArr, org_id, 0, date.ToShortDateString(), connectionStr);
+            ChangeState(personIDArr, org_id, 0, date.ToString("yyyy-MM-dd"), connectionStr);
         }
 
         static public void SetStateToVosstanovit(long person_id, long org_id, string connectionStr)
         {
-            ChangeState(person_id, org_id, 1, "", connectionStr);
+            ChangeState(person_id, org_id, 1, null, connectionStr);
         }
 
         static public void SetStateToRabotaet(IEnumerable<long> personIDArr, long org_id, string connectionStr)
         {
-            ChangeState(personIDArr, org_id, 1, "", connectionStr);
+            ChangeState(personIDArr, org_id, 1, null, connectionStr);
         }
         #endregion
     }
@@ -1328,6 +1343,9 @@ namespace Pers_uchet_org
         static public string state = "state";
         static public string dismissDate = "dismiss_date";
         static public string orgID = "org_id";
+        static public string newDate = "new_date";
+        static public string editDate = "edit_date";
+        static public string operName = "operator";
         #endregion
 
 
@@ -1353,8 +1371,15 @@ namespace Pers_uchet_org
             table.Columns.Add(docDate, typeof(DateTime));
             table.Columns.Add(docOrg, typeof(string));
             table.Columns.Add(regAdress, typeof(string));
+            table.Columns.Add(regAdressZipcode, typeof(string));
             table.Columns.Add(factAdress, typeof(string));
+            table.Columns.Add(factAdressZipcode, typeof(string));
             table.Columns.Add(bornAdress, typeof(string));
+            table.Columns.Add(bornAdressZipcode, typeof(string));
+            table.Columns.Add(bornAdressCountry, typeof(string));
+            table.Columns.Add(bornAdressRegion, typeof(string));
+            table.Columns.Add(bornAdressArea, typeof(string));
+            table.Columns.Add(bornAdressCity, typeof(string));
             table.Columns.Add(citizen1, typeof(string));
             table.Columns.Add(citizen2, typeof(string));
             table.Columns.Add(citizen1ID, typeof(long));
@@ -1362,18 +1387,15 @@ namespace Pers_uchet_org
             table.Columns.Add(state, typeof(int));
             table.Columns.Add(dismissDate, typeof(DateTime));
             table.Columns.Add(orgID, typeof(long));
+            table.Columns.Add(newDate, typeof(DateTime));
+            table.Columns.Add(editDate, typeof(DateTime));
+            table.Columns.Add(operName, typeof(string));
             return table;
         }
 
         static public string GetSelectText()
         {
-            return string.Format("SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29} FROM {30} ",
-                                id, socNumber, fName, mName, lName, fio, birthday, sex,
-                                docType, docSeries, docNumber, docDate, docOrg,
-                                regAdressZipcode, regAdress, factAdressZipcode, factAdress, 
-                                bornAdress, bornAdressCountry, bornAdressArea, bornAdressRegion, bornAdressCity, bornAdressZipcode,
-                                citizen1, citizen2, citizen1ID, citizen2ID,
-                                state, dismissDate, orgID, tablename);
+            return string.Format("SELECT * FROM {0} ", tablename);
         }
 
         static public string GetSelectText(long org_id)
@@ -1415,22 +1437,12 @@ namespace Pers_uchet_org
             if (htmlDivList.Count > 0)
             {
                 StringBuilder sb = new StringBuilder(htmlDivList.Count * htmlDivList[0].Length);
-                //string htmlBody = "";
                 foreach (string div in htmlDivList)
-                    //htmlBody += div;
                     sb.Append(div);
-                //htmlDoc.Body.InnerHtml = htmlBody;
                 htmlDoc.Body.InnerHtml = sb.ToString();
             }
 
             MyPrinter.SetPrintSettings();
-            //Form webForm = new Form();
-            //webForm.Width = 700;
-            //webForm.Height = 600;
-            //webForm.Controls.Add(wb);
-            //wb.Dock = DockStyle.Fill;
-            //wb.Show();
-            //webForm.Show();
             wb.ShowPrintPreviewDialog();
         }
         #endregion
@@ -2293,4 +2305,56 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class FixData
+    {
+        public enum FixType { New=0, Edit=1 }
+        static public string tablename = "Fixdata";
+
+        #region
+        static public string id = "id";
+        static public string type = "type";
+        static public string table = "tablename";
+        static public string rowID = "row_id";
+        static public string oper = "operator";
+        static public string fixDate = "fix_date";
+        #endregion
+
+        #region
+        #endregion
+
+        #region
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT {0},{1},{2},{3} FROM {4} ", type, rowID, oper, fixDate, tablename);
+        }
+
+        static public string GetSelectText(string table_name)
+        {
+            return string.Format("{0} WHERE {1}={2} ", GetSelectText(), table, table_name);
+        }
+
+        static public string GetSelectText(string table_name, long row_id)
+        {
+            return string.Format("{0} AND {1}={2} ",GetSelectText(table_name), rowID, row_id);
+        }
+
+        static public string GetSelectText(string table_name, long row_id, FixType fix_type)
+        {
+            return string.Format("{0} AND {1}={2} ", GetSelectText(table_name, row_id), type, (int)fix_type);
+        }
+
+        static public string GetReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date)
+        {
+            return string.Format(" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6})VALUES((SELECT {1} FROM {0} WHERE {2}={7} AND {3}={8} AND {5}={9}),{7},{8},{9},{10},'{11}') ", 
+                                    tablename,id,type,table,rowID,oper,fixDate,
+                                    (int)fix_type, table_name, row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
+                                );
+        }
+
+        static public string GetDeleteText()
+        {
+            return string.Format("");
+        }
+        #endregion
+    }
 }

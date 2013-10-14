@@ -127,7 +127,7 @@ namespace Pers_uchet_org
                 return;
             }
             this.fioBox.Text = row[PersonView.fio] as string;
-            this.datarojdBox.Text = ((DateTime)row[PersonView.birthday]).ToShortDateString();
+            this.datarojdBox.Text = row[PersonView.birthday] == DBNull.Value ? "" : ((DateTime)row[PersonView.birthday]).ToShortDateString();
             this.grajdanstvoBox.Text = row[PersonView.citizen1] as string;
             this.grajdanstvoBox.Text += " "+ row[PersonView.citizen2] as string;
             object sexObj = row[PersonView.sex];
@@ -138,8 +138,12 @@ namespace Pers_uchet_org
             this.documentBox.Text = row[PersonView.docType] as string;
             this.docseriaBox.Text = row[PersonView.docSeries] as string;
             this.docnumBox.Text = row[PersonView.docNumber] as string;
-            this.docdataBox.Text = row[PersonView.docDate] as string;
+            this.docdataBox.Text = row[PersonView.docDate] == DBNull.Value ? "" : ((DateTime)row[PersonView.docDate]).ToShortDateString();
             this.docvidanBox.Text = row[PersonView.docOrg] as string;
+
+            this.newdateBox.Text = row[PersonView.newDate] == DBNull.Value ? "":((DateTime)row[PersonView.newDate]).ToShortDateString();
+            this.editdateBox.Text = row[PersonView.editDate] == DBNull.Value ? "" : ((DateTime)row[PersonView.editDate]).ToShortDateString();
+            this.operatorBox.Text = row[PersonView.operName] as string;
 
             object stateObj = row[PersonView.state];
             this.uvolitButton.Enabled = (stateObj is DBNull) || (int)stateObj == 1 ? true : false;
@@ -192,9 +196,6 @@ namespace Pers_uchet_org
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            //RemovePersonForm tmpform = new RemovePersonForm();
-            //tmpform.Owner = this;
-            //tmpform.ShowDialog(this);
             List<long> personIdList = new List<long>();
             List<DataRowView> personList = new List<DataRowView>();
             foreach (DataRowView personRow in _personBS)
@@ -354,11 +355,17 @@ namespace Pers_uchet_org
                     personRow.EndEdit();
                 }
             if (sender == this.uvolenRButton)
-                _personBS.Filter = string.Format("{0} = {1}", 
+            {
+                _personBS.Filter = string.Format("{0} = {1}",
                                         PersonView.state, (int)PersonView.PersonState.Uvolen);
+                this.dismissdateColumn.Visible = true;
+            }
             else if (sender == this.rabotaRButton)
-                _personBS.Filter = string.Format("{0} is NULL OR {0} = {1}", 
+            {
+                _personBS.Filter = string.Format("{0} is NULL OR {0} = {1}",
                                         PersonView.state, (int)PersonView.PersonState.Rabotaet);
+                this.dismissdateColumn.Visible = false;
+            }
         }
         #endregion
     }
