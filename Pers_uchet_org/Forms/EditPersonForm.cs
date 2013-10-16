@@ -13,28 +13,25 @@ namespace Pers_uchet_org
     public partial class EditPersonForm : Form
     {
         #region Поля
-        string _connection;
-        bool _el;
-        long _personID;
-        long _idocID;
-        long _regadrID;
-        long _factadrID;
-        long _bornadrID;
+        string _connection; // строка соединения с БД
+        string _operName;   // имя оператора, работающего с формой
+        long _orgID;        // ID организации, для для которой открыта форма
+        long _personID;     // ID персоны, котору редактируют, или создают (при создании сначала = -1)
+        long _idocID;       // ID записи документа
+        long _regadrID;     // ID записи рег. адреса
+        long _factadrID;    // ID записи фактического адреса
+        long _bornadrID;    // ID записи адреса рождения рождения
 
-        DataTable _doctypeTable;
-        DataTable _citizenTable;
+        DataTable _doctypeTable;    // таблица с типами документов
+        DataTable _citizenTable;    // таблица с странами (для гражданства)
 
         BindingSource _doctypeBS;
         BindingSource _citizen1BS;
         BindingSource _citizen2BS;
-
-        SQLiteCommand _select;
-        SQLiteCommand _insert;
-        SQLiteCommand _update;
         #endregion
 
         #region Конструктор и инициализатор
-        public EditPersonForm(string connection)
+        public EditPersonForm(string connection, string operatorName, long orgID)
         {
             InitializeComponent();
 
@@ -46,6 +43,14 @@ namespace Pers_uchet_org
             _regadrID = -1;
             _factadrID = -1;
             _bornadrID = -1;
+            _operName = operatorName;
+            if (_operName == null || _operName.Length <=0)
+            {
+                //MainForm.ShowWarningMessage("Не указан оператор.\nОбратитесь к разработчикам программы для решения данной проблемы", "Внимание");
+                //this.DialogResult = DialogResult.Abort;
+                _operName = "Mr.Unknown";
+            }
+            _orgID = orgID;
         }
 
         private void EditPersonForm_Load(object sender, EventArgs e)
@@ -91,6 +96,7 @@ namespace Pers_uchet_org
 
             _citizen2BS.MoveFirst();
             _doctypeBS.MoveFirst();
+            this.sexBox.SelectedIndex = this.sexBox.Items.Count > 0 ? 0 : -1;
         }
         #endregion
 
@@ -369,12 +375,16 @@ namespace Pers_uchet_org
             SQLiteCommand insFactadr = Adress.CreateInsertCommand();
             SQLiteCommand insBornadr = Adress.CreateInsertCommand();
             SQLiteCommand insIDoc = IDocInfo.CreateInsertCommand();
+            SQLiteCommand insFixdata = new SQLiteCommand();
+            SQLiteCommand insPersonOrg = new SQLiteCommand();
             // присвоение подключения командам
             insPerson.Connection = connection;
             insRegadr.Connection = connection;
             insFactadr.Connection = connection;
             insBornadr.Connection = connection;
             insIDoc.Connection = connection;
+            insFixdata.Connection = connection;
+            insPersonOrg.Connection = connection;
             // заполнение команд параметрами
             this.SetRegAdressValues(insRegadr);
             this.SetFactAdressValues(insFactadr);
@@ -385,7 +395,7 @@ namespace Pers_uchet_org
             // создание транзакции
             SQLiteTransaction transaction = connection.BeginTransaction();
             // присвоение транзакции командам
-            insFactadr.Transaction = insRegadr.Transaction = insBornadr.Transaction = insIDoc.Transaction = insPerson.Transaction = transaction;
+            insPersonOrg.Transaction = insFixdata.Transaction = insFactadr.Transaction = insRegadr.Transaction = insBornadr.Transaction = insIDoc.Transaction = insPerson.Transaction = transaction;
 
             // выполнение запросов для вставки данных в смежные таблицы
             // вставка прописки и получение ID записи
@@ -409,6 +419,12 @@ namespace Pers_uchet_org
             this.SetPersonValues(insPerson);
             // исполнение команды вставки Персоны
             _personID = (long)insPerson.ExecuteScalar();
+            // выполнение запроса на фиксацию факта создания записи
+            insFixdata.CommandText = FixData.GetReplaceText(PersonInfo.tablename, FixData.FixType.New, _personID, _operName, DateTime.Now);
+            insFixdata.ExecuteNonQuery();
+
+            insPersonOrg.CommandText = PersonOrg.GetInsertPersonOrgText(_personID, _orgID);
+            insPersonOrg.ExecuteScalar();
             // подтаверждение транзакции
             insRegadr.Transaction.Commit();
             // закрытие соединения
@@ -419,10 +435,10 @@ namespace Pers_uchet_org
         {
             // создание соединения с БД
             SQLiteConnection connection = new SQLiteConnection(_connection);
-            
+            // команда для фиксации факта изменения записи
+            SQLiteCommand fixdata = new SQLiteCommand(FixData.GetReplaceText(PersonInfo.tablename, FixData.FixType.Edit, _personID, _operName, DateTime.Now));
             // создание команд для обновления
             SQLiteCommand updatePerson = PersonInfo.CreateUpdateCommand();
-            
             // инициализация комманды для Адресса прописки
             SQLiteCommand commandRegadr = null;
             if (_regadrID == -1)
@@ -460,6 +476,7 @@ namespace Pers_uchet_org
             if (commandFactadr != null) commandFactadr.Connection = connection;
             commandBornadr.Connection = connection;
             commandIDoc.Connection = connection;
+            fixdata.Connection = connection;
             // заполнение команд параметрами
             this.SetRegAdressValues(commandRegadr);
             if (commandFactadr != null) this.SetFactAdressValues(commandFactadr);
@@ -471,7 +488,7 @@ namespace Pers_uchet_org
             // создание транзакции
             SQLiteTransaction transaction = connection.BeginTransaction();
             // присвоение транзакции командам
-            commandRegadr.Transaction = commandBornadr.Transaction = commandIDoc.Transaction = updatePerson.Transaction = transaction;
+            fixdata.Transaction = commandRegadr.Transaction = commandBornadr.Transaction = commandIDoc.Transaction = updatePerson.Transaction = transaction;
             if (commandFactadr != null) commandFactadr.Transaction = transaction;
             
             // выполнение запросов для вставки данных в смежные таблицы
@@ -515,7 +532,7 @@ namespace Pers_uchet_org
             this.SetPersonValues(updatePerson);
             // исполнение команды обновления Персоны
             updatePerson.ExecuteNonQuery();
-
+            fixdata.ExecuteNonQuery();
             // подтаверждение транзакции
             transaction.Commit();
             // закрытие соединения

@@ -874,8 +874,7 @@ namespace Pers_uchet_org
             comm.Parameters.Add(new SQLiteParameter(pId, DbType.UInt64, id));
             comm.Parameters.Add(new SQLiteParameter(pOrgID, DbType.UInt64, orgID));
             comm.Parameters.Add(new SQLiteParameter(pPersonID, DbType.UInt64, personID));
-            comm.CommandText = string.Format(@"INSERT INTO [{0}] ({1}, {2}) VALUES ({3}, {4});
-                                            SELECT last_indert_rowid();",
+            comm.CommandText = string.Format(@"INSERT INTO [{0}] ({1}, {2}) VALUES ({3}, {4}); SELECT last_indert_rowid();",
                                             tablename, orgID, personID, pOrgID, pPersonID);
             return comm;
         }
@@ -968,7 +967,12 @@ namespace Pers_uchet_org
 
         static public string GetChangeStateText(long person_id, long org_id, object stateVal, string date)
         {
-            return string.Format(" UPDATE [{0}] SET {1} = {2}, {3} = '{4}' WHERE {5} = {6} AND {7} = {8} ",
+            DateTime dateval;
+            if (DateTime.TryParse(date, out dateval))
+                date = string.Format("'{0}'", date);
+            else
+                date = "NULL";
+            return string.Format(" UPDATE [{0}] SET {1} = {2}, {3} = {4} WHERE {5} = {6} AND {7} = {8} ",
                                     tablename, state, stateVal, dismissDate, date,
                                     personID, person_id, orgID, org_id);
         }
@@ -980,7 +984,12 @@ namespace Pers_uchet_org
                 personsIdStr += val + ",";
             personsIdStr = personsIdStr.Remove(personsIdStr.Length - 1);
             personsIdStr += " )";
-            return string.Format("UPDATE {0} SET {1} = {2}, {3} = '{4}' WHERE {5} in {6} AND {7} = {8} ",
+            DateTime dateval;
+            if (DateTime.TryParse(date, out dateval))
+                date = string.Format("'{0}'", date);
+            else
+                date = "NULL";
+            return string.Format("UPDATE {0} SET {1} = {2}, {3} = {4} WHERE {5} in {6} AND {7} = {8} ",
                                     tablename, state, stateVal, dismissDate, date,
                                     personID, personsIdStr, orgID, org_id);
         }
@@ -1072,7 +1081,7 @@ namespace Pers_uchet_org
             ChangeState(personIDArr, org_id, 0, date.ToString("yyyy-MM-dd"), connectionStr);
         }
 
-        static public void SetStateToVosstanovit(long person_id, long org_id, string connectionStr)
+        static public void SetStateToRabotaet(long person_id, long org_id, string connectionStr)
         {
             ChangeState(person_id, org_id, 1, null, connectionStr);
         }
@@ -2305,15 +2314,60 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class Tables
+    {
+        // название таблицы в БД
+        static public string tablename = "Tables";
+
+        #region Название полей таблицы в БД
+        static public string id = "id";
+        static public string name = "name";
+        #endregion
+
+        #region Методы - статические
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long table_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), id, table_id);
+        }
+
+        static public string GetSelectText(string table_name)
+        {
+            return string.Format("{0} WHERE {1} = '{2}' ", GetSelectText(), name, table_name);
+        }
+
+        static public string GetSelectIDText(string table_name)
+        {
+            return string.Format(" SELECT {0} FROM {1} WHERE {2} = '{3}' ", tablename, id, name, table_name);
+        }
+
+        static public long GetID(string table_name, string connectionStr)
+        {
+            SQLiteConnection conn = new SQLiteConnection(connectionStr);
+            SQLiteCommand command = new SQLiteCommand(GetSelectIDText(table_name), conn);
+            object res; ;
+            conn.Open();
+            res = command.ExecuteScalar();
+            conn.Close();
+            return (long)res;
+        }
+        #endregion
+    }
+
     public class FixData
     {
         public enum FixType { New=0, Edit=1 }
+        // название таблицы в БД
         static public string tablename = "Fixdata";
 
-        #region
+        #region Название полей таблицы в БД
         static public string id = "id";
         static public string type = "type";
-        static public string table = "tablename";
+        static public string tableID = "table_id";
         static public string rowID = "row_id";
         static public string oper = "operator";
         static public string fixDate = "fix_date";
@@ -2322,7 +2376,7 @@ namespace Pers_uchet_org
         #region
         #endregion
 
-        #region
+        #region Методы - статические
         static public string GetSelectText()
         {
             return string.Format(" SELECT {0},{1},{2},{3} FROM {4} ", type, rowID, oper, fixDate, tablename);
@@ -2330,7 +2384,7 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(string table_name)
         {
-            return string.Format("{0} WHERE {1}={2} ", GetSelectText(), table, table_name);
+            return string.Format("{0} WHERE {1}={2} ", GetSelectText(), tableID, table_name);
         }
 
         static public string GetSelectText(string table_name, long row_id)
@@ -2345,8 +2399,10 @@ namespace Pers_uchet_org
 
         static public string GetReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date)
         {
-            return string.Format(" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6})VALUES((SELECT {1} FROM {0} WHERE {2}={7} AND {3}={8} AND {5}={9}),{7},{8},{9},{10},'{11}') ", 
-                                    tablename,id,type,table,rowID,oper,fixDate,
+            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES ((SELECT f.{1} FROM {0} f LEFT JOIN {7} t ON t.{8}=f.{3} AND t.{9}='{11}' WHERE f.{2}={10} AND {4}={12}),{10},'{11}',{12},'{13}','{14}') ", 
+                                    tablename,
+                                    id,type,tableID,rowID,oper,fixDate,
+                                    Tables.tablename, Tables.id, Tables.name,
                                     (int)fix_type, table_name, row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
                                 );
         }

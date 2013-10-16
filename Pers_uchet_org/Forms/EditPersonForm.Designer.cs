@@ -123,6 +123,7 @@
             // 
             // citizen1Box
             // 
+            this.citizen1Box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.citizen1Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.citizen1Box.FormattingEnabled = true;
             this.citizen1Box.Location = new System.Drawing.Point(9, 23);
@@ -217,6 +218,7 @@
             // 
             // citizen2Box
             // 
+            this.citizen2Box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.citizen2Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.citizen2Box.FormattingEnabled = true;
             this.citizen2Box.Location = new System.Drawing.Point(143, 23);
@@ -226,6 +228,7 @@
             // 
             // sexBox
             // 
+            this.sexBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sexBox.FormattingEnabled = true;
             this.sexBox.Items.AddRange(new object[] {
             "женский",
@@ -739,6 +742,7 @@
             // 
             // doctypeBox
             // 
+            this.doctypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.doctypeBox.FormattingEnabled = true;
             this.doctypeBox.Location = new System.Drawing.Point(85, 16);
             this.doctypeBox.Name = "doctypeBox";
