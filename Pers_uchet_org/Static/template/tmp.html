@@ -395,3 +395,355 @@
 	</div>
 </body>
 </html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Форма СЗВ-1</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setArrayValues = function(selectorStr, valStr) {
+			var valStr = valStr.toUpperCase();
+	 		var strLen = valStr.length;
+			var liArray = $(selectorStr);  
+			var liLen = liArray.length;
+			for(var i=0; i<liLen; i++) {
+				if(i < strLen)
+					liArray[i].innerText  = valStr.charAt(i);
+				else
+					liArray[i].innerText  = "";
+			};
+		};
+		var setBornDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			var mnum = parseInt(darr[1], 10);
+			var mname = months[mnum-1];
+			setArrayValues("#born_day li", darr[0]);
+			setArrayValues("#born_month li", mname);
+			setArrayValues("#born_year li", darr[2]);
+		};
+		var setRegAddress = function(valStr) {
+			var i = valStr.lastIndexOf(' ', 45)
+			$("#reg_address1").text(valStr.slice(0, i));
+			$("#reg_address2").text(valStr.slice(i));
+		};
+		var setPrintDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			$("#print_day").text(darr[0]);
+			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_year").text(darr[2]);
+		};
+	</script>
+	<style type="text/css">
+		body { background: #def; text-align: center; padding:0in;}
+		div {margin:0; padding:0;}
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin:0.7em auto; position:relative; }
+		#top {}
+		#title {}
+		#data {	text-align: left; padding:0; position: relative; margin:0;}
+		#footer {position:relative; margin:0; padding:0; text-align:left; border:none;}
+		
+		td, th {border-top:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
+		th {font-weight:normal;}
+		th p {padding:0px; margin:-3px auto;}
+		tr.kvartal > td {border-top:solid 1px #000;}
+		.mytable {width:100%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;}
+		
+		
+		ul { padding: 0px; }
+		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
+		
+		.container { border:solid 1px #999;	margin:5px 0; padding:5px 0; position: relative; }
+		.container ul li span, .myspan {
+			min-width: 1em;
+			width: 4em;
+			display: inline-block;
+			position: relative;
+			vertical-align: bottom;
+			zoom: 1;
+			*display: inline;
+		}
+		.data_title { position:absolute; top:0px; left:2px;	}
+		
+		ul.numlist { display: inline-block;	margin:0; padding:0; position:relative; zoom:1; *display: inline;}
+		ul.numlist li { display:inline-block; border:solid 1px #555; margin:1px; height:1.4em; width:1.4em; text-align:center; font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		
+		.absolute_box { position:absolute; right:0; top:0; width:1.6in; margin:0; border:solid 1px #000; }
+		.checkbox { display:inline-block; border:solid 1px #555; margin:1px; height:1em; width:1em; text-align:center; font-weight:bold;
+			zoom: 1;
+			*display: inline; 
+			vertical-align:bottom;
+		}
+				
+		.field_underline {	
+			display: inline-block;	
+			margin: 0 0.2em; 
+			padding:0;
+			border-bottom: solid 1px #555; 
+			position: relative;	
+			vertical-align: bottom;
+			text-align: center;
+			min-width: 1em;
+			height: 1em;
+			font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center;
+			zoom: 1;
+			*display: inline;
+		}
+	</style>
+	<style media="print">
+    .main_container {
+		margin-bottom:999em;
+		width:8.27in; 
+		height:11.69in;
+	}
+  </style>
+
+</head>
+<body>
+	<div class="main_container">
+		<div id="top">
+			<p style="text-align:right; margin:0; padding:0; font-size:small;">
+				Приложение №13 <br/>
+				к приказу министра социальной защиты и труда <br/>
+				Приднестровской Молдавской Республики от _____ г. №____
+			</p>
+			<p style="margin:0.3em auto;">
+				Единый государственный фонд социального страхования<br/>
+				Приднестровской Молдавской Республики
+			</p>
+			<p style="position:absolute; top:2em; left:0em;;font-size:small;"><u>Форма СЗВ-1</u></p>
+		</div>
+		
+		<div id="title">
+			<p style="margin: 5px"><b>Индивидуальные сведения о доходе и стаже застрахованного лица</b></p>
+		</div>
+		
+		<div id="data">			
+			<div id="data1" class="container" style="border:none;">
+				<ul style="margin:0;">
+					<li>
+						<span>Фамилия</span>
+						<ul id="l_name" class="numlist">
+							<li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span>Имя</span>
+						<ul id="f_name" class="numlist">
+							<li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span>Отчество</span>
+						<ul id="m_name" class="numlist">
+							<li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span class="myspan" style="width:10.6em;">Номер лицевого счета</span>
+						<ul id="soc_num" class="numlist">
+							<li/><li/> <li style="border:none; margin:0;"> &#151; </li> <li/><li/><li/><li/><li/><li/><li/><li/>
+						</ul>
+					</li>
+					<li>
+						<span class="myspan" style="width:16em;">Код категории застрахованног лица</span>
+						<div id="category_code" class="field_underline" style="width:21.3em;"></div>
+					</li>
+				</ul>
+				<br/>
+				<b>Сведения о страхователе:</b>
+				<ul style="padding-left:1em; margin:0;">
+					<li>Регистрационный номер в Фонде <ul id="org_regnum" class="numlist"><li/><li/><li/><li/><li/><li/><li/></ul> </li>
+					<li>наименование <div id="org_name" class="field_underline" style="width:30em;"></div> </li>
+				</ul>
+				<br/>
+				Сумма обязательного страхового взноса
+				<ul id="soc_pay_rub" class="numlist"><li/><li/><li/><li/><li/></ul> руб.
+				<ul id="soc_pay_kop" class="numlist"><li/><li/></ul> коп.
+				
+				<div class="absolute_box" style="height:7.7em;">
+					<center>
+						<b>Тип формы</b> <br/>
+						(<small>отметить символом</small> <b>X</b>) <br/>
+					</center>
+					<div id="form_type" style="padding:0 0.3em;">
+						<div class="checkbox"></div> <small>исходная</small> <br/>
+						<div class="checkbox"></div> <small>корректирующая</small> <br/>
+						<div class="checkbox"></div> <small>отменяющая</small> <br/>
+						<div class="checkbox"></div> <small>назначение пенсии</small>
+					</div>
+				</div>
+				<div class="absolute_box" style="top:8.25em; height:5.1em;">
+					<center>
+						<b>Место работы</b> <br/>
+						(<small>отметить символом</small> <b>X</b>) <br/>
+					</center>
+					<div id="work_place" style="padding:0 0.3em;">
+						<div class="checkbox"></div> <small>основное</small> <br/>
+						<div class="checkbox"></div> <small>не основное</small>
+					</div>
+				</div>
+				<div class="absolute_box" style="top:13.9em; height:3.1em;">
+					<center>
+						<b>Отчетный период</b> <br/>
+					</center>
+					<ul id="rep_year" class="numlist" style="padding-left:0.3em;"><li/><li/><li/><li/></ul> год
+				</div>
+			</div>
+			
+			<table id="payment" class="mytable" cellspacing=0 cellpadding=1>
+			<thead>
+				<tr style="border-top:solid 3px #3b3;">
+					<th rowspan=2 style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
+					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
+					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма выплат, учитываемых для назначения пенсий</th>
+					<th colspan=2 style="width:10em;  padding:0.8em 5px;">Сумма обязательного страхового взноса</th>
+					<th rowspan=2 style="width:6em;">Всего фактически отработанных дней</th>
+				</tr>
+				<tr>
+					<th style="width:7em;">Руб.</th>
+					<th style="width:3em;">Коп.</th>
+					<th style="width:7em;">Руб.</th>
+					<th style="width:3em;">Коп.</th>
+					<th style="width:7em;">Руб.</th>
+					<th style="width:3em;">Коп.</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="kvartal">
+					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="kvartal">
+					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="kvartal">
+					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="kvartal">
+					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="kvartal">
+					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+			</tbody>
+			</table>		
+			
+			<span class="myspan" style="width:19em; ">Данные о стаже в отчетном году (периоды)</span> 
+			<div id="data_staj_1" class="field_underline" style="width:29em;"></div>
+			<div id="data_staj_2" class="field_underline" style="width:48.3em; margin-bottom:0.5em;"></div>
+			
+			<b>Специальный стаж работы за отчетный период</b>
+			
+			<table class="mytable" cellspacing=0 cellpadding=1>
+			<thead style='display:table-header-group'>
+				<tr>
+					<th rowspan=2 style="min-width:1em; width:2em; padding:5px;"><p>№</p><p>п/п</p></th>
+					<th rowspan=2 style="">Начало периода (дд.мм.гггг)</th>
+					<th rowspan=2 style="">Конец периода (дд.мм.гггг)</th>
+					<th rowspan=2 style="">Особые условия труда (код)</th>
+					<th colspan=2 style="">Исчисляемый страховой стаж</th>
+					<th colspan=2 style="">Выслуга лет</th>
+				</tr>
+				<tr>
+					<th>основание (код)</th>
+					<th>дополнительные сведения</th>
+					<th>основание (код)</th>
+					<th>дополнительные сведения</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+			</tbody>
+			</table>
+			
+			Сведения за иной период, засчитываемые в страховой стаж:<br/>
+			<small>
+				<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
+				<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
+				<br/>
+				<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
+				<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
+			</small>
+		</div>
+			
+		<div id="footer">		
+			<div style="padding-bottom:1em; text-align:center;">
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 17em;"></div> <br/>
+					<span style="font-size:small; text-align:left;">Наименование должности руководителя</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+			
+			<div style="padding-bottom:1em; text-align:center;">
+				<span style="font-size:small; width:21.7em; display:inline-block; zoom:1; *display:inline; text-align:left;">Бухгалтер</span>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+			
+			<div id="print_date" style="position:relative; margin:1em 0 0; height:1.5em;">
+				<span style="margin-right:1em; font-size:small;">Дата заполнения</span>
+				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
+				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 
+				<div id="print_year" class="field_underline" style="min-width: 5em;"></div> г.
+			</div>
+		</div>
+	</div>
+</body>
+</html>

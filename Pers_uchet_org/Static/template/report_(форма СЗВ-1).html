@@ -50,7 +50,7 @@
 		td, th {border-top:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
 		th {font-weight:normal;}
 		th p {padding:0px; margin:-3px auto;}
-		tr.cvartal > td {border-top:solid 1px #000;}
+		tr.kvartal > td {border-top:solid 1px #000;}
 		.mytable {width:100%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;}
 		
 		
@@ -158,7 +158,7 @@
 					</li>
 					<li>
 						<span class="myspan" style="width:16em;">Код категории застрахованног лица</span>
-						<div class="field_underline" style="width:21.3em;"></div>
+						<div id="category_code" class="field_underline" style="width:21.3em;"></div>
 					</li>
 				</ul>
 				<br/>
@@ -169,15 +169,15 @@
 				</ul>
 				<br/>
 				Сумма обязательного страхового взноса
-				<ul class="numlist"><li/><li/><li/><li/><li/></ul> руб.
-				<ul class="numlist"><li/><li/></ul> коп.
+				<ul id="soc_pay_rub" class="numlist"><li/><li/><li/><li/><li/></ul> руб.
+				<ul id="soc_pay_kop" class="numlist"><li/><li/></ul> коп.
 				
 				<div class="absolute_box" style="height:7.7em;">
 					<center>
 						<b>Тип формы</b> <br/>
 						(<small>отметить символом</small> <b>X</b>) <br/>
 					</center>
-					<div style="padding:0 0.3em;">
+					<div id="form_type" style="padding:0 0.3em;">
 						<div class="checkbox"></div> <small>исходная</small> <br/>
 						<div class="checkbox"></div> <small>корректирующая</small> <br/>
 						<div class="checkbox"></div> <small>отменяющая</small> <br/>
@@ -189,7 +189,7 @@
 						<b>Место работы</b> <br/>
 						(<small>отметить символом</small> <b>X</b>) <br/>
 					</center>
-					<div style="padding:0 0.3em;">
+					<div id="work_place" style="padding:0 0.3em;">
 						<div class="checkbox"></div> <small>основное</small> <br/>
 						<div class="checkbox"></div> <small>не основное</small>
 					</div>
@@ -198,11 +198,12 @@
 					<center>
 						<b>Отчетный период</b> <br/>
 					</center>
-					<ul class="numlist" style="padding-left:0.3em;"><li/><li/><li/><li/></ul> год
+					<ul id="rep_year" class="numlist" style="padding-left:0.3em;"><li/><li/><li/><li/></ul> год
 				</div>
 			</div>
 			
-			<table class="mytable" cellspacing=0 cellpadding=1>
+			<table id="payment" class="mytable" cellspacing=0 cellpadding=1>
+			<thead>
 				<tr style="border-top:solid 3px #3b3;">
 					<th rowspan=2 style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
 					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
@@ -218,7 +219,9 @@
 					<th style="width:7em;">Руб.</th>
 					<th style="width:3em;">Коп.</th>
 				</tr>
-				<tr class="cvartal">
+			</thead>
+			<tbody>
+				<tr class="kvartal">
 					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -227,7 +230,7 @@
 				<tr>
 					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr class="cvartal">
+				<tr class="kvartal">
 					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -236,7 +239,7 @@
 				<tr>
 					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr class="cvartal">
+				<tr class="kvartal">
 					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -245,7 +248,7 @@
 				<tr>
 					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr class="cvartal">
+				<tr class="kvartal">
 					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -254,9 +257,10 @@
 				<tr>
 					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr class="cvartal">
+				<tr class="kvartal">
 					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
+			</tbody>
 			</table>		
 			
 			<span class="myspan" style="width:19em; ">Данные о стаже в отчетном году (периоды)</span> 

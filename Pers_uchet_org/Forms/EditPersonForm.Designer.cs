@@ -116,19 +116,20 @@
             this.closeButton.Location = new System.Drawing.Point(522, 537);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 10;
+            this.closeButton.TabIndex = 8;
             this.closeButton.Text = "Отменить";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // citizen1Box
             // 
+            this.citizen1Box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.citizen1Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.citizen1Box.FormattingEnabled = true;
             this.citizen1Box.Location = new System.Drawing.Point(9, 23);
             this.citizen1Box.Name = "citizen1Box";
             this.citizen1Box.Size = new System.Drawing.Size(128, 21);
-            this.citizen1Box.TabIndex = 8;
+            this.citizen1Box.TabIndex = 1;
             // 
             // birthdayBox
             // 
@@ -217,15 +218,17 @@
             // 
             // citizen2Box
             // 
+            this.citizen2Box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.citizen2Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.citizen2Box.FormattingEnabled = true;
             this.citizen2Box.Location = new System.Drawing.Point(143, 23);
             this.citizen2Box.Name = "citizen2Box";
             this.citizen2Box.Size = new System.Drawing.Size(122, 21);
-            this.citizen2Box.TabIndex = 9;
+            this.citizen2Box.TabIndex = 2;
             // 
             // sexBox
             // 
+            this.sexBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sexBox.FormattingEnabled = true;
             this.sexBox.Items.AddRange(new object[] {
             "женский",
@@ -345,7 +348,7 @@
             this.saveButton.Location = new System.Drawing.Point(441, 537);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 9;
+            this.saveButton.TabIndex = 7;
             this.saveButton.Text = "Принять";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -406,7 +409,7 @@
             this.regCityBox.Location = new System.Drawing.Point(77, 97);
             this.regCityBox.Name = "regCityBox";
             this.regCityBox.Size = new System.Drawing.Size(200, 20);
-            this.regCityBox.TabIndex = 5;
+            this.regCityBox.TabIndex = 4;
             // 
             // label21
             // 
@@ -470,7 +473,7 @@
             this.regIndexBox.Location = new System.Drawing.Point(77, 123);
             this.regIndexBox.Name = "regIndexBox";
             this.regIndexBox.Size = new System.Drawing.Size(200, 20);
-            this.regIndexBox.TabIndex = 6;
+            this.regIndexBox.TabIndex = 5;
             // 
             // label25
             // 
@@ -739,6 +742,7 @@
             // 
             // doctypeBox
             // 
+            this.doctypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.doctypeBox.FormattingEnabled = true;
             this.doctypeBox.Location = new System.Drawing.Point(85, 16);
             this.doctypeBox.Name = "doctypeBox";
