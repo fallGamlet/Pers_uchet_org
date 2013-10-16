@@ -41,16 +41,16 @@
             this.label29 = new System.Windows.Forms.Label();
             this.professionRichTextBox = new System.Windows.Forms.RichTextBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
             this.servYearBaseComboBox = new System.Windows.Forms.ComboBox();
-            this.label24 = new System.Windows.Forms.Label();
             this.stajBaseComboBox = new System.Windows.Forms.ComboBox();
-            this.label23 = new System.Windows.Forms.Label();
             this.partConditionComboBox = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.beginDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthsNumUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.daysNumUpDown)).BeginInit();
@@ -203,58 +203,31 @@
             this.label31.TabIndex = 33;
             this.label31.Text = "Должность (профессия)";
             // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(12, 115);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(133, 13);
-            this.label25.TabIndex = 32;
-            this.label25.Text = "Выслуга лет (основание)";
-            // 
             // servYearBaseComboBox
             // 
             this.servYearBaseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.servYearBaseComboBox.FormattingEnabled = true;
-            this.servYearBaseComboBox.Location = new System.Drawing.Point(175, 112);
+            this.servYearBaseComboBox.Location = new System.Drawing.Point(187, 112);
             this.servYearBaseComboBox.Name = "servYearBaseComboBox";
-            this.servYearBaseComboBox.Size = new System.Drawing.Size(168, 21);
+            this.servYearBaseComboBox.Size = new System.Drawing.Size(156, 21);
             this.servYearBaseComboBox.TabIndex = 31;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(12, 88);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(146, 13);
-            this.label24.TabIndex = 30;
-            this.label24.Text = "Трудовой стаж (основание)";
             // 
             // stajBaseComboBox
             // 
             this.stajBaseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.stajBaseComboBox.FormattingEnabled = true;
-            this.stajBaseComboBox.Location = new System.Drawing.Point(175, 85);
+            this.stajBaseComboBox.Location = new System.Drawing.Point(187, 85);
             this.stajBaseComboBox.Name = "stajBaseComboBox";
-            this.stajBaseComboBox.Size = new System.Drawing.Size(168, 21);
+            this.stajBaseComboBox.Size = new System.Drawing.Size(156, 21);
             this.stajBaseComboBox.TabIndex = 29;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(12, 61);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(149, 13);
-            this.label23.TabIndex = 28;
-            this.label23.Text = "Особые условия труда (код)";
             // 
             // partConditionComboBox
             // 
             this.partConditionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partConditionComboBox.FormattingEnabled = true;
-            this.partConditionComboBox.Location = new System.Drawing.Point(175, 58);
+            this.partConditionComboBox.Location = new System.Drawing.Point(187, 58);
             this.partConditionComboBox.Name = "partConditionComboBox";
-            this.partConditionComboBox.Size = new System.Drawing.Size(168, 21);
+            this.partConditionComboBox.Size = new System.Drawing.Size(156, 21);
             this.partConditionComboBox.TabIndex = 27;
             // 
             // label22
@@ -278,32 +251,67 @@
             // endDateTimePicker
             // 
             this.endDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.endDateTimePicker.Location = new System.Drawing.Point(175, 32);
+            this.endDateTimePicker.Location = new System.Drawing.Point(187, 32);
             this.endDateTimePicker.Name = "endDateTimePicker";
-            this.endDateTimePicker.Size = new System.Drawing.Size(168, 20);
+            this.endDateTimePicker.Size = new System.Drawing.Size(156, 20);
             this.endDateTimePicker.TabIndex = 24;
+            this.endDateTimePicker.ValueChanged += new System.EventHandler(this.endDateTimePicker_ValueChanged);
             // 
             // beginDateTimePicker
             // 
             this.beginDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.beginDateTimePicker.Location = new System.Drawing.Point(175, 6);
+            this.beginDateTimePicker.Location = new System.Drawing.Point(187, 6);
             this.beginDateTimePicker.Name = "beginDateTimePicker";
-            this.beginDateTimePicker.Size = new System.Drawing.Size(168, 20);
+            this.beginDateTimePicker.Size = new System.Drawing.Size(156, 20);
             this.beginDateTimePicker.TabIndex = 23;
+            this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(15, 59);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(167, 17);
+            this.radioButton1.TabIndex = 36;
+            this.radioButton1.Text = "Особые условия труда (код)";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(15, 86);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(164, 17);
+            this.radioButton2.TabIndex = 37;
+            this.radioButton2.Text = "Трудовой стаж (основание)";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(15, 113);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(151, 17);
+            this.radioButton3.TabIndex = 38;
+            this.radioButton3.Text = "Выслуга лет (основание)";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // AddEditSpecialPeriodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 318);
+            this.Controls.Add(this.radioButton3);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.professionRichTextBox);
             this.Controls.Add(this.label31);
-            this.Controls.Add(this.label25);
             this.Controls.Add(this.servYearBaseComboBox);
-            this.Controls.Add(this.label24);
             this.Controls.Add(this.stajBaseComboBox);
-            this.Controls.Add(this.label23);
             this.Controls.Add(this.partConditionComboBox);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
@@ -317,6 +325,7 @@
             this.Name = "AddEditSpecialPeriodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление периода специального стажа";
+            this.Load += new System.EventHandler(this.AddEditSpecialPeriodForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthsNumUpDown)).EndInit();
@@ -343,15 +352,15 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.RichTextBox professionRichTextBox;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox servYearBaseComboBox;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox stajBaseComboBox;
-        private System.Windows.Forms.Label label23;
         private System.Windows.Forms.ComboBox partConditionComboBox;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.DateTimePicker endDateTimePicker;
         private System.Windows.Forms.DateTimePicker beginDateTimePicker;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
     }
 }

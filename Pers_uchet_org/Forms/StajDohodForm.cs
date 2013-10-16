@@ -128,6 +128,11 @@ namespace Pers_uchet_org
                 reestrButton.Enabled = false;
                 calculateButton.Enabled = false;
                 printButton.Enabled = false;
+
+                if (_docsTable != null)
+                    //очистка таблицы 
+                    _docsTable.Clear();
+                addDocButton.Enabled = false;
                 return;
             }
             else
@@ -138,6 +143,8 @@ namespace Pers_uchet_org
                 reestrButton.Enabled = true;
                 calculateButton.Enabled = true;
                 printButton.Enabled = true;
+
+                addDocButton.Enabled = true;
             }
 
             //throw new NotImplementedException();
@@ -298,7 +305,8 @@ namespace Pers_uchet_org
             ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, RepYear, _connection);
             if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
+                bool isNew = true;
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, RepYear, personId, flagDoc, isNew, _connection);
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 { }
             }

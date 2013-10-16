@@ -1411,7 +1411,12 @@ namespace Pers_uchet_org
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1}", orgID, org_id);
         }
-        
+
+        static public string GetSelectText(long org_id, long person_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} AND {2} = {3}", orgID, org_id, id, person_id);
+        }
+
         static public string GetSelectText(long org_id, int rep_year)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1} AND ({2} = 1 or ( {2} = 0 AND ({3} IS NUll OR strftime('%Y',{3}) >= {4}))) ", orgID, org_id, state, dismissDate, rep_year);
@@ -1513,7 +1518,7 @@ namespace Pers_uchet_org
         static public string socNumber = "soc_number";
         static public string fio = "fio";
         static public string state = "state";
-        static public string dismisYear = "dismiss_year";
+        static public string dismisDate = "dismiss_date";
         static public string orgID = "org_id";
         #endregion
 
@@ -1525,7 +1530,7 @@ namespace Pers_uchet_org
             table.Columns.Add(socNumber, typeof(string));
             table.Columns.Add(fio, typeof(string));
             table.Columns.Add(state, typeof(int));
-            table.Columns.Add(dismisYear, typeof(DateTime));
+            table.Columns.Add(dismisDate, typeof(DateTime));
             table.Columns.Add(orgID, typeof(long));
             return table;
         }
@@ -1533,7 +1538,7 @@ namespace Pers_uchet_org
         static public string GetSelectText()
         {
             return string.Format("SELECT {0},{1},{2},{3},{4},{5} FROM {6}",
-                                id, socNumber, fio, state, dismisYear, orgID, tablename);
+                                id, socNumber, fio, state, dismisDate, orgID, tablename);
         }
 
         static public string GetSelectText(long org_id)
@@ -1543,15 +1548,15 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(long org_id, int rep_year)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1} AND ({2} = 1 or ( {2} = 0 AND ({3} IS NUll OR {3} >= {4}))) ", orgID, org_id, state, dismisYear, rep_year);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} AND ({2} = 1 or ( {2} = 0 AND ({3} IS NUll OR {3} >= date('{4}-01-01')))) ", orgID, org_id, state, dismisDate, rep_year);
         }
 
         static public string GetSelectRawPersonsText(long org_id, int rep_year)
         {
-            return GetSelectText() + string.Format(@" WHERE {0} = {1} AND ({2} = {3} or ( {2} = {4} AND ({5} IS NUll OR {5} >= {6})))
+            return GetSelectText() + string.Format(@" WHERE {0} = {1} AND ({2} = {3} or ( {2} = {4} AND ({5} IS NUll OR {5} >= date('{6}-01-01'))))
 	AND {7} NOT IN (SELECT d.[{8}] FROM {9} d
 	INNER JOIN {10} l ON d.[{11}] = l.[{12}] AND  l.[{13}] = {14} AND l.[{15}] = {6})",
-         orgID, org_id, state, (int)PersonState.Rabotaet, (int)PersonState.Uvolen, dismisYear, rep_year,
+         orgID, org_id, state, (int)PersonState.Rabotaet, (int)PersonState.Uvolen, dismisDate, rep_year,
          id, Docs.personID, Docs.tablename, Lists.tablename, Docs.listId, Lists.id, Lists.orgID, org_id, Lists.repYear);
         }
         #endregion
@@ -1894,6 +1899,7 @@ namespace Pers_uchet_org
         static public string value = "value";
         static public string dateBegin = "date_begin";
         static public string dateEnd = "date_end";
+        static public string obligatoryIsEnabled = "obligatory_is_enabled";
         #endregion
 
         #region Методы - статические
@@ -1903,17 +1909,134 @@ namespace Pers_uchet_org
             table.Columns.Add(id, typeof(long));
             table.Columns.Add(classificatorID, typeof(long));
             table.Columns.Add(privilegeID, typeof(long));
-            table.Columns.Add(value, typeof(string));
+            table.Columns.Add(value, typeof(double));
             table.Columns.Add(dateBegin, typeof(string));
             table.Columns.Add(dateEnd, typeof(string));
+            table.Columns.Add(obligatoryIsEnabled, typeof(string));
             return table;
         }
 
         static public string GetSelectText()
         {
-            return string.Format(@" SELECT {7}.{0} as {0},{1},{2}, {8}.{10} as {3},{4},{5},{6} FROM {7} LEFT JOIN {8} ON {7}.{2} = {8}.{9} ",
+            return string.Format(@" SELECT {7}.{0} as {0},{1},{2}, {8}.{10} as {3}, round(CAST(REPLACE({4},',','.') AS real) * 100 , 2) as {4},{5},{6} FROM {7} LEFT JOIN {8} ON {7}.{2} = {8}.{9} ",
                                 id, classificatorID, privilegeID, privilegeName, value, dateBegin, dateEnd, tablename, Privilege.tablename, Privilege.id, Privilege.name);
         }
+        #endregion
+    }
+
+    public class ClasspercentView
+    {
+        // название таблицы в БД
+        static public string tablename = "Classpercent_View";
+
+        #region Название полей таблицы в БД
+        static public string id = "id";
+        static public string classificatorID = "classificator_id";
+        static public string code = "code";
+        static public string name = "name";
+        static public string description = "description";
+        static public string privilegeID = "privilege_id";
+        static public string privilegeName = "privilege_name";
+        static public string value = "value";
+        static public string dateBegin = "date_begin";
+        static public string dateEnd = "date_end";
+        static public string obligatoryIsEnabled = "obligatory_is_enabled";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(classificatorID, typeof(long));
+            table.Columns.Add(code, typeof(string));
+            table.Columns.Add(name, typeof(string));
+            table.Columns.Add(description, typeof(string));
+            table.Columns.Add(privilegeID, typeof(long));
+            table.Columns.Add(privilegeName, typeof(string));
+            table.Columns.Add(value, typeof(double));
+            table.Columns.Add(dateBegin, typeof(DateTime));
+            table.Columns.Add(dateEnd, typeof(DateTime));
+            table.Columns.Add(obligatoryIsEnabled, typeof(string));
+
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format(@" SELECT * FROM {0}", tablename);
+        }
+
+        static public string GetSelectClassgroupOneText(DateTime now)
+        {
+            string commandStr = string.Format(@"SELECT *  FROM {0} WHERE (strftime('%s',ifnull({1},'1990-01-01')) - strftime('%s','{2}') <= 0) 
+                AND (strftime('%s',ifnull({3},'2999-01-01')) - strftime('%s','{2}') >= 0)
+                AND {4} >=100 AND {4} < 200", tablename, dateBegin, now.ToString("yyyy-MM-dd"), dateEnd, classificatorID);
+
+            return commandStr;
+        }
+
+        static public string GetSelectClassgroupTwoText(DateTime now)
+        {
+            string commandStr = string.Format(@"SELECT *  FROM {0} WHERE (strftime('%s',ifnull({1},'1990-01-01')) - strftime('%s','{2}') <= 0) 
+                AND (strftime('%s',ifnull({3},'2999-01-01')) - strftime('%s','{2}') >= 0)
+                AND {4} >=200 AND {4} < 300", tablename, dateBegin, now.ToString("yyyy-MM-dd"), dateEnd, classificatorID);
+
+            return commandStr;
+        }
+
+        static public string GetSelectClassgroupThreeText(DateTime now)
+        {
+            string commandStr = string.Format(@"SELECT *  FROM {0} WHERE (strftime('%s',ifnull({1},'1990-01-01')) - strftime('%s','{2}') <= 0) 
+                AND (strftime('%s',ifnull({3},'2999-01-01')) - strftime('%s','{2}') >= 0)
+                AND {4} >=300 AND {4} < 400", tablename, dateBegin, now.ToString("yyyy-MM-dd"), dateEnd, classificatorID);
+
+            return commandStr;
+        }
+
+        static public string GetSelectClassgroupFourText(DateTime now)
+        {
+            string commandStr = string.Format(@"SELECT *  FROM {0} WHERE (strftime('%s',ifnull({1},'1990-01-01')) - strftime('%s','{2}') <= 0) 
+                AND (strftime('%s',ifnull({3},'2999-01-01')) - strftime('%s','{2}') >= 0)
+                AND {4} >=400 AND {4} < 500", tablename, dateBegin, now.ToString("yyyy-MM-dd"), dateEnd, classificatorID);
+
+            return commandStr;
+        }
+
+        static public string GetSelectClassgroupFiveText(DateTime now)
+        {
+            string commandStr = string.Format(@"SELECT *  FROM {0} WHERE (strftime('%s',ifnull({1},'1990-01-01')) - strftime('%s','{2}') <= 0) 
+                AND (strftime('%s',ifnull({3},'2999-01-01')) - strftime('%s','{2}') >= 0)
+                AND {4} >=500 AND {4} < 600", tablename, dateBegin, now.ToString("yyyy-MM-dd"), dateEnd, classificatorID);
+
+            return commandStr;
+        }
+
+        static public string GetBindingSourceFilterFor100(DateTime now)
+        {
+            return string.Format("{0}<='{2}' AND ({1} >= '{2}' OR {1} IS NULL) AND {3} >=100 AND {3} < 200", ClasspercentView.dateBegin, ClasspercentView.dateEnd, now.ToString("yyyy-MM-dd"), ClasspercentView.classificatorID);
+        }
+
+        static public string GetBindingSourceFilterFor200(DateTime now)
+        {
+            return string.Format("{0}<='{2}' AND ({1} >= '{2}' OR {1} IS NULL) AND {3} >=200 AND {3} < 300", ClasspercentView.dateBegin, ClasspercentView.dateEnd, now.ToString("yyyy-MM-dd"), ClasspercentView.classificatorID);
+        }
+
+        static public string GetBindingSourceFilterFor300(DateTime now)
+        {
+            return string.Format("{0}<='{2}' AND ({1} >= '{2}' OR {1} IS NULL) AND {3} >=300 AND {3} < 400", ClasspercentView.dateBegin, ClasspercentView.dateEnd, now.ToString("yyyy-MM-dd"), ClasspercentView.classificatorID);
+        }
+
+        static public string GetBindingSourceFilterFor400(DateTime now)
+        {
+            return string.Format("{0}<='{2}' AND ({1} >= '{2}' OR {1} IS NULL) AND {3} >=400 AND {3} < 500", ClasspercentView.dateBegin, ClasspercentView.dateEnd, now.ToString("yyyy-MM-dd"), ClasspercentView.classificatorID);
+        }
+
+        static public string GetBindingSourceFilterFor500(DateTime now)
+        {
+            return string.Format("{0}<='{2}' AND ({1} >= '{2}' OR {1} IS NULL) AND {3} >=500 AND {3} < 600", ClasspercentView.dateBegin, ClasspercentView.dateEnd, now.ToString("yyyy-MM-dd"), ClasspercentView.classificatorID);
+        }
+
         #endregion
     }
 
@@ -1931,6 +2054,45 @@ namespace Pers_uchet_org
         static public string GetSelectText()
         {
             return string.Format(" SELECT {0},{1} FROM {2} ", id, name, tablename);
+        }
+        #endregion
+    }
+
+    public class ObligatoryPercent
+    {
+        // название таблицы в БД
+        static public string tablename = "Obligatory_Percent";
+
+        #region Названия полей таблицы в БД
+        static public string id = "id";
+        static public string value = "value";
+        static public string dateBegin = "date_begin";
+        static public string dateEnd = "date_end";
+        #endregion
+
+        #region Методы - статические
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+
+        static public double GetValue(int rep_year, string connectionStr)
+        {
+            double val = 0;
+            SQLiteConnection connection = new SQLiteConnection(connectionStr);
+            SQLiteCommand command = new SQLiteCommand();
+            command.Connection = connection;
+            command.CommandText = GetSelectText() + string.Format(@"WHERE (strftime('%s',ifnull({0},'1990-01-01')) - strftime('%s','{2}-01-01') <= 0) 
+		AND (strftime('%s',ifnull({1},'now')) - strftime('%s','{2}-01-01') >= 0);", dateBegin, dateEnd, rep_year);
+            connection.Open();
+            SQLiteDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                val = Double.Parse(reader[value].ToString());
+            }
+            reader.Close();
+            connection.Close();
+            return val;
         }
         #endregion
     }
@@ -2311,6 +2473,182 @@ namespace Pers_uchet_org
         }
 
 
+        #endregion
+    }
+
+    public class SalaryInfo
+    {
+        static public string tablename = "Salary_Info";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string salaryGroupsId = "salary_groups_id";
+        static public string january = "january";
+        static public string february = "february";
+        static public string march = "march";
+        static public string april = "april";
+        static public string may = "may";
+        static public string june = "june";
+        static public string july = "july";
+        static public string august = "august";
+        static public string september = "september";
+        static public string october = "october";
+        static public string november = "november";
+        static public string december = "december";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(salaryGroupsId, typeof(long));
+            table.Columns.Add(january, typeof(double));
+            table.Columns.Add(february, typeof(double));
+            table.Columns.Add(march, typeof(double));
+            table.Columns.Add(april, typeof(double));
+            table.Columns.Add(may, typeof(double));
+            table.Columns.Add(june, typeof(double));
+            table.Columns.Add(july, typeof(double));
+            table.Columns.Add(august, typeof(double));
+            table.Columns.Add(september, typeof(double));
+            table.Columns.Add(october, typeof(double));
+            table.Columns.Add(november, typeof(double));
+            table.Columns.Add(december, typeof(double));
+            return table;
+        }
+
+        static public DataTable CreatetTransposeTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add("months", typeof(int));
+            table.Columns.Add("1", typeof(double));
+            table.Columns.Add("2", typeof(double));
+            table.Columns.Add("3", typeof(double));
+            table.Columns.Add("4", typeof(double));
+            table.Columns.Add("5", typeof(double));
+            table.Columns.Add("10", typeof(int));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2}", docId, doc_id, salaryGroupsId);
+        }
+
+        public static DataTable TransposeDataTable(DataTable dtTableToTranspose, Int32 columnIndex)
+        {
+            DataTable dtTransposedTable = new DataTable(tablename);
+
+            //String colName = dtTableToTranspose.Columns[columnIndex].ColumnName.ToString();
+            dtTransposedTable.Columns.Add("months");
+
+            foreach (DataRow row in dtTableToTranspose.Rows)
+            {
+                dtTransposedTable.Columns.Add(row[columnIndex].ToString());
+            }
+
+            Int32 colIndex = 0;
+            Int32 month = 1;
+            foreach (DataColumn dc in dtTableToTranspose.Columns)
+            {
+                if (colIndex != columnIndex)
+                {
+                    DataRow newRow = dtTransposedTable.NewRow();
+                    newRow[0] = month;
+                    month++;
+                    for (Int32 destColIndex = 1; destColIndex < dtTransposedTable.Columns.Count; destColIndex++)
+                    {
+                        newRow[destColIndex] = dtTableToTranspose.Rows[destColIndex - 1][colIndex];
+                    }
+
+                    dtTransposedTable.Rows.Add(newRow);
+                }
+                colIndex++;
+            }
+            return dtTransposedTable;
+        }
+
+        //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, docTypeId, new_doc_type_id, id, doc_id);
+        //}
+
+        //static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, docTypeId, new_doc_type_id, listId, list_id);
+        //}
+
+        //static public void UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, string connectionStr)
+        //{
+        //    if (doc_idArr.Count < 1)
+        //        throw new ArgumentException("Количество документов на изменение должно быть >= 1");
+        //    string commantText = String.Empty;
+        //    foreach (long doc_id in doc_idArr)
+        //        commantText += GetUpdateDocTypeByDocIdText(doc_id, new_doc_type_id) + "; \n";
+
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        int count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //    }
+        //}
+
+        //static public void UpdateDocTypeByListId(long list_id, long new_doc_type_id, string connectionStr)
+        //{
+        //    string commantText = GetUpdateDocTypeByListText(list_id, new_doc_type_id);
+
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        int count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //    }
+        //}
+
+        //static public string GetDeleteText(long doc_id)
+        //{
+        //    return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, doc_id);
+        //}
+
+        //static public string GetUpdateListIdText(long doc_id, long new_list_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, listId, new_list_id, id, doc_id);
+        //}
+
+        //static public int UpdateListId(long doc_id, long new_list_id, string connectionStr)
+        //{
+        //    string commantText = GetUpdateListIdText(doc_id, new_list_id);
+        //    int count = 0;
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //        connection.Close();
+        //    }
+        //    return count;
+        //}
         #endregion
     }
 

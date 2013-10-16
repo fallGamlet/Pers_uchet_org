@@ -28,6 +28,7 @@ namespace Pers_uchet_org
         public static DataTable ClassificatorTable = Classificator.CreateTable();
         public static DataTable ClassgroupTable = Classgroup.CreateTable();
         public static DataTable ClasspercentTable = Classpercent.CreateTable();
+        public static DataTable ClasspercentViewTable = ClasspercentView.CreateTable();
 
         // переменная содержит текущий используемый год
         public static int RepYear;
