@@ -58,19 +58,19 @@
             // 
             // endDateTimePicker
             // 
-            this.endDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.endDateTimePicker.Location = new System.Drawing.Point(169, 59);
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(138, 20);
             this.endDateTimePicker.TabIndex = 19;
+            this.endDateTimePicker.ValueChanged += new System.EventHandler(this.endDateTimePicker_ValueChanged);
             // 
             // beginDateTimePicker
             // 
-            this.beginDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.beginDateTimePicker.Location = new System.Drawing.Point(169, 33);
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(138, 20);
             this.beginDateTimePicker.TabIndex = 18;
+            this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
             // 
             // addButton
             // 
@@ -133,6 +133,7 @@
             this.Name = "AddEditAdditionalPeriodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление периода дополнительного стажа";
+            this.Load += new System.EventHandler(this.AddEditAdditionalPeriodForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

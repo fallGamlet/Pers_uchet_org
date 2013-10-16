@@ -83,6 +83,7 @@
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(124, 20);
             this.endDateTimePicker.TabIndex = 13;
+            this.endDateTimePicker.ValueChanged += new System.EventHandler(this.endDateTimePicker_ValueChanged);
             // 
             // beginDateTimePicker
             // 
@@ -91,6 +92,7 @@
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(124, 20);
             this.beginDateTimePicker.TabIndex = 12;
+            this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
             // 
             // AddEditGeneralPeriodForm
             // 
@@ -111,6 +113,7 @@
             this.Name = "AddEditGeneralPeriodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление периода основного стажа";
+            this.Load += new System.EventHandler(this.AddEditGeneralPeriodForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

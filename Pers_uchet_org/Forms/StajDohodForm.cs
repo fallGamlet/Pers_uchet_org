@@ -128,6 +128,11 @@ namespace Pers_uchet_org
                 reestrButton.Enabled = false;
                 calculateButton.Enabled = false;
                 printButton.Enabled = false;
+
+                if (_docsTable != null)
+                    //очистка таблицы 
+                    _docsTable.Clear();
+                addDocButton.Enabled = false;
                 return;
             }
             else
@@ -138,6 +143,8 @@ namespace Pers_uchet_org
                 reestrButton.Enabled = true;
                 calculateButton.Enabled = true;
                 printButton.Enabled = true;
+
+                addDocButton.Enabled = true;
             }
 
             //throw new NotImplementedException();
