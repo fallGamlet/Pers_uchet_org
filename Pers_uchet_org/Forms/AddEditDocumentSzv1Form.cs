@@ -48,7 +48,7 @@ namespace Pers_uchet_org
             InitializeComponent();
         }
 
-        public AddEditDocumentSzv1Form(Org _org, int RepYear, long personId, int flagDoc, bool isNew, string _connection, long idDoc = -1)
+        public AddEditDocumentSzv1Form(Org _org, int RepYear, long personId, int flagDoc, bool isNew, string _connection, long idDoc)
             : this()
         {
             this._org = _org;
@@ -58,6 +58,19 @@ namespace Pers_uchet_org
             this.isNew = isNew;
             this._connection = _connection;
             this.idDoc = idDoc;
+            this.dataViewProfit.CellParsing += new DataGridViewCellParsingEventHandler(dataViewProfit_CellParsing);
+        }
+
+        public AddEditDocumentSzv1Form(Org _org, int RepYear, long personId, int flagDoc, bool isNew, string _connection)
+            : this()
+        {
+            this._org = _org;
+            this.RepYear = RepYear;
+            this.personId = personId;
+            this.flagDoc = flagDoc;
+            this.isNew = isNew;
+            this._connection = _connection;
+            this.idDoc = -1;
             this.dataViewProfit.CellParsing += new DataGridViewCellParsingEventHandler(dataViewProfit_CellParsing);
         }
 
@@ -223,9 +236,9 @@ namespace Pers_uchet_org
                 {
                     textBoxAnketaName.Text = reader[PersonView.fio].ToString();
                     textBoxInsNum.Text = reader[PersonView.socNumber].ToString();
-                    long citizen = (long)reader[PersonView.citizen1Id];
+                    long citizen = (long)reader[PersonView.citizen1ID];
                     _citizen1BS.Position = _citizen1BS.Find(Country.id, citizen);
-                    citizen = (long)reader[PersonView.citizen2Id];
+                    citizen = (long)reader[PersonView.citizen2ID];
                     _citizen2BS.Position = _citizen2BS.Find(Country.id, citizen);
 
                 }

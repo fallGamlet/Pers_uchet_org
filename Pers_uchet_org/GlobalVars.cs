@@ -2680,7 +2680,7 @@ namespace Pers_uchet_org
 
         static public string GetSelectIDText(string table_name)
         {
-            return string.Format(" SELECT {0} FROM {1} WHERE {2} = '{3}' ", tablename, id, name, table_name);
+            return string.Format(" SELECT {1} FROM {0} WHERE {2} = '{3}' ", tablename, id, name, table_name);
         }
 
         static public long GetID(string table_name, string connectionStr)
@@ -2735,13 +2735,28 @@ namespace Pers_uchet_org
             return string.Format("{0} AND {1}={2} ", GetSelectText(table_name, row_id), type, (int)fix_type);
         }
 
+        static public string GetSelectIDText(FixData.FixType type, string table_name, long row_id)
+        {
+            return string.Format(@"SELECT f.{0} FROM {1} f LEFT JOIN {2} t ON t.{3}=f.{4} AND t.{5}='{6}' WHERE f.type={7} AND row_id={8}",
+                                    id, 
+                                    tablename, 
+                                    Tables.tablename, 
+                                    Tables.id,
+                                    tableID,
+                                    Tables.name,
+                                    table_name,
+                                    (int)type,  
+                                    row_id);
+        }
+
         static public string GetReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date)
         {
-            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES ((SELECT f.{1} FROM {0} f LEFT JOIN {7} t ON t.{8}=f.{3} AND t.{9}='{11}' WHERE f.{2}={10} AND {4}={12}),{10},'{11}',{12},'{13}','{14}') ", 
+            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES (({7}),{8},({9}),{10},'{11}','{12}') ", 
                                     tablename,
-                                    id,type,tableID,rowID,oper,fixDate,
-                                    Tables.tablename, Tables.id, Tables.name,
-                                    (int)fix_type, table_name, row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
+                                    id, 
+                                    type, tableID, rowID, oper, fixDate,
+                                    GetSelectIDText(fix_type, table_name, row_id),
+                                    (int)fix_type, Tables.GetSelectIDText(table_name), row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
                                 );
         }
 
