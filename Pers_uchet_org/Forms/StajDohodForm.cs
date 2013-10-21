@@ -44,7 +44,7 @@ namespace Pers_uchet_org
         public static long newDocTypeId;
         // переменная-флаг, означает для каких документов менять тип: 1 - текущий документ, 2 - выбранные, 3 - все документы в пакете
         // или содержит id типа нового документа
-        public static int flagDoc = 0;
+        public static int flagDoc = -1;
         // переменная содержит id пакета, в который будет перемещен документ
         public static long newListId = 0;
         // переменная содержит id добавляемого человека
@@ -306,7 +306,7 @@ namespace Pers_uchet_org
             if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 bool isNew = true;
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, RepYear, personId, flagDoc, isNew, _connection);
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, RepYear, personId, flagDoc, _connection);
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 { }
             }

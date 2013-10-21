@@ -11,30 +11,43 @@ namespace Pers_uchet_org
 {
     public partial class AddEditGeneralPeriodForm : Form
     {
-        private int RepYear;
-
         public DateTime Begin;
         public DateTime End;
+
+        private int _repYear;
 
         public AddEditGeneralPeriodForm()
         {
             InitializeComponent();
         }
 
-        public AddEditGeneralPeriodForm(int RepYear):this()
+        public AddEditGeneralPeriodForm(int repYear)
+            : this()
         {
-            this.RepYear = RepYear;
+            this._repYear = repYear;
+            this.Begin = DateTime.Now.Date;
+            this.End = DateTime.Now.Date;
         }
+
+        public AddEditGeneralPeriodForm(int repYear, DateTime beginDate, DateTime endDate)
+            : this()
+        {
+            this._repYear = repYear;
+            this.Begin = beginDate;
+            this.End = endDate;
+        }
+
 
         private void AddEditGeneralPeriodForm_Load(object sender, EventArgs e)
         {
-            beginDateTimePicker.MinDate = DateTime.Parse(RepYear + "-01-01");
-            beginDateTimePicker.MaxDate = DateTime.Parse(RepYear + "-12-31");
+            beginDateTimePicker.MinDate = DateTime.Parse(_repYear + "-01-01");
+            beginDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
             endDateTimePicker.MinDate = beginDateTimePicker.Value;
-            endDateTimePicker.MaxDate = DateTime.Parse(RepYear + "-12-31");
+            endDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
 
-            Begin = beginDateTimePicker.Value;
-            End = endDateTimePicker.Value;
+
+            beginDateTimePicker.Value = Begin;
+            endDateTimePicker.Value = End;
         }
 
         private void beginDateTimePicker_ValueChanged(object sender, EventArgs e)

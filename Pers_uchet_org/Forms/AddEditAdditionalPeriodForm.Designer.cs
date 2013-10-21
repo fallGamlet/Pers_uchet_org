@@ -32,7 +32,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.beginDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.addButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.codeComboBox = new System.Windows.Forms.ComboBox();
@@ -72,16 +72,16 @@
             this.beginDateTimePicker.TabIndex = 18;
             this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
             // 
-            // addButton
+            // saveButton
             // 
-            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.addButton.Location = new System.Drawing.Point(151, 88);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
-            this.addButton.TabIndex = 17;
-            this.addButton.Text = "Добавить";
-            this.addButton.UseVisualStyleBackColor = true;
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.saveButton.Location = new System.Drawing.Point(151, 88);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 17;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
@@ -114,7 +114,7 @@
             // 
             // AddEditAdditionalPeriodForm
             // 
-            this.AcceptButton = this.addButton;
+            this.AcceptButton = this.saveButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
@@ -125,7 +125,7 @@
             this.Controls.Add(this.label21);
             this.Controls.Add(this.endDateTimePicker);
             this.Controls.Add(this.beginDateTimePicker);
-            this.Controls.Add(this.addButton);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.cancelButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -145,7 +145,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.DateTimePicker endDateTimePicker;
         private System.Windows.Forms.DateTimePicker beginDateTimePicker;
-        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox codeComboBox;

@@ -13,7 +13,7 @@ namespace Pers_uchet_org
 {
     public class MyXml
     {
-        public enum ReportType { ADV1=0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3}
+        public enum ReportType { ADV1 = 0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3 }
 
         public static string GetReportUrl(ReportType type)
         {
@@ -180,7 +180,7 @@ namespace Pers_uchet_org
             mname.InnerText = personViewRow[PersonView.mName] as string;
             regnum.InnerText = personViewRow[PersonView.socNumber] as string;
             birthday.InnerText = ((DateTime)personViewRow[PersonView.birthday]).ToShortDateString();
-            sex.InnerText = (int)personViewRow[PersonView.sex]==1? "м": "ж";
+            sex.InnerText = (int)personViewRow[PersonView.sex] == 1 ? "м" : "ж";
             doctype.InnerText = personViewRow[PersonView.docType] as string;
             docseries.InnerText = personViewRow[PersonView.docSeries] as string;
             docnumber.InnerText = personViewRow[PersonView.docNumber] as string;
@@ -253,7 +253,7 @@ namespace Pers_uchet_org
             }
             else
             {
-                MainForm.ShowWarningMessage("Не удалось найти файл отчета!","Внимание");
+                MainForm.ShowWarningMessage("Не удалось найти файл отчета!", "Внимание");
             }
         }
 
@@ -1900,6 +1900,7 @@ namespace Pers_uchet_org
         static public string dateBegin = "date_begin";
         static public string dateEnd = "date_end";
         static public string obligatoryIsEnabled = "obligatory_is_enabled";
+        static public string isAgriculture = "is_agriculture";
         #endregion
 
         #region Методы - статические
@@ -1912,7 +1913,8 @@ namespace Pers_uchet_org
             table.Columns.Add(value, typeof(double));
             table.Columns.Add(dateBegin, typeof(string));
             table.Columns.Add(dateEnd, typeof(string));
-            table.Columns.Add(obligatoryIsEnabled, typeof(string));
+            table.Columns.Add(obligatoryIsEnabled, typeof(int));
+            table.Columns.Add(isAgriculture, typeof(int));
             return table;
         }
 
@@ -1941,6 +1943,7 @@ namespace Pers_uchet_org
         static public string dateBegin = "date_begin";
         static public string dateEnd = "date_end";
         static public string obligatoryIsEnabled = "obligatory_is_enabled";
+        static public string isAgriculture = "is_agriculture";
         #endregion
 
         #region Методы - статические
@@ -1957,8 +1960,8 @@ namespace Pers_uchet_org
             table.Columns.Add(value, typeof(double));
             table.Columns.Add(dateBegin, typeof(DateTime));
             table.Columns.Add(dateEnd, typeof(DateTime));
-            table.Columns.Add(obligatoryIsEnabled, typeof(string));
-
+            table.Columns.Add(obligatoryIsEnabled, typeof(int));
+            table.Columns.Add(isAgriculture, typeof(int));
             return table;
         }
 
@@ -2496,6 +2499,7 @@ namespace Pers_uchet_org
         static public string october = "october";
         static public string november = "november";
         static public string december = "december";
+        static public string sum = "sum";
         #endregion
 
         #region Методы - статические
@@ -2517,6 +2521,7 @@ namespace Pers_uchet_org
             table.Columns.Add(october, typeof(double));
             table.Columns.Add(november, typeof(double));
             table.Columns.Add(december, typeof(double));
+            table.Columns.Add(sum, typeof(double));
             return table;
         }
 
@@ -2543,38 +2548,38 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2}", docId, doc_id, salaryGroupsId);
         }
 
-        public static DataTable TransposeDataTable(DataTable dtTableToTranspose, Int32 columnIndex)
-        {
-            DataTable dtTransposedTable = new DataTable(tablename);
+        //public static DataTable TransposeDataTable(DataTable dtTableToTranspose, Int32 columnIndex)
+        //{
+        //    DataTable dtTransposedTable = new DataTable(tablename);
 
-            //String colName = dtTableToTranspose.Columns[columnIndex].ColumnName.ToString();
-            dtTransposedTable.Columns.Add("months");
+        //    //String colName = dtTableToTranspose.Columns[columnIndex].ColumnName.ToString();
+        //    dtTransposedTable.Columns.Add("months");
 
-            foreach (DataRow row in dtTableToTranspose.Rows)
-            {
-                dtTransposedTable.Columns.Add(row[columnIndex].ToString());
-            }
+        //    foreach (DataRow row in dtTableToTranspose.Rows)
+        //    {
+        //        dtTransposedTable.Columns.Add(row[columnIndex].ToString());
+        //    }
 
-            Int32 colIndex = 0;
-            Int32 month = 1;
-            foreach (DataColumn dc in dtTableToTranspose.Columns)
-            {
-                if (colIndex != columnIndex)
-                {
-                    DataRow newRow = dtTransposedTable.NewRow();
-                    newRow[0] = month;
-                    month++;
-                    for (Int32 destColIndex = 1; destColIndex < dtTransposedTable.Columns.Count; destColIndex++)
-                    {
-                        newRow[destColIndex] = dtTableToTranspose.Rows[destColIndex - 1][colIndex];
-                    }
+        //    Int32 colIndex = 0;
+        //    Int32 month = 1;
+        //    foreach (DataColumn dc in dtTableToTranspose.Columns)
+        //    {
+        //        if (colIndex != columnIndex)
+        //        {
+        //            DataRow newRow = dtTransposedTable.NewRow();
+        //            newRow[0] = month;
+        //            month++;
+        //            for (Int32 destColIndex = 1; destColIndex < dtTransposedTable.Columns.Count; destColIndex++)
+        //            {
+        //                newRow[destColIndex] = dtTableToTranspose.Rows[destColIndex - 1][colIndex];
+        //            }
 
-                    dtTransposedTable.Rows.Add(newRow);
-                }
-                colIndex++;
-            }
-            return dtTransposedTable;
-        }
+        //            dtTransposedTable.Rows.Add(newRow);
+        //        }
+        //        colIndex++;
+        //    }
+        //    return dtTransposedTable;
+        //}
 
         //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
         //{
@@ -2652,6 +2657,304 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class GeneralPeriod
+    {
+        static public string tablename = "Gen_period";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string beginDate = "begin_date";
+        static public string endDate = "end_date";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(beginDate, typeof(DateTime));
+            table.Columns.Add(endDate, typeof(DateTime));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, docTypeId, new_doc_type_id, id, doc_id);
+        //}
+
+        //static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, docTypeId, new_doc_type_id, listId, list_id);
+        //}
+
+        //static public void UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, string connectionStr)
+        //{
+        //    if (doc_idArr.Count < 1)
+        //        throw new ArgumentException("Количество документов на изменение должно быть >= 1");
+        //    string commantText = String.Empty;
+        //    foreach (long doc_id in doc_idArr)
+        //        commantText += GetUpdateDocTypeByDocIdText(doc_id, new_doc_type_id) + "; \n";
+
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        int count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //    }
+        //}
+
+
+        static public string GetDeleteTextById(long _id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, _id);
+        }
+
+        static public string GetDeleteTextByDocId(long doc_id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, docId, doc_id);
+        }
+        #endregion
+    }
+
+    public class DopPeriod
+    {
+        static public string tablename = "Dop_period";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string classificatorId = "classificator_id";
+        static public string beginDate = "begin_date";
+        static public string endDate = "end_date";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(classificatorId, typeof(long));
+            table.Columns.Add(beginDate, typeof(DateTime));
+            table.Columns.Add(endDate, typeof(DateTime));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        static public string GetDeleteTextById(long _id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, _id);
+        }
+
+        static public string GetDeleteTextByDocId(long doc_id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, docId, doc_id);
+        }
+        #endregion
+    }
+
+    public class DopPeriodView
+    {
+        static public string tablename = "Dop_period_View";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string classificatorId = "classificator_id";
+        static public string code = "code";
+        static public string beginDate = "begin_date";
+        static public string endDate = "end_date";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(classificatorId, typeof(long));
+            table.Columns.Add(code, typeof(string));
+            table.Columns.Add(beginDate, typeof(DateTime));
+            table.Columns.Add(endDate, typeof(DateTime));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        static public string GetDeleteTextById(long _id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, _id);
+        }
+
+        static public string GetDeleteTextByDocId(long doc_id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, docId, doc_id);
+        }
+        #endregion
+    }
+
+    public class SpecialPeriod
+    {
+        static public string tablename = "Spec_period";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string partCondition = "part_condition";
+        static public string stajBase = "staj_base";
+        static public string servYearBase = "serv_year_base";
+        static public string beginDate = "begin_date";
+        static public string endDate = "end_date";
+        static public string month = "month";
+        static public string day = "day";
+        static public string hour = "hour";
+        static public string minute = "minute";
+        static public string profession = "profession";
+
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(partCondition, typeof(long));
+            table.Columns.Add(stajBase, typeof(long));
+            table.Columns.Add(servYearBase, typeof(long));
+            table.Columns.Add(beginDate, typeof(DateTime));
+            table.Columns.Add(endDate, typeof(DateTime));
+            table.Columns.Add(month, typeof(int));
+            table.Columns.Add(day, typeof(int));
+            table.Columns.Add(hour, typeof(int));
+            table.Columns.Add(minute, typeof(int));
+            table.Columns.Add(profession, typeof(string));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        static public string GetDeleteTextById(long _id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, _id);
+        }
+
+        static public string GetDeleteTextByDocId(long doc_id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, docId, doc_id);
+        }
+        #endregion
+    }
+
+    public class SpecialPeriodView
+    {
+        static public string tablename = "Spec_period_View";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string partCondition = "part_condition";
+        static public string partCode = "part_code";
+        static public string stajBase = "staj_base";
+        static public string stajCode = "staj_code";
+        static public string servYearBase = "serv_year_base";
+        static public string servCode = "serv_code";
+        static public string beginDate = "begin_date";
+        static public string endDate = "end_date";
+        static public string month = "month";
+        static public string day = "day";
+        static public string hour = "hour";
+        static public string minute = "minute";
+        static public string profession = "profession";
+
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreatetTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(partCondition, typeof(long));
+            table.Columns.Add(partCode, typeof(string));
+            table.Columns.Add(stajBase, typeof(long));
+            table.Columns.Add(stajCode, typeof(string));
+            table.Columns.Add(servYearBase, typeof(long));
+            table.Columns.Add(servCode, typeof(string));
+            table.Columns.Add(beginDate, typeof(DateTime));
+            table.Columns.Add(endDate, typeof(DateTime));
+            table.Columns.Add(month, typeof(int));
+            table.Columns.Add(day, typeof(int));
+            table.Columns.Add(hour, typeof(int));
+            table.Columns.Add(minute, typeof(int));
+            table.Columns.Add(profession, typeof(string));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        static public string GetDeleteTextById(long _id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, _id);
+        }
+
+        static public string GetDeleteTextByDocId(long doc_id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, docId, doc_id);
+        }
+        #endregion
+    }
+
     public class Tables
     {
         // название таблицы в БД
@@ -2698,7 +3001,7 @@ namespace Pers_uchet_org
 
     public class FixData
     {
-        public enum FixType { New=0, Edit=1 }
+        public enum FixType { New = 0, Edit = 1 }
         // название таблицы в БД
         static public string tablename = "Fixdata";
 
@@ -2727,7 +3030,7 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(string table_name, long row_id)
         {
-            return string.Format("{0} AND {1}={2} ",GetSelectText(table_name), rowID, row_id);
+            return string.Format("{0} AND {1}={2} ", GetSelectText(table_name), rowID, row_id);
         }
 
         static public string GetSelectText(string table_name, long row_id, FixType fix_type)
@@ -2737,9 +3040,9 @@ namespace Pers_uchet_org
 
         static public string GetReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date)
         {
-            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES ((SELECT f.{1} FROM {0} f LEFT JOIN {7} t ON t.{8}=f.{3} AND t.{9}='{11}' WHERE f.{2}={10} AND {4}={12}),{10},'{11}',{12},'{13}','{14}') ", 
+            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES ((SELECT f.{1} FROM {0} f LEFT JOIN {7} t ON t.{8}=f.{3} AND t.{9}='{11}' WHERE f.{2}={10} AND {4}={12}),{10},'{11}',{12},'{13}','{14}') ",
                                     tablename,
-                                    id,type,tableID,rowID,oper,fixDate,
+                                    id, type, tableID, rowID, oper, fixDate,
                                     Tables.tablename, Tables.id, Tables.name,
                                     (int)fix_type, table_name, row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
                                 );

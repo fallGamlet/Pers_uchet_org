@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.addButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -58,16 +58,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.hoursNumUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // addButton
+            // saveButton
             // 
-            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.addButton.Location = new System.Drawing.Point(187, 283);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
-            this.addButton.TabIndex = 19;
-            this.addButton.Text = "Добавить";
-            this.addButton.UseVisualStyleBackColor = true;
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.saveButton.Location = new System.Drawing.Point(187, 283);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 19;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // cancelButton
             // 
@@ -255,7 +256,6 @@
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(156, 20);
             this.endDateTimePicker.TabIndex = 24;
-            this.endDateTimePicker.ValueChanged += new System.EventHandler(this.endDateTimePicker_ValueChanged);
             // 
             // beginDateTimePicker
             // 
@@ -317,7 +317,7 @@
             this.Controls.Add(this.label21);
             this.Controls.Add(this.endDateTimePicker);
             this.Controls.Add(this.beginDateTimePicker);
-            this.Controls.Add(this.addButton);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.cancelButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -339,7 +339,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label27;
