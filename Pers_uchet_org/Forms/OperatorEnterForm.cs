@@ -30,5 +30,17 @@ namespace Pers_uchet_org.Forms
             set { this.passwordBox.Text = value; }
         }
         #endregion
+
+        private void loginBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                passwordBox.Focus();
+        }
+
+        private void passwordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                acceptButton.Focus();
+        }
     }
 }

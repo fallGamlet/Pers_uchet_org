@@ -21,16 +21,17 @@ namespace Pers_uchet_org
         long _idDoc;
         //тип документа
         int _flagDoc;
-
         //процент по выбранной категории
         double _currentPercent;
         double _currentObligatory;
         //значение ячейки в подсказке
         double _hintValue;
+
         SQLiteConnection _con;
         SQLiteCommand _command;
         //объекты таблиц для хранения записей
-        DataTable _salaryInfoTable;         //таблица зарплаты человека
+        DataTable _salaryInfoTable;
+        DataTable _salaryInfoTableTranspose;
         DataTable _generalPeriodTable;
         DataTable _dopPeriodTable;
         DataTable _specPeriodTable;
@@ -42,6 +43,7 @@ namespace Pers_uchet_org
         BindingSource _generalPeriodBS;
         BindingSource _dopPeriodBS;
         BindingSource _specPeriodBS;
+
         #endregion
 
         #region Конструктор и инициализатор
@@ -61,7 +63,6 @@ namespace Pers_uchet_org
             this._repYear = repYear;
             this._personId = personId;
             this._flagDoc = flagDoc;
-
             this._connection = connection;
             this._idDoc = idDoc;
 
@@ -72,8 +73,8 @@ namespace Pers_uchet_org
             orgNameTextBox.Text = _org.nameVal;
             regNumTextBox.Text = _org.regnumVal;
             yearLabel.Text = _repYear.ToString();
-
-            GenerateFormText();
+            saveButton.Enabled = false;
+            this.Text = GenerateFormText(_idDoc, _flagDoc);
 
             //заполнение источников гражданства
             if (MainForm.CountryTable == null)
@@ -84,6 +85,7 @@ namespace Pers_uchet_org
 
             _citizen1BS = new BindingSource();
             _citizen1BS.DataSource = new DataView(MainForm.CountryTable);
+            _citizen1BS.Filter = string.Format("{0}<>0", Country.id);
             _citizen2BS = new BindingSource();
             _citizen2BS.DataSource = new DataView(MainForm.CountryTable);
             citizen1Box.DataSource = _citizen1BS;
@@ -101,6 +103,7 @@ namespace Pers_uchet_org
                 adapter = new SQLiteDataAdapter(ClasspercentView.GetSelectText(), _connection);
                 adapter.Fill(MainForm.ClasspercentViewTable);
 
+                //формирование строк в виде "ОРГАНИЗАЦИЯ / ЛЬГОТА"
                 foreach (DataRow row in MainForm.ClasspercentViewTable.Rows)
                 {
                     if (row[ClasspercentView.privilegeName].ToString() != "---")
@@ -114,7 +117,6 @@ namespace Pers_uchet_org
                 }
                 MainForm.ClasspercentViewTable.AcceptChanges();
             }
-
             _classpercentView100BS = new BindingSource();
             _classpercentView100BS.DataSource = MainForm.ClasspercentViewTable;
             _classpercentView100BS.CurrentChanged += new EventHandler(_classpercentViewBS_CurrentChanged);
@@ -127,37 +129,32 @@ namespace Pers_uchet_org
 
             //формирование источников для таблицы зарплат
             _salaryInfoTable = SalaryInfo.CreatetTable();
+
+            _salaryInfoTableTranspose = SalaryInfo.CreatetTransposeTable();
+            for (int i = 1; i < 13; i++)
+            {
+                DataRow row = _salaryInfoTableTranspose.NewRow();
+                row["months"] = i;
+                row[1] = 0.0;
+                row[2] = 0.0;
+                row[3] = 0.0;
+                row[4] = 0.0;
+                row[5] = 0.0;
+                row[6] = 0.0;
+                _salaryInfoTableTranspose.Rows.Add(row);
+            }
+
             if (_idDoc > 0)
             {
                 //TODO: Переделать заполнение данными из базы
-                //adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(_idDoc), _connection);
-                //adapter.Fill(_salaryInfoTable);
-                //_salaryInfoTable.Columns.Remove(SalaryInfo.id);
-                //_salaryInfoTable.Columns.Remove(SalaryInfo.docId);
-                //_salaryInfoTable = SalaryInfo.TransposeDataTable(_salaryInfoTable, 0);
             }
-            else
-            {
-                _salaryInfoTable = SalaryInfo.CreatetTransposeTable();
-                for (int i = 1; i < 13; i++)
-                {
-                    DataRow row = _salaryInfoTable.NewRow();
-                    row["months"] = i;
-                    row[1] = 0.0;
-                    row[2] = 0.0;
-                    row[3] = 0.0;
-                    row[4] = 0.0;
-                    row[5] = 0.0;
-                    row[6] = 0.0;
-                    _salaryInfoTable.Rows.Add(row);
-                }
 
-            }
             _salaryInfoBS = new BindingSource();
-            _salaryInfoBS.DataSource = _salaryInfoTable;
+            _salaryInfoBS.DataSource = _salaryInfoTableTranspose;
             dataViewProfit.CellParsing += new DataGridViewCellParsingEventHandler(dataViewProfit_CellParsing);
             dataViewProfit.DataSource = _salaryInfoBS;
 
+            //Выбор ФИО, страхового номера, гражданства из базы
             _con = new SQLiteConnection(_connection);
             _command = new SQLiteCommand(PersonView.GetSelectText(_org.idVal, _personId), _con);
             if (_con.State != ConnectionState.Open)
@@ -169,6 +166,7 @@ namespace Pers_uchet_org
                 textBoxInsNum.Text = reader[PersonView.socNumber].ToString();
                 if (_idDoc > 0)
                 {
+                    //TODO: Переделать заполнение данными из базы
                 }
                 else
                 {
@@ -181,64 +179,55 @@ namespace Pers_uchet_org
             reader.Close();
             _con.Close();
 
+            //Заполнение таблиц с периодами
             _generalPeriodTable = GeneralPeriod.CreatetTable();
+            _generalPeriodBS = new BindingSource();
+            _generalPeriodBS.DataSource = _generalPeriodTable;
+            generalPeriodDataGridView.AutoGenerateColumns = false;
+            generalPeriodDataGridView.DataSource = _generalPeriodBS;
+            generalPeriodDataGridView.Columns["beginGeneralPeriodColumn"].DataPropertyName = GeneralPeriod.beginDate;
+            generalPeriodDataGridView.Columns["endGeneralPeriodColumn"].DataPropertyName = GeneralPeriod.endDate;
             if (_idDoc > 0)
             {
-            }
-            else
-            {
-                _generalPeriodBS = new BindingSource();
-                _generalPeriodBS.DataSource = _generalPeriodTable;
-                generalPeriodDataGridView.AutoGenerateColumns = false;
-                generalPeriodDataGridView.DataSource = _generalPeriodBS;
-                generalPeriodDataGridView.Columns["beginGeneralPeriodColumn"].DataPropertyName = GeneralPeriod.beginDate;
-                generalPeriodDataGridView.Columns["endGeneralPeriodColumn"].DataPropertyName = GeneralPeriod.endDate;
+                //TODO: Переделать заполнение данными из базы
             }
 
             _dopPeriodTable = DopPeriodView.CreatetTable();
+            _dopPeriodBS = new BindingSource();
+            _dopPeriodBS.DataSource = _dopPeriodTable;
+            additionalPeriodDataGridView.AutoGenerateColumns = false;
+            additionalPeriodDataGridView.DataSource = _dopPeriodBS;
+            additionalPeriodDataGridView.Columns["codeAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.code;
+            additionalPeriodDataGridView.Columns["beginAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.beginDate;
+            additionalPeriodDataGridView.Columns["endAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.endDate;
+
             if (_idDoc > 0)
             {
-            }
-            else
-            {
-                _dopPeriodBS = new BindingSource();
-                _dopPeriodBS.DataSource = _dopPeriodTable;
-                additionalPeriodDataGridView.AutoGenerateColumns = false;
-                additionalPeriodDataGridView.DataSource = _dopPeriodBS;
-                additionalPeriodDataGridView.Columns["codeAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.code;
-                additionalPeriodDataGridView.Columns["beginAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.beginDate;
-                additionalPeriodDataGridView.Columns["endAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.endDate;
+                //TODO: Переделать заполнение данными из базы
             }
 
             _specPeriodTable = SpecialPeriodView.CreatetTable();
+            _specPeriodBS = new BindingSource();
+            _specPeriodBS.DataSource = _specPeriodTable;
+            specialPeriodDataGridView.AutoGenerateColumns = false;
+            specialPeriodDataGridView.DataSource = _specPeriodBS;
+            specialPeriodDataGridView.Columns["beginSpecialPeriodColumn"].DataPropertyName = SpecialPeriodView.beginDate;
+            specialPeriodDataGridView.Columns["endSpecialPeriodColumn"].DataPropertyName = SpecialPeriodView.endDate;
+            specialPeriodDataGridView.Columns["partConditionColumn"].DataPropertyName = SpecialPeriodView.partCode;
+            specialPeriodDataGridView.Columns["stajBaseColumn"].DataPropertyName = SpecialPeriodView.stajCode;
+            specialPeriodDataGridView.Columns["servYearColumn"].DataPropertyName = SpecialPeriodView.servCode;
+            specialPeriodDataGridView.Columns["monthsColumn"].DataPropertyName = SpecialPeriodView.month;
+            specialPeriodDataGridView.Columns["daysColumn"].DataPropertyName = SpecialPeriodView.day;
+            specialPeriodDataGridView.Columns["hoursColumn"].DataPropertyName = SpecialPeriodView.hour;
+            specialPeriodDataGridView.Columns["minutesColumn"].DataPropertyName = SpecialPeriodView.minute;
+            specialPeriodDataGridView.Columns["professionColumn"].DataPropertyName = SpecialPeriodView.profession;
+
             if (_idDoc > 0)
             {
-            }
-            else
-            {
-                _specPeriodBS = new BindingSource();
-                _specPeriodBS.DataSource = _specPeriodTable;
-                specialPeriodDataGridView.AutoGenerateColumns = false;
-                specialPeriodDataGridView.DataSource = _specPeriodBS;
-                specialPeriodDataGridView.Columns["beginSpecialPeriodColumn"].DataPropertyName = SpecialPeriodView.beginDate;
-                specialPeriodDataGridView.Columns["endSpecialPeriodColumn"].DataPropertyName = SpecialPeriodView.endDate;
-                specialPeriodDataGridView.Columns["partConditionColumn"].DataPropertyName = SpecialPeriodView.partCode;
-                specialPeriodDataGridView.Columns["stajBaseColumn"].DataPropertyName = SpecialPeriodView.stajCode;
-                specialPeriodDataGridView.Columns["servYearColumn"].DataPropertyName = SpecialPeriodView.servCode;
-                specialPeriodDataGridView.Columns["monthsColumn"].DataPropertyName = SpecialPeriodView.month;
-                specialPeriodDataGridView.Columns["daysColumn"].DataPropertyName = SpecialPeriodView.day;
-                specialPeriodDataGridView.Columns["hoursColumn"].DataPropertyName = SpecialPeriodView.hour;
-                specialPeriodDataGridView.Columns["minutesColumn"].DataPropertyName = SpecialPeriodView.minute;
-                specialPeriodDataGridView.Columns["professionColumn"].DataPropertyName = SpecialPeriodView.profession;
+                //TODO: Переделать заполнение данными из базы
             }
 
-            //int pos = _citizen1BS.Find(Country.name, "ПМР");
-            //if (pos != -1)
-            //    _citizen1BS.Position = pos;
-            //else
-            //    _citizen1BS.MoveFirst();
-
-            //_citizen2BS.MoveFirst();
+            saveButton.Enabled = true;
         }
         #endregion
 
@@ -249,7 +238,7 @@ namespace Pers_uchet_org
 
             if (String.IsNullOrEmpty(e.Value.ToString().Trim()))
             {
-                if (view.Columns[e.ColumnIndex].DataPropertyName == "10")
+                if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10)
                     e.Value = 0;
                 else
                     e.Value = 0.0;
@@ -258,7 +247,7 @@ namespace Pers_uchet_org
             }
 
             double result = 0;
-            if (view.Columns[e.ColumnIndex].DataPropertyName == "10")
+            if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10)
             {
                 if (Double.TryParse(e.Value.ToString(), out result) || Double.TryParse(e.Value.ToString().Replace('.', ','), out result))
                 {
@@ -279,9 +268,7 @@ namespace Pers_uchet_org
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
-            {
                 return;
-            }
 
             _currentPercent = (double)row[ClasspercentView.value];
             percentLabel.Text = (_currentPercent * 100).ToString() + " %";
@@ -296,7 +283,13 @@ namespace Pers_uchet_org
 
         private void addGeneralPeriodButton_Click(object sender, EventArgs e)
         {
-            AddEditGeneralPeriodForm generalPeriodForm = new AddEditGeneralPeriodForm(_repYear);
+            if (_generalPeriodBS == null || _generalPeriodBS.DataSource == null)
+            {
+                MainForm.ShowErrorMessage("Источник данных для основного периода не задан!", "Ошибка");
+                return;
+            }
+
+            AddEditGeneralPeriodForm generalPeriodForm = new AddEditGeneralPeriodForm(_repYear, _generalPeriodBS, _specPeriodBS);
             if (generalPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DataRowView row = _generalPeriodBS.AddNew() as DataRowView;
@@ -311,29 +304,68 @@ namespace Pers_uchet_org
             DataRowView row = _generalPeriodBS.Current as DataRowView;
             if (row == null)
                 return;
-            AddEditGeneralPeriodForm generalPeriodForm = new AddEditGeneralPeriodForm(_repYear, (DateTime)row[GeneralPeriod.beginDate], (DateTime)row[GeneralPeriod.endDate]);
+            AddEditGeneralPeriodForm generalPeriodForm = new AddEditGeneralPeriodForm(_repYear, _generalPeriodBS, _specPeriodBS, (DateTime)row[GeneralPeriod.beginDate], (DateTime)row[GeneralPeriod.endDate]);
             if (generalPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 row[GeneralPeriod.beginDate] = generalPeriodForm.Begin;
                 row[GeneralPeriod.endDate] = generalPeriodForm.End;
+                _generalPeriodBS.EndEdit();
             }
         }
 
         private void delGeneralPeriodButton_Click(object sender, EventArgs e)
         {
-            if (_generalPeriodBS.Current == null)
+            DataRowView row = _generalPeriodBS.Current as DataRowView;
+            if (row == null)
                 return;
-            DateTime begin = (DateTime)(_generalPeriodBS.Current as DataRowView)[GeneralPeriod.beginDate];
-            DateTime end = (DateTime)(_generalPeriodBS.Current as DataRowView)[GeneralPeriod.endDate];
-            if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", begin.ToShortDateString(), end.ToShortDateString()), "Удаление периода основного стажа") != System.Windows.Forms.DialogResult.Yes)
+
+            bool isPeriodCross = false;
+            DateTime beginCurrent = (DateTime)row[GeneralPeriod.beginDate];
+            DateTime endCurrent = (DateTime)row[GeneralPeriod.endDate];
+            DateTime begin;
+            DateTime end;
+            foreach (DataRowView item in _specPeriodBS)
+            {
+                begin = (DateTime)item[SpecialPeriod.beginDate];
+                end = (DateTime)item[SpecialPeriod.endDate];
+
+                if (begin >= beginCurrent && end <= endCurrent)
+                {
+                    isPeriodCross = true;
+                }
+            }
+            if (isPeriodCross)
+            {
+                MainForm.ShowWarningMessage("Среди записей специального стажа есть периоды принадлежащие текущему основному периоду!\nПри удалении текущего периода будут удалены и записи о специальном стаже!", "Удаление периода основного стажа");
+            }
+
+            if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", beginCurrent.ToShortDateString(), endCurrent.ToShortDateString()), "Удаление периода основного стажа") != System.Windows.Forms.DialogResult.Yes)
                 return;
+
+            for (int i = 0; i < _specPeriodBS.Count; i++ )
+            {
+                
+                begin = (DateTime)(_specPeriodBS[i] as DataRowView)[SpecialPeriod.beginDate];
+                end = (DateTime)(_specPeriodBS[i] as DataRowView)[SpecialPeriod.endDate];
+
+                if (begin >= beginCurrent && end <= endCurrent)
+                {
+                    _specPeriodBS.List.RemoveAt(i);
+                }
+            }
             _generalPeriodBS.RemoveCurrent();
 
         }
 
         private void addAdditionalPeriodButton_Click(object sender, EventArgs e)
         {
-            AddEditAdditionalPeriodForm additionalPeriodForm = new AddEditAdditionalPeriodForm(_repYear);
+            if (_dopPeriodBS == null || _dopPeriodBS.DataSource == null)
+            {
+                MainForm.ShowErrorMessage("Источник данных для дополнительного периода не задан!", "Ошибка");
+                return;
+            }
+
+            AddEditAdditionalPeriodForm additionalPeriodForm = new AddEditAdditionalPeriodForm(_repYear, _dopPeriodBS);
             if (additionalPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DataRowView row = _dopPeriodBS.AddNew() as DataRowView;
@@ -351,8 +383,7 @@ namespace Pers_uchet_org
             if (row == null)
                 return;
 
-
-            AddEditAdditionalPeriodForm additionalPeriodForm = new AddEditAdditionalPeriodForm(_repYear, (long)row[DopPeriodView.classificatorId], (DateTime)row[DopPeriodView.beginDate], (DateTime)row[DopPeriodView.endDate]);
+            AddEditAdditionalPeriodForm additionalPeriodForm = new AddEditAdditionalPeriodForm(_repYear, (long)row[DopPeriodView.classificatorId], _dopPeriodBS, (DateTime)row[DopPeriodView.beginDate], (DateTime)row[DopPeriodView.endDate]);
             if (additionalPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 row[DopPeriodView.classificatorId] = additionalPeriodForm.Code;
@@ -365,10 +396,12 @@ namespace Pers_uchet_org
 
         private void delAdditionalPeriodButton_Click(object sender, EventArgs e)
         {
-            if (_dopPeriodBS.Current == null)
+            DataRowView row = _dopPeriodBS.Current as DataRowView;
+            if (row == null)
                 return;
-            DateTime begin = (DateTime)(_dopPeriodBS.Current as DataRowView)[DopPeriodView.beginDate];
-            DateTime end = (DateTime)(_dopPeriodBS.Current as DataRowView)[DopPeriodView.endDate];
+
+            DateTime begin = (DateTime)row[DopPeriodView.beginDate];
+            DateTime end = (DateTime)row[DopPeriodView.endDate];
             if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", begin.ToShortDateString(), end.ToShortDateString()), "Удаление периода дополнительного стажа") != System.Windows.Forms.DialogResult.Yes)
                 return;
             _dopPeriodBS.RemoveCurrent();
@@ -376,7 +409,7 @@ namespace Pers_uchet_org
 
         private void addSpecialPeriodButton_Click(object sender, EventArgs e)
         {
-            AddEditSpecialPeriodForm specialPeriodForm = new AddEditSpecialPeriodForm(_repYear);
+            AddEditSpecialPeriodForm specialPeriodForm = new AddEditSpecialPeriodForm(_repYear, _generalPeriodBS);
             if (specialPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
@@ -411,16 +444,98 @@ namespace Pers_uchet_org
 
         private void editSpecialPeriodButton_Click(object sender, EventArgs e)
         {
-            AddEditSpecialPeriodForm specialPeriodForm = new AddEditSpecialPeriodForm();
+            DataRowView row = _specPeriodBS.Current as DataRowView;
+            if (row == null)
+                return;
+
+            int typePeriod = 0;
+            long code = 0;
+            if (row[SpecialPeriodView.partCondition] != DBNull.Value)
+            {
+                typePeriod = 1;
+                code = (long)row[SpecialPeriodView.partCondition];
+            }
+            else
+                if (row[SpecialPeriodView.stajBase] != DBNull.Value)
+                {
+                    typePeriod = 2;
+                    code = (long)row[SpecialPeriodView.stajBase];
+                }
+                else
+                    if (row[SpecialPeriodView.servYearBase] != DBNull.Value)
+                    {
+                        typePeriod = 3;
+                        code = (long)row[SpecialPeriodView.servYearBase];
+                    }
+
+            DateTime begin = (DateTime)row[SpecialPeriodView.beginDate];
+            DateTime end = (DateTime)row[SpecialPeriodView.endDate];
+            int month = (int)row[SpecialPeriodView.month];
+            int day = (int)row[SpecialPeriodView.day];
+            int hour = (int)row[SpecialPeriodView.hour];
+            int minute = (int)row[SpecialPeriodView.minute];
+            String profession = (string)row[SpecialPeriodView.profession];
+
+            AddEditSpecialPeriodForm specialPeriodForm = new AddEditSpecialPeriodForm(_repYear, _generalPeriodBS, typePeriod, code, begin, end, month, day, hour, minute, profession);
             if (specialPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
+
+                if (specialPeriodForm.TypePeriod == 1)
+                {
+                    row[SpecialPeriodView.partCondition] = specialPeriodForm.Code;
+                    row[SpecialPeriodView.partCode] = specialPeriodForm.CodeName;
+                    row[SpecialPeriodView.stajBase] = DBNull.Value;
+                    row[SpecialPeriodView.stajCode] = DBNull.Value;
+                    row[SpecialPeriodView.servYearBase] = DBNull.Value;
+                    row[SpecialPeriodView.servCode] = DBNull.Value;
+                }
+                else
+                    if (specialPeriodForm.TypePeriod == 2)
+                    {
+                        row[SpecialPeriodView.partCondition] = DBNull.Value;
+                        row[SpecialPeriodView.partCode] = DBNull.Value;
+                        row[SpecialPeriodView.stajBase] = specialPeriodForm.Code;
+                        row[SpecialPeriodView.stajCode] = specialPeriodForm.CodeName;
+                        row[SpecialPeriodView.servYearBase] = DBNull.Value;
+                        row[SpecialPeriodView.servCode] = DBNull.Value;
+                    }
+                    else
+                        if (specialPeriodForm.TypePeriod == 3)
+                        {
+                            row[SpecialPeriodView.partCondition] = DBNull.Value;
+                            row[SpecialPeriodView.partCode] = DBNull.Value;
+                            row[SpecialPeriodView.stajBase] = DBNull.Value;
+                            row[SpecialPeriodView.stajCode] = DBNull.Value;
+                            row[SpecialPeriodView.servYearBase] = specialPeriodForm.Code;
+                            row[SpecialPeriodView.servCode] = specialPeriodForm.CodeName;
+                        }
+                        else
+                        {
+                            MainForm.ShowErrorMessage("Не выбран тип стажа!", "Ошибка изменения периода специального стажа");
+                        }
+
+                row[SpecialPeriodView.beginDate] = specialPeriodForm.Begin;
+                row[SpecialPeriodView.endDate] = specialPeriodForm.End;
+                row[SpecialPeriodView.month] = specialPeriodForm.Month;
+                row[SpecialPeriodView.day] = specialPeriodForm.Day;
+                row[SpecialPeriodView.hour] = specialPeriodForm.Hour;
+                row[SpecialPeriodView.minute] = specialPeriodForm.Minute;
+                row[SpecialPeriodView.profession] = specialPeriodForm.Profession;
+                _specPeriodBS.EndEdit();
             }
         }
 
         private void delSpecialPeriodButton_Click(object sender, EventArgs e)
         {
-
+            DataRowView row = _specPeriodBS.Current as DataRowView;
+            if (row == null)
+                return;
+            DateTime begin = (DateTime)row[SpecialPeriodView.beginDate];
+            DateTime end = (DateTime)row[SpecialPeriodView.endDate];
+            if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", begin.ToShortDateString(), end.ToShortDateString()), "Удаление периода специального стажа") != System.Windows.Forms.DialogResult.Yes)
+                return;
+            _specPeriodBS.RemoveCurrent();
         }
 
         private void dataViewProfit_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -500,11 +615,11 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы
-        private void GenerateFormText()
+        private string GenerateFormText(long idDoc, int flagDoc)
         {
             StringBuilder builder = new StringBuilder();
 
-            if (_idDoc > 0)
+            if (idDoc > 0)
             {
                 builder.Append("Редактирование ");
             }
@@ -513,7 +628,7 @@ namespace Pers_uchet_org
                 builder.Append("Добавление ");
             }
             builder.Append("документа \"СЗВ-1\"");
-            switch (_flagDoc)
+            switch (flagDoc)
             {
                 case 21:
                     builder.Append(" - исходная форма");
@@ -530,7 +645,7 @@ namespace Pers_uchet_org
                 default:
                     break;
             }
-            this.Text = builder.ToString();
+            return builder.ToString();
         }
 
         private void ShowCellHint()
@@ -539,14 +654,14 @@ namespace Pers_uchet_org
                 return;
             DataGridViewCell cell = dataViewProfit.CurrentCell;
 
-            if (cell.OwningColumn.DataPropertyName == "3")
+            if (cell.OwningColumn.DataPropertyName == SalaryGroups.Column3)
             {
                 Rectangle cellRectangle = dataViewProfit.GetCellDisplayRectangle(cell.ColumnIndex, cell.RowIndex, true);
                 if (cellRectangle.Bottom != 0)
                 {
                     panelHint.Left = dataViewProfit.Left + (cellRectangle.Left + cellRectangle.Width / 2) - panelHint.Width / 2;
                     panelHint.Top = dataViewProfit.Top + cellRectangle.Bottom;
-                    _hintValue = Math.Round((double)(_salaryInfoBS.Current as DataRowView)["1"] * _currentPercent, 2);
+                    _hintValue = Math.Round((double)(_salaryInfoBS.Current as DataRowView)[SalaryGroups.Column1] * _currentPercent, 2);
                     textBoxHint.Text = _hintValue.ToString("N2");
                     panelHint.Visible = true;
                 }
@@ -556,14 +671,14 @@ namespace Pers_uchet_org
                 }
             }
             else
-                if (cell.OwningColumn.DataPropertyName == "5")
+                if (cell.OwningColumn.DataPropertyName == SalaryGroups.Column5)
                 {
                     Rectangle cellRectangle = dataViewProfit.GetCellDisplayRectangle(cell.ColumnIndex, cell.RowIndex, true);
                     if (cellRectangle.Bottom != 0)
                     {
                         panelHint.Left = dataViewProfit.Left + (cellRectangle.Left + cellRectangle.Width / 2) - panelHint.Width / 2;
                         panelHint.Top = dataViewProfit.Top + cellRectangle.Bottom;
-                        _hintValue = Math.Round((double)(_salaryInfoBS.Current as DataRowView)["1"] * _currentObligatory, 2);
+                        _hintValue = Math.Round((double)(_salaryInfoBS.Current as DataRowView)[SalaryGroups.Column1] * _currentObligatory, 2);
                         textBoxHint.Text = _hintValue.ToString("N2");
                         panelHint.Visible = true;
                     }
@@ -576,6 +691,11 @@ namespace Pers_uchet_org
                 {
                     panelHint.Visible = false;
                 }
+        }
+        
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            return;
         }
         #endregion
     }

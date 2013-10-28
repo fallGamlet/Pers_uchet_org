@@ -30,8 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -39,6 +37,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,8 +48,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.textBoxAnketaName = new System.Windows.Forms.TextBox();
             this.textBoxInsNum = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -62,8 +62,6 @@
             this.editGeneralPeriodButton = new System.Windows.Forms.Button();
             this.addGeneralPeriodButton = new System.Windows.Forms.Button();
             this.generalPeriodDataGridView = new System.Windows.Forms.DataGridView();
-            this.beginGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.additionalPeriodGroupBox = new System.Windows.Forms.GroupBox();
             this.delAdditionalPeriodButton = new System.Windows.Forms.Button();
             this.editAdditionalPeriodButton = new System.Windows.Forms.Button();
@@ -74,6 +72,16 @@
             this.endAdditionalPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.specialPeriodGroupBox = new System.Windows.Forms.GroupBox();
             this.specialPeriodDataGridView = new System.Windows.Forms.DataGridView();
+            this.beginSpecialPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.endSpecialPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.partConditionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stajBaseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.servYearColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monthsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.daysColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hoursColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.minutesColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.professionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.delSpecialPeriodButton = new System.Windows.Forms.Button();
             this.editSpecialPeriodButton = new System.Windows.Forms.Button();
             this.addSpecialPeriodButton = new System.Windows.Forms.Button();
@@ -133,16 +141,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.citizen1Box = new System.Windows.Forms.ComboBox();
             this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.beginSpecialPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endSpecialPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.partConditionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stajBaseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.servYearColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monthsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.daysColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hoursColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.minutesColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.professionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.beginGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.endGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.generalPeriodGroupBox.SuspendLayout();
@@ -215,6 +215,7 @@
             this.saveButton.TabIndex = 10;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // previewButton
             // 
@@ -338,33 +339,11 @@
             this.generalPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.generalPeriodDataGridView.MultiSelect = false;
             this.generalPeriodDataGridView.Name = "generalPeriodDataGridView";
+            this.generalPeriodDataGridView.ReadOnly = true;
             this.generalPeriodDataGridView.RowHeadersVisible = false;
-            this.generalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.generalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.generalPeriodDataGridView.Size = new System.Drawing.Size(210, 84);
             this.generalPeriodDataGridView.TabIndex = 22;
-            // 
-            // beginGeneralPeriodColumn
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.beginGeneralPeriodColumn.HeaderText = "Начало периода";
-            this.beginGeneralPeriodColumn.MinimumWidth = 30;
-            this.beginGeneralPeriodColumn.Name = "beginGeneralPeriodColumn";
-            this.beginGeneralPeriodColumn.ReadOnly = true;
-            this.beginGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // endGeneralPeriodColumn
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.endGeneralPeriodColumn.HeaderText = "Конец периода";
-            this.endGeneralPeriodColumn.MinimumWidth = 100;
-            this.endGeneralPeriodColumn.Name = "endGeneralPeriodColumn";
-            this.endGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // additionalPeriodGroupBox
             // 
@@ -452,8 +431,9 @@
             this.additionalPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.additionalPeriodDataGridView.MultiSelect = false;
             this.additionalPeriodDataGridView.Name = "additionalPeriodDataGridView";
+            this.additionalPeriodDataGridView.ReadOnly = true;
             this.additionalPeriodDataGridView.RowHeadersVisible = false;
-            this.additionalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.additionalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.additionalPeriodDataGridView.Size = new System.Drawing.Size(361, 84);
             this.additionalPeriodDataGridView.TabIndex = 28;
             // 
@@ -551,10 +531,79 @@
             this.specialPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.specialPeriodDataGridView.MultiSelect = false;
             this.specialPeriodDataGridView.Name = "specialPeriodDataGridView";
+            this.specialPeriodDataGridView.ReadOnly = true;
             this.specialPeriodDataGridView.RowHeadersVisible = false;
-            this.specialPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.specialPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.specialPeriodDataGridView.Size = new System.Drawing.Size(667, 255);
             this.specialPeriodDataGridView.TabIndex = 28;
+            // 
+            // beginSpecialPeriodColumn
+            // 
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Format = "d";
+            this.beginSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle11;
+            this.beginSpecialPeriodColumn.HeaderText = "Начало периода";
+            this.beginSpecialPeriodColumn.Name = "beginSpecialPeriodColumn";
+            this.beginSpecialPeriodColumn.ReadOnly = true;
+            this.beginSpecialPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // endSpecialPeriodColumn
+            // 
+            dataGridViewCellStyle12.Format = "d";
+            dataGridViewCellStyle12.NullValue = "0,00";
+            this.endSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle12;
+            this.endSpecialPeriodColumn.HeaderText = "Конец периода";
+            this.endSpecialPeriodColumn.Name = "endSpecialPeriodColumn";
+            this.endSpecialPeriodColumn.ReadOnly = true;
+            this.endSpecialPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // partConditionColumn
+            // 
+            this.partConditionColumn.HeaderText = "Особые условия труда (код)";
+            this.partConditionColumn.Name = "partConditionColumn";
+            this.partConditionColumn.ReadOnly = true;
+            // 
+            // stajBaseColumn
+            // 
+            this.stajBaseColumn.HeaderText = "Трудовой стаж (основание)";
+            this.stajBaseColumn.Name = "stajBaseColumn";
+            this.stajBaseColumn.ReadOnly = true;
+            // 
+            // servYearColumn
+            // 
+            this.servYearColumn.HeaderText = "Выслуга лет (основание)";
+            this.servYearColumn.Name = "servYearColumn";
+            this.servYearColumn.ReadOnly = true;
+            // 
+            // monthsColumn
+            // 
+            this.monthsColumn.HeaderText = "Месяцы";
+            this.monthsColumn.Name = "monthsColumn";
+            this.monthsColumn.ReadOnly = true;
+            // 
+            // daysColumn
+            // 
+            this.daysColumn.HeaderText = "Дни";
+            this.daysColumn.Name = "daysColumn";
+            this.daysColumn.ReadOnly = true;
+            // 
+            // hoursColumn
+            // 
+            this.hoursColumn.HeaderText = "Часы";
+            this.hoursColumn.Name = "hoursColumn";
+            this.hoursColumn.ReadOnly = true;
+            // 
+            // minutesColumn
+            // 
+            this.minutesColumn.HeaderText = "Минуты";
+            this.minutesColumn.Name = "minutesColumn";
+            this.minutesColumn.ReadOnly = true;
+            // 
+            // professionColumn
+            // 
+            this.professionColumn.HeaderText = "Должность (профессия)";
+            this.professionColumn.Name = "professionColumn";
+            this.professionColumn.ReadOnly = true;
             // 
             // delSpecialPeriodButton
             // 
@@ -1300,73 +1349,29 @@
             this.tabControlMain.Size = new System.Drawing.Size(769, 417);
             this.tabControlMain.TabIndex = 2;
             // 
-            // beginSpecialPeriodColumn
+            // beginGeneralPeriodColumn
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Format = "d";
-            this.beginSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle11;
-            this.beginSpecialPeriodColumn.HeaderText = "Начало периода";
-            this.beginSpecialPeriodColumn.Name = "beginSpecialPeriodColumn";
-            this.beginSpecialPeriodColumn.ReadOnly = true;
-            this.beginSpecialPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.beginGeneralPeriodColumn.HeaderText = "Начало периода";
+            this.beginGeneralPeriodColumn.MinimumWidth = 30;
+            this.beginGeneralPeriodColumn.Name = "beginGeneralPeriodColumn";
+            this.beginGeneralPeriodColumn.ReadOnly = true;
+            this.beginGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // endSpecialPeriodColumn
+            // endGeneralPeriodColumn
             // 
-            dataGridViewCellStyle12.Format = "d";
-            dataGridViewCellStyle12.NullValue = "0,00";
-            this.endSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle12;
-            this.endSpecialPeriodColumn.HeaderText = "Конец периода";
-            this.endSpecialPeriodColumn.Name = "endSpecialPeriodColumn";
-            this.endSpecialPeriodColumn.ReadOnly = true;
-            this.endSpecialPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // partConditionColumn
-            // 
-            this.partConditionColumn.HeaderText = "Особые условия труда (код)";
-            this.partConditionColumn.Name = "partConditionColumn";
-            this.partConditionColumn.ReadOnly = true;
-            // 
-            // stajBaseColumn
-            // 
-            this.stajBaseColumn.HeaderText = "Трудовой стаж (основание)";
-            this.stajBaseColumn.Name = "stajBaseColumn";
-            this.stajBaseColumn.ReadOnly = true;
-            // 
-            // servYearColumn
-            // 
-            this.servYearColumn.HeaderText = "Выслуга лет (основание)";
-            this.servYearColumn.Name = "servYearColumn";
-            this.servYearColumn.ReadOnly = true;
-            // 
-            // monthsColumn
-            // 
-            this.monthsColumn.HeaderText = "Месяцы";
-            this.monthsColumn.Name = "monthsColumn";
-            this.monthsColumn.ReadOnly = true;
-            // 
-            // daysColumn
-            // 
-            this.daysColumn.HeaderText = "Дни";
-            this.daysColumn.Name = "daysColumn";
-            this.daysColumn.ReadOnly = true;
-            // 
-            // hoursColumn
-            // 
-            this.hoursColumn.HeaderText = "Часы";
-            this.hoursColumn.Name = "hoursColumn";
-            this.hoursColumn.ReadOnly = true;
-            // 
-            // minutesColumn
-            // 
-            this.minutesColumn.HeaderText = "Минуты";
-            this.minutesColumn.Name = "minutesColumn";
-            this.minutesColumn.ReadOnly = true;
-            // 
-            // professionColumn
-            // 
-            this.professionColumn.HeaderText = "Должность (профессия)";
-            this.professionColumn.Name = "professionColumn";
-            this.professionColumn.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.endGeneralPeriodColumn.HeaderText = "Конец периода";
+            this.endGeneralPeriodColumn.MinimumWidth = 100;
+            this.endGeneralPeriodColumn.Name = "endGeneralPeriodColumn";
+            this.endGeneralPeriodColumn.ReadOnly = true;
+            this.endGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // AddEditDocumentSzv1Form
             // 
@@ -1494,8 +1499,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn beginGeneralPeriodColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn endGeneralPeriodColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn codeAdditionalPeriodColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn beginAdditionalPeriodColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn endAdditionalPeriodColumn;
@@ -1509,5 +1512,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn hoursColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn minutesColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn professionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn beginGeneralPeriodColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn endGeneralPeriodColumn;
     }
 }

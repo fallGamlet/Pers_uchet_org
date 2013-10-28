@@ -2479,6 +2479,68 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class SalaryGroups
+    {
+        /// <summary>
+        /// Сумма заработка (дохода), на который начислены страховые взносы
+        /// </summary>
+        public static string Column1
+        {
+            get { return "1"; }
+        }
+
+        /// <summary>
+        /// Сумма выплат, учитываемых для назначения пенсии
+        /// </summary>
+        public static string Column2
+        {
+            get { return "2"; }
+        }
+        /// <summary>
+        /// Сумма страховых взносов, начисленных работодателем
+        /// </summary>
+        public static string Column3
+        {
+            get { return "3"; }
+        }
+        /// <summary>
+        /// Сумма страховых взносов, уплаченных работодателем
+        /// </summary>
+        public static string Column4
+        {
+            get { return "4"; }
+        }
+        /// <summary>
+        /// Сумма обязательных страховых взносов, уплачиваемых из заработка
+        /// </summary>
+        public static string Column5
+        {
+            get { return "5"; }
+        }
+        /// <summary>
+        /// Всего полных дней для общего стажа
+        /// </summary>
+        public static string Column10
+        {
+            get { return "10"; }
+        }
+        /// <summary>
+        /// Признак тарифа
+        /// </summary>
+        public static string Column20
+        {
+            get { return "20"; }
+        }
+        /// <summary>
+        /// Средняя численность работников (застрахованных лиц)
+        /// </summary>
+        public static string Column21
+        {
+            get { return "21"; }
+        }
+
+    }
+
     public class SalaryInfo
     {
         static public string tablename = "Salary_Info";
@@ -2527,14 +2589,14 @@ namespace Pers_uchet_org
 
         static public DataTable CreatetTransposeTable()
         {
-            DataTable table = new DataTable(tablename);
+            DataTable table = new DataTable(tablename + "_transpose");
             table.Columns.Add("months", typeof(int));
-            table.Columns.Add("1", typeof(double));
-            table.Columns.Add("2", typeof(double));
-            table.Columns.Add("3", typeof(double));
-            table.Columns.Add("4", typeof(double));
-            table.Columns.Add("5", typeof(double));
-            table.Columns.Add("10", typeof(int));
+            table.Columns.Add(SalaryGroups.Column1, typeof(double));
+            table.Columns.Add(SalaryGroups.Column2, typeof(double));
+            table.Columns.Add(SalaryGroups.Column3, typeof(double));
+            table.Columns.Add(SalaryGroups.Column4, typeof(double));
+            table.Columns.Add(SalaryGroups.Column5, typeof(double));
+            table.Columns.Add(SalaryGroups.Column10, typeof(int));
             return table;
         }
 

@@ -11,36 +11,43 @@ namespace Pers_uchet_org
 {
     public partial class AddEditAdditionalPeriodForm : Form
     {
+        #region Поля
         int _repYear;
         BindingSource _classpercentView500BS;
+        BindingSource _dopPeriodBS;
+        bool isNew;
 
         public long Code;
         public string CodeName;
         public DateTime Begin;
         public DateTime End;
+         #endregion
 
+        #region Конструктор и инициализатор
         public AddEditAdditionalPeriodForm()
         {
             InitializeComponent();
         }
 
-        public AddEditAdditionalPeriodForm(int repYear)
+        public AddEditAdditionalPeriodForm(int repYear, BindingSource periodBS)
             : this()
         {
             this._repYear = repYear;
+            this._dopPeriodBS = periodBS;
             this.Begin = DateTime.Now.Date;
             this.End = DateTime.Now.Date;
             this.Code = 0;
             this.CodeName = "";
+            isNew = true;
         }
 
-        public AddEditAdditionalPeriodForm(int repYear, long classificatorId, DateTime beginDate, DateTime endDate)
-            : this()
+        public AddEditAdditionalPeriodForm(int repYear, long classificatorId, BindingSource periodBS, DateTime beginDate, DateTime endDate)
+            : this(repYear, periodBS)
         {
-            this._repYear = repYear;
             this.Code = classificatorId;
             this.Begin = beginDate;
             this.End = endDate;
+            isNew = false;
         }
 
         private void AddEditAdditionalPeriodForm_Load(object sender, EventArgs e)
@@ -74,7 +81,9 @@ namespace Pers_uchet_org
                 endDateTimePicker.Value = End;
             }
         }
+        #endregion
 
+        #region Методы - обработчики событий
         void _classpercentView500BS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
@@ -97,20 +106,44 @@ namespace Pers_uchet_org
                 beginDateTimePicker.MaxDate = date;
                 endDateTimePicker.MaxDate = date;
             }
-
-            Code = (long)row[ClasspercentView.id];
-            CodeName = codeComboBox.Text;
         }
 
         private void beginDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             endDateTimePicker.MinDate = beginDateTimePicker.Value;
-            Begin = beginDateTimePicker.Value;
         }
 
-        private void endDateTimePicker_ValueChanged(object sender, EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
+            Code = (long)codeComboBox.SelectedValue;
+            CodeName = codeComboBox.Text;
+            Begin = beginDateTimePicker.Value;
             End = endDateTimePicker.Value;
+
+            bool isAllRight = true;
+            DateTime begin;
+            DateTime end;
+            foreach (DataRowView row in _dopPeriodBS)
+            {
+                if (row != (_dopPeriodBS.Current as DataRowView) || isNew)
+                {
+                    begin = (DateTime)row[DopPeriod.beginDate];
+                    end = (DateTime)row[DopPeriod.endDate];
+                    if (this.Begin <= end && this.Begin >= begin)
+                        isAllRight = false;
+                    if (this.End <= end && this.End >= begin)
+                        isAllRight = false;
+                    if (this.End >= end && this.Begin <= begin)
+                        isAllRight = false;
+                }
+            }
+            if (isAllRight)
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            else
+            {
+                MainForm.ShowWarningMessage("Указанный период пересекается с уже имеющимся периодом!", "Ошибка добавления периода");
+            }
         }
+        #endregion
     }
 }

@@ -58,36 +58,37 @@
             // 
             // endDateTimePicker
             // 
+            this.endDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.endDateTimePicker.Location = new System.Drawing.Point(169, 59);
             this.endDateTimePicker.Name = "endDateTimePicker";
-            this.endDateTimePicker.Size = new System.Drawing.Size(138, 20);
+            this.endDateTimePicker.Size = new System.Drawing.Size(110, 20);
             this.endDateTimePicker.TabIndex = 19;
-            this.endDateTimePicker.ValueChanged += new System.EventHandler(this.endDateTimePicker_ValueChanged);
             // 
             // beginDateTimePicker
             // 
+            this.beginDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.beginDateTimePicker.Location = new System.Drawing.Point(169, 33);
             this.beginDateTimePicker.Name = "beginDateTimePicker";
-            this.beginDateTimePicker.Size = new System.Drawing.Size(138, 20);
+            this.beginDateTimePicker.Size = new System.Drawing.Size(110, 20);
             this.beginDateTimePicker.TabIndex = 18;
             this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
             // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.saveButton.Location = new System.Drawing.Point(151, 88);
+            this.saveButton.Location = new System.Drawing.Point(123, 88);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 17;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(232, 88);
+            this.cancelButton.Location = new System.Drawing.Point(204, 88);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 16;
@@ -109,16 +110,15 @@
             this.codeComboBox.FormattingEnabled = true;
             this.codeComboBox.Location = new System.Drawing.Point(169, 6);
             this.codeComboBox.Name = "codeComboBox";
-            this.codeComboBox.Size = new System.Drawing.Size(138, 21);
+            this.codeComboBox.Size = new System.Drawing.Size(110, 21);
             this.codeComboBox.TabIndex = 23;
             // 
             // AddEditAdditionalPeriodForm
             // 
-            this.AcceptButton = this.saveButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(319, 123);
+            this.ClientSize = new System.Drawing.Size(291, 123);
             this.Controls.Add(this.codeComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label22);
