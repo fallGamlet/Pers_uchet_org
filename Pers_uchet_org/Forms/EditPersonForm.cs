@@ -425,7 +425,7 @@ namespace Pers_uchet_org
 
             insPersonOrg.CommandText = PersonOrg.GetInsertPersonOrgText(_personID, _orgID);
             insPersonOrg.ExecuteScalar();
-            // подтаверждение транзакции
+            // подтверждение транзакции
             insRegadr.Transaction.Commit();
             // закрытие соединения
             connection.Close();

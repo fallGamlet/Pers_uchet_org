@@ -30,6 +30,8 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,8 +50,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.textBoxAnketaName = new System.Windows.Forms.TextBox();
             this.textBoxInsNum = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -62,6 +62,8 @@
             this.editGeneralPeriodButton = new System.Windows.Forms.Button();
             this.addGeneralPeriodButton = new System.Windows.Forms.Button();
             this.generalPeriodDataGridView = new System.Windows.Forms.DataGridView();
+            this.beginGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.endGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.additionalPeriodGroupBox = new System.Windows.Forms.GroupBox();
             this.delAdditionalPeriodButton = new System.Windows.Forms.Button();
             this.editAdditionalPeriodButton = new System.Windows.Forms.Button();
@@ -93,7 +95,7 @@
             this.sumCalc5Box = new System.Windows.Forms.TextBox();
             this.sumCalc3Box = new System.Windows.Forms.TextBox();
             this.sum1Box = new System.Windows.Forms.TextBox();
-            this.sum6Box = new System.Windows.Forms.TextBox();
+            this.sum10Box = new System.Windows.Forms.TextBox();
             this.sum5Box = new System.Windows.Forms.TextBox();
             this.sum4Box = new System.Windows.Forms.TextBox();
             this.sum3Box = new System.Windows.Forms.TextBox();
@@ -141,8 +143,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.citizen1Box = new System.Windows.Forms.ComboBox();
             this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.beginGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.endGeneralPeriodColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.generalPeriodGroupBox.SuspendLayout();
@@ -344,6 +344,30 @@
             this.generalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.generalPeriodDataGridView.Size = new System.Drawing.Size(210, 84);
             this.generalPeriodDataGridView.TabIndex = 22;
+            // 
+            // beginGeneralPeriodColumn
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.beginGeneralPeriodColumn.HeaderText = "Начало периода";
+            this.beginGeneralPeriodColumn.MinimumWidth = 30;
+            this.beginGeneralPeriodColumn.Name = "beginGeneralPeriodColumn";
+            this.beginGeneralPeriodColumn.ReadOnly = true;
+            this.beginGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // endGeneralPeriodColumn
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.endGeneralPeriodColumn.HeaderText = "Конец периода";
+            this.endGeneralPeriodColumn.MinimumWidth = 100;
+            this.endGeneralPeriodColumn.Name = "endGeneralPeriodColumn";
+            this.endGeneralPeriodColumn.ReadOnly = true;
+            this.endGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // additionalPeriodGroupBox
             // 
@@ -645,7 +669,7 @@
             this.tabPage2.Controls.Add(this.sumCalc5Box);
             this.tabPage2.Controls.Add(this.sumCalc3Box);
             this.tabPage2.Controls.Add(this.sum1Box);
-            this.tabPage2.Controls.Add(this.sum6Box);
+            this.tabPage2.Controls.Add(this.sum10Box);
             this.tabPage2.Controls.Add(this.sum5Box);
             this.tabPage2.Controls.Add(this.sum4Box);
             this.tabPage2.Controls.Add(this.sum3Box);
@@ -750,17 +774,17 @@
             this.sum1Box.Text = "0.00";
             this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // sum6Box
+            // sum10Box
             // 
-            this.sum6Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum6Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sum6Box.Location = new System.Drawing.Point(654, 338);
-            this.sum6Box.Name = "sum6Box";
-            this.sum6Box.ReadOnly = true;
-            this.sum6Box.Size = new System.Drawing.Size(100, 20);
-            this.sum6Box.TabIndex = 36;
-            this.sum6Box.Text = "0";
-            this.sum6Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum10Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sum10Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.sum10Box.Location = new System.Drawing.Point(654, 338);
+            this.sum10Box.Name = "sum10Box";
+            this.sum10Box.ReadOnly = true;
+            this.sum10Box.Size = new System.Drawing.Size(100, 20);
+            this.sum10Box.TabIndex = 36;
+            this.sum10Box.Text = "0";
+            this.sum10Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // sum5Box
             // 
@@ -1349,30 +1373,6 @@
             this.tabControlMain.Size = new System.Drawing.Size(769, 417);
             this.tabControlMain.TabIndex = 2;
             // 
-            // beginGeneralPeriodColumn
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.beginGeneralPeriodColumn.HeaderText = "Начало периода";
-            this.beginGeneralPeriodColumn.MinimumWidth = 30;
-            this.beginGeneralPeriodColumn.Name = "beginGeneralPeriodColumn";
-            this.beginGeneralPeriodColumn.ReadOnly = true;
-            this.beginGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // endGeneralPeriodColumn
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.endGeneralPeriodColumn.HeaderText = "Конец периода";
-            this.endGeneralPeriodColumn.MinimumWidth = 100;
-            this.endGeneralPeriodColumn.Name = "endGeneralPeriodColumn";
-            this.endGeneralPeriodColumn.ReadOnly = true;
-            this.endGeneralPeriodColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
             // AddEditDocumentSzv1Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1447,7 +1447,7 @@
         private System.Windows.Forms.TextBox sumCalc5Box;
         private System.Windows.Forms.TextBox sumCalc3Box;
         private System.Windows.Forms.TextBox sum1Box;
-        private System.Windows.Forms.TextBox sum6Box;
+        private System.Windows.Forms.TextBox sum10Box;
         private System.Windows.Forms.TextBox sum5Box;
         private System.Windows.Forms.TextBox sum4Box;
         private System.Windows.Forms.TextBox sum3Box;

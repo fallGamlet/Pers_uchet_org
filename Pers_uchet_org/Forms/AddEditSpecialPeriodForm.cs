@@ -287,30 +287,30 @@ namespace Pers_uchet_org
 
             DateTime begin;
             DateTime end;
-            bool isPeriodCross = false;
+            bool isPeriodCross = true;
             foreach (DataRowView row in _generalPeriodBS)
             {
                 begin = (DateTime)row[GeneralPeriod.beginDate];
                 end = (DateTime)row[GeneralPeriod.endDate];
-                if (this.End > end || this.Begin < begin)
-                {
-                    isPeriodCross = true;
-                }
-                if (this.End <= end && this.Begin >= begin)
+                if (this.Begin >= begin && this.End <= end)
                 {
                     isPeriodCross = false;
                 }
             }
+
+            if (_generalPeriodBS.Count < 1)
+            {
+                MainForm.ShowWarningMessage("Указанный период не попадает\nне в один из периодов основного стажа!\nНет записей о периодах основного стажа!", "Ошибка добавления периода");
+                isAllRight = false;
+                isPeriodCross = false;
+            }
+
             if (isPeriodCross)
             {
                 MainForm.ShowWarningMessage("Указанный период не попадает не в один из периодов основного стажа!", "Ошибка добавления периода");
                 isAllRight = false;
             }
-            if (_generalPeriodBS.Count < 1)
-            {
-                MainForm.ShowWarningMessage("Указанный период не попадает\nне в один из периодов основного стажа!\nНет записей о периодах основного стажа!", "Ошибка добавления периода");
-                isAllRight = false;
-            }
+            
 
             if (isAllRight)
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;

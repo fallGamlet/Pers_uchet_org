@@ -14,18 +14,26 @@ namespace Pers_uchet_org
     {
         #region Поля
         Org _org;
+        Operator _operator;
+        long _currentListId;
         int _repYear;
         long _personId;
         string _connection;
         //id документа, если производится редактирование
-        long _idDoc;
+        long _currentDocId;
         //тип документа
-        int _flagDoc;
+        long _flagDocType;
         //процент по выбранной категории
+        long _currentClassPercent;
         double _currentPercent;
         double _currentObligatory;
+        //идентификаторы выбранных гражданств
+        long _currentCitizen1Id;
+        long _currentCitizen2Id;
         //значение ячейки в подсказке
         double _hintValue;
+        //суммы в по столбцам
+        double[] sum;
 
         SQLiteConnection _con;
         SQLiteCommand _command;
@@ -50,22 +58,27 @@ namespace Pers_uchet_org
         public AddEditDocumentSzv1Form()
         {
             InitializeComponent();
-            _idDoc = -1;
+            _currentDocId = -1;
             _currentPercent = 0;
             _currentObligatory = 0;
             _hintValue = 0;
+            _personId = 0;
+            _currentClassPercent = 0;
+            _currentCitizen1Id = 174; //ПМР
+            _currentCitizen2Id = 0;
         }
 
-        public AddEditDocumentSzv1Form(Org org, int repYear, long personId, int flagDoc, string connection, long idDoc = -1)
+        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection, long idDoc = -1)
             : this()
         {
             this._org = org;
+            this._operator = _operator;
+            this._currentListId = currentListId;
             this._repYear = repYear;
             this._personId = personId;
-            this._flagDoc = flagDoc;
+            this._flagDocType = flagDocType;
             this._connection = connection;
-            this._idDoc = idDoc;
-
+            this._currentDocId = idDoc;
         }
 
         private void AddEditDocumentSzv1Form_Load(object sender, EventArgs e)
@@ -74,7 +87,7 @@ namespace Pers_uchet_org
             regNumTextBox.Text = _org.regnumVal;
             yearLabel.Text = _repYear.ToString();
             saveButton.Enabled = false;
-            this.Text = GenerateFormText(_idDoc, _flagDoc);
+            this.Text = GenerateFormText(_currentDocId, _flagDocType);
 
             //заполнение источников гражданства
             if (MainForm.CountryTable == null)
@@ -144,7 +157,7 @@ namespace Pers_uchet_org
                 _salaryInfoTableTranspose.Rows.Add(row);
             }
 
-            if (_idDoc > 0)
+            if (_currentDocId > 0)
             {
                 //TODO: Переделать заполнение данными из базы
             }
@@ -164,7 +177,7 @@ namespace Pers_uchet_org
             {
                 textBoxAnketaName.Text = reader[PersonView.fio].ToString();
                 textBoxInsNum.Text = reader[PersonView.socNumber].ToString();
-                if (_idDoc > 0)
+                if (_currentDocId > 0)
                 {
                     //TODO: Переделать заполнение данными из базы
                 }
@@ -187,7 +200,7 @@ namespace Pers_uchet_org
             generalPeriodDataGridView.DataSource = _generalPeriodBS;
             generalPeriodDataGridView.Columns["beginGeneralPeriodColumn"].DataPropertyName = GeneralPeriod.beginDate;
             generalPeriodDataGridView.Columns["endGeneralPeriodColumn"].DataPropertyName = GeneralPeriod.endDate;
-            if (_idDoc > 0)
+            if (_currentDocId > 0)
             {
                 //TODO: Переделать заполнение данными из базы
             }
@@ -201,7 +214,7 @@ namespace Pers_uchet_org
             additionalPeriodDataGridView.Columns["beginAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.beginDate;
             additionalPeriodDataGridView.Columns["endAdditionalPeriodColumn"].DataPropertyName = DopPeriodView.endDate;
 
-            if (_idDoc > 0)
+            if (_currentDocId > 0)
             {
                 //TODO: Переделать заполнение данными из базы
             }
@@ -222,7 +235,7 @@ namespace Pers_uchet_org
             specialPeriodDataGridView.Columns["minutesColumn"].DataPropertyName = SpecialPeriodView.minute;
             specialPeriodDataGridView.Columns["professionColumn"].DataPropertyName = SpecialPeriodView.profession;
 
-            if (_idDoc > 0)
+            if (_currentDocId > 0)
             {
                 //TODO: Переделать заполнение данными из базы
             }
@@ -238,7 +251,7 @@ namespace Pers_uchet_org
 
             if (String.IsNullOrEmpty(e.Value.ToString().Trim()))
             {
-                if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10)
+                if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10.ToString())
                     e.Value = 0;
                 else
                     e.Value = 0.0;
@@ -247,7 +260,7 @@ namespace Pers_uchet_org
             }
 
             double result = 0;
-            if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10)
+            if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10.ToString())
             {
                 if (Double.TryParse(e.Value.ToString(), out result) || Double.TryParse(e.Value.ToString().Replace('.', ','), out result))
                 {
@@ -271,6 +284,7 @@ namespace Pers_uchet_org
                 return;
 
             _currentPercent = (double)row[ClasspercentView.value];
+            _currentClassPercent = (long)row[ClasspercentView.id];
             percentLabel.Text = (_currentPercent * 100).ToString() + " %";
 
             if (int.Parse(row[ClasspercentView.obligatoryIsEnabled].ToString()) != 0)
@@ -342,9 +356,9 @@ namespace Pers_uchet_org
             if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", beginCurrent.ToShortDateString(), endCurrent.ToShortDateString()), "Удаление периода основного стажа") != System.Windows.Forms.DialogResult.Yes)
                 return;
 
-            for (int i = 0; i < _specPeriodBS.Count; i++ )
+            for (int i = 0; i < _specPeriodBS.Count; i++)
             {
-                
+
                 begin = (DateTime)(_specPeriodBS[i] as DataRowView)[SpecialPeriod.beginDate];
                 end = (DateTime)(_specPeriodBS[i] as DataRowView)[SpecialPeriod.endDate];
 
@@ -419,12 +433,24 @@ namespace Pers_uchet_org
                     case 1:
                         row[SpecialPeriodView.partCondition] = specialPeriodForm.Code;
                         row[SpecialPeriodView.partCode] = specialPeriodForm.CodeName;
+                        row[SpecialPeriodView.stajBase] = 0;
+                        row[SpecialPeriodView.stajCode] = 0;
+                        row[SpecialPeriodView.servYearBase] = 0;
+                        row[SpecialPeriodView.servCode] = 0;
                         break;
                     case 2:
+                        row[SpecialPeriodView.partCondition] = 0;
+                        row[SpecialPeriodView.partCode] = 0;
                         row[SpecialPeriodView.stajBase] = specialPeriodForm.Code;
                         row[SpecialPeriodView.stajCode] = specialPeriodForm.CodeName;
+                        row[SpecialPeriodView.servYearBase] = 0;
+                        row[SpecialPeriodView.servCode] = 0;
                         break;
                     case 3:
+                        row[SpecialPeriodView.partCondition] = 0;
+                        row[SpecialPeriodView.partCode] = 0;
+                        row[SpecialPeriodView.stajBase] = 0;
+                        row[SpecialPeriodView.stajCode] = 0;
                         row[SpecialPeriodView.servYearBase] = specialPeriodForm.Code;
                         row[SpecialPeriodView.servCode] = specialPeriodForm.CodeName;
                         break;
@@ -450,19 +476,19 @@ namespace Pers_uchet_org
 
             int typePeriod = 0;
             long code = 0;
-            if (row[SpecialPeriodView.partCondition] != DBNull.Value)
+            if (row[SpecialPeriodView.partCondition] != DBNull.Value && (long)row[SpecialPeriodView.partCondition] > 0)
             {
                 typePeriod = 1;
                 code = (long)row[SpecialPeriodView.partCondition];
             }
             else
-                if (row[SpecialPeriodView.stajBase] != DBNull.Value)
+                if (row[SpecialPeriodView.stajBase] != DBNull.Value && (long)row[SpecialPeriodView.stajBase] > 0)
                 {
                     typePeriod = 2;
                     code = (long)row[SpecialPeriodView.stajBase];
                 }
                 else
-                    if (row[SpecialPeriodView.servYearBase] != DBNull.Value)
+                    if (row[SpecialPeriodView.servYearBase] != DBNull.Value && (long)row[SpecialPeriodView.servYearBase] > 0)
                     {
                         typePeriod = 3;
                         code = (long)row[SpecialPeriodView.servYearBase];
@@ -479,34 +505,32 @@ namespace Pers_uchet_org
             AddEditSpecialPeriodForm specialPeriodForm = new AddEditSpecialPeriodForm(_repYear, _generalPeriodBS, typePeriod, code, begin, end, month, day, hour, minute, profession);
             if (specialPeriodForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
-
                 if (specialPeriodForm.TypePeriod == 1)
                 {
                     row[SpecialPeriodView.partCondition] = specialPeriodForm.Code;
                     row[SpecialPeriodView.partCode] = specialPeriodForm.CodeName;
-                    row[SpecialPeriodView.stajBase] = DBNull.Value;
-                    row[SpecialPeriodView.stajCode] = DBNull.Value;
-                    row[SpecialPeriodView.servYearBase] = DBNull.Value;
-                    row[SpecialPeriodView.servCode] = DBNull.Value;
+                    row[SpecialPeriodView.stajBase] = 0;
+                    row[SpecialPeriodView.stajCode] = 0;
+                    row[SpecialPeriodView.servYearBase] = 0;
+                    row[SpecialPeriodView.servCode] = 0;
                 }
                 else
                     if (specialPeriodForm.TypePeriod == 2)
                     {
-                        row[SpecialPeriodView.partCondition] = DBNull.Value;
-                        row[SpecialPeriodView.partCode] = DBNull.Value;
+                        row[SpecialPeriodView.partCondition] = 0;
+                        row[SpecialPeriodView.partCode] = 0;
                         row[SpecialPeriodView.stajBase] = specialPeriodForm.Code;
                         row[SpecialPeriodView.stajCode] = specialPeriodForm.CodeName;
-                        row[SpecialPeriodView.servYearBase] = DBNull.Value;
-                        row[SpecialPeriodView.servCode] = DBNull.Value;
+                        row[SpecialPeriodView.servYearBase] = 0;
+                        row[SpecialPeriodView.servCode] = 0;
                     }
                     else
                         if (specialPeriodForm.TypePeriod == 3)
                         {
-                            row[SpecialPeriodView.partCondition] = DBNull.Value;
-                            row[SpecialPeriodView.partCode] = DBNull.Value;
-                            row[SpecialPeriodView.stajBase] = DBNull.Value;
-                            row[SpecialPeriodView.stajCode] = DBNull.Value;
+                            row[SpecialPeriodView.partCondition] = 0;
+                            row[SpecialPeriodView.partCode] = 0;
+                            row[SpecialPeriodView.stajBase] = 0;
+                            row[SpecialPeriodView.stajCode] = 0;
                             row[SpecialPeriodView.servYearBase] = specialPeriodForm.Code;
                             row[SpecialPeriodView.servCode] = specialPeriodForm.CodeName;
                         }
@@ -547,25 +571,25 @@ namespace Pers_uchet_org
         private void dataViewProfit_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
             dataViewProfit.EndEdit();
-            double[] sum = new double[6];
+            sum = new double[6];
 
-            if (_salaryInfoTable == null)
+            if (_salaryInfoTableTranspose == null)
                 return;
-            foreach (DataRow row in _salaryInfoTable.Rows)
+            foreach (DataRow row in _salaryInfoTableTranspose.Rows)
             {
-                sum[0] += Convert.ToDouble(row[1].ToString());
-                sum[1] += Convert.ToDouble(row[2].ToString());
-                sum[2] += Convert.ToDouble(row[3].ToString());
-                sum[3] += Convert.ToDouble(row[4].ToString());
-                sum[4] += Convert.ToDouble(row[5].ToString());
-                sum[5] += Convert.ToDouble(row[6].ToString());
+                sum[0] += Convert.ToDouble(row[SalaryGroups.Column1.ToString()].ToString());
+                sum[1] += Convert.ToDouble(row[SalaryGroups.Column2.ToString()].ToString());
+                sum[2] += Convert.ToDouble(row[SalaryGroups.Column3.ToString()].ToString());
+                sum[3] += Convert.ToDouble(row[SalaryGroups.Column4.ToString()].ToString());
+                sum[4] += Convert.ToDouble(row[SalaryGroups.Column5.ToString()].ToString());
+                sum[5] += Convert.ToDouble(row[SalaryGroups.Column10.ToString()].ToString());
             }
             sum1Box.Text = sum[0].ToString("N2");
             sum2Box.Text = sum[1].ToString("N2");
             sum3Box.Text = sum[2].ToString("N2");
             sum4Box.Text = sum[3].ToString("N2");
             sum5Box.Text = sum[4].ToString("N2");
-            sum6Box.Text = sum[5].ToString("N2");
+            sum10Box.Text = sum[5].ToString("N2");
 
             sumCalc3Box.Text = (sum[0] * _currentPercent).ToString("N2");
             sumCalc5Box.Text = (sum[0] * _currentObligatory).ToString("N2");
@@ -615,7 +639,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы
-        private string GenerateFormText(long idDoc, int flagDoc)
+        private string GenerateFormText(long idDoc, long flagDoc)
         {
             StringBuilder builder = new StringBuilder();
 
@@ -654,7 +678,7 @@ namespace Pers_uchet_org
                 return;
             DataGridViewCell cell = dataViewProfit.CurrentCell;
 
-            if (cell.OwningColumn.DataPropertyName == SalaryGroups.Column3)
+            if (cell.OwningColumn.DataPropertyName == SalaryGroups.Column3.ToString())
             {
                 Rectangle cellRectangle = dataViewProfit.GetCellDisplayRectangle(cell.ColumnIndex, cell.RowIndex, true);
                 if (cellRectangle.Bottom != 0)
@@ -671,7 +695,7 @@ namespace Pers_uchet_org
                 }
             }
             else
-                if (cell.OwningColumn.DataPropertyName == SalaryGroups.Column5)
+                if (cell.OwningColumn.DataPropertyName == SalaryGroups.Column5.ToString())
                 {
                     Rectangle cellRectangle = dataViewProfit.GetCellDisplayRectangle(cell.ColumnIndex, cell.RowIndex, true);
                     if (cellRectangle.Bottom != 0)
@@ -692,10 +716,132 @@ namespace Pers_uchet_org
                     panelHint.Visible = false;
                 }
         }
-        
+
         private void saveButton_Click(object sender, EventArgs e)
         {
-            return;
+            try
+            {
+                if (_currentDocId > 0)
+                {
+                    //TODO: Сохранение изменений
+                }
+                else
+                {
+
+                    using (_con = new SQLiteConnection(_connection))
+                    {
+                        _con.Open();
+                        using (SQLiteTransaction transaction = _con.BeginTransaction())
+                        {
+                            using (_command = _con.CreateCommand())
+                            {
+                                _command.Transaction = transaction;
+                                //Сохранение в таблицу Doc
+                                _command.CommandText = Docs.GetInsertText(_flagDocType, _currentListId, _personId);
+                                _currentDocId = (long)_command.ExecuteScalar();
+                                if (_currentDocId < 1)
+                                {
+                                    throw new SQLiteException("Невозможно создать документ.");
+                                }
+                                //Сохранение в таблицу IndDoc
+                                if (_citizen1BS.Current != null)
+                                {
+                                    _currentCitizen1Id = (long)(_citizen1BS.Current as DataRowView)[Country.id];
+                                }
+                                if (_citizen2BS.Current != null)
+                                {
+                                    _currentCitizen2Id = (long)(_citizen2BS.Current as DataRowView)[Country.id];
+                                }
+                                _command.CommandText = IndDocs.GetInsertText(_currentDocId, _currentClassPercent, additionalRadioButton.Checked ? 2 : 1, _currentCitizen1Id, _currentCitizen2Id);
+                                if ((long)_command.ExecuteScalar() < 1)
+                                {
+                                    throw new SQLiteException("Невозможно создать документ. Таблица IndDocs.");
+                                }
+                                //Сохранение в таблицу Gen_period
+                                foreach (DataRowView row in _generalPeriodBS)
+                                {
+                                    _command.CommandText = GeneralPeriod.GetInsertText(_currentDocId, (DateTime)row[GeneralPeriod.beginDate], (DateTime)row[GeneralPeriod.endDate]);
+                                    if ((long)_command.ExecuteScalar() < 1)
+                                    {
+                                        throw new SQLiteException("Невозможно создать документ. Таблица Gen_period.");
+                                    }
+                                }
+                                //Сохранение в таблицу Dop_period
+                                foreach (DataRowView row in _dopPeriodBS)
+                                {
+                                    _command.CommandText = DopPeriod.GetInsertText(_currentDocId, (long)row[DopPeriodView.classificatorId], (DateTime)row[DopPeriodView.beginDate], (DateTime)row[DopPeriodView.endDate]);
+                                    if ((long)_command.ExecuteScalar() < 1)
+                                    {
+                                        throw new SQLiteException("Невозможно создать документ. Таблица Dop_period.");
+                                    }
+                                }
+                                //Сохранение в таблицу Spec_period
+                                foreach (DataRowView row in _specPeriodBS)
+                                {
+                                    _command.CommandText = SpecialPeriod.GetInsertText(_currentDocId, (long)row[SpecialPeriodView.partCondition],
+                                                                                                      (long)row[SpecialPeriodView.stajBase],
+                                                                                                      (long)row[SpecialPeriodView.servYearBase],
+                                                                                                      (DateTime)row[SpecialPeriodView.beginDate],
+                                                                                                      (DateTime)row[SpecialPeriodView.endDate],
+                                                                                                      (int)row[SpecialPeriodView.month],
+                                                                                                      (int)row[SpecialPeriodView.day],
+                                                                                                      (int)row[SpecialPeriodView.hour],
+                                                                                                      (int)row[SpecialPeriodView.minute],
+                                                                                                      row[SpecialPeriodView.profession].ToString());
+                                    if ((long)_command.ExecuteScalar() < 1)
+                                    {
+                                        throw new SQLiteException("Невозможно создать документ. Таблица Spec_period.");
+                                    }
+                                }
+                                //Сохранение в таблицу Salary_Info
+                                _command = SalaryInfo.CreateInsertCommand();
+                                _command.Connection = _con;
+                                _command.Transaction = transaction;
+                                foreach (DataColumn column in _salaryInfoTableTranspose.Columns)
+                                {
+                                    if (column.ColumnName == SalaryGroups.Column1.ToString() || column.ColumnName == SalaryGroups.Column2.ToString() || column.ColumnName == SalaryGroups.Column3.ToString() || column.ColumnName == SalaryGroups.Column4.ToString() || column.ColumnName == SalaryGroups.Column5.ToString() || column.ColumnName == SalaryGroups.Column10.ToString())
+                                    {
+                                        _command.Parameters[SalaryInfo.pDocId].Value = _currentDocId;
+                                        _command.Parameters[SalaryInfo.pSalaryGroupsId].Value = Int64.Parse(column.ColumnName);
+                                        _command.Parameters[SalaryInfo.pJanuary].Value = Double.Parse(_salaryInfoTableTranspose.Rows[0][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pFebruary].Value = Double.Parse(_salaryInfoTableTranspose.Rows[1][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pMarch].Value = Double.Parse(_salaryInfoTableTranspose.Rows[2][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pApril].Value = Double.Parse(_salaryInfoTableTranspose.Rows[3][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pMay].Value = Double.Parse(_salaryInfoTableTranspose.Rows[4][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pJune].Value = Double.Parse(_salaryInfoTableTranspose.Rows[5][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pJuly].Value = Double.Parse(_salaryInfoTableTranspose.Rows[6][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pAugust].Value = Double.Parse(_salaryInfoTableTranspose.Rows[7][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pSeptember].Value = Double.Parse(_salaryInfoTableTranspose.Rows[8][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pOctober].Value = Double.Parse(_salaryInfoTableTranspose.Rows[9][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pNovember].Value = Double.Parse(_salaryInfoTableTranspose.Rows[10][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pDecember].Value = Double.Parse(_salaryInfoTableTranspose.Rows[11][column.ColumnName].ToString().Replace('.', ','));
+                                        _command.Parameters[SalaryInfo.pSum].Value = Double.Parse((this.Controls.Find("sum" + column.ColumnName + "Box", true)[0] as TextBox).Text.Replace('.', ','));
+
+                                        if ((long)_command.ExecuteScalar() < 1)
+                                        {
+                                            throw new SQLiteException("Невозможно создать документ. Таблица Salary_Info.");
+                                        }
+                                    }
+                                }
+
+                            }
+                            transaction.Commit();
+                        }
+                        _con.Close();
+                    }
+                }
+                MainForm.ShowInfoMessage("Данные о стаже и доходе успешно сохранены!", "Сохранение");
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorMessage(ex.Message, "Ошибка сохранения документа");
+            }
+            finally
+            {
+
+
+            }
+
         }
         #endregion
     }

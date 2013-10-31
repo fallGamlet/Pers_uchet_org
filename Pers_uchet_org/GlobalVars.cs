@@ -1825,6 +1825,50 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class IndDocs
+    {
+        // название таблицы в БД
+        static public string tablename = "IndDocs";
+
+        #region названия полей таблицы в БД
+        static public string id = "id";
+        static public string docId = "doc_id";
+        static public string classpercentId = "classpercent_id";
+        static public string isGeneral = "is_general";
+        static public string citizen1Id = "citizen1_id";
+        static public string citizen2Id = "citizen2_id";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docId, typeof(long));
+            table.Columns.Add(classpercentId, typeof(long));
+            table.Columns.Add(isGeneral, typeof(long));
+            table.Columns.Add(citizen1Id, typeof(long));
+            table.Columns.Add(citizen2Id, typeof(long));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long doc_id)
+        {
+            return string.Format(GetSelectText() + "WHERE {0} = {1};", docId, doc_id);
+        }
+
+        static public string GetInsertText(long doc_id, long classpercent_id, int is_general, long citizen1_id, long citizen2_id)
+        {
+            return string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5}) VALUES ({6},{7},{8},{9},{10}); SELECT LAST_INSERT_ROWID();", tablename, docId, classpercentId, isGeneral, citizen1Id, citizen2Id, doc_id, classpercent_id, is_general, citizen1_id, citizen2_id);
+        }
+        #endregion
+    }
+
     public class Classgroup
     {
         // название таблицы в БД
@@ -2284,10 +2328,9 @@ namespace Pers_uchet_org
         static public string personID = "person_id";
         static public string socNumber = "soc_number";
         static public string fio = "fio";
-        static public string operIdReg = "oper_id_reg";
+        static public string code = "code";
         static public string operNameReg = "name_reg";
         static public string regDate = "reg_date";
-        static public string operIdChange = "oper_id_change";
         static public string operNameChange = "name_change";
         static public string changeDate = "change_date";
         #endregion
@@ -2303,10 +2346,9 @@ namespace Pers_uchet_org
             table.Columns.Add(personID, typeof(long));
             table.Columns.Add(socNumber, typeof(string));
             table.Columns.Add(fio, typeof(string));
-            table.Columns.Add(operIdReg, typeof(long));
+            table.Columns.Add(code, typeof(string));
             table.Columns.Add(operNameReg, typeof(string));
             table.Columns.Add(regDate, typeof(DateTime));
-            table.Columns.Add(operIdChange, typeof(long));
             table.Columns.Add(operNameChange, typeof(string));
             table.Columns.Add(changeDate, typeof(DateTime));
             return table;
@@ -2338,10 +2380,6 @@ namespace Pers_uchet_org
         static public string docTypeId = "doc_type_id";
         static public string listId = "list_id";
         static public string personID = "person_id";
-        static public string operIdReg = "oper_id_reg";
-        static public string regDate = "reg_date";
-        static public string operIdChange = "oper_id_change";
-        static public string changeDate = "change_date";
         #endregion
 
         #region Методы - статические
@@ -2352,10 +2390,6 @@ namespace Pers_uchet_org
             table.Columns.Add(docTypeId, typeof(int));
             table.Columns.Add(listId, typeof(long));
             table.Columns.Add(personID, typeof(long));
-            table.Columns.Add(operIdReg, typeof(long));
-            table.Columns.Add(regDate, typeof(DateTime));
-            table.Columns.Add(operIdChange, typeof(long));
-            table.Columns.Add(changeDate, typeof(DateTime));
             return table;
         }
 
@@ -2442,6 +2476,11 @@ namespace Pers_uchet_org
             }
             return count;
         }
+
+        static public string GetInsertText(long doc_type_id, long list_id, long person_id)
+        {
+            return string.Format("INSERT INTO {0} ({1},{2},{3}) VALUES ({4},{5},{6}); SELECT LAST_INSERT_ROWID();", tablename, docTypeId, listId, personID, doc_type_id, list_id, person_id);
+        }
         #endregion
     }
 
@@ -2484,59 +2523,58 @@ namespace Pers_uchet_org
         /// <summary>
         /// Сумма заработка (дохода), на который начислены страховые взносы
         /// </summary>
-        public static string Column1
+        public static int Column1
         {
-            get { return "1"; }
+            get { return 1; }
         }
-
         /// <summary>
         /// Сумма выплат, учитываемых для назначения пенсии
         /// </summary>
-        public static string Column2
+        public static int Column2
         {
-            get { return "2"; }
+            get { return 2; }
         }
         /// <summary>
         /// Сумма страховых взносов, начисленных работодателем
         /// </summary>
-        public static string Column3
+        public static int Column3
         {
-            get { return "3"; }
+            get { return 3; }
         }
         /// <summary>
         /// Сумма страховых взносов, уплаченных работодателем
         /// </summary>
-        public static string Column4
+        public static int Column4
         {
-            get { return "4"; }
+            get { return 4; }
         }
         /// <summary>
         /// Сумма обязательных страховых взносов, уплачиваемых из заработка
         /// </summary>
-        public static string Column5
+        public static int Column5
         {
-            get { return "5"; }
+            get { return 5; }
         }
         /// <summary>
         /// Всего полных дней для общего стажа
         /// </summary>
-        public static string Column10
+        public static int Column10
         {
-            get { return "10"; }
+            get { return 10; }
         }
         /// <summary>
         /// Признак тарифа
         /// </summary>
-        public static string Column20
+        public static int Column20
         {
-            get { return "20"; }
+            get { return 20; }
         }
         /// <summary>
         /// Средняя численность работников (застрахованных лиц)
         /// </summary>
-        public static string Column21
+        public static int Column21
         {
-            get { return "21"; }
+            get { return 21; }
         }
 
     }
@@ -2562,6 +2600,25 @@ namespace Pers_uchet_org
         static public string november = "november";
         static public string december = "december";
         static public string sum = "sum";
+        #endregion
+
+        #region Параметры для полей таблицы
+        static public string pId = "@id";
+        static public string pDocId = "@doc_id";
+        static public string pSalaryGroupsId = "@salary_groups_id";
+        static public string pJanuary = "@january";
+        static public string pFebruary = "@february";
+        static public string pMarch = "@march";
+        static public string pApril = "@april";
+        static public string pMay = "@may";
+        static public string pJune = "@june";
+        static public string pJuly = "@july";
+        static public string pAugust = "@august";
+        static public string pSeptember = "@september";
+        static public string pOctober = "@october";
+        static public string pNovember = "@november";
+        static public string pDecember = "@december";
+        static public string pSum = "@sum";
         #endregion
 
         #region Методы - статические
@@ -2591,12 +2648,12 @@ namespace Pers_uchet_org
         {
             DataTable table = new DataTable(tablename + "_transpose");
             table.Columns.Add("months", typeof(int));
-            table.Columns.Add(SalaryGroups.Column1, typeof(double));
-            table.Columns.Add(SalaryGroups.Column2, typeof(double));
-            table.Columns.Add(SalaryGroups.Column3, typeof(double));
-            table.Columns.Add(SalaryGroups.Column4, typeof(double));
-            table.Columns.Add(SalaryGroups.Column5, typeof(double));
-            table.Columns.Add(SalaryGroups.Column10, typeof(int));
+            table.Columns.Add(SalaryGroups.Column1.ToString(), typeof(double));
+            table.Columns.Add(SalaryGroups.Column2.ToString(), typeof(double));
+            table.Columns.Add(SalaryGroups.Column3.ToString(), typeof(double));
+            table.Columns.Add(SalaryGroups.Column4.ToString(), typeof(double));
+            table.Columns.Add(SalaryGroups.Column5.ToString(), typeof(double));
+            table.Columns.Add(SalaryGroups.Column10.ToString(), typeof(int));
             return table;
         }
 
@@ -2608,6 +2665,36 @@ namespace Pers_uchet_org
         static public string GetSelectText(long doc_id)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2}", docId, doc_id, salaryGroupsId);
+        }
+
+        //static public string GetInsertText(long doc_id, int salary_groups_id, double _january, double _february, double _march, double _april, double _may, double _june, double _july, double _august, double _september, double _october, double _november, double _december, double _sum)
+        //{
+        //    return string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}) VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}); SELECT LAST_INSERT_ROWID();", tablename, docId, salaryGroupsId, january, february, march, april, may, june, july, august, september, october, november, december, sum, doc_id, salary_groups_id, _january, _february, _march, _april, _may, _june, _july, _august, _september, _october, _november, _december, _sum);
+        //}
+
+        static public SQLiteCommand CreateInsertCommand()
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            comm.Parameters.Add(pDocId, DbType.Int64);
+            comm.Parameters.Add(pSalaryGroupsId, DbType.Int64);
+            comm.Parameters.Add(pJanuary, DbType.Double);
+            comm.Parameters.Add(pFebruary, DbType.Double);
+            comm.Parameters.Add(pMarch, DbType.Double);
+            comm.Parameters.Add(pApril, DbType.Double);
+            comm.Parameters.Add(pMay, DbType.Double);
+            comm.Parameters.Add(pJune, DbType.Double);
+            comm.Parameters.Add(pJuly, DbType.Double);
+            comm.Parameters.Add(pAugust, DbType.Double);
+            comm.Parameters.Add(pSeptember, DbType.Double);
+            comm.Parameters.Add(pOctober, DbType.Double);
+            comm.Parameters.Add(pNovember, DbType.Double);
+            comm.Parameters.Add(pDecember, DbType.Double);
+            comm.Parameters.Add(pSum, DbType.Double);
+
+            comm.CommandText = string.Format(@"INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15})
+                                                        VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30});
+                                               SELECT LAST_INSERT_ROWID();", tablename, docId, salaryGroupsId, january, february, march, april, may, june, july, august, september, october, november, december, sum, pDocId, pSalaryGroupsId, pJanuary, pFebruary, pMarch, pApril, pMay, pJune, pJuly, pAugust, pSeptember, pOctober, pNovember, pDecember, pSum);
+            return comm;
         }
 
         //public static DataTable TransposeDataTable(DataTable dtTableToTranspose, Int32 columnIndex)
@@ -2751,37 +2838,10 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
         }
 
-        //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, docTypeId, new_doc_type_id, id, doc_id);
-        //}
-
-        //static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, docTypeId, new_doc_type_id, listId, list_id);
-        //}
-
-        //static public void UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, string connectionStr)
-        //{
-        //    if (doc_idArr.Count < 1)
-        //        throw new ArgumentException("Количество документов на изменение должно быть >= 1");
-        //    string commantText = String.Empty;
-        //    foreach (long doc_id in doc_idArr)
-        //        commantText += GetUpdateDocTypeByDocIdText(doc_id, new_doc_type_id) + "; \n";
-
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        int count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //    }
-        //}
-
+        static public string GetInsertText(long doc_id, DateTime begin_date, DateTime end_date)
+        {
+            return string.Format("INSERT INTO {0} ({1},{2},{3}) VALUES ({4},'{5}','{6}'); SELECT LAST_INSERT_ROWID();", tablename, docId, beginDate, endDate, doc_id, begin_date.ToString("yyyy-MM-dd"), end_date.ToString("yyyy-MM-dd"));
+        }
 
         static public string GetDeleteTextById(long _id)
         {
@@ -2827,6 +2887,11 @@ namespace Pers_uchet_org
         static public string GetSelectText(long doc_id)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        static public string GetInsertText(long doc_id, long classificator_id, DateTime begin_date, DateTime end_date)
+        {
+            return string.Format("INSERT INTO {0} ({1},{2},{3},{4}) VALUES ({5},{6},'{7}','{8}'); SELECT LAST_INSERT_ROWID();", tablename, docId, classificatorId, beginDate, endDate, doc_id, classificator_id, begin_date.ToString("yyyy-MM-dd"), end_date.ToString("yyyy-MM-dd"));
         }
 
         static public string GetDeleteTextById(long _id)
@@ -2936,6 +3001,11 @@ namespace Pers_uchet_org
         static public string GetSelectText(long doc_id)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+        }
+
+        static public string GetInsertText(long doc_id, long part_condition, long staj_base, long serv_year_base, DateTime begin_date, DateTime end_date, int _month, int _day, int _hour, int _minute, string _profession)
+        {
+            return string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}) VALUES ({12},{13},{14},{15},'{16}','{17}',{18},{19},{20},{21},'{22}'); SELECT LAST_INSERT_ROWID();", tablename, docId, partCondition, stajBase, servYearBase, beginDate, endDate, month, day, hour, minute, profession, doc_id, part_condition, staj_base, serv_year_base, begin_date.ToString("yyyy-MM-dd"), end_date.ToString("yyyy-MM-dd"), _month, _day, _hour, _minute, _profession);
         }
 
         static public string GetDeleteTextById(long _id)

@@ -49,6 +49,8 @@ namespace Pers_uchet_org
         public static long newListId = 0;
         // переменная содержит id добавляемого человека
         public static long personId;
+        // переменная содержит id текущего пакета
+        static long currentListId;
 
 
         #endregion
@@ -64,6 +66,7 @@ namespace Pers_uchet_org
 
         private void StajDohodForm_Load(object sender, EventArgs e)
         {
+            currentListId = 0;
             RepYear = MainForm.RepYear;
             yearBox.Maximum = RepYear + 10;
             yearBox.Value = RepYear;
@@ -146,8 +149,6 @@ namespace Pers_uchet_org
 
                 addDocButton.Enabled = true;
             }
-
-            //throw new NotImplementedException();
         }
 
         void _listsBS_CurrentChanged(object sender, EventArgs e)
@@ -155,6 +156,7 @@ namespace Pers_uchet_org
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
             {
+                currentListId = 0;
                 return;
             }
 
@@ -164,10 +166,10 @@ namespace Pers_uchet_org
             else
                 return;
 
-            long listId = (long)row[ListsView.id];
+            currentListId = (long)row[ListsView.id];
 
             // инициализация Адаптера для считывания документов из БД
-            string commandStr = DocsView.GetSelectTextByListId(listId);
+            string commandStr = DocsView.GetSelectTextByListId(currentListId);
             _docsAdapter = new SQLiteDataAdapter(commandStr, _connection);
             // заполнение таблицы данными из БД
             _docsAdapter.Fill(_docsTable);
@@ -305,11 +307,12 @@ namespace Pers_uchet_org
             ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, RepYear, _connection);
             if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                bool isNew = true;
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, RepYear, personId, flagDoc, _connection);
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, currentListId, RepYear, personId, flagDoc, _connection);
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 { }
             }
+            //Перезагрузка данных
+            ReloadDataAfterChanges();
         }
 
         private void editDocButton_Click(object sender, EventArgs e)
@@ -325,7 +328,7 @@ namespace Pers_uchet_org
                 return;
             if (ShowQuestionMessage("Вы действительно хотите удалить текущий документ \"СЗВ-1\"?", "Удаление документа") == DialogResult.No)
                 return;
-            long doc_id = (long)docView.CurrentRow.Cells["id"].Value;
+            long doc_id = (long)docView.CurrentRow.Cells["idColumn"].Value;
             string commandText = Docs.GetDeleteText(doc_id);
             SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
             cmd.Connection.Open();
