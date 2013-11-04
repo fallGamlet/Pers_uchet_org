@@ -2499,7 +2499,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-        static public DataTable CreatetTable()
+        static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
@@ -2520,7 +2520,7 @@ namespace Pers_uchet_org
             return table;
         }
 
-        static public DataTable CreatetTransposeTable()
+        static public DataTable CreateTransposeTable()
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add("months", typeof(int));
@@ -2649,6 +2649,444 @@ namespace Pers_uchet_org
         //    }
         //    return count;
         //}
+        #endregion
+    }
+
+    public class Mergies
+    {
+        static public string tablename = "Mergies";
+
+        #region Название полей таблицы в БД
+        static public string id = "id";
+        static public string orgID = "org_id";
+        static public string repYear = "rep_year";
+        static public string listCount = "list_count";
+        static public string docCount = "doc_count";
+        static public string actual = "actual";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(orgID, typeof(long));
+            table.Columns.Add(repYear, typeof(long));
+            table.Columns.Add(listCount, typeof(long));
+            table.Columns.Add(docCount, typeof(long));
+            table.Columns.Add(actual, typeof(bool));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectRowText(long row_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), id, row_id);
+        }
+
+        static public string GetSelectText(long org_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), orgID, org_id);
+        }
+
+        static public string GetSelectActualText(long org_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} AND {3} = 1 ", GetSelectText(), orgID, org_id, actual);
+        }
+
+        static public string GetInsertText(long org_id, int rep_year, int list_count, int doc_count)
+        {
+            return string.Format(" INSERT INTO {0} ({1},{2},{3},{4})VALUES({5},{6},{7},{8}); SELECT last_insert_rowid(); ", 
+                                    orgID, repYear, listCount, docCount,
+                                    org_id, rep_year, list_count, doc_count);
+        }
+        
+        static public string GetUpdateText(long row_id, long org_id, int rep_year, int list_count, int doc_count)
+        {
+            return string.Format(" UPDATE {0} SET {1}={2},{3}={4},{5}={6},{7}={8} WHERE {9}={10} ",
+                                    tablename,
+                                    orgID, org_id, 
+                                    repYear, rep_year, 
+                                    listCount, list_count, 
+                                    docCount, doc_count, 
+                                    id, row_id);
+        }
+
+        static public string GetChangeActualText(long row_id, bool actual_value)
+        {
+            return string.Format("UPDATE {0} SET {1}={2} WHERE {3}={4}", 
+                                    tablename, actual, actual_value, id, row_id);
+        }
+
+        static public string GetChangeActualText(IEnumerable<long> row_id, bool actual_value)
+        {
+            string instr = "( ";
+            foreach (long val in row_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+
+            return string.Format("UPDATE {0} SET {1}={2} WHERE {3} in {4}",
+                                    tablename, actual, actual_value, id, instr);
+        }
+
+        static public string GetChangeActualByOrgText(long org_id, int rep_year, bool actual_value)
+        {
+            return string.Format("UPDATE {0} SET {1}={2} WHERE {3}={4} AND {5}={6} ",
+                                    tablename, actual, actual_value, orgID, org_id, repYear, rep_year);
+        }
+
+        static public string GetDeleteText(long row_id)
+        {
+            return string.Format(" DELETE FROM {0} WHERE {1}={2} ", tablename, id, row_id);
+        }
+
+        static public string GetDeleteByOrgText(long org_id)
+        {
+            return string.Format(" DELETE FROM {0} WHERE {1}={2} ", tablename, orgID, org_id);
+        }
+
+        static public string GetDeleteByOrgText(long org_id, int rep_year)
+        {
+            return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, orgID, org_id, repYear, rep_year);
+        }
+        #endregion
+    }
+
+    public class MergiesView: Mergies
+    {
+        // название представления в БД
+        new static public string tablename = "Mergies_View";
+
+        #region Дополненные поля для представления
+        static public string operName = "operator";
+        static public string newDate = "new_date";
+        static public string editDate = "edit_date";
+        #endregion
+        
+        new static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+        
+        new static public string GetSelectRowText(long row_id)
+        {
+            return string.Format("{0} WHERE {1}={2} ", GetSelectText(), id, row_id);
+        }
+
+        new static public string GetSelectText(long org_id)
+        {
+            return string.Format("{0} WHERE {1}={2} ", GetSelectText(), orgID, org_id);
+        }
+
+        static public string GetSelectText(long org_id, int rep_year)
+        {
+            return string.Format("{0} WHERE {1}={2} AND {3}={4} ", GetSelectText(), orgID, org_id, repYear, rep_year);
+        }
+
+        new static public string GetSelectActualText(long org_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} AND {3} = 1 ", GetSelectText(), orgID, org_id, actual);
+        }
+        
+        new static public DataTable CreateTable()
+        {
+            DataTable table = Mergies.CreateTable();
+            table.Columns.Add(newDate, typeof(DateTime));
+            table.Columns.Add(editDate, typeof(DateTime));
+            table.Columns.Add(operName, typeof(string));
+            return table;
+        }
+    }
+
+    public class MergeInfo
+    {
+        static public string tablename = "Merge_Info";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string mergeID = "merge_id";
+        static public string groupID = "groups_id";
+        static public string january = "january";
+        static public string february = "february";
+        static public string march = "march";
+        static public string april = "april";
+        static public string may = "may";
+        static public string june = "june";
+        static public string july = "july";
+        static public string august = "august";
+        static public string september = "september";
+        static public string october = "october";
+        static public string november = "november";
+        static public string december = "december";
+        static public string sum = "sum";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(mergeID, typeof(long));
+            table.Columns.Add(groupID, typeof(long));
+            table.Columns.Add(january, typeof(double));
+            table.Columns.Add(february, typeof(double));
+            table.Columns.Add(march, typeof(double));
+            table.Columns.Add(april, typeof(double));
+            table.Columns.Add(may, typeof(double));
+            table.Columns.Add(june, typeof(double));
+            table.Columns.Add(july, typeof(double));
+            table.Columns.Add(august, typeof(double));
+            table.Columns.Add(september, typeof(double));
+            table.Columns.Add(october, typeof(double));
+            table.Columns.Add(november, typeof(double));
+            table.Columns.Add(december, typeof(double));
+            table.Columns.Add(sum, typeof(double));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long merge_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
+        }
+
+        public static DataTable TransposeDataTable(DataTable dtTableToTranspose, Int32 columnIndex)
+        {
+            DataTable dtTransposedTable = new DataTable(tablename);
+
+            //String colName = dtTableToTranspose.Columns[columnIndex].ColumnName.ToString();
+            dtTransposedTable.Columns.Add("months");
+
+            foreach (DataRow row in dtTableToTranspose.Rows)
+            {
+                dtTransposedTable.Columns.Add(row[columnIndex].ToString());
+            }
+
+            Int32 colIndex = 0;
+            Int32 month = 1;
+            foreach (DataColumn dc in dtTableToTranspose.Columns)
+            {
+                if (colIndex != columnIndex)
+                {
+                    DataRow newRow = dtTransposedTable.NewRow();
+                    newRow[0] = month;
+                    month++;
+                    for (Int32 destColIndex = 1; destColIndex < dtTransposedTable.Columns.Count; destColIndex++)
+                    {
+                        newRow[destColIndex] = dtTableToTranspose.Rows[destColIndex - 1][colIndex];
+                    }
+
+                    dtTransposedTable.Rows.Add(newRow);
+                }
+                colIndex++;
+            }
+            return dtTransposedTable;
+        }
+
+        public static DataRow Find(DataTable table, string colname, object value)
+        {
+            foreach (DataRow row in table.Rows)
+            {
+                object v = row[colname];
+                if (Object.Equals(v, value))
+                    return row;
+            }
+            return null;
+        }
+
+        //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, docTypeId, new_doc_type_id, id, doc_id);
+        //}
+
+        //static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, docTypeId, new_doc_type_id, listId, list_id);
+        //}
+
+        //static public void UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, string connectionStr)
+        //{
+        //    if (doc_idArr.Count < 1)
+        //        throw new ArgumentException("Количество документов на изменение должно быть >= 1");
+        //    string commantText = String.Empty;
+        //    foreach (long doc_id in doc_idArr)
+        //        commantText += GetUpdateDocTypeByDocIdText(doc_id, new_doc_type_id) + "; \n";
+
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        int count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //    }
+        //}
+
+        //static public void UpdateDocTypeByListId(long list_id, long new_doc_type_id, string connectionStr)
+        //{
+        //    string commantText = GetUpdateDocTypeByListText(list_id, new_doc_type_id);
+
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        int count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //    }
+        //}
+
+        //static public string GetDeleteText(long doc_id)
+        //{
+        //    return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, doc_id);
+        //}
+
+        //static public string GetUpdateListIdText(long doc_id, long new_list_id)
+        //{
+        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
+        //                        tablename, listId, new_list_id, id, doc_id);
+        //}
+
+        //static public int UpdateListId(long doc_id, long new_list_id, string connectionStr)
+        //{
+        //    string commantText = GetUpdateListIdText(doc_id, new_list_id);
+        //    int count = 0;
+        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        SQLiteTransaction trans = connection.BeginTransaction();
+        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
+        //        count = command.ExecuteNonQuery();
+        //        trans.Commit();
+        //        connection.Close();
+        //    }
+        //    return count;
+        //}
+        #endregion
+    }
+
+    // класс виртуальной таблицы (ей нет прямой аналогии в БД)
+    public class MergeInfoTranspose
+    {
+        static public string tablename = "Merge_Info_transpose";
+
+        #region Поля виртуальной таблицы
+        static public string month = "month";
+        static public string col1 = "1";
+        static public string col2 = "2";
+        static public string col3 = "3";
+        static public string col4 = "4";
+        static public string col5 = "5";
+        static public string col6 = "21";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(month, typeof(int));
+            table.Columns.Add(col1, typeof(double));
+            table.Columns.Add(col2, typeof(double));
+            table.Columns.Add(col3, typeof(double));
+            table.Columns.Add(col4, typeof(double));
+            table.Columns.Add(col5, typeof(double));
+            table.Columns.Add(col6, typeof(int));
+
+            for (int i = 0; i < 12; i++)
+            {
+                DataRow row = table.NewRow();
+                row[month] = i + 1;
+                row.EndEdit();
+                table.Rows.Add(row);
+            }
+            return table;
+        }
+
+        static public void ConvertToMergeInfo(DataTable mergeInfoTranspose, DataTable mergeInfo)
+        {
+            int[] iMonth = new int[] {
+                            mergeInfo.Columns[MergeInfo.january].Ordinal,
+                            mergeInfo.Columns[MergeInfo.february].Ordinal,
+                            mergeInfo.Columns[MergeInfo.march].Ordinal,
+                            mergeInfo.Columns[MergeInfo.april].Ordinal,
+                            mergeInfo.Columns[MergeInfo.may].Ordinal,
+                            mergeInfo.Columns[MergeInfo.june].Ordinal,
+                            mergeInfo.Columns[MergeInfo.july].Ordinal,
+                            mergeInfo.Columns[MergeInfo.august].Ordinal,
+                            mergeInfo.Columns[MergeInfo.september].Ordinal,
+                            mergeInfo.Columns[MergeInfo.october].Ordinal,
+                            mergeInfo.Columns[MergeInfo.november].Ordinal,
+                            mergeInfo.Columns[MergeInfo.december].Ordinal,
+                            //mergeInfo.Columns[MergeInfo.sum].Ordinal,
+                            };
+            DataRow[] mergeInfoRows = new DataRow[] {
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 1L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 2L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 3L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 4L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 5L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 21L)
+                            };
+            for (int i = 0; i < iMonth.Length; i++)
+            {
+                mergeInfoRows[0][iMonth[i]] = mergeInfoTranspose.Rows[i][MergeInfoTranspose.col1];
+                mergeInfoRows[1][iMonth[i]] = mergeInfoTranspose.Rows[i][MergeInfoTranspose.col2];
+                mergeInfoRows[2][iMonth[i]] = mergeInfoTranspose.Rows[i][MergeInfoTranspose.col3];
+                mergeInfoRows[3][iMonth[i]] = mergeInfoTranspose.Rows[i][MergeInfoTranspose.col4];
+                mergeInfoRows[4][iMonth[i]] = mergeInfoTranspose.Rows[i][MergeInfoTranspose.col5];
+                mergeInfoRows[5][iMonth[i]] = mergeInfoTranspose.Rows[i][MergeInfoTranspose.col6];
+            }
+        }
+
+        static public void ConvertFromMergeInfo(DataTable mergeInfoTranspose, DataTable mergeInfo)
+        {
+            int[] iMonth = new int[] {
+                            mergeInfo.Columns[MergeInfo.january].Ordinal,
+                            mergeInfo.Columns[MergeInfo.february].Ordinal,
+                            mergeInfo.Columns[MergeInfo.march].Ordinal,
+                            mergeInfo.Columns[MergeInfo.april].Ordinal,
+                            mergeInfo.Columns[MergeInfo.may].Ordinal,
+                            mergeInfo.Columns[MergeInfo.june].Ordinal,
+                            mergeInfo.Columns[MergeInfo.july].Ordinal,
+                            mergeInfo.Columns[MergeInfo.august].Ordinal,
+                            mergeInfo.Columns[MergeInfo.september].Ordinal,
+                            mergeInfo.Columns[MergeInfo.october].Ordinal,
+                            mergeInfo.Columns[MergeInfo.november].Ordinal,
+                            mergeInfo.Columns[MergeInfo.december].Ordinal,
+                            //mergeInfo.Columns[MergeInfo.sum].Ordinal,
+                            };
+            DataRow[] mergeInfoRows = new DataRow[] {
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 1L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 2L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 3L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 4L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 5L),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 21L)
+                            };
+            for (int i = 0; i < iMonth.Length; i++)
+            {
+                mergeInfoTranspose.Rows[i][MergeInfoTranspose.col1] = mergeInfoRows[0][iMonth[i]];
+                mergeInfoTranspose.Rows[i][MergeInfoTranspose.col2] = mergeInfoRows[1][iMonth[i]];
+                mergeInfoTranspose.Rows[i][MergeInfoTranspose.col3] = mergeInfoRows[2][iMonth[i]];
+                mergeInfoTranspose.Rows[i][MergeInfoTranspose.col4] = mergeInfoRows[3][iMonth[i]];
+                mergeInfoTranspose.Rows[i][MergeInfoTranspose.col5] = mergeInfoRows[4][iMonth[i]];
+                mergeInfoTranspose.Rows[i][MergeInfoTranspose.col6] = mergeInfoRows[5][iMonth[i]];
+            }
+        }
         #endregion
     }
 

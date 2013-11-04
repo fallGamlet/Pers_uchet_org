@@ -195,7 +195,7 @@ namespace Pers_uchet_org
             codeComboBox.DisplayMember = ClasspercentView.code;
 
             //формирование источников для таблицы зарплат
-            _salaryInfoTable = SalaryInfo.CreatetTable();
+            _salaryInfoTable = SalaryInfo.CreateTable();
             if (idDoc != -1)
             {
                 adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(idDoc), _connection);
@@ -206,7 +206,7 @@ namespace Pers_uchet_org
             }
             else
             {
-                _salaryInfoTable = SalaryInfo.CreatetTransposeTable();
+                _salaryInfoTable = SalaryInfo.CreateTransposeTable();
                 for (int i = 1; i < 13; i++)
                 {
                     DataRow row = _salaryInfoTable.NewRow();

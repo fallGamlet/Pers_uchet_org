@@ -38,6 +38,10 @@
             this.addButton = new System.Windows.Forms.Button();
             this.vostanovitButton = new System.Windows.Forms.Button();
             this.personView = new System.Windows.Forms.DataGridView();
+            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uvolitButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.checkallButton = new System.Windows.Forms.Button();
@@ -84,10 +88,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
-            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -122,6 +122,7 @@
             // editButton
             // 
             this.editButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.editButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.editButton.Location = new System.Drawing.Point(72, 419);
             this.editButton.Margin = new System.Windows.Forms.Padding(0);
             this.editButton.Name = "editButton";
@@ -134,6 +135,7 @@
             // removeButton
             // 
             this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.removeButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.removeButton.Location = new System.Drawing.Point(139, 419);
             this.removeButton.Margin = new System.Windows.Forms.Padding(0);
             this.removeButton.Name = "removeButton";
@@ -146,6 +148,7 @@
             // addButton
             // 
             this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.addButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.addButton.Location = new System.Drawing.Point(7, 419);
             this.addButton.Margin = new System.Windows.Forms.Padding(0);
             this.addButton.Name = "addButton";
@@ -158,6 +161,7 @@
             // vostanovitButton
             // 
             this.vostanovitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.vostanovitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.vostanovitButton.Location = new System.Drawing.Point(316, 419);
             this.vostanovitButton.Margin = new System.Windows.Forms.Padding(0);
             this.vostanovitButton.Name = "vostanovitButton";
@@ -201,7 +205,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.personView.DefaultCellStyle = dataGridViewCellStyle3;
-            this.personView.Location = new System.Drawing.Point(7, 67);
+            this.personView.Location = new System.Drawing.Point(9, 67);
             this.personView.MultiSelect = false;
             this.personView.Name = "personView";
             this.personView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -214,13 +218,58 @@
             this.personView.Size = new System.Drawing.Size(397, 349);
             this.personView.TabIndex = 4;
             // 
+            // checkColumn
+            // 
+            this.checkColumn.DataPropertyName = "check";
+            this.checkColumn.FillWeight = 20F;
+            this.checkColumn.Frozen = true;
+            this.checkColumn.HeaderText = "*";
+            this.checkColumn.Name = "checkColumn";
+            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.checkColumn.Width = 20;
+            // 
+            // numColumn
+            // 
+            this.numColumn.DataPropertyName = "soc_number";
+            this.numColumn.HeaderText = "Страховой №";
+            this.numColumn.MaxInputLength = 25;
+            this.numColumn.MinimumWidth = 80;
+            this.numColumn.Name = "numColumn";
+            this.numColumn.ReadOnly = true;
+            this.numColumn.Width = 80;
+            // 
+            // fioColumn
+            // 
+            this.fioColumn.DataPropertyName = "fio";
+            this.fioColumn.HeaderText = "Фамилия И.О.";
+            this.fioColumn.MaxInputLength = 150;
+            this.fioColumn.MinimumWidth = 190;
+            this.fioColumn.Name = "fioColumn";
+            this.fioColumn.ReadOnly = true;
+            this.fioColumn.Width = 210;
+            // 
+            // dismissdateColumn
+            // 
+            this.dismissdateColumn.DataPropertyName = "dismiss_date";
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dismissdateColumn.HeaderText = "Дата увольнения";
+            this.dismissdateColumn.MaxInputLength = 25;
+            this.dismissdateColumn.MinimumWidth = 50;
+            this.dismissdateColumn.Name = "dismissdateColumn";
+            this.dismissdateColumn.ReadOnly = true;
+            this.dismissdateColumn.Width = 70;
+            // 
             // uvolitButton
             // 
             this.uvolitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.uvolitButton.Location = new System.Drawing.Point(252, 419);
+            this.uvolitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.uvolitButton.Location = new System.Drawing.Point(230, 419);
             this.uvolitButton.Margin = new System.Windows.Forms.Padding(0);
             this.uvolitButton.Name = "uvolitButton";
-            this.uvolitButton.Size = new System.Drawing.Size(64, 23);
+            this.uvolitButton.Size = new System.Drawing.Size(86, 23);
             this.uvolitButton.TabIndex = 3;
             this.uvolitButton.Text = "Уволить";
             this.uvolitButton.UseVisualStyleBackColor = true;
@@ -229,7 +278,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(167, 14);
+            this.label4.Location = new System.Drawing.Point(151, 25);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(103, 13);
             this.label4.TabIndex = 6;
@@ -237,18 +286,18 @@
             // 
             // checkallButton
             // 
+            this.checkallButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.checkallButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkallButton.Location = new System.Drawing.Point(7, 33);
+            this.checkallButton.Location = new System.Drawing.Point(7, 41);
             this.checkallButton.Name = "checkallButton";
-            this.checkallButton.Size = new System.Drawing.Size(36, 20);
+            this.checkallButton.Size = new System.Drawing.Size(35, 20);
             this.checkallButton.TabIndex = 1;
             this.checkallButton.Text = "***";
-            this.checkallButton.UseVisualStyleBackColor = true;
             this.checkallButton.Click += new System.EventHandler(this.checkallButton_Click);
             // 
             // searchFioBox
             // 
-            this.searchFioBox.Location = new System.Drawing.Point(170, 33);
+            this.searchFioBox.Location = new System.Drawing.Point(151, 41);
             this.searchFioBox.MaxLength = 200;
             this.searchFioBox.Name = "searchFioBox";
             this.searchFioBox.Size = new System.Drawing.Size(195, 20);
@@ -257,17 +306,17 @@
             // 
             // searchSocnumBox
             // 
-            this.searchSocnumBox.Location = new System.Drawing.Point(49, 33);
+            this.searchSocnumBox.Location = new System.Drawing.Point(46, 41);
             this.searchSocnumBox.MaxLength = 200;
             this.searchSocnumBox.Name = "searchSocnumBox";
-            this.searchSocnumBox.Size = new System.Drawing.Size(115, 20);
+            this.searchSocnumBox.Size = new System.Drawing.Size(99, 20);
             this.searchSocnumBox.TabIndex = 2;
             this.searchSocnumBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchSocnumBox_KeyPress);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(46, 14);
+            this.label2.Location = new System.Drawing.Point(43, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 13);
             this.label2.TabIndex = 5;
@@ -276,6 +325,7 @@
             // zakrepButton
             // 
             this.zakrepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.zakrepButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.zakrepButton.Location = new System.Drawing.Point(10, 419);
             this.zakrepButton.Margin = new System.Windows.Forms.Padding(0);
             this.zakrepButton.Name = "zakrepButton";
@@ -288,6 +338,7 @@
             // printButton
             // 
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.printButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.printButton.Location = new System.Drawing.Point(286, 419);
             this.printButton.Margin = new System.Windows.Forms.Padding(0);
             this.printButton.Name = "printButton";
@@ -348,10 +399,10 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox4.Controls.Add(this.countBox);
             this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Location = new System.Drawing.Point(268, 457);
+            this.groupBox4.Location = new System.Drawing.Point(255, 457);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(143, 43);
+            this.groupBox4.Size = new System.Drawing.Size(156, 43);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             // 
@@ -426,6 +477,7 @@
             // 
             this.documentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.documentBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.documentBox.Location = new System.Drawing.Point(6, 19);
             this.documentBox.MaxLength = 200;
             this.documentBox.Name = "documentBox";
@@ -444,6 +496,7 @@
             // 
             // docseriaBox
             // 
+            this.docseriaBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.docseriaBox.Location = new System.Drawing.Point(6, 59);
             this.docseriaBox.MaxLength = 200;
             this.docseriaBox.Name = "docseriaBox";
@@ -453,6 +506,7 @@
             // 
             // docnumBox
             // 
+            this.docnumBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.docnumBox.Location = new System.Drawing.Point(105, 59);
             this.docnumBox.MaxLength = 200;
             this.docnumBox.Name = "docnumBox";
@@ -471,6 +525,7 @@
             // 
             // docdataBox
             // 
+            this.docdataBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.docdataBox.Location = new System.Drawing.Point(201, 59);
             this.docdataBox.MaxLength = 200;
             this.docdataBox.Name = "docdataBox";
@@ -500,6 +555,7 @@
             // 
             this.docvidanBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.docvidanBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.docvidanBox.Location = new System.Drawing.Point(6, 98);
             this.docvidanBox.MaxLength = 200;
             this.docvidanBox.Name = "docvidanBox";
@@ -574,6 +630,7 @@
             // 
             this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.adressprojivBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.adressprojivBox.Location = new System.Drawing.Point(10, 240);
             this.adressprojivBox.MaxLength = 500;
             this.adressprojivBox.Multiline = true;
@@ -586,6 +643,7 @@
             // 
             this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.adrespropiskiBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.adrespropiskiBox.Location = new System.Drawing.Point(10, 187);
             this.adrespropiskiBox.MaxLength = 500;
             this.adrespropiskiBox.Multiline = true;
@@ -598,6 +656,7 @@
             // 
             this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.mestorojdBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.mestorojdBox.Location = new System.Drawing.Point(10, 136);
             this.mestorojdBox.MaxLength = 500;
             this.mestorojdBox.Multiline = true;
@@ -610,6 +669,7 @@
             // 
             this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.grajdanstvoBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.grajdanstvoBox.Location = new System.Drawing.Point(205, 83);
             this.grajdanstvoBox.MaxLength = 200;
             this.grajdanstvoBox.Name = "grajdanstvoBox";
@@ -619,6 +679,7 @@
             // 
             // polBox
             // 
+            this.polBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.polBox.Location = new System.Drawing.Point(109, 83);
             this.polBox.MaxLength = 200;
             this.polBox.Name = "polBox";
@@ -628,6 +689,7 @@
             // 
             // datarojdBox
             // 
+            this.datarojdBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.datarojdBox.Location = new System.Drawing.Point(10, 83);
             this.datarojdBox.MaxLength = 200;
             this.datarojdBox.Name = "datarojdBox";
@@ -639,6 +701,7 @@
             // 
             this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.fioBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.fioBox.Location = new System.Drawing.Point(10, 33);
             this.fioBox.MaxLength = 200;
             this.fioBox.Name = "fioBox";
@@ -712,6 +775,7 @@
             // closeButton
             // 
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.closeButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.closeButton.Location = new System.Drawing.Point(685, 540);
             this.closeButton.Margin = new System.Windows.Forms.Padding(0);
             this.closeButton.Name = "closeButton";
@@ -720,49 +784,6 @@
             this.closeButton.Text = "Закрыть";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // checkColumn
-            // 
-            this.checkColumn.DataPropertyName = "check";
-            this.checkColumn.Frozen = true;
-            this.checkColumn.HeaderText = "*";
-            this.checkColumn.Name = "checkColumn";
-            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.checkColumn.Width = 24;
-            // 
-            // numColumn
-            // 
-            this.numColumn.DataPropertyName = "soc_number";
-            this.numColumn.HeaderText = "Страховой №";
-            this.numColumn.MaxInputLength = 25;
-            this.numColumn.MinimumWidth = 80;
-            this.numColumn.Name = "numColumn";
-            this.numColumn.ReadOnly = true;
-            this.numColumn.Width = 90;
-            // 
-            // fioColumn
-            // 
-            this.fioColumn.DataPropertyName = "fio";
-            this.fioColumn.HeaderText = "Фамилия И.О.";
-            this.fioColumn.MaxInputLength = 150;
-            this.fioColumn.MinimumWidth = 190;
-            this.fioColumn.Name = "fioColumn";
-            this.fioColumn.ReadOnly = true;
-            this.fioColumn.Width = 210;
-            // 
-            // dismissdateColumn
-            // 
-            this.dismissdateColumn.DataPropertyName = "dismiss_date";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dismissdateColumn.HeaderText = "Дата увольнения";
-            this.dismissdateColumn.MaxInputLength = 25;
-            this.dismissdateColumn.MinimumWidth = 50;
-            this.dismissdateColumn.Name = "dismissdateColumn";
-            this.dismissdateColumn.ReadOnly = true;
-            this.dismissdateColumn.Width = 70;
             // 
             // AnketadataForm
             // 
