@@ -52,6 +52,7 @@ namespace Pers_uchet_org
             this.orgView.AutoGenerateColumns = false;
             // привязка к источнику
             this.orgView.DataSource = _orgBS;
+            this.orgView.Sorted += new EventHandler(orgView_Sorted);
             // если оператор определен и соединение определено
             if (_operator != null && _connection != null)
             {
@@ -84,11 +85,7 @@ namespace Pers_uchet_org
                 _orgBS.EndEdit();
 
                 // выделить струку с текущей Организацией (усьановить задний фон)
-                i = _orgBS.Find(Org.id, _orgID);
-                if (i >= 0)
-                {
-                    orgView.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
-                }
+                this.MarkCurOrgRow();
                 // отобразить на форме страховой номер и фио выбранной Персоны
                 personDataLabel.Text = string.Format("{0}  {1}", _personRow[PersonView.socNumber], _personRow[PersonView.fio]);
             }
@@ -96,9 +93,22 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - свои
+        private void MarkCurOrgRow()
+        {
+            int i = _orgBS.Find(Org.id, _orgID);
+            if (i != -1)
+            {
+                orgView.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+            }
+        }
         #endregion
 
         #region Методы - обработчики событий
+        void orgView_Sorted(object sender, EventArgs e)
+        {
+            this.MarkCurOrgRow();
+        }
+
         private void acceptButton_Click(object sender, EventArgs e)
         {
             List<long> checkedOrgList, uncheckedOrgList;

@@ -247,6 +247,7 @@ namespace Pers_uchet_org
                     rowItem[CHECK] = false;
                     rowItem.EndEdit();
                 }
+                _personBS.MoveFirst();
             }
         }
 
@@ -264,6 +265,7 @@ namespace Pers_uchet_org
                 rowItem[CHECK] = false;
                 rowItem.EndEdit();
             }
+            _personBS.MoveFirst();
         }
 
         private void zakrepButton_Click(object sender, EventArgs e)

@@ -191,6 +191,7 @@ namespace Pers_uchet_org
             org.chiefpostVal = orgRow[Org.chief_post] as string;
             org.chieffioVal = orgRow[Org.chief_fio] as string;
             org.bookerfioVal = orgRow[Org.booker_fio] as string;
+
             AnketadataForm tmpForm = new AnketadataForm(_operator, org, _mainConnection);
             tmpForm.Show();
         }
@@ -216,7 +217,21 @@ namespace Pers_uchet_org
         // открытие формы для работы со сводными ведомостями
         private void svodvedomostMenuItem_Click(object sender, EventArgs e)
         {
-            SvodVedomostForm tmpForm = new SvodVedomostForm();
+            DataRowView orgRow = _orgBS.Current as DataRowView;
+            if (orgRow == null)
+            {
+                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                return;
+            }
+            Org org = new Org();
+            org.idVal = (long)orgRow[Org.id];
+            org.regnumVal = orgRow[Org.regnum] as string;
+            org.nameVal = orgRow[Org.name] as string;
+            org.chiefpostVal = orgRow[Org.chief_post] as string;
+            org.chieffioVal = orgRow[Org.chief_fio] as string;
+            org.bookerfioVal = orgRow[Org.booker_fio] as string;
+
+            SvodVedomostForm tmpForm = new SvodVedomostForm(org, _operator, _mainConnection);
             tmpForm.Show();
         }
         // открыть форму для печати бланков
