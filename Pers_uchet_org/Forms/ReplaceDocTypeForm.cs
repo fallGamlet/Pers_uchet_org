@@ -69,7 +69,7 @@ namespace Pers_uchet_org
             {
                 return;
             }
-            StajDohodForm.newDocTypeId = (long)row[DocTypes.id];
+            StajDohodForm.NewDocTypeId = (long)row[DocTypes.id];
         }
 
         private void DocRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace Pers_uchet_org
                         flag = 0;
                         break;
                 }
-            StajDohodForm.flagDoc = flag;
+            StajDohodForm.FlagDoc = flag;
         }
     }
 }

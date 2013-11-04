@@ -32,7 +32,7 @@ namespace Pers_uchet_org
 
         private void movePacketButton_Click(object sender, EventArgs e)
         {
-            StajDohodForm.newRepYear = (int)yearNumericUpDown.Value;
+            StajDohodForm.NewRepYear = (int)yearNumericUpDown.Value;
         }
     }
 }

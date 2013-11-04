@@ -68,7 +68,7 @@ namespace Pers_uchet_org
             allAnketsButton.Enabled = false;
             rawAnketsButton.Enabled = true;
             radioButton1.Checked = true;
-            StajDohodForm.personId = 0;
+            StajDohodForm.PersonId = 0;
         }
 
         void _personBS_ListChanged(object sender, ListChangedEventArgs e)
@@ -150,16 +150,16 @@ namespace Pers_uchet_org
                 switch (current.Name)
                 {
                     case "radioButton1":
-                        flag = 21;
+                        flag = DocTypes.InitialFormId;
                         break;
                     case "radioButton2":
-                        flag = 22;
+                        flag = DocTypes.CorrectionFormId;
                         break;
                     case "radioButton3":
-                        flag = 23;
+                        flag = DocTypes.CancelingFormId;
                         break;
                     case "radioButton4":
-                        flag = 24;
+                        flag = DocTypes.GrantingPensionId;
                         break;
                     default:
                         flag = 0;
@@ -176,8 +176,8 @@ namespace Pers_uchet_org
                 this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
                 return;
             }
-            StajDohodForm.personId = (long)row[PersonView2.id];
-            StajDohodForm.flagDoc = flag;
+            StajDohodForm.PersonId = (long)row[PersonView2.id];
+            StajDohodForm.FlagDoc = flag;
         }
     }
 }

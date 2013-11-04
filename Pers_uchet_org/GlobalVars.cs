@@ -2494,6 +2494,37 @@ namespace Pers_uchet_org
         static public string name = "name";
         #endregion
 
+        #region Свойства
+        /// <summary>
+        /// Исходная форма
+        /// </summary>
+        public static int InitialFormId
+        {
+            get { return 21; }
+        }
+        /// <summary>
+        /// Корректирующая форма
+        /// </summary>
+        public static int CorrectionFormId
+        {
+            get { return 22; }
+        }
+        /// <summary>
+        /// Отменяющая форма
+        /// </summary>
+        public static int CancelingFormId
+        {
+            get { return 23; }
+        }
+        /// <summary>
+        /// Назначение пенсии
+        /// </summary>
+        public static int GrantingPensionId
+        {
+            get { return 24; }
+        }
+        #endregion
+
         #region Методы - статические
         static public DataTable CreatetTable()
         {
@@ -2513,8 +2544,6 @@ namespace Pers_uchet_org
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1}", listTypeId, list_type_id);
         }
-
-
         #endregion
     }
 
@@ -2622,7 +2651,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-        static public DataTable CreatetTable()
+        static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
@@ -2644,7 +2673,7 @@ namespace Pers_uchet_org
             return table;
         }
 
-        static public DataTable CreatetTransposeTable()
+        static public DataTable CreateTransposeTable()
         {
             DataTable table = new DataTable(tablename + "_transpose");
             table.Columns.Add("months", typeof(int));

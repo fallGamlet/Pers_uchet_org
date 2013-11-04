@@ -81,7 +81,7 @@ namespace Pers_uchet_org
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            StajDohodForm.newOrgId = (long)orgsComboBox.SelectedValue;
+            StajDohodForm.NewOrgId = (long)orgsComboBox.SelectedValue;
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Pers_uchet_org
             {
                 return;
             }
-            StajDohodForm.newListId = (long)row[Lists.id];
+            StajDohodForm.NewListId = (long)row[Lists.id];
         }
     }
 }

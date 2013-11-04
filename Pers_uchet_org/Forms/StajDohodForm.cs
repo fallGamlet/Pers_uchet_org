@@ -34,24 +34,22 @@ namespace Pers_uchet_org
         // названия добавочного виртуального столбца
         const string CHECK = "check";
         // переменная содержит текущий используемый год
-        int RepYear;
-
+        int _repYear;
+        // переменная содержит id текущего пакета
+        static long _currentListId;
         // переменная содержит год, в который будет перемещен пакет
-        public static int newRepYear = 0;
+        public static int NewRepYear = 0;
         // переменная содержит id организации, в которую будет перемещен пакет
-        public static long newOrgId = 0;
+        public static long NewOrgId = 0;
         // переменная содержит новый тип для документа
-        public static long newDocTypeId;
+        public static long NewDocTypeId;
         // переменная-флаг, означает для каких документов менять тип: 1 - текущий документ, 2 - выбранные, 3 - все документы в пакете
         // или содержит id типа нового документа
-        public static int flagDoc = -1;
+        public static int FlagDoc = -1;
         // переменная содержит id пакета, в который будет перемещен документ
-        public static long newListId = 0;
+        public static long NewListId = 0;
         // переменная содержит id добавляемого человека
-        public static long personId;
-        // переменная содержит id текущего пакета
-        static long currentListId;
-
+        public static long PersonId;
 
         #endregion
 
@@ -66,10 +64,10 @@ namespace Pers_uchet_org
 
         private void StajDohodForm_Load(object sender, EventArgs e)
         {
-            currentListId = 0;
-            RepYear = MainForm.RepYear;
-            yearBox.Maximum = RepYear + 10;
-            yearBox.Value = RepYear;
+            _currentListId = 0;
+            _repYear = MainForm.RepYear;
+            yearBox.Maximum = _repYear + 10;
+            yearBox.Value = _repYear;
 
             // иництализация таблиц
             _listsTable = ListsView.CreatetTable();
@@ -97,7 +95,7 @@ namespace Pers_uchet_org
             this.docView.DataSource = _docsBS;
 
             // инициализация Адаптера для считывания пакетов из БД
-            string commandStr = ListsView.GetSelectText(_org.idVal, RepYear);
+            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
 
             // заполнение таблицы данными с БД
@@ -115,7 +113,7 @@ namespace Pers_uchet_org
 
         private void StajDohodForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            MainForm.RepYear = RepYear;
+            MainForm.RepYear = _repYear;
         }
         #endregion
 
@@ -156,7 +154,7 @@ namespace Pers_uchet_org
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
             {
-                currentListId = 0;
+                _currentListId = 0;
                 return;
             }
 
@@ -166,10 +164,10 @@ namespace Pers_uchet_org
             else
                 return;
 
-            currentListId = (long)row[ListsView.id];
+            _currentListId = (long)row[ListsView.id];
 
             // инициализация Адаптера для считывания документов из БД
-            string commandStr = DocsView.GetSelectTextByListId(currentListId);
+            string commandStr = DocsView.GetSelectTextByListId(_currentListId);
             _docsAdapter = new SQLiteDataAdapter(commandStr, _connection);
             // заполнение таблицы данными из БД
             _docsAdapter.Fill(_docsTable);
@@ -206,7 +204,7 @@ namespace Pers_uchet_org
             if (ShowQuestionMessage("Вы действительно хотите создать\n новый пакет документов \"СЗВ-1\"?", "Создание пакета") == DialogResult.No)
                 return;
             //TODO: Загружать список доступных типов пакета для текущего года, спрашивать пользователя 
-            string commandText = Lists.GetInsertText(1, _org.idVal, _operator.idVal, string.Format("{0:dd/MM/yyyy}", DateTime.Now), _operator.idVal, string.Format("{0:dd/MM/yyyy}", DateTime.Now), RepYear);
+            string commandText = Lists.GetInsertText(1, _org.idVal, _operator.idVal, string.Format("{0:dd/MM/yyyy}", DateTime.Now), _operator.idVal, string.Format("{0:dd/MM/yyyy}", DateTime.Now), _repYear);
             SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
             cmd.Connection.Open();
             if (cmd.ExecuteNonQuery() < 1)
@@ -261,8 +259,8 @@ namespace Pers_uchet_org
                         personIdList.Add((long)reader[Docs.personID]);
                     }
                 cmd.Connection.Close();
-                PersonOrg.InsertPersonOrg(personIdList, newOrgId, _connection);
-                commandText = Lists.GetUpdateOrgText(list_id, newOrgId);
+                PersonOrg.InsertPersonOrg(personIdList, NewOrgId, _connection);
+                commandText = Lists.GetUpdateOrgText(list_id, NewOrgId);
                 cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
                 if (cmd.Connection.State != ConnectionState.Open)
                     cmd.Connection.Open();
@@ -288,7 +286,7 @@ namespace Pers_uchet_org
                 if (ShowQuestionMessage("Вы действительно хотите переместить текущий пакет\n документов \"СЗВ-1\" № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                     return;
 
-                string commandText = Lists.GetUpdateYearText(listId, newRepYear);
+                string commandText = Lists.GetUpdateYearText(listId, NewRepYear);
                 SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
                 cmd.Connection.Open();
                 if (cmd.ExecuteNonQuery() < 1)
@@ -304,10 +302,10 @@ namespace Pers_uchet_org
 
         private void addDocButton_Click(object sender, EventArgs e)
         {
-            ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, RepYear, _connection);
+            ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, _repYear, _connection);
             if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, currentListId, RepYear, personId, flagDoc, _connection);
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 { }
             }
@@ -317,9 +315,9 @@ namespace Pers_uchet_org
 
         private void editDocButton_Click(object sender, EventArgs e)
         {
-            AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
-            if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            { }
+            //AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
+            //if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{ }
         }
 
         private void removeDocButton_Click(object sender, EventArgs e)
@@ -350,13 +348,13 @@ namespace Pers_uchet_org
             if (row == null)
                 return;
             docId = (long)row[Docs.id];
-            MoveDocumentForm moveDocForm = new MoveDocumentForm(_org, RepYear, docId, _connection);
+            MoveDocumentForm moveDocForm = new MoveDocumentForm(_org, _repYear, docId, _connection);
             if (moveDocForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (ShowQuestionMessage("Вы действительно хотите переместить текущий документ \"СЗВ-1\"?", "Перемещение документа") == DialogResult.No)
                     return;
 
-                if (Docs.UpdateListId(docId, newListId, _connection) < 1)
+                if (Docs.UpdateListId(docId, NewListId, _connection) < 1)
                 {
                     ShowErrorMessage("Не удалось переместить документ.", "Ошибка перемещения документа");
                 }
@@ -378,9 +376,9 @@ namespace Pers_uchet_org
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1)
                 return;
-            AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
-            if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            { }
+            //AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
+            //if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{ }
         }
 
         private void changeTypedDocButton_Click(object sender, EventArgs e)
@@ -393,20 +391,20 @@ namespace Pers_uchet_org
                 try
                 {
                     List<long> docIdList = new List<long>();
-                    switch (flagDoc)
+                    switch (FlagDoc)
                     {
                         case 1:
                             DataRowView row = _docsBS.Current as DataRowView;
                             if (row != null)
                                 docIdList.Add((long)row[Docs.id]);
-                            Docs.UpdateDocTypeByDocId(docIdList, newDocTypeId, _connection);
+                            Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, _connection);
                             break;
                         case 2:
                             docIdList = GetSelectedDocIds();
-                            Docs.UpdateDocTypeByDocId(docIdList, newDocTypeId, _connection);
+                            Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, _connection);
                             break;
                         case 3:
-                            Docs.UpdateDocTypeByListId((long)listsView.CurrentRow.Cells["id"].Value, newDocTypeId, _connection);
+                            Docs.UpdateDocTypeByListId((long)listsView.CurrentRow.Cells["id"].Value, NewDocTypeId, _connection);
                             break;
                         default:
                             throw new Exception("Не указан документ у которого необходимо изменить тип.");
@@ -439,8 +437,8 @@ namespace Pers_uchet_org
 
         private void yearBox_ValueChanged(object sender, EventArgs e)
         {
-            RepYear = (int)yearBox.Value;
-            MainForm.RepYear = RepYear;
+            _repYear = (int)yearBox.Value;
+            MainForm.RepYear = _repYear;
             ReloadDataAfterChanges();
         }
         #endregion
@@ -484,7 +482,7 @@ namespace Pers_uchet_org
                 return;
 
             // инициализация Адаптера для считывания пакетов из БД
-            string commandStr = ListsView.GetSelectText(_org.idVal, RepYear);
+            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
 
             // заполнение таблицы данными с БД
