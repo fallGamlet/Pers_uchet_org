@@ -270,7 +270,7 @@ namespace Pers_uchet_org
             Day = (int)daysNumUpDown.Value;
             Hour = (int)hoursNumUpDown.Value;
             Minute = (int)minutesNumUpDown.Value;
-            Profession = professionRichTextBox.Text;
+            Profession = professionRichTextBox.Text.Trim();
 
             bool isAllRight = true;
 

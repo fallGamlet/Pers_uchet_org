@@ -747,7 +747,7 @@
             this.sumCalc5Box.Size = new System.Drawing.Size(120, 20);
             this.sumCalc5Box.TabIndex = 40;
             this.sumCalc5Box.Text = "0.00";
-            this.sumCalc5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sumCalc5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sumCalc3Box
             // 
@@ -759,7 +759,7 @@
             this.sumCalc3Box.Size = new System.Drawing.Size(121, 20);
             this.sumCalc3Box.TabIndex = 37;
             this.sumCalc3Box.Text = "0.00";
-            this.sumCalc3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sumCalc3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum1Box
             // 
@@ -771,7 +771,7 @@
             this.sum1Box.Size = new System.Drawing.Size(121, 20);
             this.sum1Box.TabIndex = 26;
             this.sum1Box.Text = "0.00";
-            this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum10Box
             // 
@@ -783,7 +783,7 @@
             this.sum10Box.Size = new System.Drawing.Size(100, 20);
             this.sum10Box.TabIndex = 36;
             this.sum10Box.Text = "0";
-            this.sum10Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum10Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum5Box
             // 
@@ -795,7 +795,7 @@
             this.sum5Box.Size = new System.Drawing.Size(120, 20);
             this.sum5Box.TabIndex = 25;
             this.sum5Box.Text = "0.00";
-            this.sum5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum4Box
             // 
@@ -807,7 +807,7 @@
             this.sum4Box.Size = new System.Drawing.Size(120, 20);
             this.sum4Box.TabIndex = 24;
             this.sum4Box.Text = "0.00";
-            this.sum4Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum4Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum3Box
             // 
@@ -819,7 +819,7 @@
             this.sum3Box.Size = new System.Drawing.Size(121, 20);
             this.sum3Box.TabIndex = 22;
             this.sum3Box.Text = "0.00";
-            this.sum3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum2Box
             // 
@@ -831,7 +831,7 @@
             this.sum2Box.Size = new System.Drawing.Size(119, 20);
             this.sum2Box.TabIndex = 23;
             this.sum2Box.Text = "0.00";
-            this.sum2Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum2Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label14
             // 
@@ -872,7 +872,7 @@
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;

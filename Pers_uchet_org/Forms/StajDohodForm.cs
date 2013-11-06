@@ -315,9 +315,14 @@ namespace Pers_uchet_org
 
         private void editDocButton_Click(object sender, EventArgs e)
         {
-            //AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form();
-            //if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{ }
+            if (_docsBS.Current == null)
+                return;
+            long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
+            PersonId = (long)(_docsBS.Current as DataRowView)[DocsView.personID];
+            FlagDoc = (int)(_docsBS.Current as DataRowView)[DocsView.docTypeId];
+            AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
+            if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            { }
         }
 
         private void removeDocButton_Click(object sender, EventArgs e)

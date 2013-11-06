@@ -37,6 +37,7 @@ namespace Pers_uchet_org
 
         SQLiteConnection _con;
         SQLiteCommand _command;
+        SQLiteDataReader reader;
         //объекты таблиц для хранения записей
         DataTable _salaryInfoTable;
         DataTable _salaryInfoTableTranspose;
@@ -51,6 +52,8 @@ namespace Pers_uchet_org
         BindingSource _generalPeriodBS;
         BindingSource _dopPeriodBS;
         BindingSource _specPeriodBS;
+        // адаптер для чтения данных из БД
+        SQLiteDataAdapter _adapter;
 
         #endregion
 
@@ -69,7 +72,19 @@ namespace Pers_uchet_org
             sum = new double[6];
         }
 
-        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection, long idDoc = -1)
+        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection)
+            : this()
+        {
+            this._org = org;
+            this._operator = _operator;
+            this._currentListId = currentListId;
+            this._repYear = repYear;
+            this._personId = personId;
+            this._flagDocType = flagDocType;
+            this._connection = connection;
+        }
+
+        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection, long idDoc)
             : this()
         {
             this._org = org;
@@ -173,31 +188,48 @@ namespace Pers_uchet_org
             _command = new SQLiteCommand(PersonView.GetSelectText(_org.idVal, _personId), _con);
             if (_con.State != ConnectionState.Open)
                 _con.Open();
-            SQLiteDataReader reader = _command.ExecuteReader();
+            reader = _command.ExecuteReader();
             if (reader.Read())
             {
                 textBoxAnketaName.Text = reader[PersonView.fio].ToString();
                 textBoxInsNum.Text = reader[PersonView.socNumber].ToString();
-                if (_currentDocId > 0)
-                {
-                    //TODO: Переделать заполнение данными из базы
-                }
-                else
-                {
-                    long citizen = (long)reader[PersonView.citizen1ID];
-                    _citizen1BS.Position = _citizen1BS.Find(Country.id, citizen);
-                    citizen = (long)reader[PersonView.citizen2ID];
-                    _citizen2BS.Position = _citizen2BS.Find(Country.id, citizen);
-                }
+                long citizen = (long)reader[PersonView.citizen1ID];
+                _citizen1BS.Position = _citizen1BS.Find(Country.id, citizen);
+                citizen = (long)reader[PersonView.citizen2ID];
+                _citizen2BS.Position = _citizen2BS.Find(Country.id, citizen);
             }
             reader.Close();
             _con.Close();
+            //Выбор гражданства, места работы и кода котегории документа из базы
+            if (_currentDocId > 0)
+            {
+                _command = new SQLiteCommand(IndDocs.GetSelectText(_currentDocId), _con);
+                if (_con.State != ConnectionState.Open)
+                    _con.Open();
+                reader = _command.ExecuteReader();
+                if (reader.Read())
+                {
+                    long citizen = (long)reader[IndDocs.citizen1Id];
+                    _citizen1BS.Position = _citizen1BS.Find(Country.id, citizen);
+                    citizen = (long)reader[IndDocs.citizen2Id];
+                    _citizen2BS.Position = _citizen2BS.Find(Country.id, citizen);
+                    long code = (long)reader[IndDocs.classpercentId];
+                    _classpercentView100BS.Position = _classpercentView100BS.Find(ClasspercentView.id, code);
+                    if ((long)reader[IndDocs.isGeneral] == (long)IndDocs.Job.Second)
+                    {
+                        additionalRadioButton.Checked = true;
+                    }
+                }
+                reader.Close();
+                _con.Close();
+            }
 
             //Заполнение таблиц с периодами
             _generalPeriodTable = GeneralPeriod.CreatetTable();
             if (_currentDocId > 0)
             {
-                //TODO: Переделать заполнение данными из базы
+                _adapter = new SQLiteDataAdapter(GeneralPeriod.GetSelectText(_currentDocId), _connection);
+                _adapter.Fill(_generalPeriodTable);
             }
             _generalPeriodBS = new BindingSource();
             _generalPeriodBS.DataSource = _generalPeriodTable;
@@ -209,7 +241,8 @@ namespace Pers_uchet_org
             _dopPeriodTable = DopPeriodView.CreatetTable();
             if (_currentDocId > 0)
             {
-                //TODO: Переделать заполнение данными из базы
+                _adapter = new SQLiteDataAdapter(DopPeriodView.GetSelectText(_currentDocId), _connection);
+                _adapter.Fill(_dopPeriodTable);
             }
             _dopPeriodBS = new BindingSource();
             _dopPeriodBS.DataSource = _dopPeriodTable;
@@ -222,7 +255,8 @@ namespace Pers_uchet_org
             _specPeriodTable = SpecialPeriodView.CreatetTable();
             if (_currentDocId > 0)
             {
-                //TODO: Переделать заполнение данными из базы
+                _adapter = new SQLiteDataAdapter(SpecialPeriodView.GetSelectText(_currentDocId), _connection);
+                _adapter.Fill(_specPeriodTable);
             }
             _specPeriodBS = new BindingSource();
             _specPeriodBS.DataSource = _specPeriodTable;
@@ -259,21 +293,25 @@ namespace Pers_uchet_org
             }
 
             double result = 0;
-            if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10.ToString())
+            if (!Double.TryParse(e.Value.ToString(), out result))
             {
-                if (Double.TryParse(e.Value.ToString(), out result) || Double.TryParse(e.Value.ToString().Replace('.', ','), out result))
+                if (!Double.TryParse(e.Value.ToString().Replace('.', ','), out result))
                 {
-                    e.Value = Convert.ToInt32(result);
-                    e.ParsingApplied = true;
+                    //MainForm.ShowWarningMessage("Введены некорректные данные!", "Внимание");
+                    e.ParsingApplied = false;
                     return;
                 }
             }
 
-            if (Double.TryParse(e.Value.ToString(), out result) || Double.TryParse(e.Value.ToString().Replace('.', ','), out result))
+            if (view.Columns[e.ColumnIndex].DataPropertyName == SalaryGroups.Column10.ToString())
             {
-                e.Value = Math.Round(result, 2);
+                e.Value = Convert.ToInt32(result);
                 e.ParsingApplied = true;
+                return;
             }
+
+            e.Value = Math.Round(result, 2);
+            e.ParsingApplied = true;
         }
 
         void _classpercentViewBS_CurrentChanged(object sender, EventArgs e)
@@ -563,7 +601,7 @@ namespace Pers_uchet_org
 
         private void dataViewProfit_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            MainForm.ShowErrorMessage("Неверный формат данных.", "Ошибка");
+            MainForm.ShowWarningMessage("Неверный формат данных.", "Ошибка");
             e.Cancel = true;
         }
 
@@ -724,6 +762,7 @@ namespace Pers_uchet_org
                 }
                 else
                 {
+                    long docId = -1;
                     using (_con = new SQLiteConnection(_connection))
                     {
                         _con.Open();
@@ -734,8 +773,8 @@ namespace Pers_uchet_org
                                 _command.Transaction = transaction;
                                 //Сохранение в таблицу Doc
                                 _command.CommandText = Docs.GetInsertText(_flagDocType, _currentListId, _personId);
-                                _currentDocId = (long)_command.ExecuteScalar();
-                                if (_currentDocId < 1)
+                                docId = (long)_command.ExecuteScalar();
+                                if (docId < 1)
                                 {
                                     throw new SQLiteException("Невозможно создать документ.");
                                 }
@@ -748,7 +787,7 @@ namespace Pers_uchet_org
                                 {
                                     _currentCitizen2Id = (long)(_citizen2BS.Current as DataRowView)[Country.id];
                                 }
-                                _command.CommandText = IndDocs.GetInsertText(_currentDocId, _currentClassPercent, additionalRadioButton.Checked ? 2 : 1, _currentCitizen1Id, _currentCitizen2Id);
+                                _command.CommandText = IndDocs.GetInsertText(docId, _currentClassPercent, additionalRadioButton.Checked ? (int)IndDocs.Job.Second : (int)IndDocs.Job.General, _currentCitizen1Id, _currentCitizen2Id);
                                 if ((long)_command.ExecuteScalar() < 1)
                                 {
                                     throw new SQLiteException("Невозможно создать документ. Таблица " + IndDocs.tablename + ".");
@@ -756,7 +795,7 @@ namespace Pers_uchet_org
                                 //Сохранение в таблицу Gen_period
                                 foreach (DataRowView row in _generalPeriodBS)
                                 {
-                                    _command.CommandText = GeneralPeriod.GetInsertText(_currentDocId, (DateTime)row[GeneralPeriod.beginDate], (DateTime)row[GeneralPeriod.endDate]);
+                                    _command.CommandText = GeneralPeriod.GetInsertText(docId, (DateTime)row[GeneralPeriod.beginDate], (DateTime)row[GeneralPeriod.endDate]);
                                     if ((long)_command.ExecuteScalar() < 1)
                                     {
                                         throw new SQLiteException("Невозможно создать документ. Таблица " + GeneralPeriod.tablename + ".");
@@ -765,7 +804,7 @@ namespace Pers_uchet_org
                                 //Сохранение в таблицу Dop_period
                                 foreach (DataRowView row in _dopPeriodBS)
                                 {
-                                    _command.CommandText = DopPeriod.GetInsertText(_currentDocId, (long)row[DopPeriodView.classificatorId], (DateTime)row[DopPeriodView.beginDate], (DateTime)row[DopPeriodView.endDate]);
+                                    _command.CommandText = DopPeriod.GetInsertText(docId, (long)row[DopPeriodView.classificatorId], (DateTime)row[DopPeriodView.beginDate], (DateTime)row[DopPeriodView.endDate]);
                                     if ((long)_command.ExecuteScalar() < 1)
                                     {
                                         throw new SQLiteException("Невозможно создать документ. Таблица " + DopPeriod.tablename + ".");
@@ -774,7 +813,7 @@ namespace Pers_uchet_org
                                 //Сохранение в таблицу Spec_period
                                 foreach (DataRowView row in _specPeriodBS)
                                 {
-                                    _command.CommandText = SpecialPeriod.GetInsertText(_currentDocId, (long)row[SpecialPeriodView.partCondition],
+                                    _command.CommandText = SpecialPeriod.GetInsertText(docId, (long)row[SpecialPeriodView.partCondition],
                                                                                                       (long)row[SpecialPeriodView.stajBase],
                                                                                                       (long)row[SpecialPeriodView.servYearBase],
                                                                                                       (DateTime)row[SpecialPeriodView.beginDate],
@@ -790,14 +829,14 @@ namespace Pers_uchet_org
                                     }
                                 }
                                 //Сохранение в таблицу Salary_Info
-                                _command = SalaryInfo.CreateInsertCommand();
+                                _command = SalaryInfo.CreateReplaceCommand();
                                 _command.Connection = _con;
                                 _command.Transaction = transaction;
                                 foreach (DataColumn column in _salaryInfoTableTranspose.Columns)
                                 {
                                     if (column.ColumnName == SalaryGroups.Column1.ToString() || column.ColumnName == SalaryGroups.Column2.ToString() || column.ColumnName == SalaryGroups.Column3.ToString() || column.ColumnName == SalaryGroups.Column4.ToString() || column.ColumnName == SalaryGroups.Column5.ToString() || column.ColumnName == SalaryGroups.Column10.ToString())
                                     {
-                                        _command.Parameters[SalaryInfo.pDocId].Value = _currentDocId;
+                                        _command.Parameters[SalaryInfo.pDocId].Value = docId;
                                         _command.Parameters[SalaryInfo.pSalaryGroupsId].Value = Int64.Parse(column.ColumnName);
                                         _command.Parameters[SalaryInfo.pJanuary].Value = _salaryInfoTableTranspose.Rows[0][column.ColumnName];
                                         _command.Parameters[SalaryInfo.pFebruary].Value = _salaryInfoTableTranspose.Rows[1][column.ColumnName];
@@ -822,15 +861,16 @@ namespace Pers_uchet_org
                                 }
 
                                 //Сохранение в таблицу Fixdata
-                                //_command = _con.CreateCommand();
-                                //_command.Transaction = transaction;
-                                //_command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.New, _currentDocId, _operator.nameVal, DateTime.Now.Date);
-                                //if ((long)_command.ExecuteScalar() < 1)
-                                //{
-                                //    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
-                                //}
+                                _command = _con.CreateCommand();
+                                _command.Transaction = transaction;
+                                _command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.New, docId, _operator.nameVal, DateTime.Now.Date);
+                                if ((long)_command.ExecuteScalar() < 1)
+                                {
+                                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
+                                }
                             }
                             transaction.Commit();
+                            _currentDocId = docId;
                         }
                         _con.Close();
                     }

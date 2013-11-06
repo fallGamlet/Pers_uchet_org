@@ -109,7 +109,7 @@ namespace Pers_uchet_org
         {
             // очистка таблицы персон (записи с анкетными данными)
             _personTable.Clear();
-            
+
             // отключаем фильтр
             searchFioTextBox.Text = "";
             searchNumTextBox.Text = "";
@@ -178,6 +178,24 @@ namespace Pers_uchet_org
             }
             StajDohodForm.PersonId = (long)row[PersonView2.id];
             StajDohodForm.FlagDoc = flag;
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
+
+        private void personView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1)
+                return;
+            choiceButton_Click(sender, new EventArgs());
+        }
+
+        private void personView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (personView.CurrentCell != null)
+                    choiceButton_Click(sender, new EventArgs());
+            }
+        }
+
     }
 }

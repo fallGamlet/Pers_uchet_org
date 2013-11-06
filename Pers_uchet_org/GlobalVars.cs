@@ -1839,6 +1839,8 @@ namespace Pers_uchet_org
         static public string citizen2Id = "citizen2_id";
         #endregion
 
+        public enum Job { General = 1, Second = 2 };
+
         #region Методы - статические
         static public DataTable CreateTable()
         {
@@ -2701,9 +2703,10 @@ namespace Pers_uchet_org
         //    return string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}) VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}); SELECT LAST_INSERT_ROWID();", tablename, docId, salaryGroupsId, january, february, march, april, may, june, july, august, september, october, november, december, sum, doc_id, salary_groups_id, _january, _february, _march, _april, _may, _june, _july, _august, _september, _october, _november, _december, _sum);
         //}
 
-        static public SQLiteCommand CreateInsertCommand()
+        static public SQLiteCommand CreateReplaceCommand()
         {
             SQLiteCommand comm = new SQLiteCommand();
+            comm.Parameters.Add(pId, DbType.Int64);
             comm.Parameters.Add(pDocId, DbType.Int64);
             comm.Parameters.Add(pSalaryGroupsId, DbType.Int64);
             comm.Parameters.Add(pJanuary, DbType.Double);
@@ -2720,9 +2723,9 @@ namespace Pers_uchet_org
             comm.Parameters.Add(pDecember, DbType.Double);
             comm.Parameters.Add(pSum, DbType.Double);
 
-            comm.CommandText = string.Format(@"INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15})
-                                                        VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30});
-                                               SELECT LAST_INSERT_ROWID();", tablename, docId, salaryGroupsId, january, february, march, april, may, june, july, august, september, october, november, december, sum, pDocId, pSalaryGroupsId, pJanuary, pFebruary, pMarch, pApril, pMay, pJune, pJuly, pAugust, pSeptember, pOctober, pNovember, pDecember, pSum);
+            comm.CommandText = string.Format(@"REPLACE INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16})
+                                                        VALUES ({17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32});
+                                               SELECT LAST_INSERT_ROWID();", tablename, id, docId, salaryGroupsId, january, february, march, april, may, june, july, august, september, october, november, december, sum, pId, pDocId, pSalaryGroupsId, pJanuary, pFebruary, pMarch, pApril, pMay, pJune, pJuly, pAugust, pSeptember, pOctober, pNovember, pDecember, pSum);
             return comm;
         }
 
@@ -2757,80 +2760,6 @@ namespace Pers_uchet_org
         //        colIndex++;
         //    }
         //    return dtTransposedTable;
-        //}
-
-        //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, docTypeId, new_doc_type_id, id, doc_id);
-        //}
-
-        //static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, docTypeId, new_doc_type_id, listId, list_id);
-        //}
-
-        //static public void UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, string connectionStr)
-        //{
-        //    if (doc_idArr.Count < 1)
-        //        throw new ArgumentException("Количество документов на изменение должно быть >= 1");
-        //    string commantText = String.Empty;
-        //    foreach (long doc_id in doc_idArr)
-        //        commantText += GetUpdateDocTypeByDocIdText(doc_id, new_doc_type_id) + "; \n";
-
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        int count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //    }
-        //}
-
-        //static public void UpdateDocTypeByListId(long list_id, long new_doc_type_id, string connectionStr)
-        //{
-        //    string commantText = GetUpdateDocTypeByListText(list_id, new_doc_type_id);
-
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        int count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //    }
-        //}
-
-        //static public string GetDeleteText(long doc_id)
-        //{
-        //    return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, doc_id);
-        //}
-
-        //static public string GetUpdateListIdText(long doc_id, long new_list_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, listId, new_list_id, id, doc_id);
-        //}
-
-        //static public int UpdateListId(long doc_id, long new_list_id, string connectionStr)
-        //{
-        //    string commantText = GetUpdateListIdText(doc_id, new_list_id);
-        //    int count = 0;
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //        connection.Close();
-        //    }
-        //    return count;
         //}
         #endregion
     }
@@ -3116,7 +3045,7 @@ namespace Pers_uchet_org
         #endregion
     }
 
- public class Mergies
+    public class Mergies
     {
         static public string tablename = "Mergies";
 
@@ -3164,25 +3093,25 @@ namespace Pers_uchet_org
 
         static public string GetInsertText(long org_id, int rep_year, int list_count, int doc_count)
         {
-            return string.Format(" INSERT INTO {0} ({1},{2},{3},{4})VALUES({5},{6},{7},{8}); SELECT last_insert_rowid(); ", 
+            return string.Format(" INSERT INTO {0} ({1},{2},{3},{4})VALUES({5},{6},{7},{8}); SELECT last_insert_rowid(); ",
                                     orgID, repYear, listCount, docCount,
                                     org_id, rep_year, list_count, doc_count);
         }
-        
+
         static public string GetUpdateText(long row_id, long org_id, int rep_year, int list_count, int doc_count)
         {
             return string.Format(" UPDATE {0} SET {1}={2},{3}={4},{5}={6},{7}={8} WHERE {9}={10} ",
                                     tablename,
-                                    orgID, org_id, 
-                                    repYear, rep_year, 
-                                    listCount, list_count, 
-                                    docCount, doc_count, 
+                                    orgID, org_id,
+                                    repYear, rep_year,
+                                    listCount, list_count,
+                                    docCount, doc_count,
                                     id, row_id);
         }
 
         static public string GetChangeActualText(long row_id, bool actual_value)
         {
-            return string.Format("UPDATE {0} SET {1}={2} WHERE {3}={4}", 
+            return string.Format("UPDATE {0} SET {1}={2} WHERE {3}={4}",
                                     tablename, actual, actual_value, id, row_id);
         }
 
@@ -3221,7 +3150,7 @@ namespace Pers_uchet_org
         #endregion
     }
 
-    public class MergiesView: Mergies
+    public class MergiesView : Mergies
     {
         // название представления в БД
         new static public string tablename = "Mergies_View";
@@ -3231,12 +3160,12 @@ namespace Pers_uchet_org
         static public string newDate = "new_date";
         static public string editDate = "edit_date";
         #endregion
-        
+
         new static public string GetSelectText()
         {
             return string.Format(" SELECT * FROM {0} ", tablename);
         }
-        
+
         new static public string GetSelectRowText(long row_id)
         {
             return string.Format("{0} WHERE {1}={2} ", GetSelectText(), id, row_id);
@@ -3256,7 +3185,7 @@ namespace Pers_uchet_org
         {
             return string.Format("{0} WHERE {1} = {2} AND {3} = 1 ", GetSelectText(), orgID, org_id, actual);
         }
-        
+
         new static public DataTable CreateTable()
         {
             DataTable table = Mergies.CreateTable();
@@ -3641,22 +3570,22 @@ namespace Pers_uchet_org
         static public string GetSelectIDText(FixData.FixType type, string table_name, long row_id)
         {
             return string.Format(@"SELECT f.{0} FROM {1} f LEFT JOIN {2} t ON t.{3}=f.{4} AND t.{5}='{6}' WHERE f.type={7} AND row_id={8}",
-                                    id, 
-                                    tablename, 
-                                    Tables.tablename, 
+                                    id,
+                                    tablename,
+                                    Tables.tablename,
                                     Tables.id,
                                     tableID,
                                     Tables.name,
                                     table_name,
-                                    (int)type,  
+                                    (int)type,
                                     row_id);
         }
 
         static public string GetReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date)
         {
-            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES (({7}),{8},({9}),{10},'{11}','{12}') ", 
+            return string.Format(@" REPLACE INTO {0} ({1},{2},{3},{4},{5},{6}) VALUES (({7}),{8},({9}),{10},'{11}','{12}'); SELECT LAST_INSERT_ROWID();",
                                     tablename,
-                                    id, 
+                                    id,
                                     type, tableID, rowID, oper, fixDate,
                                     GetSelectIDText(fix_type, table_name, row_id),
                                     (int)fix_type, Tables.GetSelectIDText(table_name), row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
