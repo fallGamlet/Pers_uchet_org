@@ -3116,7 +3116,7 @@ namespace Pers_uchet_org
         #endregion
     }
 
- public class Mergies
+    public class Mergies
     {
         static public string tablename = "Mergies";
 
@@ -3135,9 +3135,9 @@ namespace Pers_uchet_org
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
             table.Columns.Add(orgID, typeof(long));
-            table.Columns.Add(repYear, typeof(long));
-            table.Columns.Add(listCount, typeof(long));
-            table.Columns.Add(docCount, typeof(long));
+            table.Columns.Add(repYear, typeof(int));
+            table.Columns.Add(listCount, typeof(int));
+            table.Columns.Add(docCount, typeof(int));
             table.Columns.Add(actual, typeof(bool));
             return table;
         }
@@ -3231,7 +3231,17 @@ namespace Pers_uchet_org
         static public string newDate = "new_date";
         static public string editDate = "edit_date";
         #endregion
-        
+
+        #region Методы - статические
+        new static public DataTable CreateTable()
+        {
+            DataTable table = Mergies.CreateTable();
+            table.Columns.Add(newDate, typeof(DateTime));
+            table.Columns.Add(editDate, typeof(DateTime));
+            table.Columns.Add(operName, typeof(string));
+            return table;
+        }
+
         new static public string GetSelectText()
         {
             return string.Format(" SELECT * FROM {0} ", tablename);
@@ -3256,15 +3266,7 @@ namespace Pers_uchet_org
         {
             return string.Format("{0} WHERE {1} = {2} AND {3} = 1 ", GetSelectText(), orgID, org_id, actual);
         }
-        
-        new static public DataTable CreateTable()
-        {
-            DataTable table = Mergies.CreateTable();
-            table.Columns.Add(newDate, typeof(DateTime));
-            table.Columns.Add(editDate, typeof(DateTime));
-            table.Columns.Add(operName, typeof(string));
-            return table;
-        }
+        #endregion
     }
 
     public class MergeInfo
@@ -3313,47 +3315,51 @@ namespace Pers_uchet_org
             return table;
         }
 
-        static public string GetSelectText()
+        static public DataTable CreateTableWithRows()
         {
-            return string.Format(" SELECT * FROM {0} ", tablename);
+            DataTable table = CreateTable();
+            DataRow row;
+            row = table.NewRow();
+            row[MergeInfo.groupID] = SalaryGroups.Column1;
+            row.EndEdit();
+            table.Rows.Add(row);
+            row = table.NewRow();
+            row[MergeInfo.groupID] = SalaryGroups.Column2;
+            row.EndEdit();
+            table.Rows.Add(row);
+            row = table.NewRow();
+            row[MergeInfo.groupID] = SalaryGroups.Column3;
+            row.EndEdit();
+            table.Rows.Add(row);
+            row = table.NewRow();
+            row[MergeInfo.groupID] = SalaryGroups.Column4;
+            row.EndEdit();
+            table.Rows.Add(row);
+            row = table.NewRow();
+            row[MergeInfo.groupID] = SalaryGroups.Column5;
+            row.EndEdit();
+            table.Rows.Add(row);
+            row = table.NewRow();
+            row[MergeInfo.groupID] = SalaryGroups.Column21;
+            row.EndEdit();
+            table.Rows.Add(row);
+            return table;
         }
 
-        static public string GetSelectText(long merge_id)
+        static public DataTable CreateTableWithRows(long merge_id)
         {
-            return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
+            DataTable table = CreateTableWithRows();
+            MergeInfo.SetMergeID(table, merge_id);
+            return table;
         }
 
-        public static DataTable TransposeDataTable(DataTable dtTableToTranspose, Int32 columnIndex)
+        static public void SetMergeID(DataTable mergeInfoTable, long merge_id)
         {
-            DataTable dtTransposedTable = new DataTable(tablename);
-
-            //String colName = dtTableToTranspose.Columns[columnIndex].ColumnName.ToString();
-            dtTransposedTable.Columns.Add("months");
-
-            foreach (DataRow row in dtTableToTranspose.Rows)
+            foreach (DataRow row in mergeInfoTable.Rows)
             {
-                dtTransposedTable.Columns.Add(row[columnIndex].ToString());
+                row[MergeInfo.mergeID] = merge_id;
+                row.EndEdit();
             }
-
-            Int32 colIndex = 0;
-            Int32 month = 1;
-            foreach (DataColumn dc in dtTableToTranspose.Columns)
-            {
-                if (colIndex != columnIndex)
-                {
-                    DataRow newRow = dtTransposedTable.NewRow();
-                    newRow[0] = month;
-                    month++;
-                    for (Int32 destColIndex = 1; destColIndex < dtTransposedTable.Columns.Count; destColIndex++)
-                    {
-                        newRow[destColIndex] = dtTableToTranspose.Rows[destColIndex - 1][colIndex];
-                    }
-
-                    dtTransposedTable.Rows.Add(newRow);
-                }
-                colIndex++;
-            }
-            return dtTransposedTable;
         }
 
         public static DataRow Find(DataTable table, string colname, object value)
@@ -3367,79 +3373,36 @@ namespace Pers_uchet_org
             return null;
         }
 
-        //static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, docTypeId, new_doc_type_id, id, doc_id);
-        //}
+        public static int[] GetMonthIndexes(DataTable mergeInfo)
+        {
+            return new int[] {
+                            mergeInfo.Columns[MergeInfo.january].Ordinal,
+                            mergeInfo.Columns[MergeInfo.february].Ordinal,
+                            mergeInfo.Columns[MergeInfo.march].Ordinal,
+                            mergeInfo.Columns[MergeInfo.april].Ordinal,
+                            mergeInfo.Columns[MergeInfo.may].Ordinal,
+                            mergeInfo.Columns[MergeInfo.june].Ordinal,
+                            mergeInfo.Columns[MergeInfo.july].Ordinal,
+                            mergeInfo.Columns[MergeInfo.august].Ordinal,
+                            mergeInfo.Columns[MergeInfo.september].Ordinal,
+                            mergeInfo.Columns[MergeInfo.october].Ordinal,
+                            mergeInfo.Columns[MergeInfo.november].Ordinal,
+                            mergeInfo.Columns[MergeInfo.december].Ordinal,
+                            //mergeInfo.Columns[MergeInfo.sum].Ordinal,
+                            };
+        }
 
-        //static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, docTypeId, new_doc_type_id, listId, list_id);
-        //}
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
 
-        //static public void UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, string connectionStr)
-        //{
-        //    if (doc_idArr.Count < 1)
-        //        throw new ArgumentException("Количество документов на изменение должно быть >= 1");
-        //    string commantText = String.Empty;
-        //    foreach (long doc_id in doc_idArr)
-        //        commantText += GetUpdateDocTypeByDocIdText(doc_id, new_doc_type_id) + "; \n";
+        static public string GetSelectText(long merge_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
+        }
 
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        int count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //    }
-        //}
-
-        //static public void UpdateDocTypeByListId(long list_id, long new_doc_type_id, string connectionStr)
-        //{
-        //    string commantText = GetUpdateDocTypeByListText(list_id, new_doc_type_id);
-
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        int count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //    }
-        //}
-
-        //static public string GetDeleteText(long doc_id)
-        //{
-        //    return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, id, doc_id);
-        //}
-
-        //static public string GetUpdateListIdText(long doc_id, long new_list_id)
-        //{
-        //    return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-        //                        tablename, listId, new_list_id, id, doc_id);
-        //}
-
-        //static public int UpdateListId(long doc_id, long new_list_id, string connectionStr)
-        //{
-        //    string commantText = GetUpdateListIdText(doc_id, new_list_id);
-        //    int count = 0;
-        //    using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
-        //    {
-        //        if (connection.State != ConnectionState.Open)
-        //            connection.Open();
-        //        SQLiteTransaction trans = connection.BeginTransaction();
-        //        SQLiteCommand command = new SQLiteCommand(commantText, connection, trans);
-        //        count = command.ExecuteNonQuery();
-        //        trans.Commit();
-        //        connection.Close();
-        //    }
-        //    return count;
-        //}
+        //static public 
         #endregion
     }
 
@@ -3449,13 +3412,13 @@ namespace Pers_uchet_org
         static public string tablename = "Merge_Info_transpose";
 
         #region Поля виртуальной таблицы
-        static public string month = "month";
-        static public string col1 = "1";
-        static public string col2 = "2";
-        static public string col3 = "3";
-        static public string col4 = "4";
-        static public string col5 = "5";
-        static public string col6 = "21";
+        readonly static public string month = "month";
+        readonly static public string col1 = SalaryGroups.Column1.ToString();
+        readonly static public string col2 = SalaryGroups.Column2.ToString();
+        readonly static public string col3 = SalaryGroups.Column3.ToString();
+        readonly static public string col4 = SalaryGroups.Column4.ToString();
+        readonly static public string col5 = SalaryGroups.Column5.ToString();
+        readonly static public string col6 = SalaryGroups.Column21.ToString();
         #endregion
 
         #region Методы - статические
@@ -3474,6 +3437,12 @@ namespace Pers_uchet_org
             {
                 DataRow row = table.NewRow();
                 row[month] = i + 1;
+                row[col1] = 0;
+                row[col2] = 0;
+                row[col3] = 0;
+                row[col4] = 0;
+                row[col5] = 0;
+                row[col6] = 0;
                 row.EndEdit();
                 table.Rows.Add(row);
             }
@@ -3482,28 +3451,14 @@ namespace Pers_uchet_org
 
         static public void ConvertToMergeInfo(DataTable mergeInfoTranspose, DataTable mergeInfo)
         {
-            int[] iMonth = new int[] {
-                            mergeInfo.Columns[MergeInfo.january].Ordinal,
-                            mergeInfo.Columns[MergeInfo.february].Ordinal,
-                            mergeInfo.Columns[MergeInfo.march].Ordinal,
-                            mergeInfo.Columns[MergeInfo.april].Ordinal,
-                            mergeInfo.Columns[MergeInfo.may].Ordinal,
-                            mergeInfo.Columns[MergeInfo.june].Ordinal,
-                            mergeInfo.Columns[MergeInfo.july].Ordinal,
-                            mergeInfo.Columns[MergeInfo.august].Ordinal,
-                            mergeInfo.Columns[MergeInfo.september].Ordinal,
-                            mergeInfo.Columns[MergeInfo.october].Ordinal,
-                            mergeInfo.Columns[MergeInfo.november].Ordinal,
-                            mergeInfo.Columns[MergeInfo.december].Ordinal,
-                            //mergeInfo.Columns[MergeInfo.sum].Ordinal,
-                            };
+            int[] iMonth = MergeInfo.GetMonthIndexes(mergeInfo);
             DataRow[] mergeInfoRows = new DataRow[] {
-                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 1L),
-                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 2L),
-                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 3L),
-                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 4L),
-                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 5L),
-                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, 21L)
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, (long)SalaryGroups.Column1),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, (long)SalaryGroups.Column2),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, (long)SalaryGroups.Column3),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, (long)SalaryGroups.Column4),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, (long)SalaryGroups.Column5),
+                            MergeInfo.Find(mergeInfo, MergeInfo.groupID, (long)SalaryGroups.Column21)
                             };
             for (int i = 0; i < iMonth.Length; i++)
             {
@@ -3518,21 +3473,7 @@ namespace Pers_uchet_org
 
         static public void ConvertFromMergeInfo(DataTable mergeInfoTranspose, DataTable mergeInfo)
         {
-            int[] iMonth = new int[] {
-                            mergeInfo.Columns[MergeInfo.january].Ordinal,
-                            mergeInfo.Columns[MergeInfo.february].Ordinal,
-                            mergeInfo.Columns[MergeInfo.march].Ordinal,
-                            mergeInfo.Columns[MergeInfo.april].Ordinal,
-                            mergeInfo.Columns[MergeInfo.may].Ordinal,
-                            mergeInfo.Columns[MergeInfo.june].Ordinal,
-                            mergeInfo.Columns[MergeInfo.july].Ordinal,
-                            mergeInfo.Columns[MergeInfo.august].Ordinal,
-                            mergeInfo.Columns[MergeInfo.september].Ordinal,
-                            mergeInfo.Columns[MergeInfo.october].Ordinal,
-                            mergeInfo.Columns[MergeInfo.november].Ordinal,
-                            mergeInfo.Columns[MergeInfo.december].Ordinal,
-                            //mergeInfo.Columns[MergeInfo.sum].Ordinal,
-                            };
+            int[] iMonth = MergeInfo.GetMonthIndexes(mergeInfo);
             DataRow[] mergeInfoRows = new DataRow[] {
                             MergeInfo.Find(mergeInfo, MergeInfo.groupID, 1L),
                             MergeInfo.Find(mergeInfo, MergeInfo.groupID, 2L),
@@ -3553,8 +3494,7 @@ namespace Pers_uchet_org
         }
         #endregion
     }
-
-
+    
     public class Tables
     {
         // название таблицы в БД

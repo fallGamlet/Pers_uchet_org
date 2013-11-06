@@ -69,7 +69,7 @@ namespace Pers_uchet_org
             sum = new double[6];
         }
 
-        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection, long idDoc = -1)
+        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection, long idDoc)
             : this()
         {
             this._org = org;
@@ -80,6 +80,18 @@ namespace Pers_uchet_org
             this._flagDocType = flagDocType;
             this._connection = connection;
             this._currentDocId = idDoc;
+        }
+
+        public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, int flagDocType, string connection)
+            : this()
+        {
+            this._org = org;
+            this._operator = _operator;
+            this._currentListId = currentListId;
+            this._repYear = repYear;
+            this._personId = personId;
+            this._flagDocType = flagDocType;
+            this._connection = connection;
         }
 
         private void AddEditDocumentSzv1Form_Load(object sender, EventArgs e)

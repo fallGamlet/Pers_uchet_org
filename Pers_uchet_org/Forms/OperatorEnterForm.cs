@@ -42,5 +42,10 @@ namespace Pers_uchet_org.Forms
             if (e.KeyCode == Keys.Enter)
                 acceptButton.Focus();
         }
+
+        private void OperatorEnterForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

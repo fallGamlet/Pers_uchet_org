@@ -81,6 +81,7 @@ namespace Pers_uchet_org
         {
             SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org);
             tmpform.Owner = this;
+            tmpform.RepYear = (int)this.yearBox.Value;
             DialogResult dRes = tmpform.ShowDialog();
             if (dRes == DialogResult.OK)
             {
