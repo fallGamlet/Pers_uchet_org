@@ -83,7 +83,6 @@ namespace Pers_uchet_org
                 if (driveBox.SelectedItem == null)
                 {
                     throw new DriveNotFoundException("Не найден диск с ключевой информацией.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали диск с ключевой информацией (шаг 1).");
-                    return;
                 }
                 //Отключено на время дебага
                 //if (flashBox.SelectedItem == null)
