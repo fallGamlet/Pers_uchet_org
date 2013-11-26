@@ -39,6 +39,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataView = new System.Windows.Forms.DataGridView();
+            this.monthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sum4Box = new System.Windows.Forms.TextBox();
             this.sum3Box = new System.Windows.Forms.TextBox();
             this.sum5Box = new System.Windows.Forms.TextBox();
@@ -60,13 +67,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.monthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetcountBox)).BeginInit();
@@ -136,225 +136,6 @@
             this.dataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataView.Size = new System.Drawing.Size(758, 339);
             this.dataView.TabIndex = 22;
-            // 
-            // sum4Box
-            // 
-            this.sum4Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum4Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sum4Box.Location = new System.Drawing.Point(425, 357);
-            this.sum4Box.Name = "sum4Box";
-            this.sum4Box.ReadOnly = true;
-            this.sum4Box.Size = new System.Drawing.Size(111, 20);
-            this.sum4Box.TabIndex = 2;
-            this.sum4Box.Text = "0.00";
-            this.sum4Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // sum3Box
-            // 
-            this.sum3Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum3Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sum3Box.Location = new System.Drawing.Point(306, 357);
-            this.sum3Box.Name = "sum3Box";
-            this.sum3Box.ReadOnly = true;
-            this.sum3Box.Size = new System.Drawing.Size(113, 20);
-            this.sum3Box.TabIndex = 2;
-            this.sum3Box.Text = "0.00";
-            this.sum3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // sum5Box
-            // 
-            this.sum5Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum5Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sum5Box.Location = new System.Drawing.Point(542, 357);
-            this.sum5Box.Name = "sum5Box";
-            this.sum5Box.ReadOnly = true;
-            this.sum5Box.Size = new System.Drawing.Size(111, 20);
-            this.sum5Box.TabIndex = 2;
-            this.sum5Box.Text = "0.00";
-            this.sum5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(9, 358);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 17);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "∑";
-            // 
-            // sum2Box
-            // 
-            this.sum2Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum2Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sum2Box.Location = new System.Drawing.Point(175, 357);
-            this.sum2Box.Name = "sum2Box";
-            this.sum2Box.ReadOnly = true;
-            this.sum2Box.Size = new System.Drawing.Size(123, 20);
-            this.sum2Box.TabIndex = 2;
-            this.sum2Box.Text = "0.00";
-            this.sum2Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // sum1Box
-            // 
-            this.sum1Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum1Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sum1Box.Location = new System.Drawing.Point(47, 357);
-            this.sum1Box.Name = "sum1Box";
-            this.sum1Box.ReadOnly = true;
-            this.sum1Box.Size = new System.Drawing.Size(122, 20);
-            this.sum1Box.TabIndex = 2;
-            this.sum1Box.Text = "0.00";
-            this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // packetcountBox
-            // 
-            this.packetcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.packetcountBox.Location = new System.Drawing.Point(242, 19);
-            this.packetcountBox.Name = "packetcountBox";
-            this.packetcountBox.Size = new System.Drawing.Size(120, 20);
-            this.packetcountBox.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Количество пакетов с документами СЗВ-1";
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(701, 541);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 6;
-            this.cancelButton.Text = "Отменить";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
-            // 
-            // regnumBox
-            // 
-            this.regnumBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.regnumBox.Location = new System.Drawing.Point(176, 19);
-            this.regnumBox.Name = "regnumBox";
-            this.regnumBox.ReadOnly = true;
-            this.regnumBox.Size = new System.Drawing.Size(209, 20);
-            this.regnumBox.TabIndex = 5;
-            // 
-            // saveButton
-            // 
-            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(611, 541);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 5;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // printButton
-            // 
-            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.printButton.Location = new System.Drawing.Point(12, 541);
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(254, 23);
-            this.printButton.TabIndex = 4;
-            this.printButton.Text = "Просмотр/Печать проверочной ведомости";
-            this.printButton.UseVisualStyleBackColor = true;
-            this.printButton.Click += new System.EventHandler(this.printButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(213, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Количество исходных документов СЗВ-1";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(164, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Геристрационный номер в ПФ";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 48);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(151, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Наименование организации";
-            // 
-            // documentcountBox
-            // 
-            this.documentcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.documentcountBox.Location = new System.Drawing.Point(242, 45);
-            this.documentcountBox.Name = "documentcountBox";
-            this.documentcountBox.Size = new System.Drawing.Size(120, 20);
-            this.documentcountBox.TabIndex = 2;
-            // 
-            // orgnameBox
-            // 
-            this.orgnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.orgnameBox.Location = new System.Drawing.Point(175, 45);
-            this.orgnameBox.Name = "orgnameBox";
-            this.orgnameBox.ReadOnly = true;
-            this.orgnameBox.Size = new System.Drawing.Size(209, 20);
-            this.orgnameBox.TabIndex = 21;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.packetcountBox);
-            this.groupBox2.Controls.Add(this.documentcountBox);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(368, 101);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.yearBox);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.regnumBox);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.orgnameBox);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(386, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(390, 101);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            // 
-            // yearBox
-            // 
-            this.yearBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.yearBox.Location = new System.Drawing.Point(175, 71);
-            this.yearBox.Name = "yearBox";
-            this.yearBox.ReadOnly = true;
-            this.yearBox.Size = new System.Drawing.Size(209, 20);
-            this.yearBox.TabIndex = 23;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 74);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(121, 13);
-            this.label14.TabIndex = 22;
-            this.label14.Text = "Отчетный период (год)";
             // 
             // monthColumn
             // 
@@ -448,6 +229,228 @@
             this.Column6.Name = "Column6";
             this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column6.Width = 96;
+            // 
+            // sum4Box
+            // 
+            this.sum4Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sum4Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.sum4Box.Location = new System.Drawing.Point(425, 357);
+            this.sum4Box.Name = "sum4Box";
+            this.sum4Box.ReadOnly = true;
+            this.sum4Box.Size = new System.Drawing.Size(111, 20);
+            this.sum4Box.TabIndex = 2;
+            this.sum4Box.Text = "0.00";
+            this.sum4Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // sum3Box
+            // 
+            this.sum3Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sum3Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.sum3Box.Location = new System.Drawing.Point(306, 357);
+            this.sum3Box.Name = "sum3Box";
+            this.sum3Box.ReadOnly = true;
+            this.sum3Box.Size = new System.Drawing.Size(113, 20);
+            this.sum3Box.TabIndex = 2;
+            this.sum3Box.Text = "0.00";
+            this.sum3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // sum5Box
+            // 
+            this.sum5Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sum5Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.sum5Box.Location = new System.Drawing.Point(542, 357);
+            this.sum5Box.Name = "sum5Box";
+            this.sum5Box.ReadOnly = true;
+            this.sum5Box.Size = new System.Drawing.Size(111, 20);
+            this.sum5Box.TabIndex = 2;
+            this.sum5Box.Text = "0.00";
+            this.sum5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(9, 358);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(19, 17);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "∑";
+            // 
+            // sum2Box
+            // 
+            this.sum2Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sum2Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.sum2Box.Location = new System.Drawing.Point(175, 357);
+            this.sum2Box.Name = "sum2Box";
+            this.sum2Box.ReadOnly = true;
+            this.sum2Box.Size = new System.Drawing.Size(123, 20);
+            this.sum2Box.TabIndex = 2;
+            this.sum2Box.Text = "0.00";
+            this.sum2Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // sum1Box
+            // 
+            this.sum1Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sum1Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.sum1Box.Location = new System.Drawing.Point(47, 357);
+            this.sum1Box.Name = "sum1Box";
+            this.sum1Box.ReadOnly = true;
+            this.sum1Box.Size = new System.Drawing.Size(122, 20);
+            this.sum1Box.TabIndex = 2;
+            this.sum1Box.Text = "0.00";
+            this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // packetcountBox
+            // 
+            this.packetcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.packetcountBox.Location = new System.Drawing.Point(242, 19);
+            this.packetcountBox.Name = "packetcountBox";
+            this.packetcountBox.Size = new System.Drawing.Size(120, 20);
+            this.packetcountBox.TabIndex = 1;
+            this.packetcountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(223, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Количество пакетов с документами СЗВ-1";
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(701, 541);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 6;
+            this.cancelButton.Text = "Отменить";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // regnumBox
+            // 
+            this.regnumBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.regnumBox.Location = new System.Drawing.Point(176, 19);
+            this.regnumBox.Name = "regnumBox";
+            this.regnumBox.ReadOnly = true;
+            this.regnumBox.Size = new System.Drawing.Size(209, 20);
+            this.regnumBox.TabIndex = 5;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.saveButton.Location = new System.Drawing.Point(611, 541);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 5;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // printButton
+            // 
+            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.printButton.Location = new System.Drawing.Point(12, 541);
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(254, 23);
+            this.printButton.TabIndex = 4;
+            this.printButton.Text = "Просмотр/Печать проверочной ведомости";
+            this.printButton.UseVisualStyleBackColor = true;
+            this.printButton.Click += new System.EventHandler(this.printButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(213, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Количество исходных документов СЗВ-1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(164, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Геристрационный номер в ПФ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 48);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(151, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Наименование организации";
+            // 
+            // documentcountBox
+            // 
+            this.documentcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.documentcountBox.Location = new System.Drawing.Point(242, 45);
+            this.documentcountBox.Name = "documentcountBox";
+            this.documentcountBox.Size = new System.Drawing.Size(120, 20);
+            this.documentcountBox.TabIndex = 2;
+            this.documentcountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // orgnameBox
+            // 
+            this.orgnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.orgnameBox.Location = new System.Drawing.Point(175, 45);
+            this.orgnameBox.Name = "orgnameBox";
+            this.orgnameBox.ReadOnly = true;
+            this.orgnameBox.Size = new System.Drawing.Size(209, 20);
+            this.orgnameBox.TabIndex = 21;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.packetcountBox);
+            this.groupBox2.Controls.Add(this.documentcountBox);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(368, 101);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.yearBox);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.regnumBox);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.orgnameBox);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Location = new System.Drawing.Point(386, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(390, 101);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            // 
+            // yearBox
+            // 
+            this.yearBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.yearBox.Location = new System.Drawing.Point(175, 71);
+            this.yearBox.Name = "yearBox";
+            this.yearBox.ReadOnly = true;
+            this.yearBox.Size = new System.Drawing.Size(209, 20);
+            this.yearBox.TabIndex = 23;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 74);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(121, 13);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "Отчетный период (год)";
             // 
             // SvodVedomostEditDocumentForm
             // 

@@ -52,7 +52,7 @@ namespace Pers_uchet_org
             else
                 _mergeTable.Rows.Clear();
 
-            if(_mergeBS == null)
+            if (_mergeBS == null)
                 _mergeBS = new BindingSource();
 
             string commText = MergiesView.GetSelectText(_org.idVal, rep_year);

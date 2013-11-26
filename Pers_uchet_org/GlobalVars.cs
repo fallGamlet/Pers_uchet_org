@@ -3157,15 +3157,15 @@ namespace Pers_uchet_org
             return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), orgID, org_id);
         }
 
-        static public string GetSelectActualText(long org_id)
+        static public string GetSelectActualText(long org_id, int rep_year)
         {
-            return string.Format("{0} WHERE {1} = {2} AND {3} = 1 ", GetSelectText(), orgID, org_id, actual);
+            return string.Format("{0} WHERE ({1}={2} AND {3}=1 AND {4}={5})", GetSelectText(), orgID, org_id, actual, repYear, rep_year);
         }
 
         static public string GetInsertText(long org_id, int rep_year, int list_count, int doc_count)
         {
             return string.Format(" INSERT INTO {0} ({1},{2},{3},{4})VALUES({5},{6},{7},{8}); SELECT last_insert_rowid(); ", 
-                                    orgID, repYear, listCount, docCount,
+                                    tablename, orgID, repYear, listCount, docCount,
                                     org_id, rep_year, list_count, doc_count);
         }
         
@@ -3218,6 +3218,33 @@ namespace Pers_uchet_org
         {
             return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, orgID, org_id, repYear, rep_year);
         }
+
+        static public SQLiteCommand InsertCommand(DataRow mergeRow)
+        {
+            if (mergeRow == null)
+                return null;
+            SQLiteCommand comm = new SQLiteCommand();
+            comm.CommandText = GetInsertText((long)mergeRow[orgID], (int)mergeRow[repYear], (int)mergeRow[listCount], (int)mergeRow[docCount]);
+            return comm;
+        }
+
+        static public SQLiteCommand UpdateCommand(DataRow mergeRow)
+        {
+            if (mergeRow == null)
+                return null;
+            SQLiteCommand comm = new SQLiteCommand();
+            comm.CommandText = GetUpdateText((long)mergeRow[id], (long)mergeRow[orgID], (int)mergeRow[repYear], (int)mergeRow[listCount], (int)mergeRow[docCount]);
+            return comm;
+        }
+
+        static public SQLiteCommand DeleteCommand(DataRow mergeRow)
+        {
+            if (mergeRow == null)
+                return null;
+            SQLiteCommand comm = new SQLiteCommand();
+            comm.CommandText = GetDeleteText((long)mergeRow[id]);
+            return comm;
+        }
         #endregion
     }
 
@@ -3262,9 +3289,21 @@ namespace Pers_uchet_org
             return string.Format("{0} WHERE {1}={2} AND {3}={4} ", GetSelectText(), orgID, org_id, repYear, rep_year);
         }
 
-        new static public string GetSelectActualText(long org_id)
+        new static public string GetSelectActualText(long org_id, int rep_year)
         {
-            return string.Format("{0} WHERE {1} = {2} AND {3} = 1 ", GetSelectText(), orgID, org_id, actual);
+            return string.Format("{0} WHERE ({1}={2} AND {3}=1 AND {4}={5})", GetSelectText(), orgID, org_id, actual, repYear, rep_year);
+        }
+
+        static public string GetReplaceFixDataText(DataRow mergeRow, FixData.FixType type)
+        {
+            DateTime fixdate = (DateTime)(type==FixData.FixType.New ? 
+                                    mergeRow[MergiesView.newDate] : 
+                                    mergeRow[MergiesView.editDate]);
+            return FixData.GetReplaceText(Mergies.tablename,
+                                    type,
+                                    (long)mergeRow[MergiesView.id],
+                                    (string)mergeRow[MergiesView.operName], 
+                                    fixdate);
         }
         #endregion
     }
@@ -3273,7 +3312,7 @@ namespace Pers_uchet_org
     {
         static public string tablename = "Merge_Info";
 
-        #region Названия полей в представления БД
+        #region Названия полей в БД
         static public string id = "id";
         static public string mergeID = "merge_id";
         static public string groupID = "groups_id";
@@ -3290,6 +3329,25 @@ namespace Pers_uchet_org
         static public string november = "november";
         static public string december = "december";
         static public string sum = "sum";
+        #endregion
+
+        #region Названия параметров для команд
+        static public string pId = "@id";
+        static public string pMergeID = "@merge_id";
+        static public string pGroupID = "@groups_id";
+        static public string pJanuary = "@january";
+        static public string pFebruary = "@february";
+        static public string pMarch = "@march";
+        static public string pApril = "@april";
+        static public string pMay = "@may";
+        static public string pJune = "@june";
+        static public string pJuly = "@july";
+        static public string pAugust = "@august";
+        static public string pSeptember = "@september";
+        static public string pOctober = "@october";
+        static public string pNovember = "@november";
+        static public string pDecember = "@december";
+        static public string pSum = "@sum";
         #endregion
 
         #region Методы - статические
@@ -3392,6 +3450,35 @@ namespace Pers_uchet_org
                             };
         }
 
+        public static double GetSum(DataTable mergeInfo, long group_id)
+        {
+            DataRow row = Find(mergeInfo, MergeInfo.groupID, group_id);
+            return (double)row[sum];
+        }
+
+        public static double MathSum(DataTable mergeInfo, long group_id)
+        {
+            double sum = 0;
+            int[] months = GetMonthIndexes(mergeInfo);
+            DataRow row = Find(mergeInfo, MergeInfo.groupID, group_id);
+            foreach (int col in months)
+                sum += (double)row[col];
+            return Math.Round(sum,2);
+        }
+
+        public static void MathSums(DataTable mergeInfo)
+        {
+            double sum;;
+            int[] months = GetMonthIndexes(mergeInfo);
+            foreach (DataRow row in mergeInfo.Rows)
+            {
+                sum = 0;
+                foreach (int col in months)
+                    sum += (double)row[col];
+                row[MergeInfo.sum] = Math.Round(sum,2);
+            }
+        }
+
         static public string GetSelectText()
         {
             return string.Format(" SELECT * FROM {0} ", tablename);
@@ -3402,7 +3489,108 @@ namespace Pers_uchet_org
             return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
         }
 
-        //static public 
+        static public string GetDeleteText(long merge_id)
+        {
+            return string.Format("DELETE FROM {0} WHERE {1}={2}", 
+                                    tablename, mergeID, merge_id);
+        }
+
+        static public string GetDeleteText(IEnumerable<long> row_id)
+        {
+            string instr = "( ";
+            foreach (long val in row_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+
+            return string.Format("DELETE FROM {0} WHERE {1} in {2}",
+                                    tablename, mergeID, instr);
+        }
+
+        static public void SetParametersTo(SQLiteCommand command)
+        {
+            if (command == null)
+                return;
+            command.Parameters.Add(new SQLiteParameter(pId, DbType.UInt64, id));
+            command.Parameters.Add(new SQLiteParameter(pMergeID, DbType.UInt64, mergeID));
+            command.Parameters.Add(new SQLiteParameter(pGroupID, DbType.UInt64, groupID));
+            command.Parameters.Add(new SQLiteParameter(pJanuary, DbType.Double, january));
+            command.Parameters.Add(new SQLiteParameter(pFebruary, DbType.Double, february));
+            command.Parameters.Add(new SQLiteParameter(pMarch, DbType.Double, march));
+            command.Parameters.Add(new SQLiteParameter(pApril, DbType.Double, april));
+            command.Parameters.Add(new SQLiteParameter(pMay, DbType.Double, may));
+            command.Parameters.Add(new SQLiteParameter(pJune, DbType.Double, june));
+            command.Parameters.Add(new SQLiteParameter(pJuly, DbType.Double, july));
+            command.Parameters.Add(new SQLiteParameter(pAugust, DbType.Double, august));
+            command.Parameters.Add(new SQLiteParameter(pSeptember, DbType.Double, september));
+            command.Parameters.Add(new SQLiteParameter(pOctober, DbType.Double, october));
+            command.Parameters.Add(new SQLiteParameter(pNovember, DbType.Double, november));
+            command.Parameters.Add(new SQLiteParameter(pDecember, DbType.Double, december));
+            command.Parameters.Add(new SQLiteParameter(pSum, DbType.Double, sum));
+        }
+
+        static public SQLiteCommand CreateInsertCommand()
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            SetParametersTo(comm);
+            comm.CommandText = string.Format(
+                                @" INSERT INTO {0} 
+                                ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15})
+                                VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30});
+                                SELECT last_insert_rowid();",
+                            tablename,
+                            mergeID,groupID,january,february,march,april,may,june,july,august,september,october,november,december,sum,
+                            pMergeID,pGroupID,pJanuary,pFebruary,pMarch,pApril,pMay,pJune,pJuly,pAugust,pSeptember,pOctober,pNovember,pDecember,pSum);
+            return comm;
+        }
+
+        static public SQLiteCommand CreateUpdateCommand()
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            SetParametersTo(comm);
+            comm.CommandText = string.Format(
+                            @" UPDATE {0} SET {1}={2},{3}={4},{5}={6},{7}={8},{9}={10},{11}={12},{13}={14},
+                             {15}={16},{17}={18},{19}={20},{21}={22},{23}={24},{25}={26},{27}={28},{29}={30}
+                            WHERE {31} = {32} ",
+                            tablename,
+                            mergeID, pMergeID,
+                            groupID, pGroupID,
+                            january, pJanuary,
+                            february, pFebruary,
+                            march, pMarch,
+                            april, pApril,
+                            may, pMay,
+                            june, pJune,
+                            july, pJuly,
+                            august, pAugust,
+                            september, pSeptember,
+                            october, pOctober,
+                            november, pNovember,
+                            december, pDecember,
+                            sum, pSum, 
+                            id, pId);
+            return comm;
+        }
+
+        static public SQLiteCommand CreateDeleteCommand()
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            SetParametersTo(comm);
+            comm.CommandText = string.Format(@" DELETE FROM {0} WHERE {1} = {2} ",tablename,id, pId);
+            return comm;
+        }
+
+        static public SQLiteCommand CreateDeleteCommand(long merge_id)
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            comm.CommandText = GetDeleteText(merge_id);
+            return comm;
+        }
+
+        static public SQLiteCommand CreateDeleteCommand(DataRow mergeRow)
+        {
+            return CreateDeleteCommand((long)mergeRow[mergeID]);
+        }
         #endregion
     }
 
@@ -3491,6 +3679,14 @@ namespace Pers_uchet_org
                 mergeInfoTranspose.Rows[i][MergeInfoTranspose.col5] = mergeInfoRows[4][iMonth[i]];
                 mergeInfoTranspose.Rows[i][MergeInfoTranspose.col6] = mergeInfoRows[5][iMonth[i]];
             }
+        }
+
+        static public double GetSum(DataTable mergeInfoTranspose, string col_name)
+        {
+            double sum = 0;
+            foreach (DataRow row in mergeInfoTranspose.Rows)
+                sum += (double)row[col_name];
+            return sum;
         }
         #endregion
     }

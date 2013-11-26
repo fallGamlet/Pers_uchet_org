@@ -13,13 +13,13 @@ namespace Pers_uchet_org
     public partial class SvodVedomostEditDocumentForm : Form
     {
         #region Поля
-        Org _org;
-        Operator _oper;
-        string _connection;
-        DataRow _svodRow;
-        DataTable _svodTable;
-        BindingSource _svodBS;
-        bool _isEditMode;
+        Org _org;                  // организация
+        Operator _oper;            // оператор
+        string _connection;        // строка соединения с БД
+        DataRow _mergeRow;         // строка Сводной ведомости
+        DataTable _svodTable;      // таблица для взаимодействия с формой
+        DataTable _mergeInfoTable; // таблица для взаимодействия с БД
+        BindingSource _svodBS;     // бинд для таблицы для отображения в пользовательском интерфейсе
         #endregion
 
         #region Конструкторы и инициализатор
@@ -30,8 +30,7 @@ namespace Pers_uchet_org
             _connection = connectionStr;
             _oper = oper;
             _org = org;
-            _svodRow = null;
-            _isEditMode = false;
+            _mergeRow = null;
         }
 
         public SvodVedomostEditDocumentForm(string connectionStr, Operator oper, Org org, DataRow svodVedomostRow)
@@ -41,10 +40,9 @@ namespace Pers_uchet_org
             _connection = connectionStr;
             _oper = oper;
             _org = org;
-            _svodRow = svodVedomostRow;
-            _isEditMode = true;
+            _mergeRow = svodVedomostRow;
         }
-        
+
         private void SvodVedomostEditDocumentForm_Load(object sender, EventArgs e)
         {
             _svodBS = new BindingSource();
@@ -53,21 +51,28 @@ namespace Pers_uchet_org
             this.regnumBox.Text = _org.regnumVal;
             this.orgnameBox.Text = _org.nameVal;
 
-            if (_svodRow == null)
+            if (_mergeRow == null)
             {
                 this.packetcountBox.Value = 0;
                 this.documentcountBox.Value = 0;
+                _mergeInfoTable = null;
             }
             else
             {
-                this.yearBox.Text = _svodRow[MergiesView.repYear].ToString();
-                this.packetcountBox.Value = (int)_svodRow[MergiesView.listCount];
-                this.documentcountBox.Value = (int)_svodRow[MergiesView.docCount];
+                this.yearBox.Text = _mergeRow[MergiesView.repYear].ToString();
+                this.packetcountBox.Value = (int)_mergeRow[MergiesView.listCount];
+                this.documentcountBox.Value = (int)_mergeRow[MergiesView.docCount];
 
-                DataTable mergeInfoTable = MergeInfo.CreateTable();
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(MergeInfo.GetSelectText((long)_svodRow[MergiesView.id]), _connection);
-                adapter.Fill(mergeInfoTable);
-                MergeInfoTranspose.ConvertFromMergeInfo(_svodTable, mergeInfoTable);
+                _mergeInfoTable = MergeInfo.CreateTable();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(MergeInfo.GetSelectText((long)_mergeRow[MergiesView.id]), _connection);
+                adapter.Fill(_mergeInfoTable);
+                MergeInfoTranspose.ConvertFromMergeInfo(_svodTable, _mergeInfoTable);
+
+                this.sum1Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column1).ToString("N2");
+                this.sum2Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column2).ToString("N2");
+                this.sum3Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column3).ToString("N2");
+                this.sum4Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column4).ToString("N2");
+                this.sum5Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column5).ToString("N2");
             }
             _svodBS.DataSource = _svodTable;
             this.dataView.AutoGenerateColumns = false;
@@ -88,17 +93,122 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - свои
+        /// <summary>
+        /// Производит заполнение записи сводной ведомости из полей формы
+        /// </summary>
+        private void SetMergeData()
+        {
+            if (_mergeRow == null)
+            {
+                _mergeRow = MergiesView.CreateTable().NewRow();
+                _mergeRow[MergiesView.newDate] = DateTime.Now.ToString("yyyy-MM-dd");
+                _mergeRow[MergiesView.id] = -1;
+            }
+            _mergeRow[MergiesView.listCount] = (int)this.packetcountBox.Value;
+            _mergeRow[MergiesView.docCount] = (int)this.documentcountBox.Value;
+            _mergeRow[MergiesView.repYear] = int.Parse(this.yearBox.Text);
+            _mergeRow[MergiesView.orgID] = _org.idVal;
+            _mergeRow[MergiesView.operName] = _oper.nameVal;
+            _mergeRow[MergiesView.editDate] = DateTime.Now;
+            _mergeRow.EndEdit();
+        }
+        /// <summary>
+        /// Производит сохранение данных в БД созданной сводной ведомости
+        /// </summary>
         private void SaveNew()
         {
-            DataTable mergieInfo = MergeInfo.CreateTableWithRows();
-
-            MergeInfoTranspose.ConvertToMergeInfo(_svodTable, mergieInfo);
-
+            // создать виртуальную таблицу с пустыми записями
+            _mergeInfoTable = MergeInfo.CreateTableWithRows();
+            // скопировать данные из транспонированной таблицы в созданную
+            MergeInfoTranspose.ConvertToMergeInfo(_svodTable, _mergeInfoTable);
+            // просчитать суммы в созданной таблицйе
+            MergeInfo.MathSums(_mergeInfoTable);
+            // заполнение данными записи Сводной ведомости
+            this.SetMergeData();
+            // создание подключения к БД
+            SQLiteConnection connection = new SQLiteConnection(_connection);
+            // создание команд для вставки данных в БД
+            SQLiteCommand mergeInsert = MergiesView.InsertCommand(_mergeRow);
+            SQLiteCommand tableInsert = MergeInfo.CreateInsertCommand();
+            SQLiteCommand fixdataReplace = new SQLiteCommand();
+            SQLiteCommand setUnactual = new SQLiteCommand(MergiesView.GetChangeActualByOrgText(_org.idVal, (int)_mergeRow[MergiesView.repYear], false));
+            // создание Адаптера для обработки таблицы
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter();
+            adapter.InsertCommand = tableInsert;
+            // присвоение созданного подключения коммандам
+            mergeInsert.Connection =
+            tableInsert.Connection =
+            fixdataReplace.Connection = 
+            setUnactual.Connection = connection;
+            // открытие соединения
+            connection.Open();
+            // начать транзакция
+            SQLiteTransaction transaction = connection.BeginTransaction();
+            // прикрепление транзакции 
+            mergeInsert.Transaction =
+            tableInsert.Transaction =
+            fixdataReplace.Transaction =
+            setUnactual.Transaction = transaction;
+            // выполнить команду обнуления актуальности сводных ведомостей в выбранном году для текущей организаций
+            setUnactual.ExecuteNonQuery();
+            // выполнить команду вставки записи о новой сводной ведомости и назначения ее актуальной
+            _mergeRow[MergiesView.id] = mergeInsert.ExecuteScalar();
+            _mergeRow.EndEdit();
+            // внести запись о факте создания записи сводной     ведомости
+            fixdataReplace.CommandText = MergiesView.GetReplaceFixDataText(_mergeRow, FixData.FixType.New);
+            fixdataReplace.ExecuteNonQuery();
+            // заполнить соответствующий столбец таблицы ID сводной ведомости для их привязки к ней (сводной ведомости)
+            MergeInfo.SetMergeID(_mergeInfoTable, (long)_mergeRow[MergiesView.id]);
+            // ввыполнить вставку записей из таблицы программы в таблицу БД
+            adapter.Update(_mergeInfoTable);
+            // принять подключение
+            transaction.Commit();
+            // закрыть соединение
+            connection.Close();
         }
-
+        /// <summary>
+        /// Производит сохранение данных в БД измененной сводной ведомости
+        /// </summary>
         private void SaveEdited()
         {
-
+            // скопировать данные с транспонированной таблицы в таблицу, соответствующую по структуре с таблицей БД
+            MergeInfoTranspose.ConvertToMergeInfo(_svodTable, _mergeInfoTable);
+            // просчитать суммы в созданной таблицйе
+            MergeInfo.MathSums(_mergeInfoTable);
+            // заполнение данными записи Сводной ведомости
+            this.SetMergeData();
+            // создание подключения к БД
+            SQLiteConnection connection = new SQLiteConnection(_connection);
+            // создание команд для вставки данных в БД
+            SQLiteCommand mergeInsert = MergiesView.UpdateCommand(_mergeRow);
+            SQLiteCommand tableInsert = MergeInfo.CreateUpdateCommand();
+            SQLiteCommand fixdataReplace = new SQLiteCommand();
+            // создание Адаптера для обработки таблицы
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter();
+            adapter.UpdateCommand = tableInsert;
+            // присвоение созданного подключения коммандам
+            mergeInsert.Connection =
+            tableInsert.Connection =
+            fixdataReplace.Connection = connection;
+            // открытие соединения
+            connection.Open();
+            // начать транзакция
+            SQLiteTransaction transaction = connection.BeginTransaction();
+            // прикрепление транзакции 
+            mergeInsert.Transaction =
+            tableInsert.Transaction =
+            fixdataReplace.Transaction = transaction;
+            // выполнить обновление данных о сводной ведомости
+            mergeInsert.ExecuteNonQuery();
+            // выполнить вставку(обновление) данных о факте изменения сводной ведомости
+            fixdataReplace.CommandText = MergiesView.GetReplaceFixDataText(_mergeRow, FixData.FixType.Edit);
+            fixdataReplace.ExecuteNonQuery();
+            // выполнить обносление данных по значениям выплат
+            adapter.Update(_mergeInfoTable);
+            // принять подключение
+            transaction.Commit();
+            // закрыть соединение
+            connection.Close();
         }
         #endregion
 
@@ -170,14 +280,15 @@ namespace Pers_uchet_org
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (_svodRow == null)
+            if (_mergeRow == null)
             {
                 this.SaveNew();
             }
             else
             {
-
+                this.SaveEdited();
             }
+            this.Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -185,7 +296,5 @@ namespace Pers_uchet_org
             this.Close();
         }
         #endregion
-
-        
     }
 }
