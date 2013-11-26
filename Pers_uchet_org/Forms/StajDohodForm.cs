@@ -69,8 +69,8 @@ namespace Pers_uchet_org
             yearBox.Value = _repYear;
 
             // инициализация таблиц
-            _listsTable = ListsView.CreatetTable();
-            _docsTable = DocsView.CreatetTable();
+            _listsTable = ListsView.CreateTable();
+            _docsTable = DocsView.CreateTable();
             // добавление виртуального столбца для возможности отмечать записи
             _docsTable.Columns.Add(CHECK, typeof(bool));
             _docsTable.Columns[CHECK].DefaultValue = false;

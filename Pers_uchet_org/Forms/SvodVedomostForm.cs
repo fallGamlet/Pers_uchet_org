@@ -52,7 +52,7 @@ namespace Pers_uchet_org
             else
                 _mergeTable.Rows.Clear();
 
-            if(_mergeBS == null)
+            if (_mergeBS == null)
                 _mergeBS = new BindingSource();
 
             string commText = MergiesView.GetSelectText(_org.idVal, rep_year);
@@ -108,7 +108,8 @@ namespace Pers_uchet_org
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-
+            DataRowView curRow = _mergeBS.Current as DataRowView;
+            Mergies.DeleteExecute(curRow.Row, _connection);
         }
 
         private void printButton_Click(object sender, EventArgs e)

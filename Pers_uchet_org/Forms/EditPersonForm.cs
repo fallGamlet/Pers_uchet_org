@@ -488,7 +488,11 @@ namespace Pers_uchet_org
             // создание транзакции
             SQLiteTransaction transaction = connection.BeginTransaction();
             // присвоение транзакции командам
-            fixdata.Transaction = commandRegadr.Transaction = commandBornadr.Transaction = commandIDoc.Transaction = updatePerson.Transaction = transaction;
+            fixdata.Transaction = 
+            commandRegadr.Transaction = 
+            commandBornadr.Transaction = 
+            commandIDoc.Transaction = 
+            updatePerson.Transaction = transaction;
             if (commandFactadr != null) commandFactadr.Transaction = transaction;
             
             // выполнение запросов для вставки данных в смежные таблицы
