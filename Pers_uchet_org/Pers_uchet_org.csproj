@@ -294,6 +294,12 @@
     <Compile Include="Forms\SvodVedomostForm.Designer.cs">
       <DependentUpon>SvodVedomostForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SvodVedomostGetPacketsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SvodVedomostGetPacketsForm.Designer.cs">
+      <DependentUpon>SvodVedomostGetPacketsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SvodVedomostPrintForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -415,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SvodVedomostForm.resx">
       <DependentUpon>SvodVedomostForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SvodVedomostGetPacketsForm.resx">
+      <DependentUpon>SvodVedomostGetPacketsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SvodVedomostPrintForm.resx">
       <DependentUpon>SvodVedomostPrintForm.cs</DependentUpon>

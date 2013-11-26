@@ -2163,7 +2163,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-        static public DataTable CreatetTable()
+        static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
@@ -2336,7 +2336,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-        static public DataTable CreatetTable()
+        static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
@@ -3245,6 +3245,17 @@ namespace Pers_uchet_org
             comm.CommandText = GetDeleteText((long)mergeRow[id]);
             return comm;
         }
+
+        static public int DeleteExecute(DataRow mergeRow, string connectionStr)
+        {
+            SQLiteConnection con = new SQLiteConnection(connectionStr);
+            SQLiteCommand comm = DeleteCommand(mergeRow);
+            comm.Connection = con;
+            con.Open();
+            int res = comm.ExecuteNonQuery();
+            con.Close();
+            return res;
+        }
         #endregion
     }
 
@@ -3799,9 +3810,9 @@ namespace Pers_uchet_org
                                 );
         }
 
-        static public string GetDeleteText()
+        static public string GetDeleteText(string table_name, long row_id)
         {
-            return string.Format("");
+            return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, tableID, Tables.GetSelectIDText(table_name), rowID, row_id);
         }
         #endregion
     }

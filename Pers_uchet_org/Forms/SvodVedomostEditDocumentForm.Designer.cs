@@ -67,6 +67,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.autofillButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetcountBox)).BeginInit();
@@ -452,11 +453,24 @@
             this.label14.TabIndex = 22;
             this.label14.Text = "Отчетный период (год)";
             // 
+            // autofillButton
+            // 
+            this.autofillButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.autofillButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.autofillButton.Location = new System.Drawing.Point(287, 541);
+            this.autofillButton.Name = "autofillButton";
+            this.autofillButton.Size = new System.Drawing.Size(144, 23);
+            this.autofillButton.TabIndex = 7;
+            this.autofillButton.Text = "Заполнить из пакетов";
+            this.autofillButton.UseVisualStyleBackColor = true;
+            this.autofillButton.Click += new System.EventHandler(this.autofillButton_Click);
+            // 
             // SvodVedomostEditDocumentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(785, 576);
+            this.Controls.Add(this.autofillButton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.printButton);
@@ -513,5 +527,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.Button autofillButton;
     }
 }

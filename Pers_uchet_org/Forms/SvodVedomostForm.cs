@@ -108,7 +108,8 @@ namespace Pers_uchet_org
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-
+            DataRowView curRow = _mergeBS.Current as DataRowView;
+            Mergies.DeleteExecute(curRow.Row, _connection);
         }
 
         private void printButton_Click(object sender, EventArgs e)

@@ -295,6 +295,16 @@ namespace Pers_uchet_org
         {
             this.Close();
         }
+
+        private void autofillButton_Click(object sender, EventArgs e)
+        {
+            Forms.SvodVedomostGetPacketsForm tmpForm = new Forms.SvodVedomostGetPacketsForm(_org, this.RepYear, _connection);
+            DialogResult dRes = tmpForm.ShowDialog(this);
+            if (dRes == DialogResult.OK)
+            {
+
+            }
+        }
         #endregion
     }
 }
