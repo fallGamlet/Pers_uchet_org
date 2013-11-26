@@ -28,7 +28,7 @@ namespace Pers_uchet_org
         // адаптер для чтения данных из БД
         SQLiteDataAdapter _personAdapter;
         //переменнная содержит тип документа
-        int flag = 0;
+        long flag = 0;
         #endregion
 
         public ChoicePersonForm()

@@ -100,7 +100,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.yearBox.Location = new System.Drawing.Point(88, 14);
             this.yearBox.Maximum = new decimal(new int[] {
-            1970,
+            2100,
             0,
             0,
             0});
@@ -237,7 +237,7 @@
             this.removeButton.TabIndex = 3;
             this.removeButton.Text = "Удалить";
             this.removeButton.UseVisualStyleBackColor = true;
-            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
+            this.removeButton.Click += new System.EventHandler(this.removeListButton_Click);
             // 
             // addButton
             // 
@@ -248,7 +248,7 @@
             this.addButton.TabIndex = 1;
             this.addButton.Text = "Добавить";
             this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            this.addButton.Click += new System.EventHandler(this.addListButton_Click);
             // 
             // listsView
             // 
@@ -300,7 +300,6 @@
             this.listsView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.listsView.Size = new System.Drawing.Size(604, 139);
             this.listsView.TabIndex = 0;
-            this.listsView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetView_CellDoubleClick);
             // 
             // id
             // 
@@ -515,6 +514,7 @@
             this.docView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.docView.Size = new System.Drawing.Size(805, 240);
             this.docView.TabIndex = 0;
+            this.docView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.docView_CellClick);
             this.docView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.documentView_CellDoubleClick);
             // 
             // idColumn
@@ -542,7 +542,7 @@
             this.socNumColumn.Name = "socNumColumn";
             this.socNumColumn.ReadOnly = true;
             this.socNumColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.socNumColumn.Width = 99;
+            this.socNumColumn.Width = 91;
             // 
             // fioColumn
             // 

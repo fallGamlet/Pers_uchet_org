@@ -28,28 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
             this.textBoxAnketaName = new System.Windows.Forms.TextBox();
             this.textBoxInsNum = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -87,6 +88,10 @@
             this.delSpecialPeriodButton = new System.Windows.Forms.Button();
             this.editSpecialPeriodButton = new System.Windows.Forms.Button();
             this.addSpecialPeriodButton = new System.Windows.Forms.Button();
+            this.cmsGeneralPeriod = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addGeneralPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editGeneralPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delGeneralPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelHint = new System.Windows.Forms.Panel();
             this.textBoxHint = new System.Windows.Forms.TextBox();
@@ -143,6 +148,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.citizen1Box = new System.Windows.Forms.ComboBox();
             this.tabControlMain = new System.Windows.Forms.TabControl();
+            this.cmsAdditionalPeriod = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addAdditionalPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editAdditionalPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delAdditionalPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsSpecialPeriod = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addSpecialPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editSpecialPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delSpecialPeriodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.generalPeriodGroupBox.SuspendLayout();
@@ -151,6 +164,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.additionalPeriodDataGridView)).BeginInit();
             this.specialPeriodGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.specialPeriodDataGridView)).BeginInit();
+            this.cmsGeneralPeriod.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panelHint.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewProfit)).BeginInit();
@@ -162,6 +176,8 @@
             this.workPlaceGroupBox.SuspendLayout();
             this.citizenshipGroupBox.SuspendLayout();
             this.tabControlMain.SuspendLayout();
+            this.cmsAdditionalPeriod.SuspendLayout();
+            this.cmsSpecialPeriod.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxAnketaName
@@ -201,7 +217,7 @@
             this.cancelButton.Location = new System.Drawing.Point(706, 479);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 11;
+            this.cancelButton.TabIndex = 7;
             this.cancelButton.Text = "Отменить";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -211,7 +227,7 @@
             this.saveButton.Location = new System.Drawing.Point(575, 479);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(125, 23);
-            this.saveButton.TabIndex = 10;
+            this.saveButton.TabIndex = 8;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -222,7 +238,7 @@
             this.previewButton.Location = new System.Drawing.Point(12, 479);
             this.previewButton.Name = "previewButton";
             this.previewButton.Size = new System.Drawing.Size(177, 23);
-            this.previewButton.TabIndex = 12;
+            this.previewButton.TabIndex = 6;
             this.previewButton.Text = "Предварительный просмотр";
             this.previewButton.UseVisualStyleBackColor = true;
             // 
@@ -251,7 +267,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 108);
-            this.tableLayoutPanel1.TabIndex = 5;
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // generalPeriodGroupBox
             // 
@@ -263,7 +279,7 @@
             this.generalPeriodGroupBox.Location = new System.Drawing.Point(3, 3);
             this.generalPeriodGroupBox.Name = "generalPeriodGroupBox";
             this.generalPeriodGroupBox.Size = new System.Drawing.Size(296, 102);
-            this.generalPeriodGroupBox.TabIndex = 2;
+            this.generalPeriodGroupBox.TabIndex = 1;
             this.generalPeriodGroupBox.TabStop = false;
             this.generalPeriodGroupBox.Text = "Сведения о стаже";
             // 
@@ -273,7 +289,7 @@
             this.delGeneralPeriodButton.Location = new System.Drawing.Point(216, 74);
             this.delGeneralPeriodButton.Name = "delGeneralPeriodButton";
             this.delGeneralPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.delGeneralPeriodButton.TabIndex = 27;
+            this.delGeneralPeriodButton.TabIndex = 4;
             this.delGeneralPeriodButton.Text = "Удалить";
             this.delGeneralPeriodButton.UseVisualStyleBackColor = true;
             this.delGeneralPeriodButton.Click += new System.EventHandler(this.delGeneralPeriodButton_Click);
@@ -284,7 +300,7 @@
             this.editGeneralPeriodButton.Location = new System.Drawing.Point(216, 45);
             this.editGeneralPeriodButton.Name = "editGeneralPeriodButton";
             this.editGeneralPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.editGeneralPeriodButton.TabIndex = 26;
+            this.editGeneralPeriodButton.TabIndex = 3;
             this.editGeneralPeriodButton.Text = "Изменить";
             this.editGeneralPeriodButton.UseVisualStyleBackColor = true;
             this.editGeneralPeriodButton.Click += new System.EventHandler(this.editGeneralPeriodButton_Click);
@@ -295,7 +311,7 @@
             this.addGeneralPeriodButton.Location = new System.Drawing.Point(216, 16);
             this.addGeneralPeriodButton.Name = "addGeneralPeriodButton";
             this.addGeneralPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.addGeneralPeriodButton.TabIndex = 25;
+            this.addGeneralPeriodButton.TabIndex = 2;
             this.addGeneralPeriodButton.Text = "Добавить";
             this.addGeneralPeriodButton.UseVisualStyleBackColor = true;
             this.addGeneralPeriodButton.Click += new System.EventHandler(this.addGeneralPeriodButton_Click);
@@ -312,28 +328,28 @@
             this.generalPeriodDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.generalPeriodDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.generalPeriodDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.generalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle45.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle45.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle45.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle45.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.generalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle45;
             this.generalPeriodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.generalPeriodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.beginGeneralPeriodColumn,
             this.endGeneralPeriodColumn});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.Format = "C2";
-            dataGridViewCellStyle4.NullValue = "0.00";
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.generalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle48.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle48.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle48.Format = "C2";
+            dataGridViewCellStyle48.NullValue = "0.00";
+            dataGridViewCellStyle48.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle48.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle48.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.generalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle48;
             this.generalPeriodDataGridView.Location = new System.Drawing.Point(3, 16);
             this.generalPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.generalPeriodDataGridView.MultiSelect = false;
@@ -342,14 +358,18 @@
             this.generalPeriodDataGridView.RowHeadersVisible = false;
             this.generalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.generalPeriodDataGridView.Size = new System.Drawing.Size(210, 84);
-            this.generalPeriodDataGridView.TabIndex = 22;
+            this.generalPeriodDataGridView.TabIndex = 1;
+            this.generalPeriodDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.generalPeriodDataGridView_CellDoubleClick);
+            this.generalPeriodDataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PeriodDataGridView_CellMouseDown);
+            this.generalPeriodDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.generalPeriodDataGridView_KeyDown);
+            this.generalPeriodDataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generalPeriodDataGridView_MouseClick);
             // 
             // beginGeneralPeriodColumn
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle46.Format = "d";
+            dataGridViewCellStyle46.NullValue = null;
+            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle46;
             this.beginGeneralPeriodColumn.HeaderText = "Начало периода";
             this.beginGeneralPeriodColumn.MinimumWidth = 30;
             this.beginGeneralPeriodColumn.Name = "beginGeneralPeriodColumn";
@@ -358,10 +378,10 @@
             // 
             // endGeneralPeriodColumn
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle47.Format = "d";
+            dataGridViewCellStyle47.NullValue = null;
+            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle47;
             this.endGeneralPeriodColumn.HeaderText = "Конец периода";
             this.endGeneralPeriodColumn.MinimumWidth = 100;
             this.endGeneralPeriodColumn.Name = "endGeneralPeriodColumn";
@@ -378,7 +398,7 @@
             this.additionalPeriodGroupBox.Location = new System.Drawing.Point(305, 3);
             this.additionalPeriodGroupBox.Name = "additionalPeriodGroupBox";
             this.additionalPeriodGroupBox.Size = new System.Drawing.Size(447, 102);
-            this.additionalPeriodGroupBox.TabIndex = 4;
+            this.additionalPeriodGroupBox.TabIndex = 2;
             this.additionalPeriodGroupBox.TabStop = false;
             this.additionalPeriodGroupBox.Text = "Сведения за иной период, засчитываемые в страховой стаж";
             // 
@@ -388,7 +408,7 @@
             this.delAdditionalPeriodButton.Location = new System.Drawing.Point(367, 74);
             this.delAdditionalPeriodButton.Name = "delAdditionalPeriodButton";
             this.delAdditionalPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.delAdditionalPeriodButton.TabIndex = 31;
+            this.delAdditionalPeriodButton.TabIndex = 4;
             this.delAdditionalPeriodButton.Text = "Удалить";
             this.delAdditionalPeriodButton.UseVisualStyleBackColor = true;
             this.delAdditionalPeriodButton.Click += new System.EventHandler(this.delAdditionalPeriodButton_Click);
@@ -399,7 +419,7 @@
             this.editAdditionalPeriodButton.Location = new System.Drawing.Point(367, 45);
             this.editAdditionalPeriodButton.Name = "editAdditionalPeriodButton";
             this.editAdditionalPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.editAdditionalPeriodButton.TabIndex = 30;
+            this.editAdditionalPeriodButton.TabIndex = 3;
             this.editAdditionalPeriodButton.Text = "Изменить";
             this.editAdditionalPeriodButton.UseVisualStyleBackColor = true;
             this.editAdditionalPeriodButton.Click += new System.EventHandler(this.editAdditionalPeriodButton_Click);
@@ -410,7 +430,7 @@
             this.addAdditionalPeriodButton.Location = new System.Drawing.Point(367, 16);
             this.addAdditionalPeriodButton.Name = "addAdditionalPeriodButton";
             this.addAdditionalPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.addAdditionalPeriodButton.TabIndex = 29;
+            this.addAdditionalPeriodButton.TabIndex = 2;
             this.addAdditionalPeriodButton.Text = "Добавить";
             this.addAdditionalPeriodButton.UseVisualStyleBackColor = true;
             this.addAdditionalPeriodButton.Click += new System.EventHandler(this.addAdditionalPeriodButton_Click);
@@ -427,29 +447,29 @@
             this.additionalPeriodDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.additionalPeriodDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.additionalPeriodDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.additionalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle49.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle49.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle49.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle49.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle49.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.additionalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle49;
             this.additionalPeriodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.additionalPeriodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.codeAdditionalPeriodColumn,
             this.beginAdditionalPeriodColumn,
             this.endAdditionalPeriodColumn});
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.Format = "C2";
-            dataGridViewCellStyle9.NullValue = "0.00";
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.additionalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle53.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle53.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle53.Format = "C2";
+            dataGridViewCellStyle53.NullValue = "0.00";
+            dataGridViewCellStyle53.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle53.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle53.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.additionalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle53;
             this.additionalPeriodDataGridView.Location = new System.Drawing.Point(3, 16);
             this.additionalPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.additionalPeriodDataGridView.MultiSelect = false;
@@ -458,12 +478,15 @@
             this.additionalPeriodDataGridView.RowHeadersVisible = false;
             this.additionalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.additionalPeriodDataGridView.Size = new System.Drawing.Size(361, 84);
-            this.additionalPeriodDataGridView.TabIndex = 28;
+            this.additionalPeriodDataGridView.TabIndex = 1;
+            this.additionalPeriodDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.additionalPeriodDataGridView_CellDoubleClick);
+            this.additionalPeriodDataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PeriodDataGridView_CellMouseDown);
+            this.additionalPeriodDataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.additionalPeriodDataGridView_MouseClick);
             // 
             // codeAdditionalPeriodColumn
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.codeAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.codeAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle50;
             this.codeAdditionalPeriodColumn.FillWeight = 76.14214F;
             this.codeAdditionalPeriodColumn.HeaderText = "Код";
             this.codeAdditionalPeriodColumn.Name = "codeAdditionalPeriodColumn";
@@ -471,10 +494,10 @@
             // 
             // beginAdditionalPeriodColumn
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Format = "d";
-            dataGridViewCellStyle7.NullValue = null;
-            this.beginAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle51.Format = "d";
+            dataGridViewCellStyle51.NullValue = null;
+            this.beginAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle51;
             this.beginAdditionalPeriodColumn.FillWeight = 111.9289F;
             this.beginAdditionalPeriodColumn.HeaderText = "Начало периода";
             this.beginAdditionalPeriodColumn.MinimumWidth = 30;
@@ -484,9 +507,9 @@
             // 
             // endAdditionalPeriodColumn
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Format = "d";
-            this.endAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle52.Format = "d";
+            this.endAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle52;
             this.endAdditionalPeriodColumn.FillWeight = 111.9289F;
             this.endAdditionalPeriodColumn.HeaderText = "Конец периода";
             this.endAdditionalPeriodColumn.MinimumWidth = 100;
@@ -506,7 +529,7 @@
             this.specialPeriodGroupBox.Location = new System.Drawing.Point(3, 114);
             this.specialPeriodGroupBox.Name = "specialPeriodGroupBox";
             this.specialPeriodGroupBox.Size = new System.Drawing.Size(753, 274);
-            this.specialPeriodGroupBox.TabIndex = 1;
+            this.specialPeriodGroupBox.TabIndex = 2;
             this.specialPeriodGroupBox.TabStop = false;
             this.specialPeriodGroupBox.Text = "Сведения о специальном стаже";
             // 
@@ -522,14 +545,14 @@
             this.specialPeriodDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.specialPeriodDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.specialPeriodDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.specialPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle54.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle54.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle54.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.specialPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle54;
             this.specialPeriodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.specialPeriodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.beginSpecialPeriodColumn,
@@ -542,14 +565,14 @@
             this.hoursColumn,
             this.minutesColumn,
             this.professionColumn});
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.specialPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle57.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle57.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle57.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle57.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle57.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle57.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.specialPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle57;
             this.specialPeriodDataGridView.Location = new System.Drawing.Point(3, 16);
             this.specialPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.specialPeriodDataGridView.MultiSelect = false;
@@ -558,13 +581,16 @@
             this.specialPeriodDataGridView.RowHeadersVisible = false;
             this.specialPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.specialPeriodDataGridView.Size = new System.Drawing.Size(667, 255);
-            this.specialPeriodDataGridView.TabIndex = 28;
+            this.specialPeriodDataGridView.TabIndex = 1;
+            this.specialPeriodDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.specialPeriodDataGridView_CellDoubleClick);
+            this.specialPeriodDataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PeriodDataGridView_CellMouseDown);
+            this.specialPeriodDataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.specialPeriodDataGridView_MouseClick);
             // 
             // beginSpecialPeriodColumn
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Format = "d";
-            this.beginSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle55.Format = "d";
+            this.beginSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle55;
             this.beginSpecialPeriodColumn.HeaderText = "Начало периода";
             this.beginSpecialPeriodColumn.Name = "beginSpecialPeriodColumn";
             this.beginSpecialPeriodColumn.ReadOnly = true;
@@ -572,9 +598,9 @@
             // 
             // endSpecialPeriodColumn
             // 
-            dataGridViewCellStyle12.Format = "d";
-            dataGridViewCellStyle12.NullValue = "0,00";
-            this.endSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle56.Format = "d";
+            dataGridViewCellStyle56.NullValue = "0,00";
+            this.endSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle56;
             this.endSpecialPeriodColumn.HeaderText = "Конец периода";
             this.endSpecialPeriodColumn.Name = "endSpecialPeriodColumn";
             this.endSpecialPeriodColumn.ReadOnly = true;
@@ -634,7 +660,7 @@
             this.delSpecialPeriodButton.Location = new System.Drawing.Point(673, 74);
             this.delSpecialPeriodButton.Name = "delSpecialPeriodButton";
             this.delSpecialPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.delSpecialPeriodButton.TabIndex = 30;
+            this.delSpecialPeriodButton.TabIndex = 4;
             this.delSpecialPeriodButton.Text = "Удалить";
             this.delSpecialPeriodButton.UseVisualStyleBackColor = true;
             this.delSpecialPeriodButton.Click += new System.EventHandler(this.delSpecialPeriodButton_Click);
@@ -645,7 +671,7 @@
             this.editSpecialPeriodButton.Location = new System.Drawing.Point(673, 45);
             this.editSpecialPeriodButton.Name = "editSpecialPeriodButton";
             this.editSpecialPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.editSpecialPeriodButton.TabIndex = 29;
+            this.editSpecialPeriodButton.TabIndex = 3;
             this.editSpecialPeriodButton.Text = "Изменить";
             this.editSpecialPeriodButton.UseVisualStyleBackColor = true;
             this.editSpecialPeriodButton.Click += new System.EventHandler(this.editSpecialPeriodButton_Click);
@@ -656,10 +682,41 @@
             this.addSpecialPeriodButton.Location = new System.Drawing.Point(673, 16);
             this.addSpecialPeriodButton.Name = "addSpecialPeriodButton";
             this.addSpecialPeriodButton.Size = new System.Drawing.Size(74, 23);
-            this.addSpecialPeriodButton.TabIndex = 28;
+            this.addSpecialPeriodButton.TabIndex = 2;
             this.addSpecialPeriodButton.Text = "Добавить";
             this.addSpecialPeriodButton.UseVisualStyleBackColor = true;
             this.addSpecialPeriodButton.Click += new System.EventHandler(this.addSpecialPeriodButton_Click);
+            // 
+            // cmsGeneralPeriod
+            // 
+            this.cmsGeneralPeriod.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addGeneralPeriodMenuItem,
+            this.editGeneralPeriodMenuItem,
+            this.delGeneralPeriodMenuItem});
+            this.cmsGeneralPeriod.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.cmsGeneralPeriod.Name = "cmsGeneralPeriod";
+            this.cmsGeneralPeriod.Size = new System.Drawing.Size(129, 70);
+            // 
+            // addGeneralPeriodMenuItem
+            // 
+            this.addGeneralPeriodMenuItem.Name = "addGeneralPeriodMenuItem";
+            this.addGeneralPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.addGeneralPeriodMenuItem.Text = "Добавить";
+            this.addGeneralPeriodMenuItem.Click += new System.EventHandler(this.addGeneralPeriodButton_Click);
+            // 
+            // editGeneralPeriodMenuItem
+            // 
+            this.editGeneralPeriodMenuItem.Name = "editGeneralPeriodMenuItem";
+            this.editGeneralPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.editGeneralPeriodMenuItem.Text = "Изменить";
+            this.editGeneralPeriodMenuItem.Click += new System.EventHandler(this.editGeneralPeriodButton_Click);
+            // 
+            // delGeneralPeriodMenuItem
+            // 
+            this.delGeneralPeriodMenuItem.Name = "delGeneralPeriodMenuItem";
+            this.delGeneralPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delGeneralPeriodMenuItem.Text = "Удалить";
+            this.delGeneralPeriodMenuItem.Click += new System.EventHandler(this.delGeneralPeriodButton_Click);
             // 
             // tabPage2
             // 
@@ -740,97 +797,103 @@
             // sumCalc5Box
             // 
             this.sumCalc5Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sumCalc5Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sumCalc5Box.Location = new System.Drawing.Point(534, 364);
             this.sumCalc5Box.Name = "sumCalc5Box";
             this.sumCalc5Box.ReadOnly = true;
             this.sumCalc5Box.Size = new System.Drawing.Size(120, 20);
             this.sumCalc5Box.TabIndex = 40;
-            this.sumCalc5Box.Text = "0.00";
+            this.sumCalc5Box.TabStop = false;
+            this.sumCalc5Box.Text = "0";
             this.sumCalc5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sumCalc3Box
             // 
             this.sumCalc3Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sumCalc3Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sumCalc3Box.Location = new System.Drawing.Point(293, 364);
             this.sumCalc3Box.Name = "sumCalc3Box";
             this.sumCalc3Box.ReadOnly = true;
             this.sumCalc3Box.Size = new System.Drawing.Size(121, 20);
             this.sumCalc3Box.TabIndex = 37;
-            this.sumCalc3Box.Text = "0.00";
+            this.sumCalc3Box.TabStop = false;
+            this.sumCalc3Box.Text = "0";
             this.sumCalc3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum1Box
             // 
             this.sum1Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum1Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sum1Box.Location = new System.Drawing.Point(53, 338);
             this.sum1Box.Name = "sum1Box";
             this.sum1Box.ReadOnly = true;
             this.sum1Box.Size = new System.Drawing.Size(121, 20);
             this.sum1Box.TabIndex = 26;
-            this.sum1Box.Text = "0.00";
+            this.sum1Box.TabStop = false;
+            this.sum1Box.Text = "0";
             this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum10Box
             // 
             this.sum10Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum10Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sum10Box.Location = new System.Drawing.Point(654, 338);
             this.sum10Box.Name = "sum10Box";
             this.sum10Box.ReadOnly = true;
             this.sum10Box.Size = new System.Drawing.Size(100, 20);
             this.sum10Box.TabIndex = 36;
+            this.sum10Box.TabStop = false;
             this.sum10Box.Text = "0";
             this.sum10Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // sum5Box
             // 
             this.sum5Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum5Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sum5Box.Location = new System.Drawing.Point(534, 338);
             this.sum5Box.Name = "sum5Box";
             this.sum5Box.ReadOnly = true;
             this.sum5Box.Size = new System.Drawing.Size(120, 20);
             this.sum5Box.TabIndex = 25;
-            this.sum5Box.Text = "0.00";
+            this.sum5Box.TabStop = false;
+            this.sum5Box.Text = "0";
             this.sum5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.sum5Box.TextChanged += new System.EventHandler(this.sum5Box_TextChanged);
             // 
             // sum4Box
             // 
             this.sum4Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum4Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sum4Box.Location = new System.Drawing.Point(414, 338);
             this.sum4Box.Name = "sum4Box";
             this.sum4Box.ReadOnly = true;
             this.sum4Box.Size = new System.Drawing.Size(120, 20);
-            this.sum4Box.TabIndex = 24;
-            this.sum4Box.Text = "0.00";
+            this.sum4Box.TabIndex = 3;
+            this.sum4Box.TabStop = false;
+            this.sum4Box.Text = "0";
             this.sum4Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.sum4Box.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sumBox_KeyPress);
+            this.sum4Box.Validating += new System.ComponentModel.CancelEventHandler(this.sumBox_Validating);
             // 
             // sum3Box
             // 
             this.sum3Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum3Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sum3Box.Location = new System.Drawing.Point(293, 338);
             this.sum3Box.Name = "sum3Box";
             this.sum3Box.ReadOnly = true;
             this.sum3Box.Size = new System.Drawing.Size(121, 20);
-            this.sum3Box.TabIndex = 22;
-            this.sum3Box.Text = "0.00";
+            this.sum3Box.TabIndex = 2;
+            this.sum3Box.TabStop = false;
+            this.sum3Box.Text = "0";
             this.sum3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.sum3Box.TextChanged += new System.EventHandler(this.sum3Box_TextChanged);
+            this.sum3Box.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sumBox_KeyPress);
+            this.sum3Box.Validating += new System.ComponentModel.CancelEventHandler(this.sumBox_Validating);
             // 
             // sum2Box
             // 
             this.sum2Box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sum2Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.sum2Box.Location = new System.Drawing.Point(174, 338);
             this.sum2Box.Name = "sum2Box";
             this.sum2Box.ReadOnly = true;
             this.sum2Box.Size = new System.Drawing.Size(119, 20);
             this.sum2Box.TabIndex = 23;
-            this.sum2Box.Text = "0.00";
+            this.sum2Box.TabStop = false;
+            this.sum2Box.Text = "0";
             this.sum2Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label14
@@ -855,14 +918,14 @@
             this.dataViewProfit.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataViewProfit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataViewProfit.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataViewProfit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle58.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle58.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle58.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle58.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle58.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataViewProfit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle58;
             this.dataViewProfit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataViewProfit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column0,
@@ -872,16 +935,16 @@
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle22.Format = "C2";
-            dataGridViewCellStyle22.NullValue = "0.00";
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataViewProfit.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle66.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle66.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle66.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle66.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle66.Format = "C2";
+            dataGridViewCellStyle66.NullValue = "0.00";
+            dataGridViewCellStyle66.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle66.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle66.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataViewProfit.DefaultCellStyle = dataGridViewCellStyle66;
             this.dataViewProfit.Location = new System.Drawing.Point(3, 3);
             this.dataViewProfit.Margin = new System.Windows.Forms.Padding(0);
             this.dataViewProfit.MultiSelect = false;
@@ -889,7 +952,7 @@
             this.dataViewProfit.RowHeadersVisible = false;
             this.dataViewProfit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataViewProfit.Size = new System.Drawing.Size(753, 317);
-            this.dataViewProfit.TabIndex = 21;
+            this.dataViewProfit.TabIndex = 1;
             this.dataViewProfit.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataViewProfit_CellEnter);
             this.dataViewProfit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataViewProfit_CellFormatting);
             this.dataViewProfit.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataViewProfit_CellValidated);
@@ -900,10 +963,10 @@
             // 
             // Column0
             // 
-            this.Column0.DataPropertyName = "months";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Format = "N0";
-            this.Column0.DefaultCellStyle = dataGridViewCellStyle15;
+            this.Column0.DataPropertyName = "month";
+            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle59.Format = "N0";
+            this.Column0.DefaultCellStyle = dataGridViewCellStyle59;
             this.Column0.FillWeight = 37.28362F;
             this.Column0.HeaderText = "Месяц";
             this.Column0.MinimumWidth = 30;
@@ -915,9 +978,9 @@
             // Column1
             // 
             this.Column1.DataPropertyName = "1";
-            dataGridViewCellStyle16.Format = "N2";
-            dataGridViewCellStyle16.NullValue = "0,00";
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle60.Format = "N2";
+            dataGridViewCellStyle60.NullValue = "0,00";
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle60;
             this.Column1.FillWeight = 121.3694F;
             this.Column1.HeaderText = "Сумма дохода на который начислены страховые взносы";
             this.Column1.MinimumWidth = 100;
@@ -929,9 +992,9 @@
             // Column2
             // 
             this.Column2.DataPropertyName = "2";
-            dataGridViewCellStyle17.Format = "N2";
-            dataGridViewCellStyle17.NullValue = "0,00";
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle61.Format = "N2";
+            dataGridViewCellStyle61.NullValue = "0,00";
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle61;
             this.Column2.FillWeight = 117.4522F;
             this.Column2.HeaderText = "Выплаты, учитываемые для назначения пенсии";
             this.Column2.MinimumWidth = 100;
@@ -942,9 +1005,9 @@
             // Column3
             // 
             this.Column3.DataPropertyName = "3";
-            dataGridViewCellStyle18.Format = "N2";
-            dataGridViewCellStyle18.NullValue = "0,00";
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle62.Format = "N2";
+            dataGridViewCellStyle62.NullValue = "0,00";
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle62;
             this.Column3.FillWeight = 114.1609F;
             this.Column3.HeaderText = "Страховые взносы начисленные страхователем";
             this.Column3.MinimumWidth = 100;
@@ -955,9 +1018,9 @@
             // Column4
             // 
             this.Column4.DataPropertyName = "4";
-            dataGridViewCellStyle19.Format = "N2";
-            dataGridViewCellStyle19.NullValue = "0,00";
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle63.Format = "N2";
+            dataGridViewCellStyle63.NullValue = "0,00";
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle63;
             this.Column4.FillWeight = 111.3955F;
             this.Column4.HeaderText = "Страховые взносы уплаченные страхователем";
             this.Column4.MinimumWidth = 100;
@@ -968,9 +1031,9 @@
             // Column5
             // 
             this.Column5.DataPropertyName = "5";
-            dataGridViewCellStyle20.Format = "N2";
-            dataGridViewCellStyle20.NullValue = "0,00";
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle64.Format = "N2";
+            dataGridViewCellStyle64.NullValue = "0,00";
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle64;
             this.Column5.FillWeight = 109.0719F;
             this.Column5.HeaderText = "Сумма обязательных страховых взносов";
             this.Column5.MinimumWidth = 100;
@@ -981,9 +1044,9 @@
             // Column6
             // 
             this.Column6.DataPropertyName = "10";
-            dataGridViewCellStyle21.Format = "N0";
-            dataGridViewCellStyle21.NullValue = "0";
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle65.Format = "N0";
+            dataGridViewCellStyle65.NullValue = "0";
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle65;
             this.Column6.FillWeight = 89.2664F;
             this.Column6.HeaderText = "Фактически отработанных дней";
             this.Column6.MinimumWidth = 50;
@@ -1130,8 +1193,9 @@
             this.sum3TextBox.ReadOnly = true;
             this.sum3TextBox.Size = new System.Drawing.Size(112, 20);
             this.sum3TextBox.TabIndex = 21;
+            this.sum3TextBox.TabStop = false;
             this.sum3TextBox.Text = "0,00";
-            this.sum3TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum3TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label11
             // 
@@ -1149,8 +1213,9 @@
             this.sum5TextBox.ReadOnly = true;
             this.sum5TextBox.Size = new System.Drawing.Size(112, 20);
             this.sum5TextBox.TabIndex = 19;
+            this.sum5TextBox.TabStop = false;
             this.sum5TextBox.Text = "0,00";
-            this.sum5TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sum5TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label12
             // 
@@ -1209,6 +1274,7 @@
             this.orgNameTextBox.ReadOnly = true;
             this.orgNameTextBox.Size = new System.Drawing.Size(216, 20);
             this.orgNameTextBox.TabIndex = 15;
+            this.orgNameTextBox.TabStop = false;
             // 
             // label7
             // 
@@ -1228,6 +1294,7 @@
             this.regNumTextBox.ReadOnly = true;
             this.regNumTextBox.Size = new System.Drawing.Size(166, 20);
             this.regNumTextBox.TabIndex = 13;
+            this.regNumTextBox.TabStop = false;
             // 
             // label1
             // 
@@ -1247,7 +1314,7 @@
             this.codeGroupBox.Location = new System.Drawing.Point(136, 6);
             this.codeGroupBox.Name = "codeGroupBox";
             this.codeGroupBox.Size = new System.Drawing.Size(294, 75);
-            this.codeGroupBox.TabIndex = 8;
+            this.codeGroupBox.TabIndex = 2;
             this.codeGroupBox.TabStop = false;
             this.codeGroupBox.Text = "Код категории застрахованного лица";
             // 
@@ -1271,7 +1338,7 @@
             this.codeComboBox.Location = new System.Drawing.Point(6, 19);
             this.codeComboBox.Name = "codeComboBox";
             this.codeComboBox.Size = new System.Drawing.Size(282, 21);
-            this.codeComboBox.TabIndex = 4;
+            this.codeComboBox.TabIndex = 1;
             // 
             // workPlaceGroupBox
             // 
@@ -1280,7 +1347,7 @@
             this.workPlaceGroupBox.Location = new System.Drawing.Point(6, 6);
             this.workPlaceGroupBox.Name = "workPlaceGroupBox";
             this.workPlaceGroupBox.Size = new System.Drawing.Size(124, 75);
-            this.workPlaceGroupBox.TabIndex = 7;
+            this.workPlaceGroupBox.TabIndex = 1;
             this.workPlaceGroupBox.TabStop = false;
             this.workPlaceGroupBox.Text = "Место работы";
             // 
@@ -1291,7 +1358,7 @@
             this.mainRadioButton.Location = new System.Drawing.Point(7, 21);
             this.mainRadioButton.Name = "mainRadioButton";
             this.mainRadioButton.Size = new System.Drawing.Size(75, 17);
-            this.mainRadioButton.TabIndex = 4;
+            this.mainRadioButton.TabIndex = 1;
             this.mainRadioButton.TabStop = true;
             this.mainRadioButton.Text = "Основное";
             this.mainRadioButton.UseVisualStyleBackColor = true;
@@ -1302,7 +1369,7 @@
             this.additionalRadioButton.Location = new System.Drawing.Point(7, 47);
             this.additionalRadioButton.Name = "additionalRadioButton";
             this.additionalRadioButton.Size = new System.Drawing.Size(90, 17);
-            this.additionalRadioButton.TabIndex = 5;
+            this.additionalRadioButton.TabIndex = 2;
             this.additionalRadioButton.Text = "Не основное";
             this.additionalRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -1316,7 +1383,7 @@
             this.citizenshipGroupBox.Location = new System.Drawing.Point(436, 6);
             this.citizenshipGroupBox.Name = "citizenshipGroupBox";
             this.citizenshipGroupBox.Size = new System.Drawing.Size(181, 75);
-            this.citizenshipGroupBox.TabIndex = 6;
+            this.citizenshipGroupBox.TabIndex = 3;
             this.citizenshipGroupBox.TabStop = false;
             this.citizenshipGroupBox.Text = "Гражданство";
             // 
@@ -1336,7 +1403,7 @@
             this.citizen2Box.Location = new System.Drawing.Point(23, 46);
             this.citizen2Box.Name = "citizen2Box";
             this.citizen2Box.Size = new System.Drawing.Size(152, 21);
-            this.citizen2Box.TabIndex = 3;
+            this.citizen2Box.TabIndex = 2;
             // 
             // label3
             // 
@@ -1372,6 +1439,68 @@
             this.tabControlMain.Size = new System.Drawing.Size(769, 417);
             this.tabControlMain.TabIndex = 2;
             // 
+            // cmsAdditionalPeriod
+            // 
+            this.cmsAdditionalPeriod.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addAdditionalPeriodMenuItem,
+            this.editAdditionalPeriodMenuItem,
+            this.delAdditionalPeriodMenuItem});
+            this.cmsAdditionalPeriod.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.cmsAdditionalPeriod.Name = "cmsGeneralPeriod";
+            this.cmsAdditionalPeriod.Size = new System.Drawing.Size(129, 70);
+            // 
+            // addAdditionalPeriodMenuItem
+            // 
+            this.addAdditionalPeriodMenuItem.Name = "addAdditionalPeriodMenuItem";
+            this.addAdditionalPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.addAdditionalPeriodMenuItem.Text = "Добавить";
+            this.addAdditionalPeriodMenuItem.Click += new System.EventHandler(this.addAdditionalPeriodButton_Click);
+            // 
+            // editAdditionalPeriodMenuItem
+            // 
+            this.editAdditionalPeriodMenuItem.Name = "editAdditionalPeriodMenuItem";
+            this.editAdditionalPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.editAdditionalPeriodMenuItem.Text = "Изменить";
+            this.editAdditionalPeriodMenuItem.Click += new System.EventHandler(this.editAdditionalPeriodButton_Click);
+            // 
+            // delAdditionalPeriodMenuItem
+            // 
+            this.delAdditionalPeriodMenuItem.Name = "delAdditionalPeriodMenuItem";
+            this.delAdditionalPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delAdditionalPeriodMenuItem.Text = "Удалить";
+            this.delAdditionalPeriodMenuItem.Click += new System.EventHandler(this.delAdditionalPeriodButton_Click);
+            // 
+            // cmsSpecialPeriod
+            // 
+            this.cmsSpecialPeriod.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addSpecialPeriodMenuItem,
+            this.editSpecialPeriodMenuItem,
+            this.delSpecialPeriodMenuItem});
+            this.cmsSpecialPeriod.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.cmsSpecialPeriod.Name = "cmsGeneralPeriod";
+            this.cmsSpecialPeriod.Size = new System.Drawing.Size(129, 70);
+            // 
+            // addSpecialPeriodMenuItem
+            // 
+            this.addSpecialPeriodMenuItem.Name = "addSpecialPeriodMenuItem";
+            this.addSpecialPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.addSpecialPeriodMenuItem.Text = "Добавить";
+            this.addSpecialPeriodMenuItem.Click += new System.EventHandler(this.addSpecialPeriodButton_Click);
+            // 
+            // editSpecialPeriodMenuItem
+            // 
+            this.editSpecialPeriodMenuItem.Name = "editSpecialPeriodMenuItem";
+            this.editSpecialPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.editSpecialPeriodMenuItem.Text = "Изменить";
+            this.editSpecialPeriodMenuItem.Click += new System.EventHandler(this.editSpecialPeriodButton_Click);
+            // 
+            // delSpecialPeriodMenuItem
+            // 
+            this.delSpecialPeriodMenuItem.Name = "delSpecialPeriodMenuItem";
+            this.delSpecialPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delSpecialPeriodMenuItem.Text = "Удалить";
+            this.delSpecialPeriodMenuItem.Click += new System.EventHandler(this.delSpecialPeriodButton_Click);
+            // 
             // AddEditDocumentSzv1Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1396,6 +1525,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.additionalPeriodDataGridView)).EndInit();
             this.specialPeriodGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.specialPeriodDataGridView)).EndInit();
+            this.cmsGeneralPeriod.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.panelHint.ResumeLayout(false);
@@ -1413,6 +1543,8 @@
             this.citizenshipGroupBox.ResumeLayout(false);
             this.citizenshipGroupBox.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
+            this.cmsAdditionalPeriod.ResumeLayout(false);
+            this.cmsSpecialPeriod.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1491,13 +1623,6 @@
         private System.Windows.Forms.Panel panelHint;
         private System.Windows.Forms.TextBox textBoxHint;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column0;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn codeAdditionalPeriodColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn beginAdditionalPeriodColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn endAdditionalPeriodColumn;
@@ -1511,7 +1636,26 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn hoursColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn minutesColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn professionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn beginGeneralPeriodColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn endGeneralPeriodColumn;
+        private System.Windows.Forms.ContextMenuStrip cmsGeneralPeriod;
+        private System.Windows.Forms.ContextMenuStrip cmsAdditionalPeriod;
+        private System.Windows.Forms.ToolStripMenuItem addGeneralPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editGeneralPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delGeneralPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addAdditionalPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editAdditionalPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delAdditionalPeriodMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsSpecialPeriod;
+        private System.Windows.Forms.ToolStripMenuItem addSpecialPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editSpecialPeriodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delSpecialPeriodMenuItem;
     }
 }

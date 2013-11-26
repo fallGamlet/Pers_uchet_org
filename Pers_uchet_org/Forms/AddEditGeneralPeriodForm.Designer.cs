@@ -79,6 +79,7 @@
             // endDateTimePicker
             // 
             this.endDateTimePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.endDateTimePicker.CustomFormat = "dd.MM.yyyy";
             this.endDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.endDateTimePicker.Location = new System.Drawing.Point(140, 32);
             this.endDateTimePicker.Name = "endDateTimePicker";
@@ -89,6 +90,7 @@
             // 
             this.beginDateTimePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.beginDateTimePicker.Checked = false;
+            this.beginDateTimePicker.CustomFormat = "dd.MM.yyyy";
             this.beginDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.beginDateTimePicker.Location = new System.Drawing.Point(140, 6);
             this.beginDateTimePicker.Name = "beginDateTimePicker";

@@ -18,7 +18,7 @@ namespace Pers_uchet_org
         // активный оператор
         Operator _operator;
         // активная организация
-        Org _org;
+        Org _organization;
         // привилегия
         string _privilege;
         // таблица пакетов
@@ -43,9 +43,9 @@ namespace Pers_uchet_org
         public static long NewOrgId = 0;
         // переменная содержит новый тип для документа
         public static long NewDocTypeId;
-        // переменная-флаг, означает для каких документов менять тип: 1 - текущий документ, 2 - выбранные, 3 - все документы в пакете
+        // переменная-флаг, означает для каких документов менять тип: 1 - выбранный документ, 2 - выбранные, 3 - все документы в пакете
         // или содержит id типа нового документа
-        public static int FlagDoc = -1;
+        public static long FlagDoc = -1;
         // переменная содержит id пакета, в который будет перемещен документ
         public static long NewListId = 0;
         // переменная содержит id добавляемого человека
@@ -54,11 +54,11 @@ namespace Pers_uchet_org
         #endregion
 
         #region Конструктор и инициализатор
-        public StajDohodForm(Operator oper, Org org, string connection)
+        public StajDohodForm(Operator oper, Org organization, string connection)
         {
             InitializeComponent();
             _operator = oper;
-            _org = org;
+            _organization = organization;
             _connection = connection;
         }
 
@@ -66,15 +66,19 @@ namespace Pers_uchet_org
         {
             _currentListId = 0;
             _repYear = MainForm.RepYear;
-            yearBox.Maximum = _repYear + 10;
             yearBox.Value = _repYear;
 
-            // иництализация таблиц
+            // инициализация таблиц
             _listsTable = ListsView.CreatetTable();
             _docsTable = DocsView.CreatetTable();
             // добавление виртуального столбца для возможности отмечать записи
             _docsTable.Columns.Add(CHECK, typeof(bool));
             _docsTable.Columns[CHECK].DefaultValue = false;
+
+            // инициализация биндинг сорса к таблице документов
+            _docsBS = new BindingSource();
+            _docsBS.ListChanged += new ListChangedEventHandler(_docsBS_ListChanged);
+            _docsBS.DataSource = _docsTable;
 
             // инициализация биндинг сорса к таблице пакетов
             _listsBS = new BindingSource();
@@ -82,11 +86,11 @@ namespace Pers_uchet_org
             _listsBS.ListChanged += new ListChangedEventHandler(_listsBS_ListChanged);
             _listsBS.DataSource = _listsTable;
 
-            // инициализация биндинг сорса к таблице документов
-            _docsBS = new BindingSource();
-            _docsBS.CurrentChanged += new EventHandler(_docsBS_CurrentChanged);
-            _docsBS.ListChanged += new ListChangedEventHandler(_docsBS_ListChanged);
-            _docsBS.DataSource = _docsTable;
+            // инициализация Адаптера для считывания пакетов из БД
+            string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
+            _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
+            // заполнение таблицы данными с БД
+            _listsAdapter.Fill(_listsTable);
 
             // присвоение источника dataGrid
             this.listsView.AutoGenerateColumns = false;
@@ -94,18 +98,11 @@ namespace Pers_uchet_org
             this.docView.AutoGenerateColumns = false;
             this.docView.DataSource = _docsBS;
 
-            // инициализация Адаптера для считывания пакетов из БД
-            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
-            _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
-
-            // заполнение таблицы данными с БД
-            _listsAdapter.Fill(_listsTable);
-
             // получить код привилегии (уровня доступа) Оператора к Организации
             if (_operator.IsAdmin())
                 _privilege = OperatorOrg.GetPrivilegeForAdmin();
             else
-                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
+                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _organization.idVal, _connection);
 
             //TODO: отобразить привилегию на форме для пользователя
             //this.SetPrivilege(_privilege);
@@ -121,6 +118,7 @@ namespace Pers_uchet_org
         void _listsBS_ListChanged(object sender, ListChangedEventArgs e)
         {
             packetcountBox.Text = _listsBS.Count.ToString();
+
             if (_listsBS.Count < 1)
             {
                 removeButton.Enabled = false;
@@ -129,12 +127,10 @@ namespace Pers_uchet_org
                 reestrButton.Enabled = false;
                 calculateButton.Enabled = false;
                 printButton.Enabled = false;
-
                 if (_docsTable != null)
                     //очистка таблицы 
                     _docsTable.Clear();
                 addDocButton.Enabled = false;
-                return;
             }
             else
             {
@@ -144,7 +140,6 @@ namespace Pers_uchet_org
                 reestrButton.Enabled = true;
                 calculateButton.Enabled = true;
                 printButton.Enabled = true;
-
                 addDocButton.Enabled = true;
             }
         }
@@ -157,20 +152,22 @@ namespace Pers_uchet_org
                 _currentListId = 0;
                 return;
             }
-
-            if (_docsTable != null)
-                //очистка таблицы перед заполнением новыми данными
-                _docsTable.Clear();
-            else
+            if (_docsTable == null)
                 return;
-
+            // не вызывать событие изменения списка, пока не обновим данные
+            if (_docsBS != null)
+                _docsBS.RaiseListChangedEvents = false;
+            _docsTable.Clear();
             _currentListId = (long)row[ListsView.id];
-
-            // инициализация Адаптера для считывания документов из БД
             string commandStr = DocsView.GetSelectTextByListId(_currentListId);
             _docsAdapter = new SQLiteDataAdapter(commandStr, _connection);
-            // заполнение таблицы данными из БД
             _docsAdapter.Fill(_docsTable);
+            // вызывать событие изменения списка и принудительный вызов
+            if (_docsBS != null)
+            {
+                _docsBS.RaiseListChangedEvents = true;
+                _docsBS.ResetBindings(false);
+            }
         }
 
         void _docsBS_ListChanged(object sender, ListChangedEventArgs e)
@@ -183,7 +180,6 @@ namespace Pers_uchet_org
                 moveDocButton.Enabled = false;
                 printFormButton.Enabled = false;
                 changeTypedDocButton.Enabled = false;
-                return;
             }
             else
             {
@@ -195,34 +191,47 @@ namespace Pers_uchet_org
             }
         }
 
-        void _docsBS_CurrentChanged(object sender, EventArgs e)
+        private void addListButton_Click(object sender, EventArgs e)
         {
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            if (ShowQuestionMessage("Вы действительно хотите создать\n новый пакет документов \"СЗВ-1\"?", "Создание пакета") == DialogResult.No)
+            if (MainForm.ShowQuestionMessage("Вы действительно хотите создать\n новый пакет документов \"СЗВ-1\"?", "Создание пакета") == DialogResult.No)
                 return;
             //TODO: Загружать список доступных типов пакета для текущего года, спрашивать пользователя 
-            string commandText = Lists.GetInsertText(1, _org.idVal, _operator.idVal, string.Format("{0:dd/MM/yyyy}", DateTime.Now), _operator.idVal, string.Format("{0:dd/MM/yyyy}", DateTime.Now), _repYear);
-            SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
-            cmd.Connection.Open();
-            if (cmd.ExecuteNonQuery() < 1)
+            using (SQLiteConnection connection = new SQLiteConnection(_connection))
             {
-                cmd.Connection.Close();
-                ShowErrorMessage("Не удалось создать новый пакет.", "Ошибка создания пакета");
-                return;
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.Transaction = transaction;
+                        command.CommandText = Lists.GetInsertText(1, _organization.idVal, _repYear);
+                        long listId = (long)command.ExecuteScalar();
+                        if (listId < 1)
+                        {
+                            throw new SQLiteException("Не удалось создать новый пакет.");
+                        }
+
+                        command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.New, listId, _operator.nameVal, DateTime.Now.Date);
+                        if ((long)command.ExecuteScalar() < 1)
+                        {
+                            throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                        }
+                    }
+                    transaction.Commit();
+                }
+                connection.Close();
             }
             //Перезагрузка данных
-            ReloadDataAfterChanges();
+            ReloadLists();
             _listsBS.MoveLast();
         }
 
-        private void removeButton_Click(object sender, EventArgs e)
+        private void removeListButton_Click(object sender, EventArgs e)
         {
             if (listsView.CurrentRow == null)
                 return;
-            if (ShowQuestionMessage("Вы действительно хотите удалить текущий пакет\n документов \"СЗВ-1\" и все документы в нём?", "Удаление пакета") == DialogResult.No)
+            if (MainForm.ShowQuestionMessage("Вы действительно хотите удалить выбранный пакет\n документов \"СЗВ-1\" и все документы в нём?", "Удаление пакета") == DialogResult.No)
                 return;
 
             string commandText = Lists.GetDeleteText((long)listsView.CurrentRow.Cells["id"].Value);
@@ -231,10 +240,10 @@ namespace Pers_uchet_org
             if (cmd.ExecuteNonQuery() < 1)
             {
                 cmd.Connection.Close();
-                ShowErrorMessage("Не удалось удалить пакет.", "Ошибка удаления пакета");
+                MainForm.ShowErrorMessage("Не удалось удалить пакет.", "Ошибка удаления пакета");
             }
             //Перезагрузка данных
-            ReloadDataAfterChanges();
+            ReloadLists();
         }
 
         private void movePacketOrgButton_Click(object sender, EventArgs e)
@@ -245,33 +254,43 @@ namespace Pers_uchet_org
             MovePacketForm movePacketForm = new MovePacketForm(_operator, _connection, listId);
             if (movePacketForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (ShowQuestionMessage("Вы действительно хотите переместить текущий пакет\n документов \"СЗВ-1\" № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
+                if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\n документов \"СЗВ-1\" № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                     return;
                 List<long> personIdList = new List<long>();
-                long list_id = (long)listsView.CurrentRow.Cells[Lists.id].Value;
-                string commandText = Lists.GetSelectPersonIdsText(list_id);
-                SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
-                if (cmd.Connection.State != ConnectionState.Open)
-                    cmd.Connection.Open();
-                using (SQLiteDataReader reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                    {
-                        personIdList.Add((long)reader[Docs.personID]);
-                    }
-                cmd.Connection.Close();
-                PersonOrg.InsertPersonOrg(personIdList, NewOrgId, _connection);
-                commandText = Lists.GetUpdateOrgText(list_id, NewOrgId);
-                cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
-                if (cmd.Connection.State != ConnectionState.Open)
-                    cmd.Connection.Open();
-                if (cmd.ExecuteNonQuery() < 1)
+                using (SQLiteConnection connection = new SQLiteConnection(_connection))
                 {
-                    cmd.Connection.Close();
-                    ShowErrorMessage("Не удалось переместить пакет.", "Ошибка перемещения пакета");
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    using (SQLiteTransaction transaction = connection.BeginTransaction())
+                    {
+                        using (SQLiteCommand command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = Lists.GetSelectPersonIdsText(listId);
+                            using (SQLiteDataReader reader = command.ExecuteReader())
+                                while (reader.Read())
+                                {
+                                    personIdList.Add((long)reader[Docs.personID]);
+                                }
+                            //Привязка всех персон к новой организации
+                            PersonOrg.InsertPersonOrg(personIdList, NewOrgId, connection, transaction);
+                            command.CommandText = Lists.GetUpdateOrgText(listId, NewOrgId);
+                            if (command.ExecuteNonQuery() < 1)
+                            {
+                                throw new SQLiteException("Не удалось переместить пакет.");
+                            }
+                            command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId, _operator.nameVal, DateTime.Now.Date);
+                            if ((long)command.ExecuteScalar() < 1)
+                            {
+                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    connection.Close();
                 }
-
                 //Перезагрузка данных
-                ReloadDataAfterChanges();
+                ReloadLists();
             }
         }
 
@@ -283,34 +302,54 @@ namespace Pers_uchet_org
             MovePacketOtherYearForm movePacketOtherYear = new MovePacketOtherYearForm(listId);
             if (movePacketOtherYear.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (ShowQuestionMessage("Вы действительно хотите переместить текущий пакет\n документов \"СЗВ-1\" № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
+                if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\n документов \"СЗВ-1\" № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                     return;
-
-                string commandText = Lists.GetUpdateYearText(listId, NewRepYear);
-                SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
-                cmd.Connection.Open();
-                if (cmd.ExecuteNonQuery() < 1)
+                using (SQLiteConnection connection = new SQLiteConnection(_connection))
                 {
-                    cmd.Connection.Close();
-                    ShowErrorMessage("Не удалось переместить пакет.", "Ошибка перемещения пакета");
-                    //return;
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    using (SQLiteTransaction transaction = connection.BeginTransaction())
+                    {
+                        using (SQLiteCommand command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = Lists.GetUpdateYearText(listId, NewRepYear);
+                            if (command.ExecuteNonQuery() < 1)
+                            {
+                                throw new SQLiteException("Не удалось переместить пакет.");
+                            }
+
+
+
+
+                            command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId, _operator.nameVal, DateTime.Now.Date);
+                            if ((long)command.ExecuteScalar() < 1)
+                            {
+                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    connection.Close();
                 }
                 //Перезагрузка данных
-                ReloadDataAfterChanges();
+                ReloadLists();
             }
         }
 
         private void addDocButton_Click(object sender, EventArgs e)
         {
-            ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, _repYear, _connection);
+            ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _connection);
             if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                { }
+                {
+                    _listsBS_CurrentChanged(_listsBS, new EventArgs());
+                }
+                //Перезагрузка данных
+                //ReloadDataAfterChanges();
             }
-            //Перезагрузка данных
-            ReloadDataAfterChanges();
         }
 
         private void editDocButton_Click(object sender, EventArgs e)
@@ -320,16 +359,18 @@ namespace Pers_uchet_org
             long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
             PersonId = (long)(_docsBS.Current as DataRowView)[DocsView.personID];
             FlagDoc = (int)(_docsBS.Current as DataRowView)[DocsView.docTypeId];
-            AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
+            AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
             if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            { }
+            {
+                _listsBS_CurrentChanged(_listsBS, new EventArgs());
+            }
         }
 
         private void removeDocButton_Click(object sender, EventArgs e)
         {
             if (docView.CurrentRow == null)
                 return;
-            if (ShowQuestionMessage("Вы действительно хотите удалить текущий документ \"СЗВ-1\"?", "Удаление документа") == DialogResult.No)
+            if (MainForm.ShowQuestionMessage("Вы действительно хотите удалить выбранный документ \"СЗВ-1\"?", "Удаление документа") == DialogResult.No)
                 return;
             long doc_id = (long)docView.CurrentRow.Cells["idColumn"].Value;
             string commandText = Docs.GetDeleteText(doc_id);
@@ -338,10 +379,11 @@ namespace Pers_uchet_org
             if (cmd.ExecuteNonQuery() < 1)
             {
                 cmd.Connection.Close();
-                ShowErrorMessage("Не удалось удалить документ.", "Ошибка удаления документа");
+                throw new SQLiteException("Не удалось удалить документ.");
             }
             //Перезагрузка данных
-            ReloadDataAfterChanges();
+            _listsBS_CurrentChanged(_listsBS, new EventArgs());
+            //ReloadDataAfterChanges();
         }
 
         private void moveDocButton_Click(object sender, EventArgs e)
@@ -353,28 +395,56 @@ namespace Pers_uchet_org
             if (row == null)
                 return;
             docId = (long)row[Docs.id];
-            MoveDocumentForm moveDocForm = new MoveDocumentForm(_org, _repYear, docId, _connection);
+            MoveDocumentForm moveDocForm = new MoveDocumentForm(_organization, _repYear, docId, _connection);
             if (moveDocForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (ShowQuestionMessage("Вы действительно хотите переместить текущий документ \"СЗВ-1\"?", "Перемещение документа") == DialogResult.No)
+                if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный документ \"СЗВ-1\"?", "Перемещение документа") == DialogResult.No)
                     return;
-
-                if (Docs.UpdateListId(docId, NewListId, _connection) < 1)
+                using (SQLiteConnection connection = new SQLiteConnection(_connection))
                 {
-                    ShowErrorMessage("Не удалось переместить документ.", "Ошибка перемещения документа");
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    using (SQLiteTransaction transaction = connection.BeginTransaction())
+                    {
+                        using (SQLiteCommand command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            if (Docs.UpdateListId(docId, NewListId, connection, transaction) < 1)
+                            {
+                                throw new SQLiteException("Не удалось переместить документ.");
+                            }
+                            command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, docId, _operator.nameVal, DateTime.Now.Date);
+                            if ((long)command.ExecuteScalar() < 1)
+                            {
+                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    connection.Close();
                 }
                 //Перезагрузка данных
-                ReloadDataAfterChanges();
+                _listsBS_CurrentChanged(_listsBS, new EventArgs());
+                //ReloadDataAfterChanges();
             }
         }
 
-        private void packetView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void docView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1 || e.ColumnIndex == -1)
-                return;
-            PacketDopInfoForm packetDopInfoForm = new PacketDopInfoForm();
-            if (packetDopInfoForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            { }
+            if (e.RowIndex == -1 && e.ColumnIndex == 1)
+            {
+                docView.EndEdit();
+                bool allchecked = true;
+                foreach (DataRowView row in _docsBS)
+                    if (!(bool)row[CHECK])
+                    {
+                        allchecked = false;
+                        break;
+                    }
+                foreach (DataRowView row in _docsBS)
+                    row[CHECK] = !allchecked;
+                this.docView.Refresh();
+            }
         }
 
         private void documentView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -395,34 +465,70 @@ namespace Pers_uchet_org
             {
                 try
                 {
-                    List<long> docIdList = new List<long>();
-                    switch (FlagDoc)
+                    using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
-                        case 1:
-                            DataRowView row = _docsBS.Current as DataRowView;
-                            if (row != null)
-                                docIdList.Add((long)row[Docs.id]);
-                            Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, _connection);
-                            break;
-                        case 2:
-                            docIdList = GetSelectedDocIds();
-                            Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, _connection);
-                            break;
-                        case 3:
-                            Docs.UpdateDocTypeByListId((long)listsView.CurrentRow.Cells["id"].Value, NewDocTypeId, _connection);
-                            break;
-                        default:
-                            throw new Exception("Не указан документ у которого необходимо изменить тип.");
-                            return;
+                        if (connection.State != ConnectionState.Open)
+                            connection.Open();
+                        using (SQLiteTransaction transaction = connection.BeginTransaction())
+                        {
+                            using (SQLiteCommand command = connection.CreateCommand())
+                            {
+                                command.Transaction = transaction;
+                                List<long> docIdList = new List<long>();
+                                switch (FlagDoc)
+                                {
+                                    case 1:
+                                        DataRowView row = _docsBS.Current as DataRowView;
+                                        if (row != null)
+                                            docIdList.Add((long)row[Docs.id]);
+                                        Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, connection, transaction);
+
+                                        command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, (long)row[Docs.id], _operator.nameVal, DateTime.Now.Date);
+                                        if ((long)command.ExecuteScalar() < 1)
+                                        {
+                                            throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                        }
+                                        break;
+                                    case 2:
+                                        docIdList = GetSelectedDocIds();
+                                        Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, connection, transaction);
+                                        foreach (long docId in docIdList)
+                                        {
+                                            command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, docId, _operator.nameVal, DateTime.Now.Date);
+                                            if ((long)command.ExecuteScalar() < 1)
+                                            {
+                                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                            }
+                                        }
+                                        break;
+                                    case 3:
+                                        Docs.UpdateDocTypeByListId((long)listsView.CurrentRow.Cells["id"].Value, NewDocTypeId, connection, transaction);
+                                        foreach (DataRowView rowDoc in _docsBS)
+                                        {
+                                            command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, (long)rowDoc[Docs.id], _operator.nameVal, DateTime.Now.Date);
+                                            if ((long)command.ExecuteScalar() < 1)
+                                            {
+                                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        throw new Exception("Не указан документ у которого необходимо изменить тип.");
+                                }
+                            }
+                            transaction.Commit();
+                        }
+                        connection.Close();
                     }
                 }
                 catch (Exception ex)
                 {
-                    ShowErrorMessage("Не удалось изменить тип документа(ов).\n" + ex.Message, "Ошибка изменения типа документа(ов)");
+                    MainForm.ShowErrorMessage("Не удалось изменить тип документа(ов).\n" + ex.Message, "Ошибка изменения типа документа(ов)");
                 }
 
                 //Перезагрузка данных
-                ReloadDataAfterChanges();
+                _listsBS_CurrentChanged(_listsBS, new EventArgs());
+                //ReloadDataAfterChanges();
             }
         }
 
@@ -444,21 +550,11 @@ namespace Pers_uchet_org
         {
             _repYear = (int)yearBox.Value;
             MainForm.RepYear = _repYear;
-            ReloadDataAfterChanges();
+            ReloadLists();
         }
         #endregion
 
         #region Методы - свои
-        static public DialogResult ShowQuestionMessage(string message, string caption)
-        {
-            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-        }
-
-        static public void ShowErrorMessage(string message, string caption)
-        {
-            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         private List<long> GetSelectedDocIds()
         {
             List<long> list = new List<long>();
@@ -468,39 +564,39 @@ namespace Pers_uchet_org
             return list;
         }
 
-        private void ReloadDataAfterChanges()
+        private void ReloadLists()
         {
             if (_listsBS == null)
                 return;
-            //отключение события, что б не мерцали кнопки при обновлении
-            _listsBS.ListChanged -= new ListChangedEventHandler(_listsBS_ListChanged);
-
-            if (_docsBS == null)
+            if (_listsTable == null)
                 return;
+            //if (_docsBS == null)
+            //return;
+
             //отключение события, что б не мерцали кнопки при обновлении
-            _docsBS.ListChanged -= new ListChangedEventHandler(_docsBS_ListChanged);
-
-            if (_listsTable != null)
-                //очистка таблицы перед заполнением новыми данными
-                _listsTable.Clear();
-            else
-                return;
-
-            // инициализация Адаптера для считывания пакетов из БД
-            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
+            //_listsBS.ListChanged -= new ListChangedEventHandler(_listsBS_ListChanged);
+            _listsBS.RaiseListChangedEvents = false;
+            
+            //отключение события, что б не мерцали кнопки при обновлении
+            //_docsBS.ListChanged -= new ListChangedEventHandler(_docsBS_ListChanged);
+            //_docsBS.RaiseListChangedEvents = false;
+            
+            _listsTable.Clear();
+            string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
-
-            // заполнение таблицы данными с БД
             _listsAdapter.Fill(_listsTable);
 
             //добавление событий и их запуск
-            _listsBS.ListChanged += new ListChangedEventHandler(_listsBS_ListChanged);
-            _listsBS_ListChanged(null, new ListChangedEventArgs(ListChangedType.Reset, -1));
-            _docsBS.ListChanged += new ListChangedEventHandler(_docsBS_ListChanged);
-            _docsBS_ListChanged(null, new ListChangedEventArgs(ListChangedType.Reset, -1));
+            //_listsBS.ListChanged += new ListChangedEventHandler(_listsBS_ListChanged);
+            //_listsBS_ListChanged(null, new ListChangedEventArgs(ListChangedType.Reset, -1));
+            _listsBS.RaiseListChangedEvents = true;
+            _listsBS.ResetBindings(false);
+
+            //_docsBS.ListChanged += new ListChangedEventHandler(_docsBS_ListChanged);
+            //_docsBS_ListChanged(null, new ListChangedEventArgs(ListChangedType.Reset, -1));
+            //_docsBS.RaiseListChangedEvents = true;
+            //_docsBS.ResetBindings(false);
         }
         #endregion
-
-
     }
 }

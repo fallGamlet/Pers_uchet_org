@@ -118,12 +118,13 @@
             this.monthsNumUpDown.Size = new System.Drawing.Size(74, 20);
             this.monthsNumUpDown.TabIndex = 12;
             this.monthsNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.monthsNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownFirst_ValueChanged);
             // 
             // daysNumUpDown
             // 
             this.daysNumUpDown.Location = new System.Drawing.Point(89, 37);
             this.daysNumUpDown.Maximum = new decimal(new int[] {
-            31,
+            366,
             0,
             0,
             0});
@@ -131,6 +132,7 @@
             this.daysNumUpDown.Size = new System.Drawing.Size(74, 20);
             this.daysNumUpDown.TabIndex = 14;
             this.daysNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.daysNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownFirst_ValueChanged);
             // 
             // label30
             // 
@@ -154,7 +156,7 @@
             // 
             this.minutesNumUpDown.Location = new System.Drawing.Point(249, 37);
             this.minutesNumUpDown.Maximum = new decimal(new int[] {
-            60,
+            59,
             0,
             0,
             0});
@@ -162,12 +164,13 @@
             this.minutesNumUpDown.Size = new System.Drawing.Size(74, 20);
             this.minutesNumUpDown.TabIndex = 18;
             this.minutesNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.minutesNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownSecond_ValueChanged);
             // 
             // hoursNumUpDown
             // 
             this.hoursNumUpDown.Location = new System.Drawing.Point(169, 37);
             this.hoursNumUpDown.Maximum = new decimal(new int[] {
-            24,
+            5000,
             0,
             0,
             0});
@@ -175,6 +178,7 @@
             this.hoursNumUpDown.Size = new System.Drawing.Size(74, 20);
             this.hoursNumUpDown.TabIndex = 16;
             this.hoursNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.hoursNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownSecond_ValueChanged);
             // 
             // label29
             // 
@@ -255,6 +259,7 @@
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(156, 20);
             this.endDateTimePicker.TabIndex = 24;
+            this.endDateTimePicker.ValueChanged += new System.EventHandler(this.TimePicker_ValueChanged);
             // 
             // beginDateTimePicker
             // 
@@ -263,7 +268,7 @@
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(156, 20);
             this.beginDateTimePicker.TabIndex = 23;
-            this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
+            this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.TimePicker_ValueChanged);
             // 
             // radioButton1
             // 

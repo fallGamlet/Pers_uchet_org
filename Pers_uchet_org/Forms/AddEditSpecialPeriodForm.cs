@@ -35,17 +35,17 @@ namespace Pers_uchet_org
         private AddEditSpecialPeriodForm()
         {
             InitializeComponent();
-            _repYear = DateTime.Now.Year;
-            TypePeriod = 1;
-            Code = 0;
-            CodeName = "";
-            Begin = DateTime.Now.Date; ;
-            End = DateTime.Now.Date; ;
-            Month = 0;
-            Day = 0;
-            Hour = 0;
-            Minute = 0;
-            Profession = "";
+            this._repYear = DateTime.Now.Year;
+            this.TypePeriod = 1;
+            this.Code = 0;
+            this.CodeName = "";
+            this.Begin = DateTime.Now.Date;
+            this.End = DateTime.Now.Date;
+            this.Month = 0;
+            this.Day = 0;
+            this.Hour = 0;
+            this.Minute = 0;
+            this.Profession = "";
         }
 
         public AddEditSpecialPeriodForm(int repYear, BindingSource generalPeriodBS)
@@ -54,6 +54,8 @@ namespace Pers_uchet_org
             this._repYear = repYear;
             this._generalPeriodBS = generalPeriodBS;
             this._isNew = true;
+            this.Begin = DateTime.Parse(_repYear + "-01-01");
+            this.End = DateTime.Parse(_repYear + "-12-31");
         }
 
         public AddEditSpecialPeriodForm(int repYear, BindingSource generalPeriodBS, int typePeriod, long classificatorId, DateTime beginDate, DateTime endDate, int month, int day, int hour, int minute, string profession)
@@ -73,12 +75,12 @@ namespace Pers_uchet_org
 
         private void AddEditSpecialPeriodForm_Load(object sender, EventArgs e)
         {
+            beginDateTimePicker.Value = Begin;
             beginDateTimePicker.MinDate = DateTime.Parse(_repYear + "-01-01");
             beginDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
-            beginDateTimePicker.Value = Begin;
+            endDateTimePicker.Value = End;
             endDateTimePicker.MinDate = beginDateTimePicker.Value;
             endDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
-            endDateTimePicker.Value = End;
 
             if (MainForm.ClasspercentViewTable != null)
             {
@@ -187,9 +189,9 @@ namespace Pers_uchet_org
                     stajBaseComboBox.Enabled = false;
                     servYearBaseComboBox.Enabled = false;
                     hoursNumUpDown.Value = 0;
-                    hoursNumUpDown.Enabled = false;
+                    //hoursNumUpDown.Enabled = false;
                     minutesNumUpDown.Value = 0;
-                    minutesNumUpDown.Enabled = false;
+                    //minutesNumUpDown.Enabled = false;
                     professionRichTextBox.Enabled = true;
                     TypePeriod = 1;
                     if (partConditionComboBox.SelectedValue != null)
@@ -231,8 +233,8 @@ namespace Pers_uchet_org
                     partConditionComboBox.Enabled = false;
                     stajBaseComboBox.Enabled = false;
                     servYearBaseComboBox.Enabled = true;
-                    hoursNumUpDown.Enabled = true;
-                    minutesNumUpDown.Enabled = true;
+                    //hoursNumUpDown.Enabled = true;
+                    //minutesNumUpDown.Enabled = true;
                     professionRichTextBox.Enabled = true;
                     TypePeriod = 3;
                     if (servYearBaseComboBox.SelectedValue != null)
@@ -253,13 +255,9 @@ namespace Pers_uchet_org
                     stajBaseComboBox.Enabled = false;
                     servYearBaseComboBox.Enabled = false;
                     TypePeriod = 0;
+                    saveButton.Enabled = false;
                     break;
             }
-        }
-
-        private void beginDateTimePicker_ValueChanged(object sender, EventArgs e)
-        {
-            endDateTimePicker.MinDate = beginDateTimePicker.Value;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -310,11 +308,51 @@ namespace Pers_uchet_org
                 MainForm.ShowWarningMessage("Указанный период не попадает не в один из периодов основного стажа!", "Ошибка добавления периода");
                 isAllRight = false;
             }
-            
+
 
             if (isAllRight)
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
         #endregion
+
+        private void TimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            endDateTimePicker.MinDate = beginDateTimePicker.Value;
+            TimeSpan span = new TimeSpan();
+            span = endDateTimePicker.Value - beginDateTimePicker.Value;
+            daysNumUpDown.Value = Convert.ToDecimal(span.Days + 1);
+        }
+
+        private void NumUpDownFirst_ValueChanged(object sender, EventArgs e)
+        {
+            if (monthsNumUpDown.Value > 0 || daysNumUpDown.Value > 0)
+            {
+                hoursNumUpDown.Value = 0;
+                hoursNumUpDown.Enabled = false;
+                minutesNumUpDown.Value = 0;
+                minutesNumUpDown.Enabled = false;
+            }
+            else
+            {
+                hoursNumUpDown.Enabled = true;
+                minutesNumUpDown.Enabled = true;
+            }
+        }
+
+        private void NumUpDownSecond_ValueChanged(object sender, EventArgs e)
+        {
+            if (hoursNumUpDown.Value > 0 || minutesNumUpDown.Value > 0)
+            {
+                monthsNumUpDown.Value = 0;
+                monthsNumUpDown.Enabled = false;
+                daysNumUpDown.Value = 0;
+                daysNumUpDown.Enabled = false;
+            }
+            else
+            {
+                monthsNumUpDown.Enabled = true;
+                daysNumUpDown.Enabled = true;
+            }
+        }
     }
 }
