@@ -15,6 +15,11 @@ namespace Pers_uchet_org
 {
     public partial class ExchangeForm : Form
     {
+        #region Поля
+
+        #endregion
+
+        #region Конструктор и инициализатор
         public ExchangeForm()
         {
             InitializeComponent();
@@ -26,7 +31,39 @@ namespace Pers_uchet_org
             driveBox_Click(sender, e);
             flashBox_Click(sender, e);
         }
+        #endregion
 
+        #region Методы - свои
+        private void disableControlsBeforeCreateFile()
+        {
+            yearGroupBox.Enabled = false;
+            tabControl1.Enabled = false;
+            groupBox1.Enabled = false;
+            groupBox2.Enabled = false;
+            groupBox3.Enabled = false;
+            groupBox4.Enabled = false;
+            groupBox5.Enabled = false;
+            xmlPathButton.Enabled = false;
+            xmlPathTextBox.Enabled = false;
+        }
+
+        private void enableControlsAfterCreateFile()
+        {
+            yearGroupBox.Enabled = true;
+            tabControl1.Enabled = true;
+            groupBox1.Enabled = true;
+            groupBox2.Enabled = true;
+            groupBox3.Enabled = true;
+            groupBox4.Enabled = true;
+            flashRButton_CheckedChanged(new object(), new EventArgs());
+            xmlPathButton.Enabled = true;
+            xmlPathTextBox.Enabled = true;
+        }
+
+
+        #endregion
+
+        #region Методы - обработчики событий
         private void driveBox_Click(object sender, EventArgs e)
         {
             DriveInfo[] driveInfo = DriveInfo.GetDrives();
@@ -258,34 +295,6 @@ namespace Pers_uchet_org
             }
         }
 
-        #region Методы
-        private void disableControlsBeforeCreateFile()
-        {
-            yearGroupBox.Enabled = false;
-            tabControl1.Enabled = false;
-            groupBox1.Enabled = false;
-            groupBox2.Enabled = false;
-            groupBox3.Enabled = false;
-            groupBox4.Enabled = false;
-            groupBox5.Enabled = false;
-            xmlPathButton.Enabled = false;
-            xmlPathTextBox.Enabled = false;
-        }
-
-        private void enableControlsAfterCreateFile()
-        {
-            yearGroupBox.Enabled = true;
-            tabControl1.Enabled = true;
-            groupBox1.Enabled = true;
-            groupBox2.Enabled = true;
-            groupBox3.Enabled = true;
-            groupBox4.Enabled = true;
-            flashRButton_CheckedChanged(new object(), new EventArgs());
-            xmlPathButton.Enabled = true;
-            xmlPathTextBox.Enabled = true;
-        }
-        #endregion
-
         private void xmlPathButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog xmlFolderBrowser = new FolderBrowserDialog();
@@ -294,5 +303,20 @@ namespace Pers_uchet_org
             if (xmlFolderBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 xmlPathTextBox.Text = xmlFolderBrowser.SelectedPath;
         }
+
+        private void viewdataButton_Click(object sender, EventArgs e)
+        {
+            string data = "123321";
+            string synchro = "C0E1205FF4F0CE01";
+            string table = "E4EAE9E2EDE8E0EEE6EBE1ECE7EFE5E3B4BAB9B2BDB8B0BEB6BBB1BCB7BFB5B3444A49424D48404E464B414C474F4543C4CAC9C2CDC8C0CEC6CBC1CCC7CFC5C3646A69626D68606E666B616C676F6563D4DAD9D2DDD8D0DED6DBD1DCD7DFD5D3F4FAF9F2FDF8F0FEF6FBF1FCF7FFF5F3A4AAA9A2ADA8A0AEA6ABA1ACA7AFA5A3242A29222D28202E262B212C272F2523343A39323D38303E363B313C373F3533848A89828D88808E868B818C878F8583141A19121D18101E161B111C171F1513040A09020D08000E060B010C070F0503747A79727D78707E767B717C777F7573545A59525D58505E565B515C575F5553949A99929D98909E969B919C979F95937578717D7A7374727E7F7C777670797BD5D8D1DDDAD3D4D2DEDFDCD7D6D0D9DBA5A8A1ADAAA3A4A2AEAFACA7A6A0A9AB1518111D1A1314121E1F1C171610191B0508010D0A0304020E0F0C070600090B8588818D8A8384828E8F8C878680898B9598919D9A9394929E9F9C979690999BF5F8F1FDFAF3F4F2FEFFFCF7F6F0F9FBE5E8E1EDEAE3E4E2EEEFECE7E6E0E9EB4548414D4A4344424E4F4C474640494B6568616D6A6364626E6F6C676660696BC5C8C1CDCAC3C4C2CECFCCC7C6C0C9CBB5B8B1BDBAB3B4B2BEBFBCB7B6B0B9BB2528212D2A2324222E2F2C272620292B5558515D5A5354525E5F5C575650595B3538313D3A3334323E3F3C373630393B464C4741454F4D48444A494E40434B42B6BCB7B1B5BFBDB8B4BAB9BEB0B3BBB2A6ACA7A1A5AFADA8A4AAA9AEA0A3ABA2060C0701050F0D08040A090E00030B02767C7771757F7D78747A797E70737B72262C2721252F2D28242A292E20232B22161C1711151F1D18141A191E10131B12D6DCD7D1D5DFDDD8D4DAD9DED0D3DBD2363C3731353F3D38343A393E30333B32666C6761656F6D68646A696E60636B62868C8781858F8D88848A898E80838B82565C5751555F5D58545A595E50535B52969C9791959F9D98949A999E90939B92C6CCC7C1C5CFCDC8C4CAC9CEC0C3CBC2F6FCF7F1F5FFFDF8F4FAF9FEF0F3FBF2E6ECE7E1E5EFEDE8E4EAE9EEE0E3EBE21D1B1411131F1519101A1E171618121CFDFBF4F1F3FFF5F9F0FAFEF7F6F8F2FCDDDBD4D1D3DFD5D9D0DADED7D6D8D2DC0D0B0401030F0509000A0E070608020C5D5B5451535F5559505A5E575658525C7D7B7471737F7579707A7E777678727CADABA4A1A3AFA5A9A0AAAEA7A6A8A2AC4D4B4441434F4549404A4E474648424C9D9B9491939F9599909A9E979698929C2D2B2421232F2529202A2E272628222C3D3B3431333F3539303A3E373638323CEDEBE4E1E3EFE5E9E0EAEEE7E6E8E2EC6D6B6461636F6569606A6E676668626CBDBBB4B1B3BFB5B9B0BABEB7B6B8B2BC8D8B8481838F8589808A8E878688828CCDCBC4C1C3CFC5C9C0CACEC7C6C8C2CC";
+            string key = "43C5066185400FDFF687B31526FAAB5E61F380EFC05150F5A2AA9C377A8C86B043C5066185400FDFF687B31526FAAB5E61F380EFC05150F5A2AA9C377A8C86B043C5066185400FDFF687B31526FAAB5E61F380EFC05150F5A2AA9C377A8C86B0B0868C7A379CAAA2F55051C0EF80F3615EABFA2615B387F6DF0F40856106C543";
+            string res = Mathdll.GostGamma(data, key, table, synchro);
+        }
+
+        private void senddataButton_Click(object sender, EventArgs e)
+        {
+            
+        }
+        #endregion
     }
 }

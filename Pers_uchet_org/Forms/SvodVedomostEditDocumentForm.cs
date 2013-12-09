@@ -73,6 +73,9 @@ namespace Pers_uchet_org
                 this.sum3Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column3).ToString("N2");
                 this.sum4Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column4).ToString("N2");
                 this.sum5Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column5).ToString("N2");
+
+                if(!(bool)_mergeRow[MergiesView.actual])
+                    this.saveButton.Enabled = false;
             }
             _svodBS.DataSource = _svodTable;
             this.dataView.AutoGenerateColumns = false;
@@ -302,7 +305,28 @@ namespace Pers_uchet_org
             DialogResult dRes = tmpForm.ShowDialog(this);
             if (dRes == DialogResult.OK)
             {
+                long[] markedPacked = tmpForm.MarckedPackets;
+                long[] doctypes = { 21, 22, 24 };
+                DataTable salaryInfoTable = SalaryInfo.CreateTable();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(markedPacked, doctypes), _connection);
+                adapter.Fill(salaryInfoTable);
+                
+                DataTable salaryInfoTranspose = SalaryInfoTranspose.CreateTableWithRows();
+                SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTranspose, salaryInfoTable);
+                int i = 0;
 
+                for (i = 0; i < 12; i++)
+                {
+                    _svodTable.Rows[i][SalaryGroups.Column1] = salaryInfoTranspose.Rows[i][SalaryGroups.Column1];
+                    _svodTable.Rows[i][SalaryGroups.Column1] = salaryInfoTranspose.Rows[i][SalaryGroups.Column2];
+                    _svodTable.Rows[i][SalaryGroups.Column1] = salaryInfoTranspose.Rows[i][SalaryGroups.Column3];
+                    _svodTable.Rows[i][SalaryGroups.Column1] = salaryInfoTranspose.Rows[i][SalaryGroups.Column4];
+                    _svodTable.Rows[i][SalaryGroups.Column1] = salaryInfoTranspose.Rows[i][SalaryGroups.Column5];
+                    _svodTable.AcceptChanges();
+                }
+
+                this.packetcountBox.Value = markedPacked.Length;
+                this.documentcountBox.Value = (long)salaryInfoTable.Rows[0][SalaryInfo.docId];
             }
         }
         #endregion

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExchangeForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -237,20 +237,20 @@
             // packetsView
             // 
             this.packetsView.AllowUserToDeleteRows = false;
-            this.packetsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.packetsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.packetsView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.packetsView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.packetsView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.packetsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.packetsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.packetsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.packetsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
@@ -298,7 +298,7 @@
             this.label3.Size = new System.Drawing.Size(286, 55);
             this.label3.TabIndex = 0;
             this.label3.Text = "Выберите пакеты документов СЗВ-1, \r\nкоторые Вы собираетесь предоставить в отделен" +
-    "ие Единого фонда социального страхования ПМР";
+                "ие Единого фонда социального страхования ПМР";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // checkAllButton
@@ -333,7 +333,7 @@
             this.label11.Size = new System.Drawing.Size(286, 60);
             this.label11.TabIndex = 13;
             this.label11.Text = "С описанием структуры и месторасположения XML-файлов можно ознакомиться в справоч" +
-    "ной системе программы.";
+                "ной системе программы.";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label10
@@ -344,8 +344,8 @@
             this.label10.Size = new System.Drawing.Size(286, 91);
             this.label10.TabIndex = 12;
             this.label10.Text = "Модуль упаковки XML-файлов в электронный контейнер осуществляет предварительную п" +
-    "роверку заранее подготовленных XML-файлов, шифрование, упаковку файлов в электро" +
-    "нный контейнер и электронную подпись.";
+                "роверку заранее подготовленных XML-файлов, шифрование, упаковку файлов в электро" +
+                "нный контейнер и электронную подпись.";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // xmlPathButton
@@ -401,7 +401,7 @@
             // 
             this.driveBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.driveBox.FormattingEnabled = true;
-            this.driveBox.Location = new System.Drawing.Point(96, 105);
+            this.driveBox.Location = new System.Drawing.Point(166, 105);
             this.driveBox.Name = "driveBox";
             this.driveBox.Size = new System.Drawing.Size(231, 21);
             this.driveBox.TabIndex = 6;
@@ -409,14 +409,15 @@
             // 
             // viewdataButton
             // 
-            this.viewdataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewdataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.viewdataButton.Location = new System.Drawing.Point(6, 19);
             this.viewdataButton.Name = "viewdataButton";
             this.viewdataButton.Size = new System.Drawing.Size(397, 23);
             this.viewdataButton.TabIndex = 3;
             this.viewdataButton.Text = "Просмотреть файл электронных данных";
             this.viewdataButton.UseVisualStyleBackColor = true;
+            this.viewdataButton.Click += new System.EventHandler(this.viewdataButton_Click);
             // 
             // flashRButton
             // 
@@ -500,9 +501,9 @@
             // 
             this.flashBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.flashBox.FormattingEnabled = true;
-            this.flashBox.Location = new System.Drawing.Point(130, 18);
+            this.flashBox.Location = new System.Drawing.Point(160, 18);
             this.flashBox.Name = "flashBox";
-            this.flashBox.Size = new System.Drawing.Size(261, 21);
+            this.flashBox.Size = new System.Drawing.Size(231, 21);
             this.flashBox.TabIndex = 7;
             this.flashBox.Click += new System.EventHandler(this.flashBox_Click);
             // 
@@ -551,8 +552,8 @@
             // 
             // createDataFileButton
             // 
-            this.createDataFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.createDataFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.createDataFileButton.Location = new System.Drawing.Point(6, 19);
             this.createDataFileButton.Name = "createDataFileButton";
             this.createDataFileButton.Size = new System.Drawing.Size(397, 23);
@@ -584,14 +585,15 @@
             // 
             // senddataButton
             // 
-            this.senddataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.senddataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.senddataButton.Location = new System.Drawing.Point(6, 19);
             this.senddataButton.Name = "senddataButton";
             this.senddataButton.Size = new System.Drawing.Size(397, 23);
             this.senddataButton.TabIndex = 4;
             this.senddataButton.Text = "Отправить данные в ЕГФСС через Интернет";
             this.senddataButton.UseVisualStyleBackColor = true;
+            this.senddataButton.Click += new System.EventHandler(this.senddataButton_Click);
             // 
             // ExchangeForm
             // 

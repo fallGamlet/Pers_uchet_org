@@ -2712,6 +2712,50 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2}", docId, doc_id, salaryGroupsId);
         }
 
+        /// <summary>
+        /// Получить текст запроса на выборку таблицы Salary_info с суммами выплат
+        /// </summary>
+        /// <param name="list_id">Перечисление идентификаторов Пакетов</param>
+        /// <param name="doc_type_id">Перечисление идентификаторов Типов документов</param>
+        /// <returns>В выбираемой таблице в столбце doc_id получается количество документов, а не их идентификаторы</returns>
+        static public string GetSelectText(IEnumerable<long> list_id, IEnumerable<long> doc_type_id)
+        {
+            string list_id_str = "( ";
+            foreach (long val in list_id)
+                list_id_str += val + ",";
+            list_id_str = list_id_str.Remove(list_id_str.Length - 1);
+            list_id_str += " )";
+
+            string doc_type_id_str = "( ";
+            foreach (long val in doc_type_id)
+                doc_type_id_str += val + ",";
+            doc_type_id_str = doc_type_id_str.Remove(doc_type_id_str.Length - 1);
+            doc_type_id_str += " )";
+
+            return string.Format(@"SELECT 
+                             [{0}]
+                            ,COUNT({14}) as {14}
+	                        ,SUM([{1}]) as {1}
+	                        ,SUM([{2}]) as {2}
+	                        ,SUM([{3}]) as {3}
+	                        ,SUM([{4}]) as {4}
+	                        ,SUM([{5}]) as {5}
+	                        ,SUM([{6}]) as {6}
+	                        ,SUM([{7}]) as {7}
+	                        ,SUM([{8}]) as {8}
+	                        ,SUM([{9}]) as {9}
+	                        ,SUM([{10}]) as {10}
+	                        ,SUM([{11}]) as {11}
+	                        ,SUM([{12}]) as {12}
+                        FROM [{13}]
+                        WHERE {14} in (SELECT {15} FROM {16} WHERE {17} in {18} AND {19} in {20})
+                        GROUP BY [{0}]", 
+                        salaryGroupsId,
+                        january, february, march, april, may, june, july, august, september, october, november, december,
+                        tablename, docId,
+                        Docs.id, Docs.tablename, Docs.listId, list_id_str, Docs.docTypeId, doc_type_id_str);
+        }
+
         //        static public SQLiteCommand CreateReplaceCommand()
         //        {
         //            SQLiteCommand comm = new SQLiteCommand();

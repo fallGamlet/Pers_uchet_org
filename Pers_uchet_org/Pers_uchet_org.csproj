@@ -168,6 +168,7 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mathdll.cs" />
     <Compile Include="Forms\MoveDocumentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -447,8 +448,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Storege.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="mathdll.dll" />
     <Content Include="Static\template\lib\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
