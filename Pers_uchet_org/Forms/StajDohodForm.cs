@@ -121,7 +121,7 @@ namespace Pers_uchet_org
 
             if (_listsBS.Count < 1)
             {
-                removeButton.Enabled = false;
+                removeListButton.Enabled = false;
                 movePacketOrgButton.Enabled = false;
                 movePacketYearButton.Enabled = false;
                 reestrButton.Enabled = false;
@@ -134,7 +134,7 @@ namespace Pers_uchet_org
             }
             else
             {
-                removeButton.Enabled = true;
+                removeListButton.Enabled = true;
                 movePacketOrgButton.Enabled = true;
                 movePacketYearButton.Enabled = true;
                 reestrButton.Enabled = true;
@@ -179,7 +179,7 @@ namespace Pers_uchet_org
                 editDocButton.Enabled = false;
                 moveDocButton.Enabled = false;
                 printFormButton.Enabled = false;
-                changeTypedDocButton.Enabled = false;
+                changeTypeDocButton.Enabled = false;
             }
             else
             {
@@ -187,13 +187,13 @@ namespace Pers_uchet_org
                 editDocButton.Enabled = true;
                 moveDocButton.Enabled = true;
                 printFormButton.Enabled = true;
-                changeTypedDocButton.Enabled = true;
+                changeTypeDocButton.Enabled = true;
             }
         }
 
         private void addListButton_Click(object sender, EventArgs e)
         {
-            if (MainForm.ShowQuestionMessage("Вы действительно хотите создать\n новый пакет документов \"СЗВ-1\"?", "Создание пакета") == DialogResult.No)
+            if (MainForm.ShowQuestionMessage("Вы действительно хотите создать\nновый пакет документов \"СЗВ-1\"?", "Создание пакета") == DialogResult.No)
                 return;
             //TODO: Загружать список доступных типов пакета для текущего года, спрашивать пользователя 
             using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -234,7 +234,7 @@ namespace Pers_uchet_org
             if (MainForm.ShowQuestionMessage("Вы действительно хотите удалить выбранный пакет\n документов \"СЗВ-1\" и все документы в нём?", "Удаление пакета") == DialogResult.No)
                 return;
 
-            string commandText = Lists.GetDeleteText((long)listsView.CurrentRow.Cells["id"].Value);
+            string commandText = Lists.GetDeleteText(_currentListId);
             SQLiteCommand cmd = new SQLiteCommand(commandText, new SQLiteConnection(_connection));
             cmd.Connection.Open();
             if (cmd.ExecuteNonQuery() < 1)
@@ -242,8 +242,12 @@ namespace Pers_uchet_org
                 cmd.Connection.Close();
                 MainForm.ShowErrorMessage("Не удалось удалить пакет.", "Ошибка удаления пакета");
             }
+            //Ищем позицию текущего пакета и сохраняем её
+            //int position = _listsBS.Find(Lists.id, _currentListId);
             //Перезагрузка данных
             ReloadLists();
+            //Переходим к позиции на единицу меньше, так как текущий пакет удален
+            //_listsBS.Position = position;
         }
 
         private void movePacketOrgButton_Click(object sender, EventArgs e)
@@ -576,11 +580,11 @@ namespace Pers_uchet_org
             //отключение события, что б не мерцали кнопки при обновлении
             //_listsBS.ListChanged -= new ListChangedEventHandler(_listsBS_ListChanged);
             _listsBS.RaiseListChangedEvents = false;
-            
+
             //отключение события, что б не мерцали кнопки при обновлении
             //_docsBS.ListChanged -= new ListChangedEventHandler(_docsBS_ListChanged);
             //_docsBS.RaiseListChangedEvents = false;
-            
+
             _listsTable.Clear();
             string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
@@ -592,11 +596,204 @@ namespace Pers_uchet_org
             _listsBS.RaiseListChangedEvents = true;
             _listsBS.ResetBindings(false);
 
+
             //_docsBS.ListChanged += new ListChangedEventHandler(_docsBS_ListChanged);
             //_docsBS_ListChanged(null, new ListChangedEventArgs(ListChangedType.Reset, -1));
             //_docsBS.RaiseListChangedEvents = true;
             //_docsBS.ResetBindings(false);
         }
         #endregion
+
+        private void listsView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
+                if (!r.Selected)
+                {
+                    r.DataGridView.ClearSelection();
+                    r.DataGridView.CurrentCell = r.Cells[0];
+                    r.Selected = true;
+                }
+            }
+        }
+
+        private void listsView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
+            {
+                DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
+                if (currentCell != null)
+                {
+                    ContextMenuStrip cms = cmsLists;
+                    if (cms != null)
+                    {
+                        Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                        Point p = new Point(r.Left, r.Top);
+                        cms.Show((sender as DataGridView), p);
+                    }
+                }
+            }
+        }
+
+        private void listsView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip menu = cmsLists;
+                if (menu == null)
+                    return;
+
+                DataGridView dataView = sender as DataGridView;
+                ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                menuItems.Add("viewOpisMenuItem");
+                menuItems.Add("calcMenuItem");
+                menuItems.Add("printListMenuItem");
+                menuItems.Add("copyToOtherYearMenuItem");
+                menuItems.Add("moveToOtherYearMenuItem");
+                menuItems.Add("copyToOtherOrgMenuItem");
+                menuItems.Add("moveToOtherOrgMenuItem");
+                menuItems.Add("delListMenuItem");
+
+                int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
+                bool isEnabled = !(currentMouseOverRow < 0);
+                for (int i = 0; i < menuItems.Count; i++)
+                {
+                    items = menu.Items.Find(menuItems[i].ToString(), false);
+                    if (items.Count() > 0)
+                        items[0].Enabled = isEnabled;
+                }
+
+                menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                menuItems.Add("copyToOtherYearMenuItem");
+                menuItems.Add("copyToOtherOrgMenuItem");
+                for (int i = 0; i < menuItems.Count; i++)
+                {
+                    items = menu.Items.Find(menuItems[i].ToString(), false);
+                    if (items.Count() > 0)
+                        items[0].Enabled = false;
+                }
+
+                menu.Show(dataView, e.Location);
+            }
+        }
+
+        private void docView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
+                if (!r.Selected)
+                {
+                    r.DataGridView.ClearSelection();
+                    r.DataGridView.CurrentCell = r.Cells[1];
+                    r.Selected = true;
+                }
+            }
+        }
+
+        private void docView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
+            {
+                DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
+                if (currentCell != null)
+                {
+                    ContextMenuStrip cms = cmsLists;
+                    if (cms != null)
+                    {
+                        Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                        Point p = new Point(r.Left, r.Top);
+                        cms.Show((sender as DataGridView), p);
+                    }
+                }
+            }
+        }
+
+        private void docView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip menu = cmsDocs;
+                if (menu == null)
+                    return;
+
+                DataGridView dataView = sender as DataGridView;
+                ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                menuItems.Add("editDocMenuItem");
+                menuItems.Add("changeTypeDocMenuItem");
+                menuItems.Add("previewDocMenuItem");
+                menuItems.Add("copyToOtherListMenuItem");
+                menuItems.Add("moveToOtherListMenuItem");
+                menuItems.Add("delDocMenuItem");
+
+                int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
+                bool isEnabled = !(currentMouseOverRow < 0);
+                for (int i = 0; i < menuItems.Count; i++)
+                {
+                    items = menu.Items.Find(menuItems[i].ToString(), false);
+                    if (items.Count() > 0)
+                        items[0].Enabled = isEnabled;
+                }
+
+                menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                menuItems.Add("copyToOtherListMenuItem");
+                for (int i = 0; i < menuItems.Count; i++)
+                {
+                    items = menu.Items.Find(menuItems[i].ToString(), false);
+                    if (items.Count() > 0)
+                        items[0].Enabled = false;
+                }
+
+                menu.Show(dataView, e.Location);
+            }
+        }
+
+        private void addListMenuItem_Click(object sender, EventArgs e)
+        {
+            addListButton_Click(sender, e);
+        }
+
+        private void moveToOtherYearMenuItem_Click(object sender, EventArgs e)
+        {
+            movePacketYearButton_Click(sender, e);
+        }
+
+        private void moveToOtherOrgMenuItem_Click(object sender, EventArgs e)
+        {
+            movePacketOrgButton_Click(sender, e);
+        }
+
+        private void delListMenuItem_Click(object sender, EventArgs e)
+        {
+            removeListButton_Click(sender, e);
+        }
+
+        private void addDocMenuItem_Click(object sender, EventArgs e)
+        {
+            addDocButton_Click(sender, e);
+        }
+
+        private void editDocMenuItem_Click(object sender, EventArgs e)
+        {
+            editDocButton_Click(sender, e);
+        }
+
+        private void changeTypeDocMenuItem_Click(object sender, EventArgs e)
+        {
+            changeTypedDocButton_Click(sender, e);
+        }
+
+        private void moveToOtherListMenuItem_Click(object sender, EventArgs e)
+        {
+            moveDocButton_Click(sender, e);
+        }
+
+        private void delDocMenuItem_Click(object sender, EventArgs e)
+        {
+            removeDocButton_Click(sender, e);
+        }
     }
 }
