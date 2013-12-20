@@ -14,7 +14,7 @@ namespace Pers_uchet_org
     {
         #region Поля
         // строка подключения к БД
-        private string _connection;
+        string _connection;
         // таблица
         DataTable _docTypesTable;
         // биндинг сорс для таблицы
@@ -39,7 +39,7 @@ namespace Pers_uchet_org
 
         private void ReplaceDocTypeForm_Load(object sender, EventArgs e)
         {
-            // иництализация таблиц
+            // инициализация таблиц
             _docTypesTable = DocTypes.CreatetTable();
 
             // инициализация биндинг сорса
@@ -66,9 +66,7 @@ namespace Pers_uchet_org
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
-            {
                 return;
-            }
             StajDohodForm.NewDocTypeId = (long)row[DocTypes.id];
         }
 

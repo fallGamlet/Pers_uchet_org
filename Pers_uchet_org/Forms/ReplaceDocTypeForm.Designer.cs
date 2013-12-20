@@ -45,9 +45,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(151, 13);
+            this.label1.Size = new System.Drawing.Size(295, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Выберите новый тип формы";
+            this.label1.Text = "Выберите новый тип формы для выбранных документов";
             // 
             // docTypesComboBox
             // 
@@ -55,13 +55,13 @@
             this.docTypesComboBox.FormattingEnabled = true;
             this.docTypesComboBox.Location = new System.Drawing.Point(15, 25);
             this.docTypesComboBox.Name = "docTypesComboBox";
-            this.docTypesComboBox.Size = new System.Drawing.Size(208, 21);
+            this.docTypesComboBox.Size = new System.Drawing.Size(292, 21);
             this.docTypesComboBox.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 49);
+            this.label2.Location = new System.Drawing.Point(12, 197);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(211, 13);
             this.label2.TabIndex = 2;
@@ -72,7 +72,7 @@
             this.groupBox1.Controls.Add(this.allDocsRadioButton);
             this.groupBox1.Controls.Add(this.checkedDocsRadioButton);
             this.groupBox1.Controls.Add(this.curDocRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(15, 65);
+            this.groupBox1.Location = new System.Drawing.Point(15, 213);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(208, 98);
             this.groupBox1.TabIndex = 3;
@@ -115,7 +115,7 @@
             // 
             this.replaceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.replaceButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.replaceButton.Location = new System.Drawing.Point(69, 171);
+            this.replaceButton.Location = new System.Drawing.Point(152, 53);
             this.replaceButton.Name = "replaceButton";
             this.replaceButton.Size = new System.Drawing.Size(75, 23);
             this.replaceButton.TabIndex = 4;
@@ -126,7 +126,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(150, 171);
+            this.cancelButton.Location = new System.Drawing.Point(233, 53);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 5;
@@ -139,7 +139,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(237, 206);
+            this.ClientSize = new System.Drawing.Size(320, 88);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.replaceButton);
             this.Controls.Add(this.groupBox1);
@@ -151,7 +151,7 @@
             this.MinimizeBox = false;
             this.Name = "ReplaceDocTypeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Замена типа формы документов \"СЗВ-1\"";
+            this.Text = "Замена типа формы документов СЗВ-1";
             this.Load += new System.EventHandler(this.ReplaceDocTypeForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

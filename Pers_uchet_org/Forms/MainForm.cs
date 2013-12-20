@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Pers_uchet_org.Forms;
+using JR.Utils.GUI.Forms;
 
 namespace Pers_uchet_org
 {
@@ -86,7 +87,32 @@ namespace Pers_uchet_org
 
         static public DialogResult ShowQuestionMessage(string message, string caption)
         {
-            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+        }
+
+        static public void ShowInfoFlexMessage(string message, string caption)
+        {
+            FlexibleMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        static public void ShowWarningFlexMessage(string message, string caption)
+        {
+            FlexibleMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        static public void ShowErrorFlexMessage(string message, string caption)
+        {
+            FlexibleMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        static public void ShowErrorFlexMessage(string err)
+        {
+            ShowErrorFlexMessage("Возникла непредвиденная ошибка в работе программы.\n" + err, "Ошибка в работе программы");
+        }
+
+        static public DialogResult ShowQuestionFlexMessage(string message, string caption)
+        {
+            return FlexibleMessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
 
         private void SetPrivilege()
