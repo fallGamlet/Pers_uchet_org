@@ -1,6 +1,6 @@
 ﻿namespace Pers_uchet_org
 {
-    partial class MoveDocumentForm
+    partial class CopyDocumentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,7 @@
             this.moveDocButton.Name = "moveDocButton";
             this.moveDocButton.Size = new System.Drawing.Size(88, 23);
             this.moveDocButton.TabIndex = 6;
-            this.moveDocButton.Text = "Переместить";
+            this.moveDocButton.Text = "Копировать";
             this.moveDocButton.UseVisualStyleBackColor = true;
             // 
             // MoveDocumentForm
@@ -90,7 +90,7 @@
             this.MinimizeBox = false;
             this.Name = "MoveDocumentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Перемещение документа(ов) СЗВ-1";
+            this.Text = "Копирование документа(ов) СЗВ-1";
             this.Load += new System.EventHandler(this.MoveDocumentForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

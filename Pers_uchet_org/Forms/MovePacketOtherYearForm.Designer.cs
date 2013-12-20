@@ -46,20 +46,19 @@
             // 
             // yearNumericUpDown
             // 
-            this.yearNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.yearNumericUpDown.Location = new System.Drawing.Point(77, 38);
+            this.yearNumericUpDown.Location = new System.Drawing.Point(73, 40);
             this.yearNumericUpDown.Maximum = new decimal(new int[] {
-            2050,
+            2100,
             0,
             0,
             0});
             this.yearNumericUpDown.Minimum = new decimal(new int[] {
-            2000,
+            1970,
             0,
             0,
             0});
             this.yearNumericUpDown.Name = "yearNumericUpDown";
-            this.yearNumericUpDown.Size = new System.Drawing.Size(82, 23);
+            this.yearNumericUpDown.Size = new System.Drawing.Size(82, 20);
             this.yearNumericUpDown.TabIndex = 1;
             this.yearNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.yearNumericUpDown.Value = new decimal(new int[] {
@@ -70,19 +69,21 @@
             // 
             // movePacketButton
             // 
+            this.movePacketButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.movePacketButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.movePacketButton.Location = new System.Drawing.Point(15, 67);
+            this.movePacketButton.Location = new System.Drawing.Point(46, 66);
             this.movePacketButton.Name = "movePacketButton";
-            this.movePacketButton.Size = new System.Drawing.Size(128, 23);
+            this.movePacketButton.Size = new System.Drawing.Size(99, 23);
             this.movePacketButton.TabIndex = 2;
-            this.movePacketButton.Text = "Переместить пакет";
+            this.movePacketButton.Text = "Переместить";
             this.movePacketButton.UseVisualStyleBackColor = true;
             this.movePacketButton.Click += new System.EventHandler(this.movePacketButton_Click);
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(149, 67);
+            this.cancelButton.Location = new System.Drawing.Point(151, 66);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
