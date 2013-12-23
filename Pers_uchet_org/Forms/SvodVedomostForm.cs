@@ -19,6 +19,9 @@ namespace Pers_uchet_org
         string _connection;
         Org _org;
         Operator _operator;
+
+        const string viewStateText = "Просмотреть";
+        const string editStateText = "Изменить";
         #endregion
 
         #region Конструктор и Инициализатор
@@ -33,14 +36,10 @@ namespace Pers_uchet_org
         private void SvodVedomostForm_Load(object sender, EventArgs e)
         {
             this.yearBox.Value = MainForm.RepYear;
-
             this.RefillData(MainForm.RepYear);
             this.mergeView.Sorted += new EventHandler(mergeView_Sorted);
-        }
-
-        void mergeView_Sorted(object sender, EventArgs e)
-        {
-            this.MarkActualRow();
+            _mergeBS.CurrentChanged += new EventHandler(_mergeBS_CurrentChanged);
+            _mergeBS.MoveLast();
         }
         #endregion
 
@@ -123,6 +122,30 @@ namespace Pers_uchet_org
         {
             MainForm.RepYear = (int)yearBox.Value;
             this.RefillData((int)yearBox.Value);
+        }
+
+        void mergeView_Sorted(object sender, EventArgs e)
+        {
+            this.MarkActualRow();
+        }
+
+        void _mergeBS_CurrentChanged(object sender, EventArgs e)
+        {
+            DataRowView curRow = _mergeBS.Current as DataRowView;
+            if (curRow == null)
+            {
+                this.editButton.Enabled = false;
+                return;
+            }
+            this.editButton.Enabled = true;
+            if ((bool)curRow[MergiesView.actual])
+            {
+                this.editButton.Text = editStateText;
+            }
+            else
+            {
+                this.editButton.Text = viewStateText;
+            }
         }
         #endregion
     }

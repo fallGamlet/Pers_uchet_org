@@ -50,10 +50,28 @@ namespace Pers_uchet_org.Forms
         }
         #endregion
 
+        #region Свойства
+        public long[] MarckedPackets
+        {
+            get
+            {
+                LinkedList<long> markedPackets = new LinkedList<long>();
+                foreach (DataRowView rowItem in _packetBS)
+                {
+                    if ((bool)rowItem[CHECK])
+                    {
+                        markedPackets.AddLast((long)rowItem[ListsView.id]);
+                    }
+                }
+                return markedPackets.ToArray();
+            }
+        }
+        #endregion
+
         #region Методы - обработчики событий
         private void saveButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
