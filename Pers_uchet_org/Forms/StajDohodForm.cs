@@ -342,7 +342,7 @@ namespace Pers_uchet_org
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
-                    menuItems.Add("copyToOtherYearMenuItem");
+                    //menuItems.Add("copyToOtherYearMenuItem");
                     menuItems.Add("copyToOtherOrgMenuItem");
                     for (int i = 0; i < menuItems.Count; i++)
                     {
@@ -478,6 +478,11 @@ namespace Pers_uchet_org
             addListStripButton_Click(sender, e);
         }
 
+        private void copyToOtherYearMenuItem_Click(object sender, EventArgs e)
+        {
+            copyToYearListStripButton_Click(sender, e);
+        }
+
         private void moveToOtherYearMenuItem_Click(object sender, EventArgs e)
         {
             moveToYearListStripButton_Click(sender, e);
@@ -609,7 +614,64 @@ namespace Pers_uchet_org
 
         private void copyToYearListStripButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (listsView.CurrentRow == null)
+                    return;
+                long listId = (long)listsView.CurrentRow.Cells["id"].Value;
+                CopyPacketOtherYearForm copyPacketOtherYear = new CopyPacketOtherYearForm(listId);
 
+                if (copyPacketOtherYear.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (MainForm.ShowQuestionMessage("Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Копирование пакета") == DialogResult.No)
+                        return;
+
+                    using (SQLiteConnection connection = new SQLiteConnection(_connection))
+                    {
+                        if (connection.State != ConnectionState.Open)
+                            connection.Open();
+                        using (SQLiteTransaction transaction = connection.BeginTransaction())
+                        {
+                            using (SQLiteCommand command = connection.CreateCommand())
+                            {
+                                command.Transaction = transaction;
+
+                                long newListId = -1;
+                                newListId = Lists.CopyListById(listId, connection, transaction);
+                                command.CommandText = Docs.GetSelectText(listId);
+
+                                List<long> docIdList = new List<long>();
+                                SQLiteDataReader reader = command.ExecuteReader();
+                                while (reader.Read())
+                                {
+                                    docIdList.Add(Convert.ToInt64(reader[Docs.id]));
+                                }
+
+                                CopyDocsByDocId(docIdList, newListId, connection, transaction);
+                                
+                                Lists.UpdateYear(newListId, NewRepYear, connection, transaction);
+
+                                long res = 0;
+                                //Сохранение в таблицу Fixdata
+                                res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, listId, _operator.nameVal, DateTime.Now, connection, transaction);
+                                if (res < 1)
+                                {
+                                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
+                                }
+                            }
+                            transaction.Commit();
+                        }
+                        connection.Close();
+                    }
+                    MainForm.ShowInfoFlexMessage("Копирование пакета успешно завершено!", "Копирование пакета");
+                    //Перезагрузка данных
+                    ReloadLists();
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка копирования пакета");
+            }
         }
 
         private void moveToYearListStripButton_Click(object sender, EventArgs e)
@@ -973,49 +1035,12 @@ namespace Pers_uchet_org
                             connection.Open();
                         using (SQLiteTransaction transaction = connection.BeginTransaction())
                         {
-                            using (SQLiteCommand command = connection.CreateCommand())
-                            {
-                                command.Transaction = transaction;
-                                long newDocId = -1;
-                                foreach (long oldDocId in docIdList)
-                                {
-
-                                    //Сохранение в таблицу Doc
-                                    newDocId = Docs.CopyDocByDocId(oldDocId, NewListId, connection, transaction);
-                                    if (newDocId < 1)
-                                        throw new SQLiteException("Невозможно создать документ.");
-
-                                    //Сохранение в таблицу Fixdata
-                                    command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.New, newDocId, _operator.nameVal, DateTime.Now);
-                                    if ((long)command.ExecuteScalar() < 1)
-                                    {
-                                        throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
-                                    }
-                                    int res = 0;
-                                    //Сохранение в таблицу IndDoc
-                                    res = IndDocs.CopyIndDocByDocId(oldDocId, newDocId, connection, transaction);
-                                    if (res < 1)
-                                    {
-                                        throw new SQLiteException("Невозможно создать документ. Таблица " + IndDocs.tablename + ".");
-                                    }
-                                    //Сохранение в таблицу Gen_period
-                                    res = GeneralPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
-                                    //Сохранение в таблицу Dop_period
-                                    res = DopPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
-                                    //Сохранение в таблицу Spec_period
-                                    res = SpecialPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
-                                    //Сохранение в таблицу Salary_Info
-                                    res = SalaryInfo.CopySalaryInfoByDocId(oldDocId, newDocId, connection, transaction);
-                                    if (res < 1)
-                                    {
-                                        throw new SQLiteException("Невозможно создать документ. Таблица " + SalaryInfo.tablename + ".");
-                                    }
-                                }
-                            }
+                            CopyDocsByDocId(docIdList, NewListId, connection, transaction);
                             transaction.Commit();
                         }
                         connection.Close();
                     }
+                    MainForm.ShowInfoFlexMessage("Копирование документов успешно завершено!", "Копирование документа(ов)");
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
                 }
             }
@@ -1024,7 +1049,7 @@ namespace Pers_uchet_org
                 MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка копирования документа(ов)");
             }
         }
-
+        
         private void moveToListDocStripButton_Click(object sender, EventArgs e)
         {
             try
@@ -1143,8 +1168,44 @@ namespace Pers_uchet_org
             _listsBS.RaiseListChangedEvents = true;
             _listsBS.ResetBindings(false);
         }
-        #endregion
 
-        
+        private void CopyDocsByDocId(List<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            long newDocId = -1;
+            foreach (long oldDocId in docIdList)
+            {
+                //Сохранение в таблицу Doc
+                newDocId = Docs.CopyDocByDocId(oldDocId, newListId, connection, transaction);
+                if (newDocId < 1)
+                    throw new SQLiteException("Невозможно создать документ.");
+
+                long res = 0;
+                //Сохранение в таблицу Fixdata
+                res = FixData.ExecReplaceText(Docs.tablename, FixData.FixType.New, newDocId, _operator.nameVal, DateTime.Now, connection, transaction);
+                if (res < 1)
+                {
+                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
+                }
+                //Сохранение в таблицу IndDoc
+                res = IndDocs.CopyIndDocByDocId(oldDocId, newDocId, connection, transaction);
+                if (res < 1)
+                {
+                    throw new SQLiteException("Невозможно создать документ. Таблица " + IndDocs.tablename + ".");
+                }
+                //Сохранение в таблицу Gen_period
+                res = GeneralPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
+                //Сохранение в таблицу Dop_period
+                res = DopPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
+                //Сохранение в таблицу Spec_period
+                res = SpecialPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
+                //Сохранение в таблицу Salary_Info
+                res = SalaryInfo.CopySalaryInfoByDocId(oldDocId, newDocId, connection, transaction);
+                if (res < 1)
+                {
+                    throw new SQLiteException("Невозможно создать документ. Таблица " + SalaryInfo.tablename + ".");
+                }
+            }
+        }
+        #endregion
     }
 }

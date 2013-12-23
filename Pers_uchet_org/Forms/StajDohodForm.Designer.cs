@@ -29,22 +29,28 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StajDohodForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listsView = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.list_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operatorRegColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datecreateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operatorEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripLists = new System.Windows.Forms.ToolStrip();
             this.addListStripButton = new System.Windows.Forms.ToolStripButton();
             this.delListStripButton = new System.Windows.Forms.ToolStripButton();
@@ -73,6 +79,16 @@
             this.copyToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.docView = new System.Windows.Forms.DataGridView();
+            this.idColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.socNumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.typeformColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operRegColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.regDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operChangeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.changeDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.docCountBox = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmsLists = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -99,22 +115,6 @@
             this.moveToOtherListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.delDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.list_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operatorRegColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datecreateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operatorEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.socNumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.typeformColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operRegColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.regDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operChangeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.changeDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yearBox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -199,14 +199,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listsView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.listsView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.listsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.listsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.listsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -215,27 +215,27 @@
             this.datecreateColumn,
             this.operatorEditColumn,
             this.dateEditColumn});
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.listsView.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.listsView.DefaultCellStyle = dataGridViewCellStyle14;
             this.listsView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.listsView.Location = new System.Drawing.Point(6, 44);
             this.listsView.MultiSelect = false;
             this.listsView.Name = "listsView";
             this.listsView.ReadOnly = true;
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.listsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.listsView.RowHeadersVisible = false;
             this.listsView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.listsView.Size = new System.Drawing.Size(882, 114);
@@ -243,6 +243,65 @@
             this.listsView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.listsView_CellMouseDown);
             this.listsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listsView_KeyDown);
             this.listsView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listsView_MouseClick);
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "№";
+            this.id.MaxInputLength = 50;
+            this.id.MinimumWidth = 50;
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 50;
+            // 
+            // list_type
+            // 
+            this.list_type.DataPropertyName = "name";
+            this.list_type.HeaderText = "Тип пакета";
+            this.list_type.Name = "list_type";
+            this.list_type.ReadOnly = true;
+            this.list_type.Width = 150;
+            // 
+            // operatorRegColumn
+            // 
+            this.operatorRegColumn.DataPropertyName = "name_reg";
+            this.operatorRegColumn.HeaderText = "Создал";
+            this.operatorRegColumn.MinimumWidth = 100;
+            this.operatorRegColumn.Name = "operatorRegColumn";
+            this.operatorRegColumn.ReadOnly = true;
+            // 
+            // datecreateColumn
+            // 
+            this.datecreateColumn.DataPropertyName = "reg_date";
+            dataGridViewCellStyle12.Format = "G";
+            dataGridViewCellStyle12.NullValue = null;
+            this.datecreateColumn.DefaultCellStyle = dataGridViewCellStyle12;
+            this.datecreateColumn.HeaderText = "Дата создания";
+            this.datecreateColumn.MaxInputLength = 50;
+            this.datecreateColumn.MinimumWidth = 80;
+            this.datecreateColumn.Name = "datecreateColumn";
+            this.datecreateColumn.ReadOnly = true;
+            this.datecreateColumn.Width = 150;
+            // 
+            // operatorEditColumn
+            // 
+            this.operatorEditColumn.DataPropertyName = "name_change";
+            this.operatorEditColumn.HeaderText = "Отредактировал";
+            this.operatorEditColumn.Name = "operatorEditColumn";
+            this.operatorEditColumn.ReadOnly = true;
+            // 
+            // dateEditColumn
+            // 
+            this.dateEditColumn.DataPropertyName = "change_date";
+            dataGridViewCellStyle13.Format = "G";
+            dataGridViewCellStyle13.NullValue = null;
+            this.dateEditColumn.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dateEditColumn.HeaderText = "Дата редактирования";
+            this.dateEditColumn.MaxInputLength = 50;
+            this.dateEditColumn.MinimumWidth = 80;
+            this.dateEditColumn.Name = "dateEditColumn";
+            this.dateEditColumn.ReadOnly = true;
+            this.dateEditColumn.Width = 150;
             // 
             // toolStripLists
             // 
@@ -322,7 +381,6 @@
             // 
             // copyToYearListStripButton
             // 
-            this.copyToYearListStripButton.Enabled = false;
             this.copyToYearListStripButton.Name = "copyToYearListStripButton";
             this.copyToYearListStripButton.Size = new System.Drawing.Size(275, 22);
             this.copyToYearListStripButton.Text = "Копировать в другой год";
@@ -507,14 +565,14 @@
             this.docView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.docView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.docView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.docView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.docView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.docView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.docView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idColumn,
@@ -527,25 +585,25 @@
             this.regDateColumn,
             this.operChangeColumn,
             this.changeDateColumn});
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.docView.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.docView.DefaultCellStyle = dataGridViewCellStyle19;
             this.docView.Location = new System.Drawing.Point(6, 44);
             this.docView.MultiSelect = false;
             this.docView.Name = "docView";
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.docView.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.docView.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
             this.docView.RowHeadersVisible = false;
             this.docView.RowHeadersWidth = 12;
             this.docView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -556,6 +614,104 @@
             this.docView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.docView_CellMouseDown);
             this.docView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.docView_KeyDown);
             this.docView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.docView_MouseClick);
+            // 
+            // idColumn
+            // 
+            this.idColumn.DataPropertyName = "id";
+            this.idColumn.HeaderText = "id";
+            this.idColumn.Name = "idColumn";
+            this.idColumn.Visible = false;
+            this.idColumn.Width = 21;
+            // 
+            // checkColumn
+            // 
+            this.checkColumn.DataPropertyName = "CHECK";
+            this.checkColumn.HeaderText = "*";
+            this.checkColumn.MinimumWidth = 25;
+            this.checkColumn.Name = "checkColumn";
+            this.checkColumn.Width = 25;
+            // 
+            // socNumColumn
+            // 
+            this.socNumColumn.DataPropertyName = "soc_number";
+            this.socNumColumn.HeaderText = "Страховой №";
+            this.socNumColumn.MaxInputLength = 100;
+            this.socNumColumn.MinimumWidth = 80;
+            this.socNumColumn.Name = "socNumColumn";
+            this.socNumColumn.ReadOnly = true;
+            this.socNumColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.socNumColumn.Width = 91;
+            // 
+            // fioColumn
+            // 
+            this.fioColumn.DataPropertyName = "fio";
+            this.fioColumn.HeaderText = "Фамилия И.О.";
+            this.fioColumn.MaxInputLength = 200;
+            this.fioColumn.MinimumWidth = 120;
+            this.fioColumn.Name = "fioColumn";
+            this.fioColumn.ReadOnly = true;
+            this.fioColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.fioColumn.Width = 120;
+            // 
+            // typeformColumn
+            // 
+            this.typeformColumn.DataPropertyName = "name";
+            this.typeformColumn.HeaderText = "Тип формы СЗВ";
+            this.typeformColumn.MaxInputLength = 200;
+            this.typeformColumn.MinimumWidth = 100;
+            this.typeformColumn.Name = "typeformColumn";
+            this.typeformColumn.ReadOnly = true;
+            this.typeformColumn.Width = 105;
+            // 
+            // categoryColumn
+            // 
+            this.categoryColumn.DataPropertyName = "code";
+            this.categoryColumn.HeaderText = "Категория";
+            this.categoryColumn.MaxInputLength = 100;
+            this.categoryColumn.MinimumWidth = 70;
+            this.categoryColumn.Name = "categoryColumn";
+            this.categoryColumn.ReadOnly = true;
+            this.categoryColumn.Width = 85;
+            // 
+            // operRegColumn
+            // 
+            this.operRegColumn.DataPropertyName = "name_reg";
+            this.operRegColumn.HeaderText = "Создал";
+            this.operRegColumn.MaxInputLength = 100;
+            this.operRegColumn.MinimumWidth = 100;
+            this.operRegColumn.Name = "operRegColumn";
+            this.operRegColumn.ReadOnly = true;
+            // 
+            // regDateColumn
+            // 
+            this.regDateColumn.DataPropertyName = "reg_date";
+            dataGridViewCellStyle17.Format = "G";
+            this.regDateColumn.DefaultCellStyle = dataGridViewCellStyle17;
+            this.regDateColumn.HeaderText = "Дата создания";
+            this.regDateColumn.MaxInputLength = 50;
+            this.regDateColumn.MinimumWidth = 70;
+            this.regDateColumn.Name = "regDateColumn";
+            this.regDateColumn.ReadOnly = true;
+            // 
+            // operChangeColumn
+            // 
+            this.operChangeColumn.DataPropertyName = "name_change";
+            this.operChangeColumn.HeaderText = "Отредактировал";
+            this.operChangeColumn.Name = "operChangeColumn";
+            this.operChangeColumn.ReadOnly = true;
+            this.operChangeColumn.Width = 116;
+            // 
+            // changeDateColumn
+            // 
+            this.changeDateColumn.DataPropertyName = "change_date";
+            dataGridViewCellStyle18.Format = "G";
+            this.changeDateColumn.DefaultCellStyle = dataGridViewCellStyle18;
+            this.changeDateColumn.HeaderText = "Дата редактирования";
+            this.changeDateColumn.MaxInputLength = 50;
+            this.changeDateColumn.MinimumWidth = 80;
+            this.changeDateColumn.Name = "changeDateColumn";
+            this.changeDateColumn.ReadOnly = true;
+            this.changeDateColumn.Width = 132;
             // 
             // docCountBox
             // 
@@ -593,7 +749,7 @@
             this.toolStripSeparator3,
             this.delListMenuItem});
             this.cmsLists.Name = "cmsLists";
-            this.cmsLists.Size = new System.Drawing.Size(276, 220);
+            this.cmsLists.Size = new System.Drawing.Size(276, 242);
             // 
             // addListMenuItem
             // 
@@ -635,6 +791,7 @@
             this.copyToOtherYearMenuItem.Name = "copyToOtherYearMenuItem";
             this.copyToOtherYearMenuItem.Size = new System.Drawing.Size(275, 22);
             this.copyToOtherYearMenuItem.Text = "Копировать в другой год";
+            this.copyToOtherYearMenuItem.Click += new System.EventHandler(this.copyToOtherYearMenuItem_Click);
             // 
             // moveToOtherYearMenuItem
             // 
@@ -746,163 +903,6 @@
             this.delDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.delDocMenuItem.Text = "Удалить";
             this.delDocMenuItem.Click += new System.EventHandler(this.delDocMenuItem_Click);
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "№";
-            this.id.MaxInputLength = 50;
-            this.id.MinimumWidth = 50;
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 50;
-            // 
-            // list_type
-            // 
-            this.list_type.DataPropertyName = "name";
-            this.list_type.HeaderText = "Тип пакета";
-            this.list_type.Name = "list_type";
-            this.list_type.ReadOnly = true;
-            this.list_type.Width = 150;
-            // 
-            // operatorRegColumn
-            // 
-            this.operatorRegColumn.DataPropertyName = "name_reg";
-            this.operatorRegColumn.HeaderText = "Создал";
-            this.operatorRegColumn.MinimumWidth = 100;
-            this.operatorRegColumn.Name = "operatorRegColumn";
-            this.operatorRegColumn.ReadOnly = true;
-            // 
-            // datecreateColumn
-            // 
-            this.datecreateColumn.DataPropertyName = "reg_date";
-            dataGridViewCellStyle22.Format = "G";
-            dataGridViewCellStyle22.NullValue = null;
-            this.datecreateColumn.DefaultCellStyle = dataGridViewCellStyle22;
-            this.datecreateColumn.HeaderText = "Дата создания";
-            this.datecreateColumn.MaxInputLength = 50;
-            this.datecreateColumn.MinimumWidth = 80;
-            this.datecreateColumn.Name = "datecreateColumn";
-            this.datecreateColumn.ReadOnly = true;
-            this.datecreateColumn.Width = 150;
-            // 
-            // operatorEditColumn
-            // 
-            this.operatorEditColumn.DataPropertyName = "name_change";
-            this.operatorEditColumn.HeaderText = "Отредактировал";
-            this.operatorEditColumn.Name = "operatorEditColumn";
-            this.operatorEditColumn.ReadOnly = true;
-            // 
-            // dateEditColumn
-            // 
-            this.dateEditColumn.DataPropertyName = "change_date";
-            dataGridViewCellStyle23.Format = "G";
-            dataGridViewCellStyle23.NullValue = null;
-            this.dateEditColumn.DefaultCellStyle = dataGridViewCellStyle23;
-            this.dateEditColumn.HeaderText = "Дата редактирования";
-            this.dateEditColumn.MaxInputLength = 50;
-            this.dateEditColumn.MinimumWidth = 80;
-            this.dateEditColumn.Name = "dateEditColumn";
-            this.dateEditColumn.ReadOnly = true;
-            this.dateEditColumn.Width = 150;
-            // 
-            // idColumn
-            // 
-            this.idColumn.DataPropertyName = "id";
-            this.idColumn.HeaderText = "id";
-            this.idColumn.Name = "idColumn";
-            this.idColumn.Visible = false;
-            this.idColumn.Width = 21;
-            // 
-            // checkColumn
-            // 
-            this.checkColumn.DataPropertyName = "CHECK";
-            this.checkColumn.HeaderText = "*";
-            this.checkColumn.MinimumWidth = 25;
-            this.checkColumn.Name = "checkColumn";
-            this.checkColumn.Width = 25;
-            // 
-            // socNumColumn
-            // 
-            this.socNumColumn.DataPropertyName = "soc_number";
-            this.socNumColumn.HeaderText = "Страховой №";
-            this.socNumColumn.MaxInputLength = 100;
-            this.socNumColumn.MinimumWidth = 80;
-            this.socNumColumn.Name = "socNumColumn";
-            this.socNumColumn.ReadOnly = true;
-            this.socNumColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.socNumColumn.Width = 99;
-            // 
-            // fioColumn
-            // 
-            this.fioColumn.DataPropertyName = "fio";
-            this.fioColumn.HeaderText = "Фамилия И.О.";
-            this.fioColumn.MaxInputLength = 200;
-            this.fioColumn.MinimumWidth = 120;
-            this.fioColumn.Name = "fioColumn";
-            this.fioColumn.ReadOnly = true;
-            this.fioColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fioColumn.Width = 120;
-            // 
-            // typeformColumn
-            // 
-            this.typeformColumn.DataPropertyName = "name";
-            this.typeformColumn.HeaderText = "Тип формы СЗВ";
-            this.typeformColumn.MaxInputLength = 200;
-            this.typeformColumn.MinimumWidth = 100;
-            this.typeformColumn.Name = "typeformColumn";
-            this.typeformColumn.ReadOnly = true;
-            this.typeformColumn.Width = 105;
-            // 
-            // categoryColumn
-            // 
-            this.categoryColumn.DataPropertyName = "code";
-            this.categoryColumn.HeaderText = "Категория";
-            this.categoryColumn.MaxInputLength = 100;
-            this.categoryColumn.MinimumWidth = 70;
-            this.categoryColumn.Name = "categoryColumn";
-            this.categoryColumn.ReadOnly = true;
-            this.categoryColumn.Width = 85;
-            // 
-            // operRegColumn
-            // 
-            this.operRegColumn.DataPropertyName = "name_reg";
-            this.operRegColumn.HeaderText = "Создал";
-            this.operRegColumn.MaxInputLength = 100;
-            this.operRegColumn.MinimumWidth = 100;
-            this.operRegColumn.Name = "operRegColumn";
-            this.operRegColumn.ReadOnly = true;
-            // 
-            // regDateColumn
-            // 
-            this.regDateColumn.DataPropertyName = "reg_date";
-            dataGridViewCellStyle27.Format = "G";
-            this.regDateColumn.DefaultCellStyle = dataGridViewCellStyle27;
-            this.regDateColumn.HeaderText = "Дата создания";
-            this.regDateColumn.MaxInputLength = 50;
-            this.regDateColumn.MinimumWidth = 70;
-            this.regDateColumn.Name = "regDateColumn";
-            this.regDateColumn.ReadOnly = true;
-            // 
-            // operChangeColumn
-            // 
-            this.operChangeColumn.DataPropertyName = "name_change";
-            this.operChangeColumn.HeaderText = "Отредактировал";
-            this.operChangeColumn.Name = "operChangeColumn";
-            this.operChangeColumn.ReadOnly = true;
-            this.operChangeColumn.Width = 116;
-            // 
-            // changeDateColumn
-            // 
-            this.changeDateColumn.DataPropertyName = "change_date";
-            dataGridViewCellStyle28.Format = "G";
-            this.changeDateColumn.DefaultCellStyle = dataGridViewCellStyle28;
-            this.changeDateColumn.HeaderText = "Дата редактирования";
-            this.changeDateColumn.MaxInputLength = 50;
-            this.changeDateColumn.MinimumWidth = 80;
-            this.changeDateColumn.Name = "changeDateColumn";
-            this.changeDateColumn.ReadOnly = true;
-            this.changeDateColumn.Width = 132;
             // 
             // StajDohodForm
             // 
