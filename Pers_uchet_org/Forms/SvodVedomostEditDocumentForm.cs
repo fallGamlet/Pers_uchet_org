@@ -104,7 +104,7 @@ namespace Pers_uchet_org
             if (_mergeRow == null)
             {
                 _mergeRow = MergiesView.CreateTable().NewRow();
-                _mergeRow[MergiesView.newDate] = DateTime.Now.ToString("yyyy-MM-dd");
+                _mergeRow[MergiesView.newDate] = DateTime.Now.ToString("yyyy-MM-dd H:mm:ss");
                 _mergeRow[MergiesView.id] = -1;
             }
             _mergeRow[MergiesView.listCount] = (int)this.packetcountBox.Value;

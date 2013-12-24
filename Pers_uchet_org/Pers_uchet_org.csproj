@@ -467,7 +467,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Storege.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="mathdll.dll" />

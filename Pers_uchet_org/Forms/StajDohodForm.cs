@@ -784,7 +784,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _connection);
+                ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _currentListId, _connection);
                 if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
