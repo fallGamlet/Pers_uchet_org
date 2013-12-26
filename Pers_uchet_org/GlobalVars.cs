@@ -2368,7 +2368,15 @@ namespace Pers_uchet_org
             return Convert.ToInt64(command.ExecuteScalar());
         }
 
-
+        static public string GetListsIdsText(long org_id, int rep_year, long doc_type, long person_id, long classpercent_id, IndDocs.Job job, long cur_doc_id)
+        {
+            return string.Format(@"SELECT DISTINCT l.{0} as id
+                                    FROM {1} l
+                                    INNER JOIN {2} d ON d.{3} = l.{0}
+                                    INNER JOIN {4} id ON id.{5} = d.{6}
+                                    WHERE {7} = {8} AND {9} = {10} AND {11} = {12} AND {13} = {14} AND {15} = {16} AND {17} = {18} AND d.{6} <> {19} ",
+                               id, tablename, Docs.tablename, Docs.listId, IndDocs.tablename, IndDocs.docId, Docs.id, orgID, org_id, repYear, rep_year, Docs.docTypeId, doc_type, Docs.personID, person_id, IndDocs.classpercentId, classpercent_id, IndDocs.isGeneral, (int)job, cur_doc_id);
+        }
 
         #endregion
     }

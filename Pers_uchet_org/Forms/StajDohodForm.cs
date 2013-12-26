@@ -559,7 +559,6 @@ namespace Pers_uchet_org
                         }
                         transaction.Commit();
                     }
-                    connection.Close();
                 }
                 //Перезагрузка данных
                 ReloadLists();
@@ -661,7 +660,6 @@ namespace Pers_uchet_org
                             }
                             transaction.Commit();
                         }
-                        connection.Close();
                     }
                     MainForm.ShowInfoFlexMessage("Копирование пакета успешно завершено!", "Копирование пакета");
                     //Перезагрузка данных
@@ -708,7 +706,6 @@ namespace Pers_uchet_org
                             }
                             transaction.Commit();
                         }
-                        connection.Close();
                     }
                     //Перезагрузка данных
                     ReloadLists();
@@ -768,7 +765,6 @@ namespace Pers_uchet_org
                             }
                             transaction.Commit();
                         }
-                        connection.Close();
                     }
                     //Перезагрузка данных
                     ReloadLists();
@@ -872,7 +868,6 @@ namespace Pers_uchet_org
                         }
                         transaction.Commit();
                     }
-                    connection.Close();
                 }
                 //Перезагрузка данных
                 int position = -1;
@@ -971,7 +966,6 @@ namespace Pers_uchet_org
                             }
                             transaction.Commit();
                         }
-                        connection.Close();
                     }
                 }
                 catch (Exception ex)
@@ -1038,7 +1032,6 @@ namespace Pers_uchet_org
                             CopyDocsByDocId(docIdList, NewListId, connection, transaction);
                             transaction.Commit();
                         }
-                        connection.Close();
                     }
                     MainForm.ShowInfoFlexMessage("Копирование документов успешно завершено!", "Копирование документа(ов)");
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
@@ -1106,7 +1099,6 @@ namespace Pers_uchet_org
                             }
                             transaction.Commit();
                         }
-                        connection.Close();
                     }
                     //Перезагрузка данных
                     //int position = -1;

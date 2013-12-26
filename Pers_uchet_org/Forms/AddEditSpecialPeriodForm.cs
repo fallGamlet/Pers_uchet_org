@@ -13,7 +13,7 @@ namespace Pers_uchet_org
     {
         #region Поля
         int _repYear;
-        bool _isNew;
+        //bool _isNew;
         BindingSource _classpercentView200BS;
         BindingSource _classpercentView300BS;
         BindingSource _classpercentView400BS;
@@ -53,7 +53,7 @@ namespace Pers_uchet_org
         {
             this._repYear = repYear;
             this._generalPeriodBS = generalPeriodBS;
-            this._isNew = true;
+            //this._isNew = true;
             this.Begin = DateTime.Parse(_repYear + "-01-01");
             this.End = DateTime.Parse(_repYear + "-12-31");
         }
@@ -70,17 +70,17 @@ namespace Pers_uchet_org
             this.Hour = hour;
             this.Minute = minute;
             this.Profession = profession;
-            this._isNew = false;
+            //this._isNew = false;
         }
 
         private void AddEditSpecialPeriodForm_Load(object sender, EventArgs e)
         {
-            beginDateTimePicker.Value = Begin;
             beginDateTimePicker.MinDate = DateTime.Parse(_repYear + "-01-01");
             beginDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
-            endDateTimePicker.Value = End;
-            endDateTimePicker.MinDate = beginDateTimePicker.Value;
             endDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
+
+            beginDateTimePicker.Value = Begin;
+            endDateTimePicker.Value = End;
 
             if (MainForm.ClasspercentViewTable != null)
             {
@@ -317,10 +317,18 @@ namespace Pers_uchet_org
 
         private void TimePicker_ValueChanged(object sender, EventArgs e)
         {
-            endDateTimePicker.MinDate = beginDateTimePicker.Value;
-            TimeSpan span = new TimeSpan();
-            span = endDateTimePicker.Value - beginDateTimePicker.Value;
-            daysNumUpDown.Value = Convert.ToDecimal(span.Days + 1);
+            try
+            {
+                endDateTimePicker.MinDate = beginDateTimePicker.Value;
+                TimeSpan span = new TimeSpan();
+                span = endDateTimePicker.Value - beginDateTimePicker.Value;
+                if (Convert.ToDecimal(span.Days + 1) <= daysNumUpDown.Maximum)
+                    daysNumUpDown.Value = Convert.ToDecimal(span.Days + 1);
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
         }
 
         private void NumUpDownFirst_ValueChanged(object sender, EventArgs e)
