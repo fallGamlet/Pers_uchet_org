@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlexibleMessageBox.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -308,6 +309,18 @@
     <Compile Include="Forms\SvodVedomostPrintForm.Designer.cs">
       <DependentUpon>SvodVedomostPrintForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CopyDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CopyDocumentForm.Designer.cs">
+      <DependentUpon>CopyDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CopyPacketOtherYearForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CopyPacketOtherYearForm.Designer.cs">
+      <DependentUpon>CopyPacketOtherYearForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalVars.cs" />
     <Compile Include="Gost.cs" />
     <Compile Include="Program.cs" />
@@ -429,6 +442,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SvodVedomostPrintForm.resx">
       <DependentUpon>SvodVedomostPrintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CopyDocumentForm.resx">
+      <DependentUpon>CopyDocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CopyPacketOtherYearForm.resx">
+      <DependentUpon>CopyPacketOtherYearForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

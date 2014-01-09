@@ -10,7 +10,7 @@ using System.Data.SQLite;
 
 namespace Pers_uchet_org
 {
-    public partial class MoveDocumentForm : Form
+    public partial class CopyDocumentForm : Form
     {
         #region Поля
         // строка подключения к БД
@@ -27,12 +27,12 @@ namespace Pers_uchet_org
         private int RepYear;
         #endregion
 
-        public MoveDocumentForm()
+        public CopyDocumentForm()
         {
             InitializeComponent();
         }
 
-        public MoveDocumentForm(Org _org, int RepYear, string _connection)
+        public CopyDocumentForm(Org _org, int RepYear, string _connection)
             : this()
         {
             this._org = _org;

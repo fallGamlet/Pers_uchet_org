@@ -29,28 +29,28 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             this.textBoxAnketaName = new System.Windows.Forms.TextBox();
             this.textBoxInsNum = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -189,7 +189,7 @@
             this.textBoxAnketaName.Location = new System.Drawing.Point(12, 12);
             this.textBoxAnketaName.Name = "textBoxAnketaName";
             this.textBoxAnketaName.ReadOnly = true;
-            this.textBoxAnketaName.Size = new System.Drawing.Size(769, 19);
+            this.textBoxAnketaName.Size = new System.Drawing.Size(768, 19);
             this.textBoxAnketaName.TabIndex = 0;
             this.textBoxAnketaName.TabStop = false;
             this.textBoxAnketaName.Text = "textBoxAnketaName";
@@ -204,7 +204,7 @@
             this.textBoxInsNum.Location = new System.Drawing.Point(12, 37);
             this.textBoxInsNum.Name = "textBoxInsNum";
             this.textBoxInsNum.ReadOnly = true;
-            this.textBoxInsNum.Size = new System.Drawing.Size(769, 13);
+            this.textBoxInsNum.Size = new System.Drawing.Size(768, 13);
             this.textBoxInsNum.TabIndex = 1;
             this.textBoxInsNum.TabStop = false;
             this.textBoxInsNum.Text = "textBoxInsNum";
@@ -214,7 +214,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(706, 479);
+            this.cancelButton.Location = new System.Drawing.Point(705, 479);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 7;
@@ -224,7 +224,7 @@
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(575, 479);
+            this.saveButton.Location = new System.Drawing.Point(574, 479);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(125, 23);
             this.saveButton.TabIndex = 8;
@@ -248,7 +248,7 @@
             this.tabPage3.Controls.Add(this.specialPeriodGroupBox);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(761, 391);
+            this.tabPage3.Size = new System.Drawing.Size(760, 391);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Сведения о стаже";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -266,7 +266,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 108);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(754, 108);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // generalPeriodGroupBox
@@ -278,7 +278,7 @@
             this.generalPeriodGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generalPeriodGroupBox.Location = new System.Drawing.Point(3, 3);
             this.generalPeriodGroupBox.Name = "generalPeriodGroupBox";
-            this.generalPeriodGroupBox.Size = new System.Drawing.Size(296, 102);
+            this.generalPeriodGroupBox.Size = new System.Drawing.Size(295, 102);
             this.generalPeriodGroupBox.TabIndex = 1;
             this.generalPeriodGroupBox.TabStop = false;
             this.generalPeriodGroupBox.Text = "Сведения о стаже";
@@ -286,7 +286,7 @@
             // delGeneralPeriodButton
             // 
             this.delGeneralPeriodButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.delGeneralPeriodButton.Location = new System.Drawing.Point(216, 74);
+            this.delGeneralPeriodButton.Location = new System.Drawing.Point(215, 74);
             this.delGeneralPeriodButton.Name = "delGeneralPeriodButton";
             this.delGeneralPeriodButton.Size = new System.Drawing.Size(74, 23);
             this.delGeneralPeriodButton.TabIndex = 4;
@@ -297,7 +297,7 @@
             // editGeneralPeriodButton
             // 
             this.editGeneralPeriodButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.editGeneralPeriodButton.Location = new System.Drawing.Point(216, 45);
+            this.editGeneralPeriodButton.Location = new System.Drawing.Point(215, 45);
             this.editGeneralPeriodButton.Name = "editGeneralPeriodButton";
             this.editGeneralPeriodButton.Size = new System.Drawing.Size(74, 23);
             this.editGeneralPeriodButton.TabIndex = 3;
@@ -308,7 +308,7 @@
             // addGeneralPeriodButton
             // 
             this.addGeneralPeriodButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addGeneralPeriodButton.Location = new System.Drawing.Point(216, 16);
+            this.addGeneralPeriodButton.Location = new System.Drawing.Point(215, 16);
             this.addGeneralPeriodButton.Name = "addGeneralPeriodButton";
             this.addGeneralPeriodButton.Size = new System.Drawing.Size(74, 23);
             this.addGeneralPeriodButton.TabIndex = 2;
@@ -328,28 +328,28 @@
             this.generalPeriodDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.generalPeriodDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.generalPeriodDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle45.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle45.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle45.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle45.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.generalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.generalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.generalPeriodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.generalPeriodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.beginGeneralPeriodColumn,
             this.endGeneralPeriodColumn});
-            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle48.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle48.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle48.Format = "C2";
-            dataGridViewCellStyle48.NullValue = "0.00";
-            dataGridViewCellStyle48.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle48.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle48.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.generalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.Format = "C2";
+            dataGridViewCellStyle4.NullValue = "0.00";
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.generalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             this.generalPeriodDataGridView.Location = new System.Drawing.Point(3, 16);
             this.generalPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.generalPeriodDataGridView.MultiSelect = false;
@@ -357,7 +357,7 @@
             this.generalPeriodDataGridView.ReadOnly = true;
             this.generalPeriodDataGridView.RowHeadersVisible = false;
             this.generalPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.generalPeriodDataGridView.Size = new System.Drawing.Size(210, 84);
+            this.generalPeriodDataGridView.Size = new System.Drawing.Size(209, 84);
             this.generalPeriodDataGridView.TabIndex = 1;
             this.generalPeriodDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.generalPeriodDataGridView_CellDoubleClick);
             this.generalPeriodDataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PeriodDataGridView_CellMouseDown);
@@ -366,10 +366,10 @@
             // 
             // beginGeneralPeriodColumn
             // 
-            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle46.Format = "d";
-            dataGridViewCellStyle46.NullValue = null;
-            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.beginGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.beginGeneralPeriodColumn.HeaderText = "Начало периода";
             this.beginGeneralPeriodColumn.MinimumWidth = 30;
             this.beginGeneralPeriodColumn.Name = "beginGeneralPeriodColumn";
@@ -378,10 +378,10 @@
             // 
             // endGeneralPeriodColumn
             // 
-            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle47.Format = "d";
-            dataGridViewCellStyle47.NullValue = null;
-            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.endGeneralPeriodColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.endGeneralPeriodColumn.HeaderText = "Конец периода";
             this.endGeneralPeriodColumn.MinimumWidth = 100;
             this.endGeneralPeriodColumn.Name = "endGeneralPeriodColumn";
@@ -395,7 +395,7 @@
             this.additionalPeriodGroupBox.Controls.Add(this.addAdditionalPeriodButton);
             this.additionalPeriodGroupBox.Controls.Add(this.additionalPeriodDataGridView);
             this.additionalPeriodGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.additionalPeriodGroupBox.Location = new System.Drawing.Point(305, 3);
+            this.additionalPeriodGroupBox.Location = new System.Drawing.Point(304, 3);
             this.additionalPeriodGroupBox.Name = "additionalPeriodGroupBox";
             this.additionalPeriodGroupBox.Size = new System.Drawing.Size(447, 102);
             this.additionalPeriodGroupBox.TabIndex = 2;
@@ -447,29 +447,29 @@
             this.additionalPeriodDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.additionalPeriodDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.additionalPeriodDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle49.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle49.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle49.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle49.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle49.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.additionalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.additionalPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.additionalPeriodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.additionalPeriodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.codeAdditionalPeriodColumn,
             this.beginAdditionalPeriodColumn,
             this.endAdditionalPeriodColumn});
-            dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle53.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle53.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle53.Format = "C2";
-            dataGridViewCellStyle53.NullValue = "0.00";
-            dataGridViewCellStyle53.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle53.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle53.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.additionalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle53;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.Format = "C2";
+            dataGridViewCellStyle9.NullValue = "0.00";
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.additionalPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle9;
             this.additionalPeriodDataGridView.Location = new System.Drawing.Point(3, 16);
             this.additionalPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.additionalPeriodDataGridView.MultiSelect = false;
@@ -481,12 +481,13 @@
             this.additionalPeriodDataGridView.TabIndex = 1;
             this.additionalPeriodDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.additionalPeriodDataGridView_CellDoubleClick);
             this.additionalPeriodDataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PeriodDataGridView_CellMouseDown);
+            this.additionalPeriodDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.additionalPeriodDataGridView_KeyDown);
             this.additionalPeriodDataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.additionalPeriodDataGridView_MouseClick);
             // 
             // codeAdditionalPeriodColumn
             // 
-            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.codeAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.codeAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle6;
             this.codeAdditionalPeriodColumn.FillWeight = 76.14214F;
             this.codeAdditionalPeriodColumn.HeaderText = "Код";
             this.codeAdditionalPeriodColumn.Name = "codeAdditionalPeriodColumn";
@@ -494,10 +495,10 @@
             // 
             // beginAdditionalPeriodColumn
             // 
-            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle51.Format = "d";
-            dataGridViewCellStyle51.NullValue = null;
-            this.beginAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "d";
+            dataGridViewCellStyle7.NullValue = null;
+            this.beginAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle7;
             this.beginAdditionalPeriodColumn.FillWeight = 111.9289F;
             this.beginAdditionalPeriodColumn.HeaderText = "Начало периода";
             this.beginAdditionalPeriodColumn.MinimumWidth = 30;
@@ -507,9 +508,9 @@
             // 
             // endAdditionalPeriodColumn
             // 
-            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle52.Format = "d";
-            this.endAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle52;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Format = "d";
+            this.endAdditionalPeriodColumn.DefaultCellStyle = dataGridViewCellStyle8;
             this.endAdditionalPeriodColumn.FillWeight = 111.9289F;
             this.endAdditionalPeriodColumn.HeaderText = "Конец периода";
             this.endAdditionalPeriodColumn.MinimumWidth = 100;
@@ -528,7 +529,7 @@
             this.specialPeriodGroupBox.Controls.Add(this.addSpecialPeriodButton);
             this.specialPeriodGroupBox.Location = new System.Drawing.Point(3, 114);
             this.specialPeriodGroupBox.Name = "specialPeriodGroupBox";
-            this.specialPeriodGroupBox.Size = new System.Drawing.Size(753, 274);
+            this.specialPeriodGroupBox.Size = new System.Drawing.Size(752, 274);
             this.specialPeriodGroupBox.TabIndex = 2;
             this.specialPeriodGroupBox.TabStop = false;
             this.specialPeriodGroupBox.Text = "Сведения о специальном стаже";
@@ -545,14 +546,14 @@
             this.specialPeriodDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.specialPeriodDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.specialPeriodDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle54.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle54.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle54.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.specialPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle54;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.specialPeriodDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.specialPeriodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.specialPeriodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.beginSpecialPeriodColumn,
@@ -565,14 +566,14 @@
             this.hoursColumn,
             this.minutesColumn,
             this.professionColumn});
-            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle57.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle57.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle57.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle57.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle57.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle57.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.specialPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.specialPeriodDataGridView.DefaultCellStyle = dataGridViewCellStyle13;
             this.specialPeriodDataGridView.Location = new System.Drawing.Point(3, 16);
             this.specialPeriodDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.specialPeriodDataGridView.MultiSelect = false;
@@ -580,17 +581,18 @@
             this.specialPeriodDataGridView.ReadOnly = true;
             this.specialPeriodDataGridView.RowHeadersVisible = false;
             this.specialPeriodDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.specialPeriodDataGridView.Size = new System.Drawing.Size(667, 255);
+            this.specialPeriodDataGridView.Size = new System.Drawing.Size(666, 255);
             this.specialPeriodDataGridView.TabIndex = 1;
             this.specialPeriodDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.specialPeriodDataGridView_CellDoubleClick);
             this.specialPeriodDataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PeriodDataGridView_CellMouseDown);
+            this.specialPeriodDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.specialPeriodDataGridView_KeyDown);
             this.specialPeriodDataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.specialPeriodDataGridView_MouseClick);
             // 
             // beginSpecialPeriodColumn
             // 
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle55.Format = "d";
-            this.beginSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Format = "d";
+            this.beginSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.beginSpecialPeriodColumn.HeaderText = "Начало периода";
             this.beginSpecialPeriodColumn.Name = "beginSpecialPeriodColumn";
             this.beginSpecialPeriodColumn.ReadOnly = true;
@@ -598,9 +600,9 @@
             // 
             // endSpecialPeriodColumn
             // 
-            dataGridViewCellStyle56.Format = "d";
-            dataGridViewCellStyle56.NullValue = "0,00";
-            this.endSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle12.Format = "d";
+            dataGridViewCellStyle12.NullValue = "0,00";
+            this.endSpecialPeriodColumn.DefaultCellStyle = dataGridViewCellStyle12;
             this.endSpecialPeriodColumn.HeaderText = "Конец периода";
             this.endSpecialPeriodColumn.Name = "endSpecialPeriodColumn";
             this.endSpecialPeriodColumn.ReadOnly = true;
@@ -657,7 +659,7 @@
             // delSpecialPeriodButton
             // 
             this.delSpecialPeriodButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.delSpecialPeriodButton.Location = new System.Drawing.Point(673, 74);
+            this.delSpecialPeriodButton.Location = new System.Drawing.Point(672, 74);
             this.delSpecialPeriodButton.Name = "delSpecialPeriodButton";
             this.delSpecialPeriodButton.Size = new System.Drawing.Size(74, 23);
             this.delSpecialPeriodButton.TabIndex = 4;
@@ -668,7 +670,7 @@
             // editSpecialPeriodButton
             // 
             this.editSpecialPeriodButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.editSpecialPeriodButton.Location = new System.Drawing.Point(673, 45);
+            this.editSpecialPeriodButton.Location = new System.Drawing.Point(672, 45);
             this.editSpecialPeriodButton.Name = "editSpecialPeriodButton";
             this.editSpecialPeriodButton.Size = new System.Drawing.Size(74, 23);
             this.editSpecialPeriodButton.TabIndex = 3;
@@ -679,7 +681,7 @@
             // addSpecialPeriodButton
             // 
             this.addSpecialPeriodButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addSpecialPeriodButton.Location = new System.Drawing.Point(673, 16);
+            this.addSpecialPeriodButton.Location = new System.Drawing.Point(672, 16);
             this.addSpecialPeriodButton.Name = "addSpecialPeriodButton";
             this.addSpecialPeriodButton.Size = new System.Drawing.Size(74, 23);
             this.addSpecialPeriodButton.TabIndex = 2;
@@ -744,7 +746,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(761, 391);
+            this.tabPage2.Size = new System.Drawing.Size(760, 391);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Сведения о доходе";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -918,14 +920,14 @@
             this.dataViewProfit.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataViewProfit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataViewProfit.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle58.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle58.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle58.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle58.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle58.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataViewProfit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataViewProfit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.dataViewProfit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataViewProfit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column0,
@@ -935,16 +937,16 @@
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle66.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle66.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle66.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle66.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle66.Format = "C2";
-            dataGridViewCellStyle66.NullValue = "0.00";
-            dataGridViewCellStyle66.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle66.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle66.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataViewProfit.DefaultCellStyle = dataGridViewCellStyle66;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle22.Format = "C2";
+            dataGridViewCellStyle22.NullValue = "0.00";
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataViewProfit.DefaultCellStyle = dataGridViewCellStyle22;
             this.dataViewProfit.Location = new System.Drawing.Point(3, 3);
             this.dataViewProfit.Margin = new System.Windows.Forms.Padding(0);
             this.dataViewProfit.MultiSelect = false;
@@ -964,9 +966,9 @@
             // Column0
             // 
             this.Column0.DataPropertyName = "month";
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle59.Format = "N0";
-            this.Column0.DefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Format = "N0";
+            this.Column0.DefaultCellStyle = dataGridViewCellStyle15;
             this.Column0.FillWeight = 37.28362F;
             this.Column0.HeaderText = "Месяц";
             this.Column0.MinimumWidth = 30;
@@ -978,9 +980,9 @@
             // Column1
             // 
             this.Column1.DataPropertyName = "1";
-            dataGridViewCellStyle60.Format = "N2";
-            dataGridViewCellStyle60.NullValue = "0,00";
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle16.Format = "N2";
+            dataGridViewCellStyle16.NullValue = "0,00";
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle16;
             this.Column1.FillWeight = 121.3694F;
             this.Column1.HeaderText = "Сумма дохода на который начислены страховые взносы";
             this.Column1.MinimumWidth = 100;
@@ -992,9 +994,9 @@
             // Column2
             // 
             this.Column2.DataPropertyName = "2";
-            dataGridViewCellStyle61.Format = "N2";
-            dataGridViewCellStyle61.NullValue = "0,00";
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle61;
+            dataGridViewCellStyle17.Format = "N2";
+            dataGridViewCellStyle17.NullValue = "0,00";
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle17;
             this.Column2.FillWeight = 117.4522F;
             this.Column2.HeaderText = "Выплаты, учитываемые для назначения пенсии";
             this.Column2.MinimumWidth = 100;
@@ -1005,9 +1007,9 @@
             // Column3
             // 
             this.Column3.DataPropertyName = "3";
-            dataGridViewCellStyle62.Format = "N2";
-            dataGridViewCellStyle62.NullValue = "0,00";
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle62;
+            dataGridViewCellStyle18.Format = "N2";
+            dataGridViewCellStyle18.NullValue = "0,00";
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle18;
             this.Column3.FillWeight = 114.1609F;
             this.Column3.HeaderText = "Страховые взносы начисленные страхователем";
             this.Column3.MinimumWidth = 100;
@@ -1018,9 +1020,9 @@
             // Column4
             // 
             this.Column4.DataPropertyName = "4";
-            dataGridViewCellStyle63.Format = "N2";
-            dataGridViewCellStyle63.NullValue = "0,00";
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle63;
+            dataGridViewCellStyle19.Format = "N2";
+            dataGridViewCellStyle19.NullValue = "0,00";
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle19;
             this.Column4.FillWeight = 111.3955F;
             this.Column4.HeaderText = "Страховые взносы уплаченные страхователем";
             this.Column4.MinimumWidth = 100;
@@ -1031,9 +1033,9 @@
             // Column5
             // 
             this.Column5.DataPropertyName = "5";
-            dataGridViewCellStyle64.Format = "N2";
-            dataGridViewCellStyle64.NullValue = "0,00";
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle20.Format = "N2";
+            dataGridViewCellStyle20.NullValue = "0,00";
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle20;
             this.Column5.FillWeight = 109.0719F;
             this.Column5.HeaderText = "Сумма обязательных страховых взносов";
             this.Column5.MinimumWidth = 100;
@@ -1044,9 +1046,9 @@
             // Column6
             // 
             this.Column6.DataPropertyName = "10";
-            dataGridViewCellStyle65.Format = "N0";
-            dataGridViewCellStyle65.NullValue = "0";
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle65;
+            dataGridViewCellStyle21.Format = "N0";
+            dataGridViewCellStyle21.NullValue = "0";
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle21;
             this.Column6.FillWeight = 89.2664F;
             this.Column6.HeaderText = "Фактически отработанных дней";
             this.Column6.MinimumWidth = 50;
@@ -1167,7 +1169,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(761, 391);
+            this.tabPage1.Size = new System.Drawing.Size(760, 391);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные сведения";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1179,7 +1181,7 @@
             this.info2GroupBox.Controls.Add(this.label11);
             this.info2GroupBox.Controls.Add(this.sum5TextBox);
             this.info2GroupBox.Controls.Add(this.label12);
-            this.info2GroupBox.Location = new System.Drawing.Point(329, 304);
+            this.info2GroupBox.Location = new System.Drawing.Point(353, 307);
             this.info2GroupBox.Name = "info2GroupBox";
             this.info2GroupBox.Size = new System.Drawing.Size(401, 81);
             this.info2GroupBox.TabIndex = 22;
@@ -1232,7 +1234,7 @@
             // 
             this.yearGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.yearGroupBox.Controls.Add(this.yearLabel);
-            this.yearGroupBox.Location = new System.Drawing.Point(623, 6);
+            this.yearGroupBox.Location = new System.Drawing.Point(647, 6);
             this.yearGroupBox.Name = "yearGroupBox";
             this.yearGroupBox.Size = new System.Drawing.Size(107, 75);
             this.yearGroupBox.TabIndex = 8;
@@ -1260,7 +1262,7 @@
             this.infoGroupBox.Controls.Add(this.label1);
             this.infoGroupBox.Location = new System.Drawing.Point(6, 304);
             this.infoGroupBox.Name = "infoGroupBox";
-            this.infoGroupBox.Size = new System.Drawing.Size(317, 81);
+            this.infoGroupBox.Size = new System.Drawing.Size(341, 81);
             this.infoGroupBox.TabIndex = 18;
             this.infoGroupBox.TabStop = false;
             this.infoGroupBox.Text = "Сведения о работодателе";
@@ -1272,7 +1274,7 @@
             this.orgNameTextBox.Location = new System.Drawing.Point(95, 19);
             this.orgNameTextBox.Name = "orgNameTextBox";
             this.orgNameTextBox.ReadOnly = true;
-            this.orgNameTextBox.Size = new System.Drawing.Size(216, 20);
+            this.orgNameTextBox.Size = new System.Drawing.Size(240, 20);
             this.orgNameTextBox.TabIndex = 15;
             this.orgNameTextBox.TabStop = false;
             // 
@@ -1292,7 +1294,7 @@
             this.regNumTextBox.Location = new System.Drawing.Point(145, 48);
             this.regNumTextBox.Name = "regNumTextBox";
             this.regNumTextBox.ReadOnly = true;
-            this.regNumTextBox.Size = new System.Drawing.Size(166, 20);
+            this.regNumTextBox.Size = new System.Drawing.Size(190, 20);
             this.regNumTextBox.TabIndex = 13;
             this.regNumTextBox.TabStop = false;
             // 
@@ -1313,7 +1315,7 @@
             this.codeGroupBox.Controls.Add(this.codeComboBox);
             this.codeGroupBox.Location = new System.Drawing.Point(136, 6);
             this.codeGroupBox.Name = "codeGroupBox";
-            this.codeGroupBox.Size = new System.Drawing.Size(294, 75);
+            this.codeGroupBox.Size = new System.Drawing.Size(318, 75);
             this.codeGroupBox.TabIndex = 2;
             this.codeGroupBox.TabStop = false;
             this.codeGroupBox.Text = "Код категории застрахованного лица";
@@ -1322,7 +1324,7 @@
             // 
             this.percentLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.percentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.percentLabel.Location = new System.Drawing.Point(108, 43);
+            this.percentLabel.Location = new System.Drawing.Point(120, 43);
             this.percentLabel.Name = "percentLabel";
             this.percentLabel.Size = new System.Drawing.Size(74, 24);
             this.percentLabel.TabIndex = 6;
@@ -1337,7 +1339,7 @@
             this.codeComboBox.FormattingEnabled = true;
             this.codeComboBox.Location = new System.Drawing.Point(6, 19);
             this.codeComboBox.Name = "codeComboBox";
-            this.codeComboBox.Size = new System.Drawing.Size(282, 21);
+            this.codeComboBox.Size = new System.Drawing.Size(306, 21);
             this.codeComboBox.TabIndex = 1;
             // 
             // workPlaceGroupBox
@@ -1380,7 +1382,7 @@
             this.citizenshipGroupBox.Controls.Add(this.citizen2Box);
             this.citizenshipGroupBox.Controls.Add(this.label3);
             this.citizenshipGroupBox.Controls.Add(this.citizen1Box);
-            this.citizenshipGroupBox.Location = new System.Drawing.Point(436, 6);
+            this.citizenshipGroupBox.Location = new System.Drawing.Point(460, 6);
             this.citizenshipGroupBox.Name = "citizenshipGroupBox";
             this.citizenshipGroupBox.Size = new System.Drawing.Size(181, 75);
             this.citizenshipGroupBox.TabIndex = 3;
@@ -1436,7 +1438,7 @@
             this.tabControlMain.Multiline = true;
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(769, 417);
+            this.tabControlMain.Size = new System.Drawing.Size(768, 417);
             this.tabControlMain.TabIndex = 2;
             // 
             // cmsAdditionalPeriod
@@ -1505,7 +1507,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(793, 514);
+            this.ClientSize = new System.Drawing.Size(792, 514);
             this.Controls.Add(this.previewButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);

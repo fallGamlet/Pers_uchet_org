@@ -1,6 +1,6 @@
 ﻿namespace Pers_uchet_org
 {
-    partial class MovePacketOtherYearForm
+    partial class CopyPacketOtherYearForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.labelMain = new System.Windows.Forms.Label();
             this.yearNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.movePacketButton = new System.Windows.Forms.Button();
+            this.copyPacketButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.yearNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -42,7 +42,7 @@
             this.labelMain.Name = "labelMain";
             this.labelMain.Size = new System.Drawing.Size(211, 26);
             this.labelMain.TabIndex = 0;
-            this.labelMain.Text = "Укажите отчетный год, в который будет\r\nперемещен пакет № ";
+            this.labelMain.Text = "Укажите отчетный год, в который будет\r\nскопирован пакет № ";
             // 
             // yearNumericUpDown
             // 
@@ -67,17 +67,17 @@
             0,
             0});
             // 
-            // movePacketButton
+            // copyPacketButton
             // 
-            this.movePacketButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.movePacketButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.movePacketButton.Location = new System.Drawing.Point(46, 66);
-            this.movePacketButton.Name = "movePacketButton";
-            this.movePacketButton.Size = new System.Drawing.Size(99, 23);
-            this.movePacketButton.TabIndex = 2;
-            this.movePacketButton.Text = "Переместить";
-            this.movePacketButton.UseVisualStyleBackColor = true;
-            this.movePacketButton.Click += new System.EventHandler(this.movePacketButton_Click);
+            this.copyPacketButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.copyPacketButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.copyPacketButton.Location = new System.Drawing.Point(46, 66);
+            this.copyPacketButton.Name = "copyPacketButton";
+            this.copyPacketButton.Size = new System.Drawing.Size(99, 23);
+            this.copyPacketButton.TabIndex = 2;
+            this.copyPacketButton.Text = "Копировать";
+            this.copyPacketButton.UseVisualStyleBackColor = true;
+            this.copyPacketButton.Click += new System.EventHandler(this.copyPacketButton_Click);
             // 
             // cancelButton
             // 
@@ -92,13 +92,13 @@
             // 
             // MovePacketOtherYearForm
             // 
-            this.AcceptButton = this.movePacketButton;
+            this.AcceptButton = this.copyPacketButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(238, 101);
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.movePacketButton);
+            this.Controls.Add(this.copyPacketButton);
             this.Controls.Add(this.yearNumericUpDown);
             this.Controls.Add(this.labelMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -106,8 +106,8 @@
             this.MinimizeBox = false;
             this.Name = "MovePacketOtherYearForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Перемещение пакета в другой год";
-            this.Load += new System.EventHandler(this.MovePacketOtherYearForm_Load);
+            this.Text = "Копирование пакета в другой год";
+            this.Load += new System.EventHandler(this.CopyPacketOtherYearForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.yearNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -118,7 +118,7 @@
 
         private System.Windows.Forms.Label labelMain;
         private System.Windows.Forms.NumericUpDown yearNumericUpDown;
-        private System.Windows.Forms.Button movePacketButton;
+        private System.Windows.Forms.Button copyPacketButton;
         private System.Windows.Forms.Button cancelButton;
     }
 }

@@ -28,41 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StajDohodForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.packetcountBox = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.movePacketYearButton = new System.Windows.Forms.Button();
-            this.printButton = new System.Windows.Forms.Button();
-            this.calculateButton = new System.Windows.Forms.Button();
-            this.reestrButton = new System.Windows.Forms.Button();
-            this.movePacketOrgButton = new System.Windows.Forms.Button();
-            this.removeButton = new System.Windows.Forms.Button();
-            this.addButton = new System.Windows.Forms.Button();
             this.listsView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.list_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operatorRegColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.datecreateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operatorEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateredactColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripLists = new System.Windows.Forms.ToolStrip();
+            this.addListStripButton = new System.Windows.Forms.ToolStripButton();
+            this.delListStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.listStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.reestrListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.calcListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.printFioListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToYearListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToYearListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToOrgListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToOrgListStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.packetcountBox = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.docCountBox = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.changeTypedDocButton = new System.Windows.Forms.Button();
-            this.printFormButton = new System.Windows.Forms.Button();
-            this.moveDocButton = new System.Windows.Forms.Button();
-            this.removeDocButton = new System.Windows.Forms.Button();
-            this.editDocButton = new System.Windows.Forms.Button();
-            this.addDocButton = new System.Windows.Forms.Button();
+            this.toolStripDocs = new System.Windows.Forms.ToolStrip();
+            this.addDocStripButton = new System.Windows.Forms.ToolStripButton();
+            this.editDocStripButton = new System.Windows.Forms.ToolStripButton();
+            this.delDocStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.changeTypeDocStripButton = new System.Windows.Forms.ToolStripButton();
+            this.printDocStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.docStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.previewDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.docView = new System.Windows.Forms.DataGridView();
             this.idColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -74,12 +89,42 @@
             this.regDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operChangeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.changeDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.docCountBox = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmsLists = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewOpisMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calcMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.copyToOtherYearMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToOtherYearMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToOtherOrgMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToOtherOrgMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.delListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsDocs = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.changeTypeDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previewDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.copyToOtherListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToOtherListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.delDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yearBox)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listsView)).BeginInit();
+            this.toolStripLists.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.toolStripDocs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.docView)).BeginInit();
+            this.cmsLists.SuspendLayout();
+            this.cmsDocs.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -87,7 +132,7 @@
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox1.Controls.Add(this.yearBox);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(327, 1);
+            this.groupBox1.Location = new System.Drawing.Point(373, 1);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(166, 43);
@@ -133,122 +178,17 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.listsView);
+            this.groupBox2.Controls.Add(this.toolStripLists);
             this.groupBox2.Controls.Add(this.packetcountBox);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.movePacketYearButton);
-            this.groupBox2.Controls.Add(this.printButton);
-            this.groupBox2.Controls.Add(this.calculateButton);
-            this.groupBox2.Controls.Add(this.reestrButton);
-            this.groupBox2.Controls.Add(this.movePacketOrgButton);
-            this.groupBox2.Controls.Add(this.removeButton);
-            this.groupBox2.Controls.Add(this.addButton);
-            this.groupBox2.Controls.Add(this.listsView);
             this.groupBox2.Location = new System.Drawing.Point(10, 46);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(910, 177);
+            this.groupBox2.Size = new System.Drawing.Size(894, 177);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Пакеты документов СЗВ-1";
-            // 
-            // packetcountBox
-            // 
-            this.packetcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.packetcountBox.Location = new System.Drawing.Point(93, 161);
-            this.packetcountBox.Name = "packetcountBox";
-            this.packetcountBox.Size = new System.Drawing.Size(28, 13);
-            this.packetcountBox.TabIndex = 10;
-            this.packetcountBox.Text = "0";
-            this.packetcountBox.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 161);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Всего пакетов:";
-            // 
-            // movePacketYearButton
-            // 
-            this.movePacketYearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.movePacketYearButton.Location = new System.Drawing.Point(710, 106);
-            this.movePacketYearButton.Name = "movePacketYearButton";
-            this.movePacketYearButton.Size = new System.Drawing.Size(194, 23);
-            this.movePacketYearButton.TabIndex = 8;
-            this.movePacketYearButton.Text = "Переместить в другой год...";
-            this.movePacketYearButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.movePacketYearButton.UseVisualStyleBackColor = true;
-            this.movePacketYearButton.Click += new System.EventHandler(this.movePacketYearButton_Click);
-            // 
-            // printButton
-            // 
-            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.printButton.Location = new System.Drawing.Point(710, 77);
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(194, 23);
-            this.printButton.TabIndex = 7;
-            this.printButton.Text = "Печать пофамильного списка...";
-            this.printButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.printButton.UseVisualStyleBackColor = true;
-            // 
-            // calculateButton
-            // 
-            this.calculateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.calculateButton.Location = new System.Drawing.Point(710, 48);
-            this.calculateButton.Name = "calculateButton";
-            this.calculateButton.Size = new System.Drawing.Size(194, 23);
-            this.calculateButton.TabIndex = 6;
-            this.calculateButton.Text = "Калькуляция по пакету...";
-            this.calculateButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calculateButton.UseVisualStyleBackColor = true;
-            // 
-            // reestrButton
-            // 
-            this.reestrButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.reestrButton.Location = new System.Drawing.Point(710, 19);
-            this.reestrButton.Name = "reestrButton";
-            this.reestrButton.Size = new System.Drawing.Size(194, 23);
-            this.reestrButton.TabIndex = 5;
-            this.reestrButton.Text = "Просмотреть опись \"СЗВ-2\"...";
-            this.reestrButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.reestrButton.UseVisualStyleBackColor = true;
-            // 
-            // movePacketOrgButton
-            // 
-            this.movePacketOrgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.movePacketOrgButton.Location = new System.Drawing.Point(710, 135);
-            this.movePacketOrgButton.Name = "movePacketOrgButton";
-            this.movePacketOrgButton.Size = new System.Drawing.Size(194, 23);
-            this.movePacketOrgButton.TabIndex = 4;
-            this.movePacketOrgButton.Text = "Переместить в организацию...";
-            this.movePacketOrgButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.movePacketOrgButton.UseVisualStyleBackColor = true;
-            this.movePacketOrgButton.Click += new System.EventHandler(this.movePacketOrgButton_Click);
-            // 
-            // removeButton
-            // 
-            this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.removeButton.Location = new System.Drawing.Point(616, 48);
-            this.removeButton.Name = "removeButton";
-            this.removeButton.Size = new System.Drawing.Size(88, 23);
-            this.removeButton.TabIndex = 3;
-            this.removeButton.Text = "Удалить";
-            this.removeButton.UseVisualStyleBackColor = true;
-            this.removeButton.Click += new System.EventHandler(this.removeListButton_Click);
-            // 
-            // addButton
-            // 
-            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.Location = new System.Drawing.Point(616, 19);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(88, 23);
-            this.addButton.TabIndex = 1;
-            this.addButton.Text = "Добавить";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addListButton_Click);
             // 
             // listsView
             // 
@@ -259,14 +199,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listsView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.listsView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.listsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.listsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.listsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -274,32 +214,35 @@
             this.operatorRegColumn,
             this.datecreateColumn,
             this.operatorEditColumn,
-            this.dateredactColumn});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.listsView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dateEditColumn});
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.listsView.DefaultCellStyle = dataGridViewCellStyle14;
             this.listsView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.listsView.Location = new System.Drawing.Point(6, 19);
+            this.listsView.Location = new System.Drawing.Point(6, 44);
             this.listsView.MultiSelect = false;
             this.listsView.Name = "listsView";
             this.listsView.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.listsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.listsView.RowHeadersVisible = false;
             this.listsView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.listsView.Size = new System.Drawing.Size(604, 139);
-            this.listsView.TabIndex = 0;
+            this.listsView.Size = new System.Drawing.Size(882, 114);
+            this.listsView.TabIndex = 1;
+            this.listsView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.listsView_CellMouseDown);
+            this.listsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listsView_KeyDown);
+            this.listsView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listsView_MouseClick);
             // 
             // id
             // 
@@ -322,7 +265,7 @@
             // operatorRegColumn
             // 
             this.operatorRegColumn.DataPropertyName = "name_reg";
-            this.operatorRegColumn.HeaderText = "Ввёл";
+            this.operatorRegColumn.HeaderText = "Создал";
             this.operatorRegColumn.MinimumWidth = 100;
             this.operatorRegColumn.Name = "operatorRegColumn";
             this.operatorRegColumn.ReadOnly = true;
@@ -330,11 +273,15 @@
             // datecreateColumn
             // 
             this.datecreateColumn.DataPropertyName = "reg_date";
+            dataGridViewCellStyle12.Format = "G";
+            dataGridViewCellStyle12.NullValue = null;
+            this.datecreateColumn.DefaultCellStyle = dataGridViewCellStyle12;
             this.datecreateColumn.HeaderText = "Дата создания";
             this.datecreateColumn.MaxInputLength = 50;
             this.datecreateColumn.MinimumWidth = 80;
             this.datecreateColumn.Name = "datecreateColumn";
             this.datecreateColumn.ReadOnly = true;
+            this.datecreateColumn.Width = 150;
             // 
             // operatorEditColumn
             // 
@@ -343,122 +290,269 @@
             this.operatorEditColumn.Name = "operatorEditColumn";
             this.operatorEditColumn.ReadOnly = true;
             // 
-            // dateredactColumn
+            // dateEditColumn
             // 
-            this.dateredactColumn.DataPropertyName = "change_date";
-            this.dateredactColumn.HeaderText = "Дата редактирования";
-            this.dateredactColumn.MaxInputLength = 50;
-            this.dateredactColumn.MinimumWidth = 80;
-            this.dateredactColumn.Name = "dateredactColumn";
-            this.dateredactColumn.ReadOnly = true;
+            this.dateEditColumn.DataPropertyName = "change_date";
+            dataGridViewCellStyle13.Format = "G";
+            dataGridViewCellStyle13.NullValue = null;
+            this.dateEditColumn.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dateEditColumn.HeaderText = "Дата редактирования";
+            this.dateEditColumn.MaxInputLength = 50;
+            this.dateEditColumn.MinimumWidth = 80;
+            this.dateEditColumn.Name = "dateEditColumn";
+            this.dateEditColumn.ReadOnly = true;
+            this.dateEditColumn.Width = 150;
+            // 
+            // toolStripLists
+            // 
+            this.toolStripLists.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripLists.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripLists.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addListStripButton,
+            this.delListStripButton,
+            this.toolStripSeparator7,
+            this.listStripDropDownButton1});
+            this.toolStripLists.Location = new System.Drawing.Point(6, 16);
+            this.toolStripLists.Name = "toolStripLists";
+            this.toolStripLists.Size = new System.Drawing.Size(204, 25);
+            this.toolStripLists.TabIndex = 0;
+            this.toolStripLists.TabStop = true;
+            this.toolStripLists.Text = "toolStrip1";
+            // 
+            // addListStripButton
+            // 
+            this.addListStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addListStripButton.Image")));
+            this.addListStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addListStripButton.Name = "addListStripButton";
+            this.addListStripButton.Size = new System.Drawing.Size(79, 22);
+            this.addListStripButton.Text = "Добавить";
+            this.addListStripButton.Click += new System.EventHandler(this.addListStripButton_Click);
+            // 
+            // delListStripButton
+            // 
+            this.delListStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delListStripButton.Image")));
+            this.delListStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.delListStripButton.Name = "delListStripButton";
+            this.delListStripButton.Size = new System.Drawing.Size(71, 22);
+            this.delListStripButton.Text = "Удалить";
+            this.delListStripButton.Click += new System.EventHandler(this.delListStripButton_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // listStripDropDownButton1
+            // 
+            this.listStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reestrListStripButton,
+            this.calcListStripButton,
+            this.printFioListStripButton,
+            this.copyToYearListStripButton,
+            this.moveToYearListStripButton,
+            this.copyToOrgListStripButton,
+            this.moveToOrgListStripButton});
+            this.listStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("listStripDropDownButton1.Image")));
+            this.listStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.listStripDropDownButton1.Name = "listStripDropDownButton1";
+            this.listStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
+            this.listStripDropDownButton1.Text = "...";
+            // 
+            // reestrListStripButton
+            // 
+            this.reestrListStripButton.Name = "reestrListStripButton";
+            this.reestrListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.reestrListStripButton.Text = "Опись СЗВ-2";
+            this.reestrListStripButton.Click += new System.EventHandler(this.reestrListStripButton_Click);
+            // 
+            // calcListStripButton
+            // 
+            this.calcListStripButton.Name = "calcListStripButton";
+            this.calcListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.calcListStripButton.Text = "Калькуляция по пакету";
+            this.calcListStripButton.Click += new System.EventHandler(this.calcListStripButton_Click);
+            // 
+            // printFioListStripButton
+            // 
+            this.printFioListStripButton.Name = "printFioListStripButton";
+            this.printFioListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.printFioListStripButton.Text = "Пофамильный список";
+            this.printFioListStripButton.Click += new System.EventHandler(this.printFioListStripButton_Click);
+            // 
+            // copyToYearListStripButton
+            // 
+            this.copyToYearListStripButton.Name = "copyToYearListStripButton";
+            this.copyToYearListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.copyToYearListStripButton.Text = "Копировать в другой год";
+            this.copyToYearListStripButton.Click += new System.EventHandler(this.copyToYearListStripButton_Click);
+            // 
+            // moveToYearListStripButton
+            // 
+            this.moveToYearListStripButton.Name = "moveToYearListStripButton";
+            this.moveToYearListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.moveToYearListStripButton.Text = "Переместить в другой год";
+            this.moveToYearListStripButton.Click += new System.EventHandler(this.moveToYearListStripButton_Click);
+            // 
+            // copyToOrgListStripButton
+            // 
+            this.copyToOrgListStripButton.Enabled = false;
+            this.copyToOrgListStripButton.Name = "copyToOrgListStripButton";
+            this.copyToOrgListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.copyToOrgListStripButton.Text = "Копировать в другую организацию";
+            this.copyToOrgListStripButton.Click += new System.EventHandler(this.copyToOrgListStripButton_Click);
+            // 
+            // moveToOrgListStripButton
+            // 
+            this.moveToOrgListStripButton.Name = "moveToOrgListStripButton";
+            this.moveToOrgListStripButton.Size = new System.Drawing.Size(275, 22);
+            this.moveToOrgListStripButton.Text = "Переместить в другую организацию";
+            this.moveToOrgListStripButton.Click += new System.EventHandler(this.moveToOrgListStripButton_Click);
+            // 
+            // packetcountBox
+            // 
+            this.packetcountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.packetcountBox.Location = new System.Drawing.Point(122, 161);
+            this.packetcountBox.Name = "packetcountBox";
+            this.packetcountBox.Size = new System.Drawing.Size(28, 13);
+            this.packetcountBox.TabIndex = 10;
+            this.packetcountBox.Text = "0";
+            this.packetcountBox.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 161);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Количество пакетов:";
             // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.toolStripDocs);
+            this.groupBox3.Controls.Add(this.docView);
             this.groupBox3.Controls.Add(this.docCountBox);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.changeTypedDocButton);
-            this.groupBox3.Controls.Add(this.printFormButton);
-            this.groupBox3.Controls.Add(this.moveDocButton);
-            this.groupBox3.Controls.Add(this.removeDocButton);
-            this.groupBox3.Controls.Add(this.editDocButton);
-            this.groupBox3.Controls.Add(this.addDocButton);
-            this.groupBox3.Controls.Add(this.docView);
             this.groupBox3.Location = new System.Drawing.Point(10, 225);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(911, 294);
+            this.groupBox3.Size = new System.Drawing.Size(895, 294);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Документы СЗВ-1";
             // 
-            // docCountBox
+            // toolStripDocs
             // 
-            this.docCountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.docCountBox.Location = new System.Drawing.Point(129, 262);
-            this.docCountBox.Name = "docCountBox";
-            this.docCountBox.Size = new System.Drawing.Size(28, 13);
-            this.docCountBox.TabIndex = 12;
-            this.docCountBox.Text = "0";
-            this.docCountBox.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.toolStripDocs.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripDocs.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripDocs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addDocStripButton,
+            this.editDocStripButton,
+            this.delDocStripButton,
+            this.toolStripSeparator8,
+            this.changeTypeDocStripButton,
+            this.printDocStripButton,
+            this.toolStripSeparator9,
+            this.docStripDropDownButton1});
+            this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
+            this.toolStripDocs.Name = "toolStripDocs";
+            this.toolStripDocs.Size = new System.Drawing.Size(588, 25);
+            this.toolStripDocs.TabIndex = 0;
+            this.toolStripDocs.TabStop = true;
+            this.toolStripDocs.Text = "toolStrip1";
             // 
-            // label4
+            // addDocStripButton
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 262);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Документов в пакете:";
+            this.addDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addDocStripButton.Image")));
+            this.addDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addDocStripButton.Name = "addDocStripButton";
+            this.addDocStripButton.Size = new System.Drawing.Size(79, 22);
+            this.addDocStripButton.Text = "Добавить";
+            this.addDocStripButton.Click += new System.EventHandler(this.addDocStripButton_Click);
             // 
-            // changeTypedDocButton
+            // editDocStripButton
             // 
-            this.changeTypedDocButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.changeTypedDocButton.Location = new System.Drawing.Point(200, 265);
-            this.changeTypedDocButton.Name = "changeTypedDocButton";
-            this.changeTypedDocButton.Size = new System.Drawing.Size(209, 23);
-            this.changeTypedDocButton.TabIndex = 8;
-            this.changeTypedDocButton.Text = "Замена типа формы документов";
-            this.changeTypedDocButton.UseVisualStyleBackColor = true;
-            this.changeTypedDocButton.Click += new System.EventHandler(this.changeTypedDocButton_Click);
+            this.editDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editDocStripButton.Image")));
+            this.editDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editDocStripButton.Name = "editDocStripButton";
+            this.editDocStripButton.Size = new System.Drawing.Size(81, 22);
+            this.editDocStripButton.Text = "Изменить";
+            this.editDocStripButton.Click += new System.EventHandler(this.editDocStripButton_Click);
             // 
-            // printFormButton
+            // delDocStripButton
             // 
-            this.printFormButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.printFormButton.Location = new System.Drawing.Point(415, 265);
-            this.printFormButton.Name = "printFormButton";
-            this.printFormButton.Size = new System.Drawing.Size(209, 23);
-            this.printFormButton.TabIndex = 7;
-            this.printFormButton.Text = "Печать форм СЗВ-2, СЗВ-1-1";
-            this.printFormButton.UseVisualStyleBackColor = true;
-            this.printFormButton.Click += new System.EventHandler(this.printFormButton_Click);
+            this.delDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delDocStripButton.Image")));
+            this.delDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.delDocStripButton.Name = "delDocStripButton";
+            this.delDocStripButton.Size = new System.Drawing.Size(71, 22);
+            this.delDocStripButton.Text = "Удалить";
+            this.delDocStripButton.Click += new System.EventHandler(this.delDocStripButton_Click);
             // 
-            // moveDocButton
+            // toolStripSeparator8
             // 
-            this.moveDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.moveDocButton.Location = new System.Drawing.Point(817, 146);
-            this.moveDocButton.Name = "moveDocButton";
-            this.moveDocButton.Size = new System.Drawing.Size(88, 23);
-            this.moveDocButton.TabIndex = 6;
-            this.moveDocButton.Text = "Переместить";
-            this.moveDocButton.UseVisualStyleBackColor = true;
-            this.moveDocButton.Click += new System.EventHandler(this.moveDocButton_Click);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
-            // removeDocButton
+            // changeTypeDocStripButton
             // 
-            this.removeDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.removeDocButton.Location = new System.Drawing.Point(817, 77);
-            this.removeDocButton.Name = "removeDocButton";
-            this.removeDocButton.Size = new System.Drawing.Size(88, 23);
-            this.removeDocButton.TabIndex = 5;
-            this.removeDocButton.Text = "Удалить";
-            this.removeDocButton.UseVisualStyleBackColor = true;
-            this.removeDocButton.Click += new System.EventHandler(this.removeDocButton_Click);
+            this.changeTypeDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("changeTypeDocStripButton.Image")));
+            this.changeTypeDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.changeTypeDocStripButton.Name = "changeTypeDocStripButton";
+            this.changeTypeDocStripButton.Size = new System.Drawing.Size(103, 22);
+            this.changeTypeDocStripButton.Text = "Изменить тип";
+            this.changeTypeDocStripButton.ToolTipText = "Изменить тип выбранных документов";
+            this.changeTypeDocStripButton.Click += new System.EventHandler(this.changeTypeDocStripButton_Click);
             // 
-            // editDocButton
+            // printDocStripButton
             // 
-            this.editDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.editDocButton.Location = new System.Drawing.Point(817, 48);
-            this.editDocButton.Name = "editDocButton";
-            this.editDocButton.Size = new System.Drawing.Size(88, 23);
-            this.editDocButton.TabIndex = 4;
-            this.editDocButton.Text = "Изменить";
-            this.editDocButton.UseVisualStyleBackColor = true;
-            this.editDocButton.Click += new System.EventHandler(this.editDocButton_Click);
+            this.printDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printDocStripButton.Image")));
+            this.printDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printDocStripButton.Name = "printDocStripButton";
+            this.printDocStripButton.Size = new System.Drawing.Size(194, 22);
+            this.printDocStripButton.Text = "Просмотр форм СЗВ-1, СЗВ-2";
+            this.printDocStripButton.Click += new System.EventHandler(this.printDocStripButton_Click);
             // 
-            // addDocButton
+            // toolStripSeparator9
             // 
-            this.addDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addDocButton.Location = new System.Drawing.Point(817, 19);
-            this.addDocButton.Name = "addDocButton";
-            this.addDocButton.Size = new System.Drawing.Size(88, 23);
-            this.addDocButton.TabIndex = 3;
-            this.addDocButton.Text = "Добавить";
-            this.addDocButton.UseVisualStyleBackColor = true;
-            this.addDocButton.Click += new System.EventHandler(this.addDocButton_Click);
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+            // 
+            // docStripDropDownButton1
+            // 
+            this.docStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.previewDocStripButton,
+            this.copyToListDocStripButton,
+            this.moveToListDocStripButton});
+            this.docStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("docStripDropDownButton1.Image")));
+            this.docStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.docStripDropDownButton1.Name = "docStripDropDownButton1";
+            this.docStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
+            this.docStripDropDownButton1.Text = "...";
+            // 
+            // previewDocStripButton
+            // 
+            this.previewDocStripButton.Name = "previewDocStripButton";
+            this.previewDocStripButton.Size = new System.Drawing.Size(233, 22);
+            this.previewDocStripButton.Text = "Предварительный просмотр";
+            this.previewDocStripButton.Click += new System.EventHandler(this.previewDocStripButton_Click);
+            // 
+            // copyToListDocStripButton
+            // 
+            this.copyToListDocStripButton.Name = "copyToListDocStripButton";
+            this.copyToListDocStripButton.Size = new System.Drawing.Size(233, 22);
+            this.copyToListDocStripButton.Text = "Копировать в другой пакет";
+            this.copyToListDocStripButton.Click += new System.EventHandler(this.copyToListDocStripButton_Click);
+            // 
+            // moveToListDocStripButton
+            // 
+            this.moveToListDocStripButton.Name = "moveToListDocStripButton";
+            this.moveToListDocStripButton.Size = new System.Drawing.Size(233, 22);
+            this.moveToListDocStripButton.Text = "Переместить в другой пакет";
+            this.moveToListDocStripButton.Click += new System.EventHandler(this.moveToListDocStripButton_Click);
             // 
             // docView
             // 
@@ -471,14 +565,14 @@
             this.docView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.docView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.docView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.docView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.docView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.docView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.docView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idColumn,
@@ -491,31 +585,35 @@
             this.regDateColumn,
             this.operChangeColumn,
             this.changeDateColumn});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.docView.DefaultCellStyle = dataGridViewCellStyle5;
-            this.docView.Location = new System.Drawing.Point(6, 19);
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.docView.DefaultCellStyle = dataGridViewCellStyle19;
+            this.docView.Location = new System.Drawing.Point(6, 44);
+            this.docView.MultiSelect = false;
             this.docView.Name = "docView";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.docView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.docView.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
             this.docView.RowHeadersVisible = false;
             this.docView.RowHeadersWidth = 12;
             this.docView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.docView.Size = new System.Drawing.Size(805, 240);
-            this.docView.TabIndex = 0;
+            this.docView.Size = new System.Drawing.Size(882, 231);
+            this.docView.TabIndex = 1;
             this.docView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.docView_CellClick);
             this.docView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.documentView_CellDoubleClick);
+            this.docView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.docView_CellMouseDown);
+            this.docView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.docView_KeyDown);
+            this.docView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.docView_MouseClick);
             // 
             // idColumn
             // 
@@ -578,7 +676,7 @@
             // operRegColumn
             // 
             this.operRegColumn.DataPropertyName = "name_reg";
-            this.operRegColumn.HeaderText = "Ввел";
+            this.operRegColumn.HeaderText = "Создал";
             this.operRegColumn.MaxInputLength = 100;
             this.operRegColumn.MinimumWidth = 100;
             this.operRegColumn.Name = "operRegColumn";
@@ -587,6 +685,8 @@
             // regDateColumn
             // 
             this.regDateColumn.DataPropertyName = "reg_date";
+            dataGridViewCellStyle17.Format = "G";
+            this.regDateColumn.DefaultCellStyle = dataGridViewCellStyle17;
             this.regDateColumn.HeaderText = "Дата создания";
             this.regDateColumn.MaxInputLength = 50;
             this.regDateColumn.MinimumWidth = 70;
@@ -604,6 +704,8 @@
             // changeDateColumn
             // 
             this.changeDateColumn.DataPropertyName = "change_date";
+            dataGridViewCellStyle18.Format = "G";
+            this.changeDateColumn.DefaultCellStyle = dataGridViewCellStyle18;
             this.changeDateColumn.HeaderText = "Дата редактирования";
             this.changeDateColumn.MaxInputLength = 50;
             this.changeDateColumn.MinimumWidth = 80;
@@ -611,17 +713,209 @@
             this.changeDateColumn.ReadOnly = true;
             this.changeDateColumn.Width = 132;
             // 
+            // docCountBox
+            // 
+            this.docCountBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.docCountBox.Location = new System.Drawing.Point(188, 278);
+            this.docCountBox.Name = "docCountBox";
+            this.docCountBox.Size = new System.Drawing.Size(28, 13);
+            this.docCountBox.TabIndex = 12;
+            this.docCountBox.Text = "0";
+            this.docCountBox.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 278);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(179, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Количество документов в пакете:";
+            // 
+            // cmsLists
+            // 
+            this.cmsLists.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addListMenuItem,
+            this.toolStripSeparator1,
+            this.viewOpisMenuItem,
+            this.calcMenuItem,
+            this.printListMenuItem,
+            this.toolStripSeparator2,
+            this.copyToOtherYearMenuItem,
+            this.moveToOtherYearMenuItem,
+            this.copyToOtherOrgMenuItem,
+            this.moveToOtherOrgMenuItem,
+            this.toolStripSeparator3,
+            this.delListMenuItem});
+            this.cmsLists.Name = "cmsLists";
+            this.cmsLists.Size = new System.Drawing.Size(276, 242);
+            // 
+            // addListMenuItem
+            // 
+            this.addListMenuItem.Name = "addListMenuItem";
+            this.addListMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.addListMenuItem.Text = "Добавить";
+            this.addListMenuItem.Click += new System.EventHandler(this.addListMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
+            // 
+            // viewOpisMenuItem
+            // 
+            this.viewOpisMenuItem.Name = "viewOpisMenuItem";
+            this.viewOpisMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.viewOpisMenuItem.Text = "Просмотреть опись \"СЗВ-2\"";
+            // 
+            // calcMenuItem
+            // 
+            this.calcMenuItem.Name = "calcMenuItem";
+            this.calcMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.calcMenuItem.Text = "Калькуляция по пакету";
+            // 
+            // printListMenuItem
+            // 
+            this.printListMenuItem.Name = "printListMenuItem";
+            this.printListMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.printListMenuItem.Text = "Печать пофамильного списка";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(272, 6);
+            // 
+            // copyToOtherYearMenuItem
+            // 
+            this.copyToOtherYearMenuItem.Name = "copyToOtherYearMenuItem";
+            this.copyToOtherYearMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.copyToOtherYearMenuItem.Text = "Копировать в другой год";
+            this.copyToOtherYearMenuItem.Click += new System.EventHandler(this.copyToOtherYearMenuItem_Click);
+            // 
+            // moveToOtherYearMenuItem
+            // 
+            this.moveToOtherYearMenuItem.Name = "moveToOtherYearMenuItem";
+            this.moveToOtherYearMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.moveToOtherYearMenuItem.Text = "Переместить в другой год";
+            this.moveToOtherYearMenuItem.Click += new System.EventHandler(this.moveToOtherYearMenuItem_Click);
+            // 
+            // copyToOtherOrgMenuItem
+            // 
+            this.copyToOtherOrgMenuItem.Name = "copyToOtherOrgMenuItem";
+            this.copyToOtherOrgMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.copyToOtherOrgMenuItem.Text = "Копировать в другую организацию";
+            // 
+            // moveToOtherOrgMenuItem
+            // 
+            this.moveToOtherOrgMenuItem.Name = "moveToOtherOrgMenuItem";
+            this.moveToOtherOrgMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.moveToOtherOrgMenuItem.Text = "Переместить в другую организацию";
+            this.moveToOtherOrgMenuItem.Click += new System.EventHandler(this.moveToOtherOrgMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(272, 6);
+            // 
+            // delListMenuItem
+            // 
+            this.delListMenuItem.Name = "delListMenuItem";
+            this.delListMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.delListMenuItem.Text = "Удалить";
+            this.delListMenuItem.Click += new System.EventHandler(this.delListMenuItem_Click);
+            // 
+            // cmsDocs
+            // 
+            this.cmsDocs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addDocMenuItem,
+            this.editDocMenuItem,
+            this.toolStripSeparator4,
+            this.changeTypeDocMenuItem,
+            this.previewDocMenuItem,
+            this.toolStripSeparator5,
+            this.copyToOtherListMenuItem,
+            this.moveToOtherListMenuItem,
+            this.toolStripSeparator6,
+            this.delDocMenuItem});
+            this.cmsDocs.Name = "cmsLists";
+            this.cmsDocs.Size = new System.Drawing.Size(234, 176);
+            // 
+            // addDocMenuItem
+            // 
+            this.addDocMenuItem.Name = "addDocMenuItem";
+            this.addDocMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.addDocMenuItem.Text = "Добавить";
+            this.addDocMenuItem.Click += new System.EventHandler(this.addDocMenuItem_Click);
+            // 
+            // editDocMenuItem
+            // 
+            this.editDocMenuItem.Name = "editDocMenuItem";
+            this.editDocMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.editDocMenuItem.Text = "Изменить";
+            this.editDocMenuItem.Click += new System.EventHandler(this.editDocMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(230, 6);
+            // 
+            // changeTypeDocMenuItem
+            // 
+            this.changeTypeDocMenuItem.Name = "changeTypeDocMenuItem";
+            this.changeTypeDocMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.changeTypeDocMenuItem.Text = "Изменить тип";
+            this.changeTypeDocMenuItem.Click += new System.EventHandler(this.changeTypeDocMenuItem_Click);
+            // 
+            // previewDocMenuItem
+            // 
+            this.previewDocMenuItem.Name = "previewDocMenuItem";
+            this.previewDocMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.previewDocMenuItem.Text = "Предварительный просмотр";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(230, 6);
+            // 
+            // copyToOtherListMenuItem
+            // 
+            this.copyToOtherListMenuItem.Name = "copyToOtherListMenuItem";
+            this.copyToOtherListMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.copyToOtherListMenuItem.Text = "Копировать в другой пакет";
+            this.copyToOtherListMenuItem.Click += new System.EventHandler(this.copyToOtherListMenuItem_Click);
+            // 
+            // moveToOtherListMenuItem
+            // 
+            this.moveToOtherListMenuItem.Name = "moveToOtherListMenuItem";
+            this.moveToOtherListMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.moveToOtherListMenuItem.Text = "Переместить в другой пакет";
+            this.moveToOtherListMenuItem.Click += new System.EventHandler(this.moveToOtherListMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(230, 6);
+            // 
+            // delDocMenuItem
+            // 
+            this.delDocMenuItem.Name = "delDocMenuItem";
+            this.delDocMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.delDocMenuItem.Text = "Удалить";
+            this.delDocMenuItem.Click += new System.EventHandler(this.delDocMenuItem_Click);
+            // 
             // StajDohodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(930, 529);
+            this.ClientSize = new System.Drawing.Size(914, 529);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.MinimumSize = new System.Drawing.Size(800, 567);
             this.Name = "StajDohodForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Стаж и доход";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StajDohodForm_FormClosing);
             this.Load += new System.EventHandler(this.StajDohodForm_Load);
@@ -631,9 +925,15 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listsView)).EndInit();
+            this.toolStripLists.ResumeLayout(false);
+            this.toolStripLists.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.toolStripDocs.ResumeLayout(false);
+            this.toolStripDocs.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.docView)).EndInit();
+            this.cmsLists.ResumeLayout(false);
+            this.cmsDocs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -647,29 +947,64 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView listsView;
         private System.Windows.Forms.DataGridView docView;
-        private System.Windows.Forms.Button movePacketYearButton;
-        private System.Windows.Forms.Button printButton;
-        private System.Windows.Forms.Button calculateButton;
-        private System.Windows.Forms.Button reestrButton;
-        private System.Windows.Forms.Button movePacketOrgButton;
-        private System.Windows.Forms.Button removeButton;
-        private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.Button moveDocButton;
-        private System.Windows.Forms.Button removeDocButton;
-        private System.Windows.Forms.Button editDocButton;
-        private System.Windows.Forms.Button addDocButton;
         private System.Windows.Forms.Label packetcountBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button changeTypedDocButton;
-        private System.Windows.Forms.Button printFormButton;
+        private System.Windows.Forms.Label docCountBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ContextMenuStrip cmsLists;
+        private System.Windows.Forms.ToolStripMenuItem addListMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delListMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem viewOpisMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem calcMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printListMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveToOtherYearMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveToOtherOrgMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem copyToOtherYearMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToOtherOrgMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ContextMenuStrip cmsDocs;
+        private System.Windows.Forms.ToolStripMenuItem addDocMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem copyToOtherListMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveToOtherListMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previewDocMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem delDocMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editDocMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeTypeDocMenuItem;
+        private System.Windows.Forms.ToolStrip toolStripLists;
+        private System.Windows.Forms.ToolStripButton addListStripButton;
+        private System.Windows.Forms.ToolStripButton delListStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripDropDownButton listStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem reestrListStripButton;
+        private System.Windows.Forms.ToolStripMenuItem calcListStripButton;
+        private System.Windows.Forms.ToolStripMenuItem printFioListStripButton;
+        private System.Windows.Forms.ToolStripMenuItem copyToYearListStripButton;
+        private System.Windows.Forms.ToolStripMenuItem moveToYearListStripButton;
+        private System.Windows.Forms.ToolStripMenuItem copyToOrgListStripButton;
+        private System.Windows.Forms.ToolStripMenuItem moveToOrgListStripButton;
+        private System.Windows.Forms.ToolStrip toolStripDocs;
+        private System.Windows.Forms.ToolStripButton addDocStripButton;
+        private System.Windows.Forms.ToolStripButton editDocStripButton;
+        private System.Windows.Forms.ToolStripButton delDocStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripButton changeTypeDocStripButton;
+        private System.Windows.Forms.ToolStripButton printDocStripButton;
+        private System.Windows.Forms.ToolStripDropDownButton docStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem previewDocStripButton;
+        private System.Windows.Forms.ToolStripMenuItem copyToListDocStripButton;
+        private System.Windows.Forms.ToolStripMenuItem moveToListDocStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn list_type;
         private System.Windows.Forms.DataGridViewTextBoxColumn operatorRegColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn datecreateColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn operatorEditColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateredactColumn;
-        private System.Windows.Forms.Label docCountBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateEditColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn socNumColumn;

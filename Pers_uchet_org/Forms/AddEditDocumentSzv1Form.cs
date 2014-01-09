@@ -19,8 +19,14 @@ namespace Pers_uchet_org
         int _repYear;
         long _personId;
         string _connectionStr;
-        //id документа, если производится редактирование
+        //id документа, если производится редактирование, и после сохранения принимает значение сохраненного документа
         long _currentDocId;
+
+        public long CurrentDocId
+        {
+            get { return _currentDocId; }
+            //set { _currentDocId = value; }
+        }
         //тип документа
         long _flagDocType;
         //процент по выбранной категории
@@ -734,7 +740,7 @@ namespace Pers_uchet_org
             {
                 builder.Append("Добавление ");
             }
-            builder.Append("документа \"СЗВ-1\"");
+            builder.Append("документа СЗВ-1");
             switch (flagDoc)
             {
                 case 21:
@@ -817,7 +823,7 @@ namespace Pers_uchet_org
                             {
                                 docId = _currentDocId;
                                 //Сохранение в таблицу Fixdata
-                                _command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, docId, _operator.nameVal, DateTime.Now.Date);
+                                _command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, docId, _operator.nameVal, DateTime.Now);
                             }
                             else
                             {
@@ -828,7 +834,7 @@ namespace Pers_uchet_org
                                     throw new SQLiteException("Невозможно создать документ.");
 
                                 //Сохранение в таблицу Fixdata
-                                _command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.New, docId, _operator.nameVal, DateTime.Now.Date);
+                                _command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.New, docId, _operator.nameVal, DateTime.Now);
                             }
 
                             if ((long)_command.ExecuteScalar() < 1)
@@ -851,7 +857,7 @@ namespace Pers_uchet_org
                             _command.CommandText = IndDocs.GetReplaceText(docId, _currentClassPercentId, additionalRadioButton.Checked ? (int)IndDocs.Job.Second : (int)IndDocs.Job.General, _currentCitizen1Id, _currentCitizen2Id);
                             if ((long)_command.ExecuteScalar() < 1)
                             {
-                                throw new SQLiteException("Невозможно изменить документ. Таблица " + IndDocs.tablename + ".");
+                                throw new SQLiteException("Невозможно создать документ. Таблица " + IndDocs.tablename + ".");
                             }
 
                             //Сохранение в таблицу Gen_period
@@ -1000,15 +1006,83 @@ namespace Pers_uchet_org
                 DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
                 if (currentCell != null)
                 {
-                    ContextMenuStrip cms = (sender as DataGridView).ContextMenuStrip;
+                    ContextMenuStrip cms = cmsGeneralPeriod;
                     if (cms != null)
                     {
-
                         Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                         Point p = new Point(r.X, r.Y);
+                        DisableItemsGenCms(cms, currentCell.RowIndex);
                         cms.Show((sender as DataGridView), p);
                     }
                 }
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                delGeneralPeriodButton_Click(sender, e);
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                editGeneralPeriodButton_Click(sender, e);
+            }
+        }
+
+        private void additionalPeriodDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Apps)
+            {
+                DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
+                if (currentCell != null)
+                {
+                    ContextMenuStrip cms = cmsAdditionalPeriod;
+                    if (cms != null)
+                    {
+                        Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                        Point p = new Point(r.X, r.Y);
+                        DisableItemsAdditionalCms(cms, currentCell.RowIndex);
+                        cms.Show((sender as DataGridView), p);
+                    }
+                }
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                delAdditionalPeriodButton_Click(sender, e);
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                editAdditionalPeriodButton_Click(sender, e);
+            }
+        }
+
+        private void specialPeriodDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Apps)
+            {
+                DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
+                if (currentCell != null)
+                {
+                    ContextMenuStrip cms = cmsSpecialPeriod;
+                    if (cms != null)
+                    {
+                        Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                        Point p = new Point(r.X, r.Y);
+                        DisableItemsSpecialCms(cms, currentCell.RowIndex);
+                        cms.Show((sender as DataGridView), p);
+                    }
+                }
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                delSpecialPeriodButton_Click(sender, e);
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                editSpecialPeriodButton_Click(sender, e);
             }
         }
 
@@ -1021,28 +1095,34 @@ namespace Pers_uchet_org
                     return;
 
                 DataGridView dataView = sender as DataGridView;
-                ToolStripItem[] items;
-
                 int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
-                if (currentMouseOverRow < 0)
-                {
-                    items = menu.Items.Find("editGeneralPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = false;
-                    items = menu.Items.Find("delGeneralPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = false;
-                }
-                else
-                {
-                    items = menu.Items.Find("editGeneralPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = true;
-                    items = menu.Items.Find("delGeneralPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = true;
-                }
+
+                DisableItemsGenCms(menu, currentMouseOverRow);
                 menu.Show(dataView, e.Location);
+            }
+        }
+
+        private static void DisableItemsGenCms(System.Windows.Forms.ContextMenuStrip menu, int currentMouseOverRow)
+        {
+            ToolStripItem[] items;
+
+            if (currentMouseOverRow < 0)
+            {
+                items = menu.Items.Find("editGeneralPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = false;
+                items = menu.Items.Find("delGeneralPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = false;
+            }
+            else
+            {
+                items = menu.Items.Find("editGeneralPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = true;
+                items = menu.Items.Find("delGeneralPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = true;
             }
         }
 
@@ -1055,28 +1135,33 @@ namespace Pers_uchet_org
                     return;
 
                 DataGridView dataView = sender as DataGridView;
-                ToolStripItem[] items;
-
                 int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
-                if (currentMouseOverRow < 0)
-                {
-                    items = menu.Items.Find("editAdditionalPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = false;
-                    items = menu.Items.Find("delAdditionalPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = false;
-                }
-                else
-                {
-                    items = menu.Items.Find("editAdditionalPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = true;
-                    items = menu.Items.Find("delAdditionalPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = true;
-                }
+
+                DisableItemsAdditionalCms(menu, currentMouseOverRow);
                 menu.Show(dataView, e.Location);
+            }
+        }
+
+        private static void DisableItemsAdditionalCms(System.Windows.Forms.ContextMenuStrip menu, int currentMouseOverRow)
+        {
+            ToolStripItem[] items;
+            if (currentMouseOverRow < 0)
+            {
+                items = menu.Items.Find("editAdditionalPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = false;
+                items = menu.Items.Find("delAdditionalPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = false;
+            }
+            else
+            {
+                items = menu.Items.Find("editAdditionalPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = true;
+                items = menu.Items.Find("delAdditionalPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = true;
             }
         }
 
@@ -1089,28 +1174,34 @@ namespace Pers_uchet_org
                     return;
 
                 DataGridView dataView = sender as DataGridView;
-                ToolStripItem[] items;
-
                 int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
-                if (currentMouseOverRow < 0)
-                {
-                    items = menu.Items.Find("editSpecialPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = false;
-                    items = menu.Items.Find("delSpecialPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = false;
-                }
-                else
-                {
-                    items = menu.Items.Find("editSpecialPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = true;
-                    items = menu.Items.Find("delSpecialPeriodMenuItem", false);
-                    if (items.Count() > 0)
-                        items[0].Enabled = true;
-                }
+
+                DisableItemsSpecialCms(menu, currentMouseOverRow);
                 menu.Show(dataView, e.Location);
+            }
+        }
+
+        private static void DisableItemsSpecialCms(System.Windows.Forms.ContextMenuStrip menu, int currentMouseOverRow)
+        {
+            ToolStripItem[] items;
+
+            if (currentMouseOverRow < 0)
+            {
+                items = menu.Items.Find("editSpecialPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = false;
+                items = menu.Items.Find("delSpecialPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = false;
+            }
+            else
+            {
+                items = menu.Items.Find("editSpecialPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = true;
+                items = menu.Items.Find("delSpecialPeriodMenuItem", false);
+                if (items.Count() > 0)
+                    items[0].Enabled = true;
             }
         }
 
@@ -1123,5 +1214,6 @@ namespace Pers_uchet_org
         {
             sum5TextBox.Text = sum5Box.Text;
         }
+
     }
 }

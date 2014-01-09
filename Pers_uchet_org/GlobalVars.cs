@@ -1875,6 +1875,26 @@ namespace Pers_uchet_org
                                     docId,
                                     doc_id);
         }
+
+        static public string GetCopyText(long oldDocId, long newDocId)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3}, {4}, {5})
+	SELECT {6}, {2}, {3}, {4}, {5} FROM {0} WHERE {7} = {8}; SELECT LAST_INSERT_ROWID();",
+                                tablename, docId, classpercentId, isGeneral, citizen1Id, citizen2Id, newDocId, docId, oldDocId);
+        }
+
+        static public int CopyIndDocByDocId(long oldDocId, long newDocId, SQLiteConnection connection)
+        {
+            return CopyIndDocByDocId(oldDocId, newDocId, connection, null);
+        }
+
+        static public int CopyIndDocByDocId(long oldDocId, long newDocId, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(oldDocId, newDocId), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
         #endregion
     }
 
@@ -2306,6 +2326,19 @@ namespace Pers_uchet_org
             return string.Format("UPDATE {0} SET {1} = {2} WHERE {3} = {4}", tablename, repYear, new_rep_year, id, list_id);
         }
 
+        static public long UpdateYear(long list_id, int new_rep_year, SQLiteConnection connection)
+        {
+            return UpdateYear(list_id, new_rep_year, connection, null);
+        }
+
+        static public long UpdateYear(long list_id, int new_rep_year, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetUpdateYearText(list_id, new_rep_year), connection, transaction);
+            return Convert.ToInt64(command.ExecuteScalar());
+        }
+
         static public string GetUpdateOrgText(long list_id, long new_org_id)
         {
             return string.Format("UPDATE {0} SET {1} = {2} WHERE {3} = {4}", tablename, orgID, new_org_id, id, list_id);
@@ -2315,6 +2348,27 @@ namespace Pers_uchet_org
         {
             return string.Format("SELECT person_id FROM Docs WHERE list_id = {0}", list_id);
         }
+
+        static public string GetCopyText(long old_list_id)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3})
+	SELECT {1}, {2}, {3} FROM {0} WHERE {4} = {5}; SELECT LAST_INSERT_ROWID();",
+                                tablename, listTypeId, orgID, repYear, id, old_list_id);
+        }
+
+        static public long CopyListById(long old_list_id, SQLiteConnection connection)
+        {
+            return CopyListById(old_list_id, connection, null);
+        }
+
+        static public long CopyListById(long old_list_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(old_list_id), connection, transaction);
+            return Convert.ToInt64(command.ExecuteScalar());
+        }
+
         #endregion
     }
 
@@ -2363,12 +2417,12 @@ namespace Pers_uchet_org
 
         static public string GetSelectTextByListId(long list_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", listId, list_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2} ", listId, list_id, fio);
         }
 
         static public string GetSelectTextByDocId(long doc_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", id, doc_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
         }
         #endregion
     }
@@ -2466,6 +2520,7 @@ namespace Pers_uchet_org
         {
             return UpdateListId(doc_id, new_list_id, connection, null);
         }
+
         static public int UpdateListId(long doc_id, long new_list_id, SQLiteConnection connection, SQLiteTransaction transaction)
         {
             string commantText = GetUpdateListIdText(doc_id, new_list_id);
@@ -2479,6 +2534,28 @@ namespace Pers_uchet_org
         static public string GetInsertText(long doc_type_id, long list_id, long person_id)
         {
             return string.Format("INSERT INTO {0} ({1},{2},{3}) VALUES ({4},{5},{6}); SELECT LAST_INSERT_ROWID();", tablename, docTypeId, listId, personID, doc_type_id, list_id, person_id);
+        }
+
+        static public string GetCopyText(long doc_id, long list_id)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3})
+	SELECT {1}, {6}, {3} FROM {0} WHERE {4} = {5}; SELECT LAST_INSERT_ROWID();",
+                                tablename, docTypeId, listId, personID, id, doc_id, list_id);
+        }
+
+        static public long CopyDocByDocId(long doc_id, long list_id, SQLiteConnection connection)
+        {
+            return CopyDocByDocId(doc_id, list_id, connection, null);
+        }
+
+        static public long CopyDocByDocId(long doc_id, long list_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            string commantText = String.Empty;
+
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(doc_id, list_id), connection, transaction);
+            return Convert.ToInt64(command.ExecuteScalar());
         }
         #endregion
     }
@@ -2950,6 +3027,26 @@ namespace Pers_uchet_org
             adapter.DeleteCommand = CreateDeleteCommand(connection, transaction);
             return adapter;
         }
+
+        static public string GetCopyText(long old_doc_id, long new_doc_id)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15})
+	SELECT {16}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15} FROM {0} WHERE {17} = {18}; SELECT LAST_INSERT_ROWID();",
+                                tablename, docId, salaryGroupsId, january, february, march, april, may, june, july, august, september, october, november, december, sum, new_doc_id, docId, old_doc_id);
+        }
+
+        static public int CopySalaryInfoByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection)
+        {
+            return CopySalaryInfoByDocId(old_doc_id, new_doc_id, connection, null);
+        }
+
+        static public int CopySalaryInfoByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(old_doc_id, new_doc_id), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
         #endregion
     }
 
@@ -3178,6 +3275,46 @@ namespace Pers_uchet_org
             adapter.DeleteCommand = CreateDeleteCommand(connection, transaction);
             return adapter;
         }
+
+        static public string GetCopyText(long old_doc_id, long new_doc_id)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3})
+	SELECT {4}, {2}, {3} FROM {0} WHERE {5} = {6}; SELECT LAST_INSERT_ROWID();",
+                                tablename, docId, beginDate, endDate, new_doc_id, docId, old_doc_id);
+        }
+
+        static public int CopyPeriodByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection)
+        {
+            return CopyPeriodByDocId(old_doc_id, new_doc_id, connection, null);
+        }
+
+        static public int CopyPeriodByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(old_doc_id, new_doc_id), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
+
+        static public string GetReplaceYearText(long doc_id, int old_year, int new_year)
+        {
+            return string.Format(@"UPDATE {0} SET {1} = replace({1}, {2}, {3}), {4} = replace({4}, {2}, {3}) WHERE {5} = {6}) ",
+                                tablename, beginDate, old_year, new_year, endDate, id, doc_id);
+        }
+
+        static public int ReplaceYear(long doc_id, int old_year, int new_year, SQLiteConnection connection)
+        {
+            return ReplaceYear(doc_id, old_year, new_year, connection, null);
+        }
+
+        static public int ReplaceYear(long doc_id, int old_year, int new_year, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetReplaceYearText(doc_id, old_year, new_year), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
+
         #endregion
     }
 
@@ -3322,6 +3459,45 @@ namespace Pers_uchet_org
             adapter.DeleteCommand = CreateDeleteCommand(connection, transaction);
             return adapter;
         }
+
+        static public string GetCopyText(long old_doc_id, long new_doc_id)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3}, {4})
+	SELECT {5}, {2}, {3}, {4} FROM {0} WHERE {6} = {7}; SELECT LAST_INSERT_ROWID();",
+                                tablename, docId, classificatorId, beginDate, endDate, new_doc_id, docId, old_doc_id);
+        }
+
+        static public int CopyPeriodByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection)
+        {
+            return CopyPeriodByDocId(old_doc_id, new_doc_id, connection, null);
+        }
+
+        static public int CopyPeriodByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(old_doc_id, new_doc_id), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
+
+        static public string GetReplaceYearText(long doc_id, int old_year, int new_year)
+        {
+            return string.Format(@"UPDATE {0} SET {1} = replace({1}, {2}, {3}), {4} = replace({4}, {2}, {3}) WHERE {5} = {6}) ",
+                                tablename, beginDate, old_year, new_year, endDate, id, doc_id);
+        }
+
+        static public int ReplaceYear(long doc_id, int old_year, int new_year, SQLiteConnection connection)
+        {
+            return ReplaceYear(doc_id, old_year, new_year, connection, null);
+        }
+
+        static public int ReplaceYear(long doc_id, int old_year, int new_year, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetReplaceYearText(doc_id, old_year, new_year), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
         #endregion
     }
 
@@ -3436,6 +3612,45 @@ namespace Pers_uchet_org
         static public string GetDeleteTextByDocId(long doc_id)
         {
             return string.Format("DELETE FROM {0} WHERE {1} = {2}", tablename, docId, doc_id);
+        }
+
+        static public string GetCopyText(long old_doc_id, long new_doc_id)
+        {
+            return string.Format(@"INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})
+	SELECT {12}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11} FROM {0} WHERE {13} = {14}; SELECT LAST_INSERT_ROWID();",
+                                tablename, docId, partCondition, stajBase, servYearBase, beginDate, endDate, month, day, hour, minute, profession, new_doc_id, docId, old_doc_id);
+        }
+
+        static public int CopyPeriodByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection)
+        {
+            return CopyPeriodByDocId(old_doc_id, new_doc_id, connection, null);
+        }
+
+        static public int CopyPeriodByDocId(long old_doc_id, long new_doc_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCopyText(old_doc_id, new_doc_id), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
+
+        static public string GetReplaceYearText(long doc_id, int old_year, int new_year)
+        {
+            return string.Format(@"UPDATE {0} SET {1} = replace({1}, {2}, {3}), {4} = replace({4}, {2}, {3}) WHERE {5} = {6}) ",
+                                tablename, beginDate, old_year, new_year, endDate, id, doc_id);
+        }
+
+        static public int ReplaceYear(long doc_id, int old_year, int new_year, SQLiteConnection connection)
+        {
+            return ReplaceYear(doc_id, old_year, new_year, connection, null);
+        }
+
+        static public int ReplaceYear(long doc_id, int old_year, int new_year, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetReplaceYearText(doc_id, old_year, new_year), connection, transaction);
+            return command.ExecuteNonQuery();
         }
         #endregion
     }
@@ -3829,13 +4044,13 @@ namespace Pers_uchet_org
 
         static public string GetReplaceFixDataText(DataRow mergeRow, FixData.FixType type)
         {
-            DateTime fixdate = (DateTime)(type==FixData.FixType.New ? 
-                                    mergeRow[MergiesView.newDate] : 
+            DateTime fixdate = (DateTime)(type == FixData.FixType.New ?
+                                    mergeRow[MergiesView.newDate] :
                                     mergeRow[MergiesView.editDate]);
             return FixData.GetReplaceText(Mergies.tablename,
                                     type,
                                     (long)mergeRow[MergiesView.id],
-                                    (string)mergeRow[MergiesView.operName], 
+                                    (string)mergeRow[MergiesView.operName],
                                     fixdate);
         }
         #endregion
@@ -3996,19 +4211,19 @@ namespace Pers_uchet_org
             DataRow row = Find(mergeInfo, MergeInfo.groupID, group_id);
             foreach (int col in months)
                 sum += (double)row[col];
-            return Math.Round(sum,2);
+            return Math.Round(sum, 2);
         }
 
         public static void MathSums(DataTable mergeInfo)
         {
-            double sum;;
+            double sum; ;
             int[] months = GetMonthIndexes(mergeInfo);
             foreach (DataRow row in mergeInfo.Rows)
             {
                 sum = 0;
                 foreach (int col in months)
                     sum += (double)row[col];
-                row[MergeInfo.sum] = Math.Round(sum,2);
+                row[MergeInfo.sum] = Math.Round(sum, 2);
             }
         }
 
@@ -4023,7 +4238,7 @@ namespace Pers_uchet_org
         }
         static public string GetDeleteText(long merge_id)
         {
-            return string.Format("DELETE FROM {0} WHERE {1}={2}", 
+            return string.Format("DELETE FROM {0} WHERE {1}={2}",
                                     tablename, mergeID, merge_id);
         }
 
@@ -4071,8 +4286,8 @@ namespace Pers_uchet_org
                                 VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30});
                                 SELECT last_insert_rowid();",
                             tablename,
-                            mergeID,groupID,january,february,march,april,may,june,july,august,september,october,november,december,sum,
-                            pMergeID,pGroupID,pJanuary,pFebruary,pMarch,pApril,pMay,pJune,pJuly,pAugust,pSeptember,pOctober,pNovember,pDecember,pSum);
+                            mergeID, groupID, january, february, march, april, may, june, july, august, september, october, november, december, sum,
+                            pMergeID, pGroupID, pJanuary, pFebruary, pMarch, pApril, pMay, pJune, pJuly, pAugust, pSeptember, pOctober, pNovember, pDecember, pSum);
             return comm;
         }
 
@@ -4099,7 +4314,7 @@ namespace Pers_uchet_org
                             october, pOctober,
                             november, pNovember,
                             december, pDecember,
-                            sum, pSum, 
+                            sum, pSum,
                             id, pId);
             return comm;
         }
@@ -4108,7 +4323,7 @@ namespace Pers_uchet_org
         {
             SQLiteCommand comm = new SQLiteCommand();
             SetParametersTo(comm);
-            comm.CommandText = string.Format(@" DELETE FROM {0} WHERE {1} = {2} ",tablename,id, pId);
+            comm.CommandText = string.Format(@" DELETE FROM {0} WHERE {1} = {2} ", tablename, id, pId);
             return comm;
         }
 
@@ -4327,7 +4542,7 @@ namespace Pers_uchet_org
                                     id,
                                     type, tableID, rowID, oper, fixDate,
                                     GetSelectIDText(fix_type, table_name, row_id),
-                                    (int)fix_type, Tables.GetSelectIDText(table_name), row_id, oper_name, fix_date.ToString("yyyy-MM-dd")
+                                    (int)fix_type, Tables.GetSelectIDText(table_name), row_id, oper_name, fix_date.ToString("yyyy-MM-dd H:mm:ss")
                                 );
         }
 
@@ -4336,5 +4551,15 @@ namespace Pers_uchet_org
             return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, tableID, Tables.GetSelectIDText(table_name), rowID, row_id);
         }
         #endregion
+
+        internal static long ExecReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            string commantText = String.Empty;
+
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetReplaceText(table_name, fix_type, row_id, oper_name, fix_date), connection, transaction);
+            return Convert.ToInt64(command.ExecuteScalar());
+        }
     }
 }
