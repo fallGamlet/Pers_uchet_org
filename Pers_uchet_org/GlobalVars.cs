@@ -3938,7 +3938,7 @@ namespace Pers_uchet_org
         static public string GetChangeActualByOrgText(long org_id, int rep_year, bool actual_value)
         {
             return string.Format("UPDATE {0} SET {1}={2} WHERE {3}={4} AND {5}={6} ",
-                                    tablename, actual, actual_value, orgID, org_id, repYear, rep_year);
+                                    tablename, actual, Convert.ToInt32(actual_value), orgID, org_id, repYear, rep_year);
         }
 
         static public string GetDeleteText(long row_id)

@@ -109,6 +109,7 @@ namespace Pers_uchet_org
         {
             DataRowView curRow = _mergeBS.Current as DataRowView;
             Mergies.DeleteExecute(curRow.Row, _connection);
+            RefillData((int)this.yearBox.Value);
         }
 
         private void printButton_Click(object sender, EventArgs e)

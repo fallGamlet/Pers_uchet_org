@@ -78,7 +78,15 @@ namespace Pers_uchet_org.Forms
         {
 
         }
-        #endregion
 
+        private void SvodVedomostGetPacketsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.DialogResult == DialogResult.OK && this.MarckedPackets.Length == 0)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать хотя бы один пакет", "Внимание");
+                e.Cancel = true;
+            }
+        }
+        #endregion
     }
 }
