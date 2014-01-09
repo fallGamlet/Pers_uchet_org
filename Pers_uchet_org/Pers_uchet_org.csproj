@@ -53,6 +53,7 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenMcdf, Version=1.5.4.22637, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -469,7 +470,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="mathdll.dll" />
+    <Content Include="Libs\mathdll.dll" />
+    <Content Include="Libs\OpenMcdf.dll" />
+    <Content Include="Libs\OpenMcdf.xml" />
     <Content Include="Static\template\lib\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
