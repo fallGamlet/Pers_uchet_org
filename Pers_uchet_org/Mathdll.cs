@@ -130,5 +130,6 @@ namespace Pers_uchet_org
         {
             return GostGamma(data, key, table, synchro, Encoding.GetEncoding(1251));
         }
+
     }
 }
