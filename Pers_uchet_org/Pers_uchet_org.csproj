@@ -469,6 +469,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Storege.cs" />
+    <Compile Include="XmlData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\mathdll.dll" />

@@ -1,0 +1,347 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Data;
+using System.IO;
+
+namespace Pers_uchet_org
+{
+    public class XmlData
+    {
+        public enum ReportType { ADV1 = 0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3 }
+
+        public static string GetReportUrl(ReportType type)
+        {
+            string url;
+            switch (type)
+            {
+                case XmlData.ReportType.ADV1:
+                    url = Properties.Settings.Default.report_adv1;
+                    break;
+                case XmlData.ReportType.ADV2:
+                    url = Properties.Settings.Default.report_adv2;
+                    break;
+                case XmlData.ReportType.ADV3:
+                    url = Properties.Settings.Default.report_adv3;
+                    break;
+                case XmlData.ReportType.ADV4:
+                    url = Properties.Settings.Default.report_adv4;
+                    break;
+                case XmlData.ReportType.ADV5:
+                    url = Properties.Settings.Default.report_adv5;
+                    break;
+                case XmlData.ReportType.ADV6:
+                    url = Properties.Settings.Default.report_adv6;
+                    break;
+                case XmlData.ReportType.SZV1:
+                    url = Properties.Settings.Default.report_szv1;
+                    break;
+                case XmlData.ReportType.SZV2:
+                    url = Properties.Settings.Default.report_szv2;
+                    break;
+                case XmlData.ReportType.SZV3:
+                    url = Properties.Settings.Default.report_szv3;
+                    break;
+                default:
+                    url = "/";
+                    break;
+            }
+            url = Path.GetFullPath(url);
+            if (File.Exists(url))
+                return url;
+            else
+                return null;
+        }
+
+        static public XmlDocument PersonXml(DataRow row)
+        {
+            XmlDocument xml = new XmlDocument();
+            XmlElement doc_info = xml.CreateElement("doc_info");
+            XmlElement person = xml.CreateElement("person");
+            XmlElement lname = xml.CreateElement("lname");
+            XmlElement fname = xml.CreateElement("fname");
+            XmlElement mname = xml.CreateElement("mname");
+            XmlElement citizen = xml.CreateElement("citizen");
+            XmlElement citizen1 = xml.CreateElement("first");
+            XmlElement citizen2 = xml.CreateElement("second");
+            XmlElement citizen1ID = xml.CreateElement("id");
+            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
+            XmlElement citizen1Name = xml.CreateElement("name");
+            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
+            XmlElement categoryID = xml.CreateElement("category_id");
+            XmlElement categoryName = xml.CreateElement("category_name");
+            XmlElement privelegeID = xml.CreateElement("privelege_id");
+            XmlElement privelegeName = xml.CreateElement("privelege_name");
+
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xml.AppendChild(doc_info);
+            doc_info.AppendChild(person);
+            person.AppendChild(lname);
+            person.AppendChild(fname);
+            person.AppendChild(mname);
+            person.AppendChild(citizen);
+            citizen.AppendChild(citizen1);
+            citizen.AppendChild(citizen2);
+            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Name);
+            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Name);
+            person.AppendChild(categoryID);
+            person.AppendChild(categoryName);
+            person.AppendChild(privelegeID);
+            person.AppendChild(privelegeName);
+
+            lname.InnerText = row[PersonView.lName] as string;
+            fname.InnerText = row[PersonView.fName] as string;
+            mname.InnerText = row[PersonView.mName] as string;
+            citizen1ID.InnerText = row["citizen1_id"].ToString();
+            citizen2ID.InnerText = row["citizen2_id"].ToString();
+            citizen1Name.InnerText = row["citizen1_name"] as string;
+            citizen2Name.InnerText = row["citizen2_name"] as string;
+            categoryID.InnerText = row["category_id"].ToString();
+            categoryName.InnerText = row["category_name"] as string;
+            privelegeID.InnerText = row["privelege_id"].ToString();
+            privelegeName.InnerText = row["privelege_name"] as string;
+            //
+            return xml;
+        }
+
+        static public XmlDocument Adv1Xml(DataRow personViewRow)
+        {
+            XmlDocument xml = new XmlDocument();
+            XmlElement person = xml.CreateElement("person");
+            XmlElement lname = xml.CreateElement("lname");
+            XmlElement fname = xml.CreateElement("fname");
+            XmlElement mname = xml.CreateElement("mname");
+            XmlElement regnum = xml.CreateElement("regnum");
+            XmlElement birthday = xml.CreateElement("birthday");
+            XmlElement sex = xml.CreateElement("sex");
+            XmlElement doctype = xml.CreateElement("doctype");
+            XmlElement docseries = xml.CreateElement("docseries");
+            XmlElement docnumber = xml.CreateElement("docnumber");
+            XmlElement docdate = xml.CreateElement("docdate");
+            XmlElement docorg = xml.CreateElement("docorg");
+            XmlElement regaddressZipcode = xml.CreateElement("regaddress_zipcode");
+            XmlElement regaddress = xml.CreateElement("regaddress");
+            XmlElement factaddressZipcode = xml.CreateElement("factaddress_zipcode");
+            XmlElement factaddress = xml.CreateElement("factaddress");
+            XmlElement bornaddress = xml.CreateElement("bornaddress");
+            XmlElement bornCountry = xml.CreateElement("borncountry");
+            XmlElement bornArea = xml.CreateElement("bornarea");
+            XmlElement bornRegion = xml.CreateElement("bornregion");
+            XmlElement bornCity = xml.CreateElement("borncity");
+            XmlElement bornZipcode = xml.CreateElement("bornzipcode");
+            XmlElement citizen = xml.CreateElement("citizen");
+            XmlElement citizen1 = xml.CreateElement("first");
+            XmlElement citizen2 = xml.CreateElement("second");
+            XmlElement citizen1ID = xml.CreateElement("id");
+            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
+            XmlElement citizen1Name = xml.CreateElement("name");
+            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
+
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xml.AppendChild(person);
+            person.AppendChild(lname);
+            person.AppendChild(fname);
+            person.AppendChild(mname);
+            person.AppendChild(regnum);
+            person.AppendChild(birthday);
+            person.AppendChild(sex);
+            person.AppendChild(doctype);
+            person.AppendChild(docseries);
+            person.AppendChild(docnumber);
+            person.AppendChild(docdate);
+            person.AppendChild(docorg);
+            person.AppendChild(regaddressZipcode);
+            person.AppendChild(regaddress);
+            person.AppendChild(factaddressZipcode);
+            person.AppendChild(factaddress);
+            bornaddress.AppendChild(bornCountry);
+            bornaddress.AppendChild(bornArea);
+            bornaddress.AppendChild(bornRegion);
+            bornaddress.AppendChild(bornCity);
+            bornaddress.AppendChild(bornZipcode);
+            person.AppendChild(bornaddress);
+            person.AppendChild(citizen);
+            citizen.AppendChild(citizen1);
+            citizen.AppendChild(citizen2);
+            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Name);
+            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Name);
+
+            lname.InnerText = personViewRow[PersonView.lName] as string;
+            fname.InnerText = personViewRow[PersonView.fName] as string;
+            mname.InnerText = personViewRow[PersonView.mName] as string;
+            regnum.InnerText = personViewRow[PersonView.socNumber] as string;
+            birthday.InnerText = ((DateTime)personViewRow[PersonView.birthday]).ToShortDateString();
+            sex.InnerText = (int)personViewRow[PersonView.sex] == 1 ? "м" : "ж";
+            doctype.InnerText = personViewRow[PersonView.docType] as string;
+            docseries.InnerText = personViewRow[PersonView.docSeries] as string;
+            docnumber.InnerText = personViewRow[PersonView.docNumber] as string;
+            docdate.InnerText = ((DateTime)personViewRow[PersonView.docDate]).ToShortDateString();
+            docorg.InnerText = personViewRow[PersonView.docOrg] as string;
+            regaddressZipcode.InnerText = personViewRow[PersonView.regAdressZipcode] as string;
+            regaddress.InnerText = personViewRow[PersonView.regAdress] as string;
+            factaddressZipcode.InnerText = personViewRow[PersonView.factAdressZipcode] as string;
+            factaddress.InnerText = personViewRow[PersonView.factAdress] as string;
+            bornCountry.InnerText = personViewRow[PersonView.bornAdressCountry] as string;
+            bornArea.InnerText = personViewRow[PersonView.bornAdressArea] as string;
+            bornRegion.InnerText = personViewRow[PersonView.bornAdressRegion] as string;
+            bornCity.InnerText = personViewRow[PersonView.bornAdressCity] as string;
+            bornZipcode.InnerText = personViewRow[PersonView.bornAdressZipcode] as string;
+            citizen1ID.InnerText = personViewRow["citizen1_id"].ToString();
+            citizen2ID.InnerText = personViewRow["citizen2_id"].ToString();
+            citizen1Name.InnerText = personViewRow["citizen1"] as string;
+            citizen2Name.InnerText = personViewRow["citizen2"] as string;
+            //
+            return xml;
+        }
+    }
+
+    public class Szv1Xml
+    {
+        static public XmlDocument GetXml()
+        {
+            XmlDocument xmlRes = new XmlDocument();
+            XmlElement docInfo = xmlRes.CreateElement("doc_info");
+
+            XmlElement person = xmlRes.CreateElement("person");
+            XmlNode lname = xmlRes.CreateElement("lname");
+            XmlElement fname = xmlRes.CreateElement("fname");
+            XmlElement mname = xmlRes.CreateElement("mname");
+            XmlElement personRegnum = xmlRes.CreateElement("regnum");
+            XmlElement citizen = xmlRes.CreateElement("citizen");
+            XmlElement citizen1 = xmlRes.CreateElement("first");
+            XmlElement citizen1ID = xmlRes.CreateElement("id");
+            XmlElement citizen1Name = xmlRes.CreateElement("name");
+            XmlElement citizen2 = xmlRes.CreateElement("second");
+            XmlNode citizen2ID = citizen1ID.CloneNode(true);
+            XmlNode citizen2Name = citizen1Name.CloneNode(true);
+            XmlElement categoryID = xmlRes.CreateElement("category_id");
+            XmlElement categoryName = xmlRes.CreateElement("category_name");
+            XmlElement privelegeID = xmlRes.CreateElement("privelege_id");
+            XmlElement privelegeName = xmlRes.CreateElement("privelege_name");
+
+            XmlElement firm = xmlRes.CreateElement("firm");
+            XmlElement firmRegnum = xmlRes.CreateElement("regnum");
+            XmlElement firmName = xmlRes.CreateElement("name");
+
+            XmlElement formType = xmlRes.CreateElement("form_type");
+            XmlElement workPlace = xmlRes.CreateElement("work_place");
+            XmlElement repYear = xmlRes.CreateElement("rep_year");
+            XmlElement firmAdd = xmlRes.CreateElement("firm_add");
+            XmlElement firmPay = xmlRes.CreateElement("firm_pay");
+
+            XmlElement payment = xmlRes.CreateElement("payment");
+            XmlElement month = xmlRes.CreateElement("month");
+            XmlElement col1 = xmlRes.CreateElement("col_1");
+            XmlElement col2 = xmlRes.CreateElement("col_2");
+            XmlElement col3 = xmlRes.CreateElement("col_3");
+            XmlElement col4 = xmlRes.CreateElement("col_4");
+            XmlElement col5 = xmlRes.CreateElement("col_5");
+            XmlElement col6 = xmlRes.CreateElement("col_6");
+
+            XmlElement genPeriod = xmlRes.CreateElement("gen_period");
+            XmlElement period = xmlRes.CreateElement("period");
+            XmlElement genStart = xmlRes.CreateElement("gen_start");
+            XmlElement genEnd = xmlRes.CreateElement("gen_end");
+
+            XmlElement specStaj = xmlRes.CreateElement("spec_staj");
+            XmlElement spec = xmlRes.CreateElement("spec");
+            XmlElement specStart = xmlRes.CreateElement("start_date");
+            XmlElement specEnd = xmlRes.CreateElement("end_date");
+            XmlElement specPArtConditionID = xmlRes.CreateElement("part_condition_id");
+            XmlElement specPArtConditionName = xmlRes.CreateElement("part_condition_name");
+            XmlElement specBaseID = xmlRes.CreateElement("staj_base_id");
+            XmlElement specBaseName = xmlRes.CreateElement("staj_base_name");
+            XmlElement specServyearBaseID = xmlRes.CreateElement("servyear_base_id");
+            XmlElement specServyearBaseName = xmlRes.CreateElement("servyear_base_name");
+            XmlElement specMonths = xmlRes.CreateElement("smonths");
+            XmlElement specDays = xmlRes.CreateElement("sdays");
+            XmlElement specHours = xmlRes.CreateElement("shours");
+            XmlElement specMinutes = xmlRes.CreateElement("sminutes");
+            XmlElement specProfession = xmlRes.CreateElement("profession");
+
+            XmlElement dopStaj = xmlRes.CreateElement("dop_staj");
+            XmlElement dopRecord = xmlRes.CreateElement("record");
+            XmlElement dopCodeID = xmlRes.CreateElement("dop_code_id");
+            XmlElement dopCodeName = xmlRes.CreateElement("dop_code_name");
+            XmlElement dopStart = xmlRes.CreateElement("dop_start");
+            XmlElement dopEnd = xmlRes.CreateElement("dop_end");
+
+            xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xmlRes.AppendChild(docInfo);
+
+            docInfo.AppendChild(person);
+            person.AppendChild(lname);
+            person.AppendChild(fname);
+            person.AppendChild(mname);
+            person.AppendChild(personRegnum);
+            person.AppendChild(citizen);
+            citizen.AppendChild(citizen1);
+            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Name);
+            citizen.AppendChild(citizen2);
+            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Name);
+            person.AppendChild(categoryID);
+            person.AppendChild(categoryName);
+            person.AppendChild(privelegeID);
+            person.AppendChild(privelegeName);
+
+            docInfo.AppendChild(firm);
+            firm.AppendChild(firmRegnum);
+            firm.AppendChild(firmName);
+
+            docInfo.AppendChild(formType);
+            docInfo.AppendChild(workPlace);
+            docInfo.AppendChild(repYear);
+            docInfo.AppendChild(firmAdd);
+            docInfo.AppendChild(firmPay);
+
+            docInfo.AppendChild(payment);
+            month.AppendChild(col1);
+            month.AppendChild(col2);
+            month.AppendChild(col3);
+            month.AppendChild(col4);
+            month.AppendChild(col5);
+            month.AppendChild(col6);
+            for (int i = 0; i < 12; i++)
+            {
+                payment.AppendChild(month.CloneNode(true));
+            }
+
+            docInfo.AppendChild(genPeriod);
+            genPeriod.AppendChild(period);
+            period.AppendChild(genStart);
+            period.AppendChild(genEnd);
+
+            docInfo.AppendChild(specStaj);
+            specStaj.AppendChild(spec);
+            spec.AppendChild(specStart);
+            spec.AppendChild(specEnd);
+            spec.AppendChild(specPArtConditionID);
+            spec.AppendChild(specPArtConditionName);
+            spec.AppendChild(specBaseID);
+            spec.AppendChild(specBaseName);
+            spec.AppendChild(specServyearBaseID);
+            spec.AppendChild(specServyearBaseName);
+            spec.AppendChild(specMonths);
+            spec.AppendChild(specHours);
+            spec.AppendChild(specMinutes);
+            spec.AppendChild(specProfession);
+
+            docInfo.AppendChild(dopStaj);
+            dopStaj.AppendChild(dopRecord);
+            dopRecord.AppendChild(dopCodeID);
+            dopRecord.AppendChild(dopCodeName);
+            dopRecord.AppendChild(dopStart);
+            dopRecord.AppendChild(dopEnd);
+            //
+            return xmlRes;
+        }
+    }
+}
