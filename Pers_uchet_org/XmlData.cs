@@ -343,5 +343,83 @@ namespace Pers_uchet_org
             //
             return xmlRes;
         }
+
+        static void GetData(long doc_id)
+        {
+
+        }
+    }
+
+    public class Szv3Xml
+    {
+        // название формы
+        static public string name = "СЗВ-3";
+        #region названия тегов, присутствующих в xml
+        static public string tagSvod = "svod";
+        static public string tagPacks = "packs_count";
+        static public string tagDocs = "docs_count";
+        static public string tagPayment = "payment";
+        static public string tagMonth = "month";
+        static public string tagMonthCol1 = "col_1";
+        static public string tagMonthCol2 = "col_2";
+        static public string tagMonthCol3 = "col_3";
+        static public string tagMonthCol4 = "col_4";
+        static public string tagMonthCol5 = "col_5";
+        static public string tagMonthCol6 = "col_6";
+        #endregion
+
+        static public XmlDocument GetXml(long merge_id, string coinnectionStr)
+        {
+            DataRow mergeRow = Mergies.GetRow(merge_id, coinnectionStr);
+            DataTable mergeInfo = MergeInfo.GetTable(merge_id, coinnectionStr);
+            DataTable mergeInfoT = MergeInfoTranspose.CreateTable();
+            MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
+            
+            XmlDocument xmlRes = new XmlDocument();
+            XmlElement svod = xmlRes.CreateElement(tagSvod);
+            XmlElement packsCount = xmlRes.CreateElement(tagPacks);
+            XmlElement docsCount = xmlRes.CreateElement(tagDocs);
+            XmlElement payment = xmlRes.CreateElement(tagPayment);
+
+            packsCount.InnerText = mergeRow[Mergies.listCount].ToString();
+            docsCount.InnerText = mergeRow[Mergies.docCount].ToString();
+
+            xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xmlRes.AppendChild(svod);
+            svod.AppendChild(packsCount);
+            svod.AppendChild(docsCount);
+            
+            svod.AppendChild(payment);
+            for (int i = 0; i < 12; i++)
+            {
+                XmlElement month = xmlRes.CreateElement(tagMonth);
+                XmlElement col1 = xmlRes.CreateElement(tagMonthCol1);
+                XmlElement col2 = xmlRes.CreateElement(tagMonthCol2);
+                XmlElement col3 = xmlRes.CreateElement(tagMonthCol3);
+                XmlElement col4 = xmlRes.CreateElement(tagMonthCol4);
+                XmlElement col5 = xmlRes.CreateElement(tagMonthCol5);
+                XmlElement col6 = xmlRes.CreateElement(tagMonthCol6);
+                col1.InnerText = mergeInfoT.Rows[i][MergeInfoTranspose.col1].ToString().Replace(',', '.');
+                col2.InnerText = mergeInfoT.Rows[i][MergeInfoTranspose.col2].ToString().Replace(',', '.');
+                col3.InnerText = mergeInfoT.Rows[i][MergeInfoTranspose.col3].ToString().Replace(',', '.');
+                col4.InnerText = mergeInfoT.Rows[i][MergeInfoTranspose.col4].ToString().Replace(',', '.');
+                col5.InnerText = mergeInfoT.Rows[i][MergeInfoTranspose.col5].ToString().Replace(',', '.');
+                col6.InnerText = mergeInfoT.Rows[i][MergeInfoTranspose.col6].ToString().Replace(',', '.');
+                month.AppendChild(col1);
+                month.AppendChild(col2);
+                month.AppendChild(col3);
+                month.AppendChild(col4);
+                month.AppendChild(col5);
+                month.AppendChild(col6);
+                payment.AppendChild(month);
+            }
+            //
+            return xmlRes;
+        }
+
+        static public string GetReportUrl()
+        {
+            return Properties.Settings.Default.report_szv3;
+        }
     }
 }

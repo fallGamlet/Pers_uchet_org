@@ -3690,14 +3690,25 @@ namespace Pers_uchet_org
             return string.Format(" SELECT * FROM {0} ", tablename);
         }
 
+        static public string GetSelectText(long org_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), orgID, org_id);
+        }
+
         static public string GetSelectRowText(long row_id)
         {
             return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), id, row_id);
         }
 
-        static public string GetSelectText(long org_id)
+        static public DataRow GetRow(long row_id, string connectionStr)
         {
-            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), orgID, org_id);
+            DataTable table = Mergies.CreateTable();
+            DataRow rowRes = null;
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectRowText(row_id), connectionStr);
+            adapter.Fill(table);
+            if (table.Rows.Count > 0)
+                rowRes = table.Rows[0];
+            return rowRes;
         }
 
         static public string GetSelectActualText(long org_id, int rep_year)
@@ -3859,6 +3870,17 @@ namespace Pers_uchet_org
                                     (string)mergeRow[MergiesView.operName],
                                     fixdate);
         }
+
+        new static public DataRow GetRow(long row_id, string connectionStr)
+        {
+            DataTable table = Mergies.CreateTable();
+            DataRow rowRes = null;
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectRowText(row_id), connectionStr);
+            adapter.Fill(table);
+            if (table.Rows.Count > 0)
+                rowRes = table.Rows[0];
+            return null;
+        }
         #endregion
     }
 
@@ -3965,6 +3987,14 @@ namespace Pers_uchet_org
             return table;
         }
 
+        static public DataTable GetTable(long merge_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectText(merge_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
         static public void SetMergeID(DataTable mergeInfoTable, long merge_id)
         {
             foreach (DataRow row in mergeInfoTable.Rows)
@@ -3999,7 +4029,7 @@ namespace Pers_uchet_org
                             mergeInfo.Columns[MergeInfo.september].Ordinal,
                             mergeInfo.Columns[MergeInfo.october].Ordinal,
                             mergeInfo.Columns[MergeInfo.november].Ordinal,
-                            mergeInfo.Columns[MergeInfo.december].Ordinal,
+                            mergeInfo.Columns[MergeInfo.december].Ordinal
                             //mergeInfo.Columns[MergeInfo.sum].Ordinal,
                             };
         }
@@ -4042,6 +4072,7 @@ namespace Pers_uchet_org
         {
             return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
         }
+        
         static public string GetDeleteText(long merge_id)
         {
             return string.Format("DELETE FROM {0} WHERE {1}={2}",
