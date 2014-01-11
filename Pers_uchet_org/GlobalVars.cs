@@ -7,203 +7,9 @@ using System.Data.SQLite;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
-using System.Xml;
 
 namespace Pers_uchet_org
 {
-    public class MyXml
-    {
-        public enum ReportType { ADV1 = 0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3 }
-
-        public static string GetReportUrl(ReportType type)
-        {
-            string url;
-            switch (type)
-            {
-                case MyXml.ReportType.ADV1:
-                    url = Properties.Settings.Default.report_adv1;
-                    break;
-                case MyXml.ReportType.ADV2:
-                    url = Properties.Settings.Default.report_adv2;
-                    break;
-                case MyXml.ReportType.ADV3:
-                    url = Properties.Settings.Default.report_adv3;
-                    break;
-                case MyXml.ReportType.ADV4:
-                    url = Properties.Settings.Default.report_adv4;
-                    break;
-                case MyXml.ReportType.ADV5:
-                    url = Properties.Settings.Default.report_adv5;
-                    break;
-                case MyXml.ReportType.ADV6:
-                    url = Properties.Settings.Default.report_adv6;
-                    break;
-                case MyXml.ReportType.SZV1:
-                    url = Properties.Settings.Default.report_szv1;
-                    break;
-                case MyXml.ReportType.SZV2:
-                    url = Properties.Settings.Default.report_szv2;
-                    break;
-                case MyXml.ReportType.SZV3:
-                    url = Properties.Settings.Default.report_szv3;
-                    break;
-                default:
-                    url = "/";
-                    break;
-            }
-            url = Path.GetFullPath(url);
-            if (File.Exists(url))
-                return url;
-            else
-                return null;
-        }
-
-        static public XmlDocument PersonXml(DataRow row)
-        {
-            XmlDocument xml = new XmlDocument();
-            XmlElement doc_info = xml.CreateElement("doc_info");
-            XmlElement person = xml.CreateElement("person");
-            XmlElement lname = xml.CreateElement("lname");
-            XmlElement fname = xml.CreateElement("fname");
-            XmlElement mname = xml.CreateElement("mname");
-            XmlElement citizen = xml.CreateElement("citizen");
-            XmlElement citizen1 = xml.CreateElement("first");
-            XmlElement citizen2 = xml.CreateElement("second");
-            XmlElement citizen1ID = xml.CreateElement("id");
-            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
-            XmlElement citizen1Name = xml.CreateElement("name");
-            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
-            XmlElement categoryID = xml.CreateElement("category_id");
-            XmlElement categoryName = xml.CreateElement("category_name");
-            XmlElement privelegeID = xml.CreateElement("privelege_id");
-            XmlElement privelegeName = xml.CreateElement("privelege_name");
-
-            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
-            xml.AppendChild(doc_info);
-            doc_info.AppendChild(person);
-            person.AppendChild(lname);
-            person.AppendChild(fname);
-            person.AppendChild(mname);
-            person.AppendChild(citizen);
-            citizen.AppendChild(citizen1);
-            citizen.AppendChild(citizen2);
-            citizen1.AppendChild(citizen1ID);
-            citizen1.AppendChild(citizen1Name);
-            citizen2.AppendChild(citizen2ID);
-            citizen2.AppendChild(citizen2Name);
-            person.AppendChild(categoryID);
-            person.AppendChild(categoryName);
-            person.AppendChild(privelegeID);
-            person.AppendChild(privelegeName);
-
-            lname.InnerText = row[PersonView.lName] as string;
-            fname.InnerText = row[PersonView.fName] as string;
-            mname.InnerText = row[PersonView.mName] as string;
-            citizen1ID.InnerText = row["citizen1_id"].ToString();
-            citizen2ID.InnerText = row["citizen2_id"].ToString();
-            citizen1Name.InnerText = row["citizen1_name"] as string;
-            citizen2Name.InnerText = row["citizen2_name"] as string;
-            categoryID.InnerText = row["category_id"].ToString();
-            categoryName.InnerText = row["category_name"] as string;
-            privelegeID.InnerText = row["privelege_id"].ToString();
-            privelegeName.InnerText = row["privelege_name"] as string;
-            //
-            return xml;
-        }
-
-        static public XmlDocument Adv1Xml(DataRow personViewRow)
-        {
-            XmlDocument xml = new XmlDocument();
-            XmlElement person = xml.CreateElement("person");
-            XmlElement lname = xml.CreateElement("lname");
-            XmlElement fname = xml.CreateElement("fname");
-            XmlElement mname = xml.CreateElement("mname");
-            XmlElement regnum = xml.CreateElement("regnum");
-            XmlElement birthday = xml.CreateElement("birthday");
-            XmlElement sex = xml.CreateElement("sex");
-            XmlElement doctype = xml.CreateElement("doctype");
-            XmlElement docseries = xml.CreateElement("docseries");
-            XmlElement docnumber = xml.CreateElement("docnumber");
-            XmlElement docdate = xml.CreateElement("docdate");
-            XmlElement docorg = xml.CreateElement("docorg");
-            XmlElement regaddressZipcode = xml.CreateElement("regaddress_zipcode");
-            XmlElement regaddress = xml.CreateElement("regaddress");
-            XmlElement factaddressZipcode = xml.CreateElement("factaddress_zipcode");
-            XmlElement factaddress = xml.CreateElement("factaddress");
-            XmlElement bornaddress = xml.CreateElement("bornaddress");
-            XmlElement bornCountry = xml.CreateElement("borncountry");
-            XmlElement bornArea = xml.CreateElement("bornarea");
-            XmlElement bornRegion = xml.CreateElement("bornregion");
-            XmlElement bornCity = xml.CreateElement("borncity");
-            XmlElement bornZipcode = xml.CreateElement("bornzipcode");
-            XmlElement citizen = xml.CreateElement("citizen");
-            XmlElement citizen1 = xml.CreateElement("first");
-            XmlElement citizen2 = xml.CreateElement("second");
-            XmlElement citizen1ID = xml.CreateElement("id");
-            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
-            XmlElement citizen1Name = xml.CreateElement("name");
-            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
-
-            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
-            xml.AppendChild(person);
-            person.AppendChild(lname);
-            person.AppendChild(fname);
-            person.AppendChild(mname);
-            person.AppendChild(regnum);
-            person.AppendChild(birthday);
-            person.AppendChild(sex);
-            person.AppendChild(doctype);
-            person.AppendChild(docseries);
-            person.AppendChild(docnumber);
-            person.AppendChild(docdate);
-            person.AppendChild(docorg);
-            person.AppendChild(regaddressZipcode);
-            person.AppendChild(regaddress);
-            person.AppendChild(factaddressZipcode);
-            person.AppendChild(factaddress);
-            bornaddress.AppendChild(bornCountry);
-            bornaddress.AppendChild(bornArea);
-            bornaddress.AppendChild(bornRegion);
-            bornaddress.AppendChild(bornCity);
-            bornaddress.AppendChild(bornZipcode);
-            person.AppendChild(bornaddress);
-            person.AppendChild(citizen);
-            citizen.AppendChild(citizen1);
-            citizen.AppendChild(citizen2);
-            citizen1.AppendChild(citizen1ID);
-            citizen1.AppendChild(citizen1Name);
-            citizen2.AppendChild(citizen2ID);
-            citizen2.AppendChild(citizen2Name);
-
-            lname.InnerText = personViewRow[PersonView.lName] as string;
-            fname.InnerText = personViewRow[PersonView.fName] as string;
-            mname.InnerText = personViewRow[PersonView.mName] as string;
-            regnum.InnerText = personViewRow[PersonView.socNumber] as string;
-            birthday.InnerText = ((DateTime)personViewRow[PersonView.birthday]).ToShortDateString();
-            sex.InnerText = (int)personViewRow[PersonView.sex] == 1 ? "м" : "ж";
-            doctype.InnerText = personViewRow[PersonView.docType] as string;
-            docseries.InnerText = personViewRow[PersonView.docSeries] as string;
-            docnumber.InnerText = personViewRow[PersonView.docNumber] as string;
-            docdate.InnerText = ((DateTime)personViewRow[PersonView.docDate]).ToShortDateString();
-            docorg.InnerText = personViewRow[PersonView.docOrg] as string;
-            regaddressZipcode.InnerText = personViewRow[PersonView.regAdressZipcode] as string;
-            regaddress.InnerText = personViewRow[PersonView.regAdress] as string;
-            factaddressZipcode.InnerText = personViewRow[PersonView.factAdressZipcode] as string;
-            factaddress.InnerText = personViewRow[PersonView.factAdress] as string;
-            bornCountry.InnerText = personViewRow[PersonView.bornAdressCountry] as string;
-            bornArea.InnerText = personViewRow[PersonView.bornAdressArea] as string;
-            bornRegion.InnerText = personViewRow[PersonView.bornAdressRegion] as string;
-            bornCity.InnerText = personViewRow[PersonView.bornAdressCity] as string;
-            bornZipcode.InnerText = personViewRow[PersonView.bornAdressZipcode] as string;
-            citizen1ID.InnerText = personViewRow["citizen1_id"].ToString();
-            citizen2ID.InnerText = personViewRow["citizen2_id"].ToString();
-            citizen1Name.InnerText = personViewRow["citizen1"] as string;
-            citizen2Name.InnerText = personViewRow["citizen2"] as string;
-            //
-            return xml;
-        }
-    }
-
     public class MyPrinter
     {
         static public void SetPrintSettings()
@@ -242,9 +48,9 @@ namespace Pers_uchet_org
             ShowWebPage(wb);
         }
 
-        static public void ShowWebPage(WebBrowser wb, MyXml.ReportType type)
+        static public void ShowWebPage(WebBrowser wb, XmlData.ReportType type)
         {
-            string url = MyXml.GetReportUrl(type);
+            string url = XmlData.GetReportUrl(type);
             if (url != null)
             {
                 ShowWebPage(wb, url);
@@ -1442,7 +1248,7 @@ namespace Pers_uchet_org
             IEnumerable<DataRow> PrintRows = wb.Tag as IEnumerable<DataRow>;
             foreach (DataRow personRow in PrintRows)
             {
-                string xmlStr = MyXml.Adv1Xml(personRow).InnerXml;
+                string xmlStr = XmlData.Adv1Xml(personRow).InnerXml;
                 htmlDoc.InvokeScript("setAllData", new object[] { xmlStr });
                 htmlDivList.Add(htmlDoc.Body.InnerHtml);
             }
@@ -3931,14 +3737,25 @@ namespace Pers_uchet_org
             return string.Format(" SELECT * FROM {0} ", tablename);
         }
 
+        static public string GetSelectText(long org_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), orgID, org_id);
+        }
+
         static public string GetSelectRowText(long row_id)
         {
             return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), id, row_id);
         }
 
-        static public string GetSelectText(long org_id)
+        static public DataRow GetRow(long row_id, string connectionStr)
         {
-            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), orgID, org_id);
+            DataTable table = Mergies.CreateTable();
+            DataRow rowRes = null;
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectRowText(row_id), connectionStr);
+            adapter.Fill(table);
+            if (table.Rows.Count > 0)
+                rowRes = table.Rows[0];
+            return rowRes;
         }
 
         static public string GetSelectActualText(long org_id, int rep_year)
@@ -4100,6 +3917,17 @@ namespace Pers_uchet_org
                                     (string)mergeRow[MergiesView.operName],
                                     fixdate);
         }
+
+        new static public DataRow GetRow(long row_id, string connectionStr)
+        {
+            DataTable table = Mergies.CreateTable();
+            DataRow rowRes = null;
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectRowText(row_id), connectionStr);
+            adapter.Fill(table);
+            if (table.Rows.Count > 0)
+                rowRes = table.Rows[0];
+            return null;
+        }
         #endregion
     }
 
@@ -4206,6 +4034,14 @@ namespace Pers_uchet_org
             return table;
         }
 
+        static public DataTable GetTable(long merge_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectText(merge_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
         static public void SetMergeID(DataTable mergeInfoTable, long merge_id)
         {
             foreach (DataRow row in mergeInfoTable.Rows)
@@ -4240,7 +4076,7 @@ namespace Pers_uchet_org
                             mergeInfo.Columns[MergeInfo.september].Ordinal,
                             mergeInfo.Columns[MergeInfo.october].Ordinal,
                             mergeInfo.Columns[MergeInfo.november].Ordinal,
-                            mergeInfo.Columns[MergeInfo.december].Ordinal,
+                            mergeInfo.Columns[MergeInfo.december].Ordinal
                             //mergeInfo.Columns[MergeInfo.sum].Ordinal,
                             };
         }
@@ -4283,6 +4119,7 @@ namespace Pers_uchet_org
         {
             return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
         }
+        
         static public string GetDeleteText(long merge_id)
         {
             return string.Format("DELETE FROM {0} WHERE {1}={2}",

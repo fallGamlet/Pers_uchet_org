@@ -477,6 +477,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Storage.cs" />
+    <Compile Include="XmlData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\mathdll.dll" />

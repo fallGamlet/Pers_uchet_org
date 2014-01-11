@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pers_uchet_org
 {
-    class Storege
+    class Storage
     {
     }
 }
