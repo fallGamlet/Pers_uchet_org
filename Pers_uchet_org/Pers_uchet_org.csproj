@@ -170,6 +170,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CopyPacketOtherOrgForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CopyPacketOtherOrgForm.Designer.cs">
+      <DependentUpon>CopyPacketOtherOrgForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mathdll.cs" />
     <Compile Include="Forms\MoveDocumentForm.cs">
       <SubType>Form</SubType>
@@ -448,6 +454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CopyPacketOtherYearForm.resx">
       <DependentUpon>CopyPacketOtherYearForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CopyPacketOtherOrgForm.resx">
+      <DependentUpon>CopyPacketOtherOrgForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
