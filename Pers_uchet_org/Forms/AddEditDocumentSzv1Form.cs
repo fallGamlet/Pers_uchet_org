@@ -218,7 +218,8 @@ namespace Pers_uchet_org
             specialPeriodDataGridView.Columns["professionColumn"].DataPropertyName = SpecialPeriodView.profession;
             _connection.Close();
 
-            saveButton.Enabled = true;
+            if (codeComboBox.Items.Count > 0)
+                saveButton.Enabled = true;
             if (_flagDocType == (long)DocTypes.CancelingFormId)
             {
                 tabControlMain.TabPages.Remove(tabPage2);
@@ -472,6 +473,7 @@ namespace Pers_uchet_org
                 row[DopPeriodView.endDate] = additionalPeriodForm.End.Date;
                 _dopPeriodBS.EndEdit();
             }
+            additionalPeriodForm.Dispose();
         }
 
         private void editAdditionalPeriodButton_Click(object sender, EventArgs e)
@@ -818,6 +820,23 @@ namespace Pers_uchet_org
                         using (_command = _connection.CreateCommand())
                         {
                             _command.Transaction = transaction;
+
+                            _command.CommandText = Lists.GetListsIdsText(_org.idVal, _repYear, _flagDocType, _personId, _currentClassPercentId, additionalRadioButton.Checked ? IndDocs.Job.Second : IndDocs.Job.General, _currentDocId);
+                            SQLiteDataReader reader = _command.ExecuteReader();
+                            string lists = String.Empty;
+                            while (reader.Read())
+                            {
+                                lists += reader[Lists.id].ToString() + ", ";
+                            }
+                            reader.Close();
+                            lists = lists.TrimEnd(',', ' ');
+                            if (!String.IsNullOrEmpty(lists))
+                            {
+                                string questionStr = "В данном отчётном периоде для выбранного застрахованного лица\nв пакете(ах) {0}\nуже зарегистрирована форма со значениями\nкатегории \"{1}\" и места работы \"{2}\" !\n\nПродолжить сохранение?";
+                                questionStr = string.Format(questionStr, lists, codeComboBox.Text, additionalRadioButton.Checked ? "Не основное" : "Основное");
+                                if (MainForm.ShowQuestionFlexMessage(questionStr, "Повторный ввод данных") == System.Windows.Forms.DialogResult.No)
+                                    return;
+                            }
 
                             if (_currentDocId > 0)
                             {

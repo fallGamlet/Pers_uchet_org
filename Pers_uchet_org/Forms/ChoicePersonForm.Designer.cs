@@ -221,7 +221,6 @@
             // choiceButton
             // 
             this.choiceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.choiceButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.choiceButton.Location = new System.Drawing.Point(148, 327);
             this.choiceButton.Name = "choiceButton";
             this.choiceButton.Size = new System.Drawing.Size(125, 23);

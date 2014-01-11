@@ -2071,7 +2071,6 @@ namespace Pers_uchet_org
         static public string pRepYear = "@rep_year";
         #endregion
 
-
         #region Методы - статические
         static public SQLiteCommand CreateInsertCommand()
         {
@@ -2173,6 +2172,16 @@ namespace Pers_uchet_org
                 connection.Open();
             SQLiteCommand command = new SQLiteCommand(GetCopyText(old_list_id), connection, transaction);
             return Convert.ToInt64(command.ExecuteScalar());
+        }
+
+        static public string GetListsIdsText(long org_id, int rep_year, long doc_type, long person_id, long classpercent_id, IndDocs.Job job, long cur_doc_id)
+        {
+            return string.Format(@"SELECT DISTINCT l.{0} as id
+                                    FROM {1} l
+                                    INNER JOIN {2} d ON d.{3} = l.{0}
+                                    INNER JOIN {4} id ON id.{5} = d.{6}
+                                    WHERE {7} = {8} AND {9} = {10} AND {11} = {12} AND {13} = {14} AND {15} = {16} AND {17} = {18} AND d.{6} <> {19} ",
+                               id, tablename, Docs.tablename, Docs.listId, IndDocs.tablename, IndDocs.docId, Docs.id, orgID, org_id, repYear, rep_year, Docs.docTypeId, doc_type, Docs.personID, person_id, IndDocs.classpercentId, classpercent_id, IndDocs.isGeneral, (int)job, cur_doc_id);
         }
 
         #endregion
@@ -2361,6 +2370,44 @@ namespace Pers_uchet_org
             if (connection.State != ConnectionState.Open)
                 connection.Open();
             SQLiteCommand command = new SQLiteCommand(GetCopyText(doc_id, list_id), connection, transaction);
+            return Convert.ToInt64(command.ExecuteScalar());
+        }
+
+        static public string GetCountDocsText(long list_id, long doc_type)
+        {
+            return string.Format(@"SELECT COUNT({0}) FROM {1} WHERE {2} = {3} AND {4} = {5} ",
+                                id, tablename, listId, list_id, docTypeId, doc_type);
+        }
+
+        static public long CountDocsInList(long list_id, long doc_type, SQLiteConnection connection)
+        {
+            return CountDocsInList(list_id, doc_type, connection, null);
+        }
+
+        static public long CountDocsInList(long list_id, long doc_type, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCountDocsText(list_id, doc_type), connection, transaction);
+            return Convert.ToInt64(command.ExecuteScalar());
+        }
+
+        static public string GetCountDocsByYearText(long year, long person_id)
+        {
+            return string.Format(@"SELECT COUNT({0}) FROM {1} WHERE {2} = {3} AND {4} IN (SELECT {5} FROM {6} WHERE {7} = {8}) ",
+                                id, tablename, personID, person_id, listId, Lists.id, Lists.tablename, Lists.repYear, year);
+        }
+
+        static public long CountDocsByYear(long year, long person_id, SQLiteConnection connection)
+        {
+            return CountDocsByYear(year, person_id, connection, null);
+        }
+
+        static public long CountDocsByYear(long year, long person_id, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetCountDocsByYearText(year, person_id), connection, transaction);
             return Convert.ToInt64(command.ExecuteScalar());
         }
         #endregion
@@ -2632,7 +2679,7 @@ namespace Pers_uchet_org
 	                        ,SUM([{12}]) as {12}
                         FROM [{13}]
                         WHERE {14} in (SELECT {15} FROM {16} WHERE {17} in {18} AND {19} in {20})
-                        GROUP BY [{0}]", 
+                        GROUP BY [{0}]",
                         salaryGroupsId,
                         january, february, march, april, may, june, july, august, september, october, november, december,
                         tablename, docId,

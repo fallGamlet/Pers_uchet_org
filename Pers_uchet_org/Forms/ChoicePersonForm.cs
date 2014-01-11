@@ -21,6 +21,8 @@ namespace Pers_uchet_org
         private Org _org;
         // текущий отчетный год
         private int RepYear;
+        // идентификатор текущего пакета
+        private long _listId;
         // таблица
         DataTable _personTable;
         // биндинг сорс для таблицы
@@ -36,39 +38,94 @@ namespace Pers_uchet_org
             InitializeComponent();
         }
 
-        public ChoicePersonForm(Org _org, int RepYear, string _connection)
+        public ChoicePersonForm(Org _org, int RepYear, long listId, string _connection)
             : this()
         {
             this._org = _org;
             this.RepYear = RepYear;
             this._connection = _connection;
+            this._listId = listId;
         }
 
         private void ChoicePersonForm_Load(object sender, EventArgs e)
         {
-            // иництализация таблицы персон (записи с анкетными данными)
-            _personTable = PersonView2.CreatetTable();
+            try
+            {
+                // инициализация таблицы персон (записи с анкетными данными)
+                _personTable = PersonView2.CreatetTable();
 
-            // инициализация биндинг сорса к таблице персон
-            _personBS = new BindingSource();
-            _personBS.CurrentChanged += new EventHandler(_personBS_CurrentChanged);
-            _personBS.ListChanged += new ListChangedEventHandler(_personBS_ListChanged);
-            _personBS.DataSource = _personTable;
+                // инициализация биндинг сорса к таблице персон
+                _personBS = new BindingSource();
+                _personBS.CurrentChanged += new EventHandler(_personBS_CurrentChanged);
+                _personBS.ListChanged += new ListChangedEventHandler(_personBS_ListChanged);
+                _personBS.DataSource = _personTable;
 
-            // присвоение источника вьюшке
-            this.personView.AutoGenerateColumns = false;
-            this.personView.DataSource = _personBS;
+                // присвоение источника вьюшке
+                this.personView.AutoGenerateColumns = false;
+                this.personView.DataSource = _personBS;
 
-            // инициализация Адаптера для считывания персон из БД
-            string commandStr = PersonView2.GetSelectText(_org.idVal, RepYear);
-            _personAdapter = new SQLiteDataAdapter(commandStr, _connection);
-            // запосление таблицы данными с БД
-            _personAdapter.Fill(_personTable);
+                // инициализация Адаптера для считывания персон из БД
+                string commandStr = PersonView2.GetSelectText(_org.idVal, RepYear);
+                _personAdapter = new SQLiteDataAdapter(commandStr, _connection);
+                // запосление таблицы данными с БД
+                _personAdapter.Fill(_personTable);
 
-            allAnketsButton.Enabled = false;
-            rawAnketsButton.Enabled = true;
-            radioButton1.Checked = true;
-            StajDohodForm.PersonId = 0;
+                StajDohodForm.PersonId = 0;
+                allAnketsButton.Enabled = false;
+                rawAnketsButton.Enabled = true;
+
+                SQLiteConnection connection = new SQLiteConnection(_connection);
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                long countPensDocsInList = Docs.CountDocsInList(_listId, DocTypes.GrantingPensionId, connection);
+                long countOtherDocsInList = 0;
+                countOtherDocsInList += Docs.CountDocsInList(_listId, DocTypes.InitialFormId, connection);
+                countOtherDocsInList += Docs.CountDocsInList(_listId, DocTypes.CorrectionFormId, connection);
+                countOtherDocsInList += Docs.CountDocsInList(_listId, DocTypes.CancelingFormId, connection);
+                connection.Close();
+                if (countPensDocsInList == 0 && countOtherDocsInList == 0)
+                {
+                    radioButton1.Enabled = true;
+                    radioButton2.Enabled = true;
+                    radioButton3.Enabled = true;
+                    radioButton4.Enabled = true;
+
+                    radioButton1.Checked = true;
+                }
+                else if (countPensDocsInList > 0 && countOtherDocsInList == 0)
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = true;
+
+                    radioButton4.Checked = true;
+                }
+                else
+                    if (countPensDocsInList == 0 && countOtherDocsInList > 0)
+                    {
+                        radioButton1.Enabled = true;
+                        radioButton2.Enabled = true;
+                        radioButton3.Enabled = true;
+                        radioButton4.Enabled = false;
+
+                        radioButton1.Checked = true;
+                    }
+                    else if (countPensDocsInList > 0 && countOtherDocsInList > 0)
+                    {
+                        radioButton1.Enabled = false;
+                        radioButton2.Enabled = false;
+                        radioButton3.Enabled = false;
+                        radioButton4.Enabled = false;
+
+                        //radioButton1.Checked = true;
+                    }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка заполнения формы");
+                choiceButton.Enabled = false;
+            }
         }
 
         void _personBS_ListChanged(object sender, ListChangedEventArgs e)
@@ -176,6 +233,24 @@ namespace Pers_uchet_org
                 this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
                 return;
             }
+
+            if (flag == 0)
+            {
+                MainForm.ShowInfoFlexMessage("В текущем пакете содержаться формы разных типов!\nДокументы типа \"Назначение пенсии\" должны находится в отдельном пакете!", "Ошибка выбора анкеты");
+                return;
+            }
+            SQLiteConnection connection = new SQLiteConnection(_connection);
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            long countDocsForPerson = Docs.CountDocsByYear(RepYear, (long)row[PersonView2.id], connection);
+            connection.Close();
+
+            if (countDocsForPerson > 0)
+            {
+                if (MainForm.ShowQuestionFlexMessage("За выбранный отчетный год уже имеются сведения\nо стаже и заработке по застрахованному лицу.\n\nВы действительно желаете ввести еще один документ?", "Ошибка выбора анкеты") == DialogResult.No)
+                    return;
+            }
+
             StajDohodForm.PersonId = (long)row[PersonView2.id];
             StajDohodForm.FlagDoc = flag;
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

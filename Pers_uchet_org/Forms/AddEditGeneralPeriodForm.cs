@@ -35,8 +35,8 @@ namespace Pers_uchet_org
             this._repYear = repYear;
             this._generalPeriodBS = generalPeriodBS;
             this._specPeriodBS = specialPeriodBS;
-            this.Begin = DateTime.Now.Date;
-            this.End = DateTime.Now.Date;
+            this.Begin = DateTime.Parse(_repYear + "-01-01");
+            this.End = DateTime.Parse(_repYear + "-12-31");
             _isNew = true;
         }
 
@@ -53,7 +53,6 @@ namespace Pers_uchet_org
         {
             beginDateTimePicker.MinDate = DateTime.Parse(_repYear + "-01-01");
             beginDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
-            endDateTimePicker.MinDate = beginDateTimePicker.Value;
             endDateTimePicker.MaxDate = DateTime.Parse(_repYear + "-12-31");
 
             beginDateTimePicker.Value = Begin;
