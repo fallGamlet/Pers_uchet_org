@@ -1,6 +1,6 @@
 ﻿namespace Pers_uchet_org
 {
-    partial class MovePacketForm
+    partial class MovePacketOtherOrgForm
     {
         /// <summary>
         /// Required designer variable.
@@ -133,7 +133,7 @@
             this.panel1.Size = new System.Drawing.Size(326, 177);
             this.panel1.TabIndex = 10;
             // 
-            // MovePacketForm
+            // MovePacketOtherOrgForm
             // 
             this.AcceptButton = this.moveButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,7 +153,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MovePacketForm";
+            this.Name = "MovePacketOtherOrgForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Перемещение пакета в другую организацию";
             this.Load += new System.EventHandler(this.MovePacketForm_Load);

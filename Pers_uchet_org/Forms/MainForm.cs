@@ -56,7 +56,8 @@ namespace Pers_uchet_org
             this.orgBox.DataSource = _orgBS;
             this.orgBox.DisplayMember = viewCol;
             int isLogedin = 0;
-            for (int i = 0; i < 3 && isLogedin == 0; i++) {
+            for (int i = 0; i < 3 && isLogedin == 0; i++) 
+            {
                 isLogedin = this.Login();
             }
             if (isLogedin != 2)

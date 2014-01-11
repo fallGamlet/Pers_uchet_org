@@ -10,7 +10,7 @@ using System.Data.SQLite;
 
 namespace Pers_uchet_org
 {
-    public partial class MovePacketForm : Form
+    public partial class MovePacketOtherOrgForm : Form
     {
         #region Поля
         const string viewCol = "view_col";
@@ -23,12 +23,12 @@ namespace Pers_uchet_org
         
         #endregion
 
-        public MovePacketForm()
+        public MovePacketOtherOrgForm()
         {
             InitializeComponent();
         }
 
-        public MovePacketForm(Operator _operator, string _connection, long listId)
+        public MovePacketOtherOrgForm(Operator _operator, string _connection, long listId)
             : this()
         {
             this._operator = _operator;
@@ -38,7 +38,7 @@ namespace Pers_uchet_org
 
         private void MovePacketForm_Load(object sender, EventArgs e)
         {
-            label1.Text += listId;
+            label2.Text += listId;
             _orgTable = Org.CreateTable();
             _orgTable.Columns.Add(viewCol);
             _orgBS = new BindingSource();
