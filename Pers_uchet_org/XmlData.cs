@@ -1,47 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Data;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Pers_uchet_org
 {
     public class XmlData
     {
-        public enum ReportType { ADV1 = 0, ADV2, ADV3, ADV4, ADV5, ADV6, SZV1, SZV2, SZV3, RDV1, RDV21, RDV22, RDV3 }
+        public enum ReportType { Adv1 = 0, Adv2, Adv3, Adv4, Adv5, Adv6, Szv1, Szv2, Szv3, Rdv1, Rdv21, Rdv22, Rdv3 }
 
         public static string GetReportUrl(ReportType type)
         {
             string url;
             switch (type)
             {
-                case XmlData.ReportType.ADV1:
+                case XmlData.ReportType.Adv1:
                     url = Properties.Settings.Default.report_adv1;
                     break;
-                case XmlData.ReportType.ADV2:
+                case XmlData.ReportType.Adv2:
                     url = Properties.Settings.Default.report_adv2;
                     break;
-                case XmlData.ReportType.ADV3:
+                case XmlData.ReportType.Adv3:
                     url = Properties.Settings.Default.report_adv3;
                     break;
-                case XmlData.ReportType.ADV4:
+                case XmlData.ReportType.Adv4:
                     url = Properties.Settings.Default.report_adv4;
                     break;
-                case XmlData.ReportType.ADV5:
+                case XmlData.ReportType.Adv5:
                     url = Properties.Settings.Default.report_adv5;
                     break;
-                case XmlData.ReportType.ADV6:
+                case XmlData.ReportType.Adv6:
                     url = Properties.Settings.Default.report_adv6;
                     break;
-                case XmlData.ReportType.SZV1:
+                case XmlData.ReportType.Szv1:
                     url = Properties.Settings.Default.report_szv1;
                     break;
-                case XmlData.ReportType.SZV2:
+                case XmlData.ReportType.Szv2:
                     url = Properties.Settings.Default.report_szv2;
                     break;
-                case XmlData.ReportType.SZV3:
+                case XmlData.ReportType.Szv3:
                     url = Properties.Settings.Default.report_szv3;
                     break;
                 default:
@@ -199,98 +202,216 @@ namespace Pers_uchet_org
             //
             return xml;
         }
+
+        public static string FormatXml(String Xml)
+        {
+            try
+            {
+                XDocument doc = XDocument.Parse(Xml);
+                return doc.ToString();
+            }
+            catch (Exception)
+            {
+                return Xml;
+            }
+        }
     }
 
     public class Szv1Xml
     {
-        static public XmlDocument GetXml()
+        // название формы
+        static public string name = "СЗВ-1";
+        #region названия тегов, присутствующих в xml
+        public static string tagDocInfo = "doc_info";
+        public static string tagPerson = "person";
+        public static string tagLname = "lname";
+        public static string tagFname = "fname";
+        public static string tagMname = "mname";
+        public static string tagPersonRegnum = "regnum";
+        public static string tagCitizen = "citizen";
+        public static string tagCitizen1 = "first";
+        public static string tagCitizen1ID = "id";
+        public static string tagCitizen1Name = "name";
+        public static string tagCitizen2 = "second";
+        public static string tagCitizen2ID = "id";
+        public static string tagCitizen2Name = "name";
+        public static string tagCategoryID = "category_id";
+        public static string tagCategoryName = "category_name";
+        public static string tagPrivelegeID = "privelege_id";
+        public static string tagPrivelegeName = "privelege_name";
+        public static string tagFirm = "firm";
+        public static string tagFirmRegnum = "regnum";
+        public static string tagFirmName = "name";
+        public static string tagFormType = "form_type";
+        public static string tagWorkPlace = "work_place";
+        public static string tagRepYear = "rep_year";
+        public static string tagFirmAdd = "firm_add";
+        public static string tagFirmPay = "firm_pay";
+        public static string tagPayment = "payment";
+        public static string tagMonth = "month";
+        public static string tagCol1 = "col_1";
+        public static string tagCol2 = "col_2";
+        public static string tagCol3 = "col_3";
+        public static string tagCol4 = "col_4";
+        public static string tagCol5 = "col_5";
+        public static string tagCol6 = "col_6";
+        public static string tagGenPeriod = "gen_period";
+        public static string tagPeriod = "period";
+        public static string tagGenStart = "gen_start";
+        public static string tagGenEnd = "gen_end";
+        public static string tagSpecStaj = "spec_staj";
+        public static string tagSpec = "spec";
+        public static string tagSpecStart = "start_date";
+        public static string tagSpecEnd = "end_date";
+        public static string tagSpecPartConditionID = "part_condition_id";
+        public static string tagSpecPartConditionName = "part_condition_name";
+        public static string tagSpecBaseID = "staj_base_id";
+        public static string tagSpecBaseName = "staj_base_name";
+        public static string tagSpecServyearBaseID = "servyear_base_id";
+        public static string tagSpecServyearBaseName = "servyear_base_name";
+        public static string tagSpecMonths = "smonths";
+        public static string tagSpecDays = "sdays";
+        public static string tagSpecHours = "shours";
+        public static string tagSpecMinutes = "sminutes";
+        public static string tagSpecProfession = "profession";
+        public static string tagDopStaj = "dop_staj";
+        public static string tagDopRecord = "record";
+        public static string tagDopCodeID = "dop_code_id";
+        public static string tagDopCodeName = "dop_code_name";
+        public static string tagDopStart = "dop_start";
+        public static string tagDopEnd = "dop_end";
+        #endregion
+
+        public static XmlDocument GetXml(long doc_id, Org org, string connection_str)
         {
+            #region Считывание данных
+
+            DataRow docRow = DocsViewForXml.GetRow(doc_id, connection_str);
+            if (docRow == null)
+                throw new NullReferenceException("Документ не найден");
+
+            DataTable salaryInfoTable = SalaryInfo.CreateTable();
+            DataTable salaryInfoTableTranspose = SalaryInfoTranspose.CreateTableWithRows();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(doc_id), connection_str);
+            adapter.Fill(salaryInfoTable);
+            SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTableTranspose, salaryInfoTable);
+
+            DataTable generalTable = GeneralPeriod.CreatetTable();
+            adapter = GeneralPeriod.CreateAdapter(new SQLiteConnection(connection_str), null);
+            adapter.SelectCommand.CommandText = GeneralPeriod.GetSelectText(doc_id);
+            adapter.Fill(generalTable);
+
+            DataTable specTable = SpecialPeriodView.CreatetTable();
+            adapter = new SQLiteDataAdapter
+            {
+                SelectCommand =
+                    new SQLiteCommand(SpecialPeriodView.GetSelectText(doc_id), new SQLiteConnection(connection_str))
+            };
+            adapter.Fill(specTable);
+
+            DataTable dopTable = DopPeriodView.CreateTable();
+            adapter = new SQLiteDataAdapter
+            {
+                SelectCommand =
+                    new SQLiteCommand(DopPeriodView.GetSelectText(doc_id), new SQLiteConnection(connection_str))
+            };
+            adapter.Fill(dopTable);
+
+            #endregion
+            return GetXml(docRow, org, salaryInfoTable, salaryInfoTableTranspose, generalTable, specTable, dopTable);
+        }
+
+        static public XmlDocument GetXml(DataRow docRow, Org org, DataTable salaryInfoTable, DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
+        {
+            #region Создание xml элементов
+
             XmlDocument xmlRes = new XmlDocument();
-            XmlElement docInfo = xmlRes.CreateElement("doc_info");
+            XmlElement docInfo = xmlRes.CreateElement(tagDocInfo);
 
-            XmlElement person = xmlRes.CreateElement("person");
-            XmlNode lname = xmlRes.CreateElement("lname");
-            XmlElement fname = xmlRes.CreateElement("fname");
-            XmlElement mname = xmlRes.CreateElement("mname");
-            XmlElement personRegnum = xmlRes.CreateElement("regnum");
-            XmlElement citizen = xmlRes.CreateElement("citizen");
-            XmlElement citizen1 = xmlRes.CreateElement("first");
-            XmlElement citizen1ID = xmlRes.CreateElement("id");
-            XmlElement citizen1Name = xmlRes.CreateElement("name");
-            XmlElement citizen2 = xmlRes.CreateElement("second");
-            XmlNode citizen2ID = citizen1ID.CloneNode(true);
-            XmlNode citizen2Name = citizen1Name.CloneNode(true);
-            XmlElement categoryID = xmlRes.CreateElement("category_id");
-            XmlElement categoryName = xmlRes.CreateElement("category_name");
-            XmlElement privelegeID = xmlRes.CreateElement("privelege_id");
-            XmlElement privelegeName = xmlRes.CreateElement("privelege_name");
+            XmlElement person = xmlRes.CreateElement(tagPerson);
+            XmlNode lname = xmlRes.CreateElement(tagLname);
+            XmlElement fname = xmlRes.CreateElement(tagFname);
+            XmlElement mname = xmlRes.CreateElement(tagMname);
+            XmlElement personRegnum = xmlRes.CreateElement(tagPersonRegnum);
+            XmlElement citizen = xmlRes.CreateElement(tagCitizen);
+            XmlElement citizen1 = xmlRes.CreateElement(tagCitizen1);
+            XmlElement citizen1Id = xmlRes.CreateElement(tagCitizen1ID);
+            XmlElement citizen1Name = xmlRes.CreateElement(tagCitizen1Name);
+            XmlElement citizen2 = xmlRes.CreateElement(tagCitizen2);
+            XmlNode citizen2Id = xmlRes.CreateElement(tagCitizen2ID);
+            XmlNode citizen2Name = xmlRes.CreateElement(tagCitizen2Name);
+            XmlElement categoryId = xmlRes.CreateElement(tagCategoryID);
+            XmlElement categoryName = xmlRes.CreateElement(tagCategoryName);
+            XmlElement privilegeId = xmlRes.CreateElement(tagPrivelegeID);
+            XmlElement privilegeName = xmlRes.CreateElement(tagPrivelegeName);
 
-            XmlElement firm = xmlRes.CreateElement("firm");
-            XmlElement firmRegnum = xmlRes.CreateElement("regnum");
-            XmlElement firmName = xmlRes.CreateElement("name");
+            XmlElement firm = xmlRes.CreateElement(tagFirm);
+            XmlElement firmRegnum = xmlRes.CreateElement(tagFirmRegnum);
+            XmlElement firmName = xmlRes.CreateElement(tagFirmName);
 
-            XmlElement formType = xmlRes.CreateElement("form_type");
-            XmlElement workPlace = xmlRes.CreateElement("work_place");
-            XmlElement repYear = xmlRes.CreateElement("rep_year");
-            XmlElement firmAdd = xmlRes.CreateElement("firm_add");
-            XmlElement firmPay = xmlRes.CreateElement("firm_pay");
+            XmlElement formType = xmlRes.CreateElement(tagFormType);
+            XmlElement workPlace = xmlRes.CreateElement(tagWorkPlace);
+            XmlElement repYear = xmlRes.CreateElement(tagRepYear);
+            XmlElement firmAdd = xmlRes.CreateElement(tagFirmAdd);
+            XmlElement firmPay = xmlRes.CreateElement(tagFirmPay);
 
-            XmlElement payment = xmlRes.CreateElement("payment");
-            XmlElement month = xmlRes.CreateElement("month");
-            XmlElement col1 = xmlRes.CreateElement("col_1");
-            XmlElement col2 = xmlRes.CreateElement("col_2");
-            XmlElement col3 = xmlRes.CreateElement("col_3");
-            XmlElement col4 = xmlRes.CreateElement("col_4");
-            XmlElement col5 = xmlRes.CreateElement("col_5");
-            XmlElement col6 = xmlRes.CreateElement("col_6");
+            XmlElement payment = xmlRes.CreateElement(tagPayment);
+            XmlElement genPeriod = xmlRes.CreateElement(tagGenPeriod);
+            XmlElement specStaj = xmlRes.CreateElement(tagSpecStaj);
+            XmlElement dopStaj = xmlRes.CreateElement(tagDopStaj);
+            #endregion
 
-            XmlElement genPeriod = xmlRes.CreateElement("gen_period");
-            XmlElement period = xmlRes.CreateElement("period");
-            XmlElement genStart = xmlRes.CreateElement("gen_start");
-            XmlElement genEnd = xmlRes.CreateElement("gen_end");
+            #region Заполнение данными
 
-            XmlElement specStaj = xmlRes.CreateElement("spec_staj");
-            XmlElement spec = xmlRes.CreateElement("spec");
-            XmlElement specStart = xmlRes.CreateElement("start_date");
-            XmlElement specEnd = xmlRes.CreateElement("end_date");
-            XmlElement specPArtConditionID = xmlRes.CreateElement("part_condition_id");
-            XmlElement specPArtConditionName = xmlRes.CreateElement("part_condition_name");
-            XmlElement specBaseID = xmlRes.CreateElement("staj_base_id");
-            XmlElement specBaseName = xmlRes.CreateElement("staj_base_name");
-            XmlElement specServyearBaseID = xmlRes.CreateElement("servyear_base_id");
-            XmlElement specServyearBaseName = xmlRes.CreateElement("servyear_base_name");
-            XmlElement specMonths = xmlRes.CreateElement("smonths");
-            XmlElement specDays = xmlRes.CreateElement("sdays");
-            XmlElement specHours = xmlRes.CreateElement("shours");
-            XmlElement specMinutes = xmlRes.CreateElement("sminutes");
-            XmlElement specProfession = xmlRes.CreateElement("profession");
+            lname.InnerText = docRow[DocsViewForXml.lName].ToString();
+            fname.InnerText = docRow[DocsViewForXml.fName].ToString();
+            mname.InnerText = docRow[DocsViewForXml.mName].ToString();
+            personRegnum.InnerText = docRow[DocsViewForXml.socNumber].ToString();
 
-            XmlElement dopStaj = xmlRes.CreateElement("dop_staj");
-            XmlElement dopRecord = xmlRes.CreateElement("record");
-            XmlElement dopCodeID = xmlRes.CreateElement("dop_code_id");
-            XmlElement dopCodeName = xmlRes.CreateElement("dop_code_name");
-            XmlElement dopStart = xmlRes.CreateElement("dop_start");
-            XmlElement dopEnd = xmlRes.CreateElement("dop_end");
+            citizen1Id.InnerText = docRow[DocsViewForXml.citizen1Id].ToString();
+            citizen1Name.InnerText = docRow[DocsViewForXml.citizen1Name].ToString();
+            citizen2Id.InnerText = docRow[DocsViewForXml.citizen2Id].ToString();
+            citizen2Name.InnerText = docRow[DocsViewForXml.citizen2Name].ToString();
+
+            categoryId.InnerText = docRow[DocsViewForXml.classificatorId].ToString();
+            categoryName.InnerText = docRow[DocsViewForXml.code].ToString();
+            privilegeId.InnerText = docRow[DocsViewForXml.privilegeId].ToString();
+            privilegeName.InnerText = docRow[DocsViewForXml.privilegeName].ToString();
+
+            firmRegnum.InnerText = org.regnumVal;
+            firmName.InnerText = org.nameVal;
+
+            formType.InnerText = docRow[DocsViewForXml.docTypeId].ToString();
+            workPlace.InnerText = docRow[DocsViewForXml.isGeneral].ToString();
+            repYear.InnerText = docRow[DocsViewForXml.repYear].ToString();
+
+            firmAdd.InnerText = salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)][SalaryInfo.sum].ToString();
+            firmPay.InnerText = salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)][SalaryInfo.sum].ToString();
+
+            #endregion
 
             xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
             xmlRes.AppendChild(docInfo);
 
             docInfo.AppendChild(person);
+
             person.AppendChild(lname);
             person.AppendChild(fname);
             person.AppendChild(mname);
             person.AppendChild(personRegnum);
+
             person.AppendChild(citizen);
             citizen.AppendChild(citizen1);
-            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Id);
             citizen1.AppendChild(citizen1Name);
             citizen.AppendChild(citizen2);
-            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Id);
             citizen2.AppendChild(citizen2Name);
-            person.AppendChild(categoryID);
+
+            person.AppendChild(categoryId);
             person.AppendChild(categoryName);
-            person.AppendChild(privelegeID);
-            person.AppendChild(privelegeName);
+            person.AppendChild(privilegeId);
+            person.AppendChild(privilegeName);
 
             docInfo.AppendChild(firm);
             firm.AppendChild(firmRegnum);
@@ -299,54 +420,133 @@ namespace Pers_uchet_org
             docInfo.AppendChild(formType);
             docInfo.AppendChild(workPlace);
             docInfo.AppendChild(repYear);
+
             docInfo.AppendChild(firmAdd);
             docInfo.AppendChild(firmPay);
 
-            docInfo.AppendChild(payment);
-            month.AppendChild(col1);
-            month.AppendChild(col2);
-            month.AppendChild(col3);
-            month.AppendChild(col4);
-            month.AppendChild(col5);
-            month.AppendChild(col6);
+
+            #region Заполнение данными заработной платы
+
             for (int i = 0; i < 12; i++)
             {
-                payment.AppendChild(month.CloneNode(true));
+                XmlElement month = xmlRes.CreateElement(tagMonth);
+                XmlElement col1 = xmlRes.CreateElement(tagCol1);
+                XmlElement col2 = xmlRes.CreateElement(tagCol2);
+                XmlElement col3 = xmlRes.CreateElement(tagCol3);
+                XmlElement col4 = xmlRes.CreateElement(tagCol4);
+                XmlElement col5 = xmlRes.CreateElement(tagCol5);
+                XmlElement col6 = xmlRes.CreateElement(tagCol6);
+                col1.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col1].ToString().Replace(',', '.');
+                col2.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col2].ToString().Replace(',', '.');
+                col3.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3].ToString().Replace(',', '.');
+                col4.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4].ToString().Replace(',', '.');
+                col5.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5].ToString().Replace(',', '.');
+                col6.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6].ToString().Replace(',', '.');
+                month.AppendChild(col1);
+                month.AppendChild(col2);
+                month.AppendChild(col3);
+                month.AppendChild(col4);
+                month.AppendChild(col5);
+                month.AppendChild(col6);
+                payment.AppendChild(month);
             }
+            docInfo.AppendChild(payment);
+            #endregion
 
+            #region Заполнение данными основного стажа
+
+            foreach (DataRow row in generalTable.Rows)
+            {
+                XmlElement period = xmlRes.CreateElement(tagPeriod);
+                XmlElement genStart = xmlRes.CreateElement(tagGenStart);
+                XmlElement genEnd = xmlRes.CreateElement(tagGenEnd);
+                genStart.InnerText = (DateTime.Parse(row[GeneralPeriod.beginDate].ToString())).ToString("dd.MM.yyyy");
+                genEnd.InnerText = (DateTime.Parse(row[GeneralPeriod.endDate].ToString())).ToString("dd.MM.yyyy");
+                genPeriod.AppendChild(period);
+                period.AppendChild(genStart);
+                period.AppendChild(genEnd);
+            }
             docInfo.AppendChild(genPeriod);
-            genPeriod.AppendChild(period);
-            period.AppendChild(genStart);
-            period.AppendChild(genEnd);
+            #endregion
 
+            #region Заполнение данными специального стажа
+
+            foreach (DataRow row in specTable.Rows)
+            {
+                XmlElement spec = xmlRes.CreateElement(tagSpec);
+                XmlElement specStart = xmlRes.CreateElement(tagSpecStart);
+                XmlElement specEnd = xmlRes.CreateElement(tagSpecEnd);
+                XmlElement specPartConditionId = xmlRes.CreateElement(tagSpecPartConditionID);
+                XmlElement specPartConditionName = xmlRes.CreateElement(tagSpecPartConditionName);
+                XmlElement specBaseId = xmlRes.CreateElement(tagSpecBaseID);
+                XmlElement specBaseName = xmlRes.CreateElement(tagSpecBaseName);
+                XmlElement specServyearBaseId = xmlRes.CreateElement(tagSpecServyearBaseID);
+                XmlElement specServyearBaseName = xmlRes.CreateElement(tagSpecServyearBaseName);
+                XmlElement specMonths = xmlRes.CreateElement(tagSpecMonths);
+                XmlElement specDays = xmlRes.CreateElement(tagSpecDays);
+                XmlElement specHours = xmlRes.CreateElement(tagSpecHours);
+                XmlElement specMinutes = xmlRes.CreateElement(tagSpecMinutes);
+                XmlElement specProfession = xmlRes.CreateElement(tagSpecProfession);
+                specStart.InnerText =  (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
+                specEnd.InnerText = (DateTime.Parse(row[SpecialPeriodView.endDate].ToString())).ToString("dd.MM.yyyy");
+                specPartConditionId.InnerText = row[SpecialPeriodView.partCondition].ToString();
+                specPartConditionName.InnerText = row[SpecialPeriodView.partCode].ToString();
+                specBaseId.InnerText = row[SpecialPeriodView.stajBase].ToString();
+                specBaseName.InnerText = row[SpecialPeriodView.stajCode].ToString();
+                specServyearBaseId.InnerText = row[SpecialPeriodView.servYearBase].ToString();
+                specServyearBaseName.InnerText = row[SpecialPeriodView.servCode].ToString();
+                specMonths.InnerText = row[SpecialPeriodView.month].ToString();
+                specDays.InnerText = row[SpecialPeriodView.day].ToString();
+                specHours.InnerText = row[SpecialPeriodView.hour].ToString();
+                specMinutes.InnerText = row[SpecialPeriodView.minute].ToString();
+                specProfession.InnerText = row[SpecialPeriodView.profession].ToString();
+                specStaj.AppendChild(spec);
+                spec.AppendChild(specStart);
+                spec.AppendChild(specEnd);
+                spec.AppendChild(specPartConditionId);
+                spec.AppendChild(specPartConditionName);
+                spec.AppendChild(specBaseId);
+                spec.AppendChild(specBaseName);
+                spec.AppendChild(specServyearBaseId);
+                spec.AppendChild(specServyearBaseName);
+                spec.AppendChild(specMonths);
+                spec.AppendChild(specDays);
+                spec.AppendChild(specHours);
+                spec.AppendChild(specMinutes);
+                spec.AppendChild(specProfession);
+            }
             docInfo.AppendChild(specStaj);
-            specStaj.AppendChild(spec);
-            spec.AppendChild(specStart);
-            spec.AppendChild(specEnd);
-            spec.AppendChild(specPArtConditionID);
-            spec.AppendChild(specPArtConditionName);
-            spec.AppendChild(specBaseID);
-            spec.AppendChild(specBaseName);
-            spec.AppendChild(specServyearBaseID);
-            spec.AppendChild(specServyearBaseName);
-            spec.AppendChild(specMonths);
-            spec.AppendChild(specHours);
-            spec.AppendChild(specMinutes);
-            spec.AppendChild(specProfession);
+            #endregion
 
+            #region Заполнение данными дополнительного стажа
+
+            foreach (DataRow row in dopTable.Rows)
+            {
+                XmlElement dopRecord = xmlRes.CreateElement(tagDopRecord);
+                XmlElement dopCodeId = xmlRes.CreateElement(tagDopCodeID);
+                XmlElement dopCodeName = xmlRes.CreateElement(tagDopCodeName);
+                XmlElement dopStart = xmlRes.CreateElement(tagDopStart);
+                XmlElement dopEnd = xmlRes.CreateElement(tagDopEnd);
+                dopCodeId.InnerText = row[DopPeriodView.classificatorId].ToString();
+                dopCodeName.InnerText = row[DopPeriodView.code].ToString();
+                dopStart.InnerText = (DateTime.Parse(row[DopPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
+                dopEnd.InnerText = (DateTime.Parse(row[DopPeriodView.endDate].ToString())).ToString("dd.MM.yyyy");
+                dopStaj.AppendChild(dopRecord);
+                dopRecord.AppendChild(dopCodeId);
+                dopRecord.AppendChild(dopCodeName);
+                dopRecord.AppendChild(dopStart);
+                dopRecord.AppendChild(dopEnd);
+            }
             docInfo.AppendChild(dopStaj);
-            dopStaj.AppendChild(dopRecord);
-            dopRecord.AppendChild(dopCodeID);
-            dopRecord.AppendChild(dopCodeName);
-            dopRecord.AppendChild(dopStart);
-            dopRecord.AppendChild(dopEnd);
-            //
+            #endregion
+
+            string formStr = XmlData.FormatXml(xmlRes.InnerXml);
             return xmlRes;
         }
 
-        static void GetData(long doc_id)
+        static public string GetReportUrl()
         {
-
+            return Properties.Settings.Default.report_szv1;
         }
     }
 
@@ -368,13 +568,13 @@ namespace Pers_uchet_org
         static public string tagMonthCol6 = "col_6";
         #endregion
 
-        static public XmlDocument GetXml(long merge_id, string coinnectionStr)
+        static public XmlDocument GetXml(long mergeId, string coinnectionStr)
         {
-            DataRow mergeRow = Mergies.GetRow(merge_id, coinnectionStr);
-            DataTable mergeInfo = MergeInfo.GetTable(merge_id, coinnectionStr);
+            DataRow mergeRow = Mergies.GetRow(mergeId, coinnectionStr);
+            DataTable mergeInfo = MergeInfo.GetTable(mergeId, coinnectionStr);
             DataTable mergeInfoT = MergeInfoTranspose.CreateTable();
             MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
-            
+
             XmlDocument xmlRes = new XmlDocument();
             XmlElement svod = xmlRes.CreateElement(tagSvod);
             XmlElement packsCount = xmlRes.CreateElement(tagPacks);
@@ -388,7 +588,7 @@ namespace Pers_uchet_org
             xmlRes.AppendChild(svod);
             svod.AppendChild(packsCount);
             svod.AppendChild(docsCount);
-            
+
             svod.AppendChild(payment);
             for (int i = 0; i < 12; i++)
             {

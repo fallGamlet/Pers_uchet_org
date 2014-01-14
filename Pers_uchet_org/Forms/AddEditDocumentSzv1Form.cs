@@ -1234,5 +1234,17 @@ namespace Pers_uchet_org
             sum5TextBox.Text = sum5Box.Text;
         }
 
+        private void previewButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Szv1Xml.GetXml(CurrentDocId, _org, _connectionStr);
+            }
+            catch (Exception exception)
+            {
+                MainForm.ShowErrorFlexMessage(exception.Message, "Ошибка открытия предварительного просмотра");
+            }
+        }
+
     }
 }

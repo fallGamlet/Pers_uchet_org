@@ -25,79 +25,79 @@ namespace Pers_uchet_org
         #region Методы - обработчики событий
         private void viewRDV1Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.RDV1);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Rdv1);
         }
 
         private void viewRDV21Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.RDV21);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Rdv21);
         }
 
         private void viewRDV22Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.RDV22);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Rdv22);
         }
 
         private void viewRDV3Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.RDV3);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Rdv3);
         }
 
         private void viewSZV1Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.SZV1);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Szv1);
         }
 
         private void viewSZV2Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.SZV2);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Szv2);
         }
 
         private void viewSZV3Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.SZV3);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Szv3);
         }
 
         private void viewADV1Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.ADV1);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Adv1);
         }
 
         private void viewADV2Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.ADV2);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Adv2);
         }
 
         private void viewADV3Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.ADV3);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Adv3);
 
         }
 
         private void viewADV4Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.ADV4);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Adv4);
         }
 
         private void viewADV6Button_Click(object sender, EventArgs e)
         {
-            MyPrinter.ShowWebPage(null, XmlData.ReportType.ADV5);
+            MyPrinter.ShowWebPage(null, XmlData.ReportType.Adv5);
         }
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            int[] counts = new int[] { (int)this.countADV1Box.Value, (int)XmlData.ReportType.ADV1,
-                                       (int)this.countADV2Box.Value, (int)XmlData.ReportType.ADV2,
-                                       (int)this.countADV3Box.Value, (int)XmlData.ReportType.ADV3,
-                                       (int)this.countADV4Box.Value, (int)XmlData.ReportType.ADV4,
-                                       (int)this.countADV6Box.Value,(int)XmlData.ReportType.ADV6,
-                                       (int)this.countSZV1Box.Value, (int)XmlData.ReportType.SZV1,
-                                       (int)this.countSZV2Box.Value, (int)XmlData.ReportType.SZV2,
-                                       (int)this.countSZV1Box.Value,(int)XmlData.ReportType.SZV3,
-                                       (int)this.countRDV1Box.Value, (int)XmlData.ReportType.RDV1,
-                                       (int)this.countRDV21Box.Value, (int)XmlData.ReportType.RDV21,
-                                       (int)this.countRDV22Box.Value, (int)XmlData.ReportType.RDV22,
-                                       (int)this.countRDV3Box.Value, (int)XmlData.ReportType.RDV3
+            int[] counts = new int[] { (int)this.countADV1Box.Value, (int)XmlData.ReportType.Adv1,
+                                       (int)this.countADV2Box.Value, (int)XmlData.ReportType.Adv2,
+                                       (int)this.countADV3Box.Value, (int)XmlData.ReportType.Adv3,
+                                       (int)this.countADV4Box.Value, (int)XmlData.ReportType.Adv4,
+                                       (int)this.countADV6Box.Value,(int)XmlData.ReportType.Adv6,
+                                       (int)this.countSZV1Box.Value, (int)XmlData.ReportType.Szv1,
+                                       (int)this.countSZV2Box.Value, (int)XmlData.ReportType.Szv2,
+                                       (int)this.countSZV1Box.Value,(int)XmlData.ReportType.Szv3,
+                                       (int)this.countRDV1Box.Value, (int)XmlData.ReportType.Rdv1,
+                                       (int)this.countRDV21Box.Value, (int)XmlData.ReportType.Rdv21,
+                                       (int)this.countRDV22Box.Value, (int)XmlData.ReportType.Rdv22,
+                                       (int)this.countRDV3Box.Value, (int)XmlData.ReportType.Rdv3
                                      };
             for (int i = 0; i < counts.Length-1; i += 2)
             {

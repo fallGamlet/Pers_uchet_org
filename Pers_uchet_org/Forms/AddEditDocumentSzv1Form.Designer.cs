@@ -241,6 +241,7 @@
             this.previewButton.TabIndex = 6;
             this.previewButton.Text = "Предварительный просмотр";
             this.previewButton.UseVisualStyleBackColor = true;
+            this.previewButton.Click += new System.EventHandler(this.previewButton_Click);
             // 
             // tabPage3
             // 
