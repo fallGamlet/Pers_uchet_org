@@ -10,7 +10,7 @@ using System.Data.SQLite;
 
 namespace Pers_uchet_org
 {
-    public partial class MovePacketOtherOrgForm : Form
+    public partial class CopyPacketOtherOrgForm : Form
     {
         #region Поля
         const string viewCol = "view_col";
@@ -23,12 +23,12 @@ namespace Pers_uchet_org
         
         #endregion
 
-        public MovePacketOtherOrgForm()
+        public CopyPacketOtherOrgForm()
         {
             InitializeComponent();
         }
 
-        public MovePacketOtherOrgForm(Operator _operator, string _connection, long listId)
+        public CopyPacketOtherOrgForm(Operator _operator, string _connection, long listId)
             : this()
         {
             this._operator = _operator;
@@ -36,7 +36,7 @@ namespace Pers_uchet_org
             this.listId = listId;
         }
 
-        private void MovePacketForm_Load(object sender, EventArgs e)
+        private void CopyPacketForm_Load(object sender, EventArgs e)
         {
             label2.Text += listId;
             _orgTable = Org.CreateTable();
@@ -75,11 +75,11 @@ namespace Pers_uchet_org
             }
             _orgTable.AcceptChanges();
             if (_orgBS.Count < 1)
-                moveButton.Enabled = false;
+                copyButton.Enabled = false;
             //TODO: this.SetPrivilege();
         }
 
-        private void moveButton_Click(object sender, EventArgs e)
+        private void copyButton_Click(object sender, EventArgs e)
         {
             StajDohodForm.NewOrgId = (long)orgsComboBox.SelectedValue;
         }

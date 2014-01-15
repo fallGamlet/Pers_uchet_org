@@ -156,6 +156,7 @@ namespace Pers_uchet_org
                 calcListStripButton.Enabled = isEnabled;
                 printFioListStripButton.Enabled = isEnabled;
                 addDocStripButton.Enabled = isEnabled;
+                copyToOrgListStripButton.Enabled = isEnabled;
 
                 if (!isEnabled && _docsTable != null)
                     _docsTable.Clear();
@@ -331,6 +332,7 @@ namespace Pers_uchet_org
                     menuItems.Add("copyToOtherOrgMenuItem");
                     menuItems.Add("moveToOtherOrgMenuItem");
                     menuItems.Add("delListMenuItem");
+                    menuItems.Add("copyToOtherOrgMenuItem");
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -343,7 +345,7 @@ namespace Pers_uchet_org
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
                     //menuItems.Add("copyToOtherYearMenuItem");
-                    menuItems.Add("copyToOtherOrgMenuItem");
+
                     for (int i = 0; i < menuItems.Count; i++)
                     {
                         items = menu.Items.Find(menuItems[i].ToString(), false);
@@ -493,6 +495,11 @@ namespace Pers_uchet_org
             moveToOrgListStripButton_Click(sender, e);
         }
 
+        private void copyToOtherOrgMenuItem_Click(object sender, EventArgs e)
+        {
+            copyToOrgListStripButton_Click(sender, e);
+        }
+
         private void delListMenuItem_Click(object sender, EventArgs e)
         {
             delListStripButton_Click(sender, e);
@@ -631,33 +638,7 @@ namespace Pers_uchet_org
                             connection.Open();
                         using (SQLiteTransaction transaction = connection.BeginTransaction())
                         {
-                            using (SQLiteCommand command = connection.CreateCommand())
-                            {
-                                command.Transaction = transaction;
-
-                                long newListId = -1;
-                                newListId = Lists.CopyListById(listId, connection, transaction);
-                                command.CommandText = Docs.GetSelectText(listId);
-
-                                List<long> docIdList = new List<long>();
-                                SQLiteDataReader reader = command.ExecuteReader();
-                                while (reader.Read())
-                                {
-                                    docIdList.Add(Convert.ToInt64(reader[Docs.id]));
-                                }
-
-                                CopyDocsByDocId(docIdList, newListId, connection, transaction);
-                                
-                                Lists.UpdateYear(newListId, NewRepYear, connection, transaction);
-
-                                long res = 0;
-                                //Сохранение в таблицу Fixdata
-                                res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, listId, _operator.nameVal, DateTime.Now, connection, transaction);
-                                if (res < 1)
-                                {
-                                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
-                                }
-                            }
+                            CopyListToOtherYear(listId, NewRepYear, connection, transaction);
                             transaction.Commit();
                         }
                     }
@@ -719,22 +700,17 @@ namespace Pers_uchet_org
 
         private void copyToOrgListStripButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void moveToOrgListStripButton_Click(object sender, EventArgs e)
-        {
             try
             {
                 if (listsView.CurrentRow == null)
                     return;
                 long listId = (long)listsView.CurrentRow.Cells[Lists.id].Value;
-                MovePacketForm movePacketForm = new MovePacketForm(_operator, _connection, listId);
+                CopyPacketOtherOrgForm movePacketForm = new CopyPacketOtherOrgForm(_operator, _connection, listId);
                 if (movePacketForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
+                    if (MainForm.ShowQuestionMessage("Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Копирование пакета") == DialogResult.No)
                         return;
-                    List<long> personIdList = new List<long>();
+
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
                         if (connection.State != ConnectionState.Open)
@@ -744,25 +720,49 @@ namespace Pers_uchet_org
                             using (SQLiteCommand command = connection.CreateCommand())
                             {
                                 command.Transaction = transaction;
-                                command.CommandText = Lists.GetSelectPersonIdsText(listId);
-                                using (SQLiteDataReader reader = command.ExecuteReader())
-                                    while (reader.Read())
-                                    {
-                                        personIdList.Add((long)reader[Docs.personID]);
-                                    }
-                                //Привязка всех персон к новой организации
-                                PersonOrg.InsertPersonOrg(personIdList, NewOrgId, connection, transaction);
-                                command.CommandText = Lists.GetUpdateOrgText(listId, NewOrgId);
-                                if (command.ExecuteNonQuery() < 1)
+
+                                NewListId = CopyListToOtherYear(listId, _repYear, connection, transaction);
+                                long res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, NewListId, _operator.nameVal, DateTime.Now, connection, transaction);
+                                if (res < 1)
                                 {
-                                    throw new SQLiteException("Не удалось переместить пакет.");
+                                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
                                 }
-                                command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId, _operator.nameVal, DateTime.Now);
-                                if ((long)command.ExecuteScalar() < 1)
-                                {
-                                    throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
-                                }
+
+                                MoveListToOrg(NewListId, NewOrgId, connection, transaction);
+                                transaction.Commit();
                             }
+                        }
+                    }
+                    //Перезагрузка данных
+                    ReloadLists();
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка копирования пакета");
+            }
+        }
+
+        private void moveToOrgListStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listsView.CurrentRow == null)
+                    return;
+                long listId = (long)listsView.CurrentRow.Cells[Lists.id].Value;
+                MovePacketOtherOrgForm movePacketForm = new MovePacketOtherOrgForm(_operator, _connection, listId);
+                if (movePacketForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
+                        return;
+
+                    using (SQLiteConnection connection = new SQLiteConnection(_connection))
+                    {
+                        if (connection.State != ConnectionState.Open)
+                            connection.Open();
+                        using (SQLiteTransaction transaction = connection.BeginTransaction())
+                        {
+                            MoveListToOrg(listId, NewOrgId, connection, transaction);
                             transaction.Commit();
                         }
                     }
@@ -922,23 +922,6 @@ namespace Pers_uchet_org
                             {
                                 command.Transaction = transaction;
 
-
-                                //switch (FlagDoc)
-                                //{
-                                //    case 1:
-                                //        DataRowView row = _docsBS.Current as DataRowView;
-                                //        if (row != null)
-                                //            docIdList.Add((long)row[DocsView.id]);
-                                //        Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, connection, transaction);
-
-                                //        command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, (long)row[DocsView.id], _operator.nameVal, DateTime.Now);
-                                //        if ((long)command.ExecuteScalar() < 1)
-                                //        {
-                                //            throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
-                                //        }
-                                //        break;
-                                //    case 2:
-
                                 Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, connection, transaction);
                                 foreach (long docId in docIdList)
                                 {
@@ -948,21 +931,6 @@ namespace Pers_uchet_org
                                         throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
                                     }
                                 }
-                                //break;
-                                //    case 3:
-                                //        Docs.UpdateDocTypeByListId((long)listsView.CurrentRow.Cells["id"].Value, NewDocTypeId, connection, transaction);
-                                //        foreach (DataRowView rowDoc in _docsBS)
-                                //        {
-                                //            command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, (long)rowDoc[DocsView.id], _operator.nameVal, DateTime.Now);
-                                //            if ((long)command.ExecuteScalar() < 1)
-                                //            {
-                                //                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
-                                //            }
-                                //        }
-                                //        break;
-                                //    default:
-                                //        throw new Exception("Не указан документ у которого необходимо изменить тип.");
-                                //}
                             }
                             transaction.Commit();
                         }
@@ -1042,7 +1010,7 @@ namespace Pers_uchet_org
                 MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка копирования документа(ов)");
             }
         }
-        
+
         private void moveToListDocStripButton_Click(object sender, EventArgs e)
         {
             try
@@ -1114,6 +1082,8 @@ namespace Pers_uchet_org
                 MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка перемещения документа");
             }
         }
+
+
         #endregion
 
         #region Методы - свои
@@ -1198,6 +1168,66 @@ namespace Pers_uchet_org
                 }
             }
         }
+
+        private void MoveListToOrg(long listId, long newOrgId, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            using (SQLiteCommand command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = Lists.GetSelectPersonIdsText(listId);
+                List<long> personIdList = new List<long>();
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        personIdList.Add((long)reader[Docs.personID]);
+                    }
+                //Привязка всех персон к новой организации
+                PersonOrg.InsertPersonOrg(personIdList, newOrgId, connection, transaction);
+                command.CommandText = Lists.GetUpdateOrgText(listId, newOrgId);
+                if (command.ExecuteNonQuery() < 1)
+                {
+                    throw new SQLiteException("Не удалось переместить пакет.");
+                }
+                command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId, _operator.nameVal, DateTime.Now);
+                if ((long)command.ExecuteScalar() < 1)
+                {
+                    throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                }
+            }
+        }
+
+        private long CopyListToOtherYear(long listId, int newRepYear, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            long newListId = -1;
+            using (SQLiteCommand command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                newListId = Lists.CopyListById(listId, connection, transaction);
+                command.CommandText = Docs.GetSelectText(listId);
+
+                List<long> docIdList = new List<long>();
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    docIdList.Add(Convert.ToInt64(reader[Docs.id]));
+                }
+
+                CopyDocsByDocId(docIdList, newListId, connection, transaction);
+
+                Lists.UpdateYear(newListId, newRepYear, connection, transaction);
+
+                long res = 0;
+                //Сохранение в таблицу Fixdata
+                res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, listId, _operator.nameVal, DateTime.Now, connection, transaction);
+                if (res < 1)
+                {
+                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
+                }
+            }
+            return newListId;
+        }
         #endregion
+
+
     }
 }
