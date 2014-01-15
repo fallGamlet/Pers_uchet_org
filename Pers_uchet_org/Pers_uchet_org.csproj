@@ -505,6 +505,12 @@
     <Content Include="Static\template\report_%28форма СЗВ-3%29.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Static\xsl\mapstyle.xsl" />
+    <Content Include="Static\xsl\svodstyle.xsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\xsl\szvopisstyle.xsl" />
+    <Content Include="Static\xsl\szvstyle.xsl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

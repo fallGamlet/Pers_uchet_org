@@ -350,6 +350,45 @@ namespace Pers_uchet_org
         }
     }
 
+    public class Szv2Xml
+    {
+        static public string name = "СЗВ-3";
+        #region названия тегов, присутствующих в xml
+        static public string tagInddocs = "inddocs";
+        static public string tagInddoc = "inddoc";
+        static public string tagTypeID = "type_id";
+        static public string tagCount = "count";
+        static public string tagSummaryInfo = "summary_info";
+        static public string tagCol1 = "col_1";
+        static public string tagCol2 = "col_2";
+        static public string tagCol3 = "col_3";
+        static public string tagCol4 = "col_4";
+        static public string tagCol5 = "col_5";
+        #endregion
+
+        static public XmlDocument GetXml()
+        {
+            XmlDocument xmlRes = new XmlDocument();
+            XmlElement inddocs = xmlRes.CreateElement(tagInddocs);
+            XmlElement inddoc = xmlRes.CreateElement(tagInddoc);
+            XmlElement typeID = xmlRes.CreateElement(tagTypeID);
+            XmlElement count = xmlRes.CreateElement(tagCount);
+            XmlElement summaryInfo = xmlRes.CreateElement(tagSummaryInfo);
+            XmlElement col1 = xmlRes.CreateElement(tagCol1);
+            XmlElement col2 = xmlRes.CreateElement(tagCol2);
+            XmlElement col3 = xmlRes.CreateElement(tagCol3);
+            XmlElement col4 = xmlRes.CreateElement(tagCol4);
+            XmlElement col5 = xmlRes.CreateElement(tagCol5);
+
+            return xmlRes;
+        }
+
+        static public string GetReportUrl()
+        {
+            return Properties.Settings.Default.report_szv2;
+        }
+    }
+
     public class Szv3Xml
     {
         // название формы
@@ -422,4 +461,6 @@ namespace Pers_uchet_org
             return Properties.Settings.Default.report_szv3;
         }
     }
+
+    
 }
