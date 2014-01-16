@@ -228,13 +228,7 @@ namespace Pers_uchet_org
                 if (e.RowIndex == -1 && e.ColumnIndex == 1)
                 {
                     docView.EndEdit();
-                    bool allchecked = true;
-                    foreach (DataRowView row in _docsBS)
-                        if (!(bool)row[CHECK])
-                        {
-                            allchecked = false;
-                            break;
-                        }
+                    bool allchecked = _docsBS.Cast<DataRowView>().All(row => (bool)row[CHECK]);
                     foreach (DataRowView row in _docsBS)
                         row[CHECK] = !allchecked;
                 }
@@ -267,12 +261,12 @@ namespace Pers_uchet_org
                 if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
-                    if (!r.Selected)
-                    {
-                        r.DataGridView.ClearSelection();
-                        r.DataGridView.CurrentCell = r.Cells[0];
-                        r.Selected = true;
-                    }
+                    //if (!r.Selected)
+                    //{
+                    r.DataGridView.ClearSelection();
+                    r.DataGridView.CurrentCell = r.Cells[0];
+                    r.Selected = true;
+                    //}
                 }
             }
             catch (Exception ex)
@@ -288,16 +282,14 @@ namespace Pers_uchet_org
                 if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
                 {
                     DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
-                    if (currentCell != null)
-                    {
-                        ContextMenuStrip cms = cmsLists;
-                        if (cms != null)
-                        {
-                            Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
-                            Point p = new Point(r.Left, r.Top);
-                            cms.Show((sender as DataGridView), p);
-                        }
-                    }
+                    if (currentCell == null)
+                        return;
+                    ContextMenuStrip cms = cmsLists;
+                    if (cms == null)
+                        return;
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Point p = new Point(r.Left, r.Top);
+                    cms.Show((sender as DataGridView), p);
                 }
 
                 if (e.KeyCode == Keys.Delete)
@@ -336,20 +328,18 @@ namespace Pers_uchet_org
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
-                    for (int i = 0; i < menuItems.Count; i++)
+                    foreach (string t in menuItems)
                     {
-                        items = menu.Items.Find(menuItems[i].ToString(), false);
-                        if (items.Count() > 0)
+                        items = menu.Items.Find(t, false);
+                        if (items.Any())
                             items[0].Enabled = isEnabled;
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
-                    //menuItems.Add("copyToOtherYearMenuItem");
-
-                    for (int i = 0; i < menuItems.Count; i++)
+                    foreach (string t in menuItems)
                     {
-                        items = menu.Items.Find(menuItems[i].ToString(), false);
-                        if (items.Count() > 0)
+                        items = menu.Items.Find(t, false);
+                        if (items.Any())
                             items[0].Enabled = false;
                     }
 
@@ -369,12 +359,12 @@ namespace Pers_uchet_org
                 if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
-                    if (!r.Selected)
-                    {
-                        r.DataGridView.ClearSelection();
-                        r.DataGridView.CurrentCell = r.Cells[1];
-                        r.Selected = true;
-                    }
+                    //if (!r.Selected)
+                    //{
+                    r.DataGridView.ClearSelection();
+                    r.DataGridView.CurrentCell = r.Cells[1];
+                    r.Selected = true;
+                    //}
                 }
             }
             catch (Exception ex)
@@ -390,16 +380,15 @@ namespace Pers_uchet_org
                 if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
                 {
                     DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
-                    if (currentCell != null)
-                    {
-                        ContextMenuStrip cms = cmsLists;
-                        if (cms != null)
-                        {
-                            Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
-                            Point p = new Point(r.Left, r.Top);
-                            cms.Show((sender as DataGridView), p);
-                        }
-                    }
+                    if (currentCell == null)
+                        return;
+                    ContextMenuStrip cms = cmsLists;
+                    if (cms == null)
+                        return;
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Point p = new Point(r.Left, r.Top);
+                    cms.Show((sender as DataGridView), p);
+
                 }
 
                 if (e.KeyCode == Keys.Delete)
@@ -450,19 +439,19 @@ namespace Pers_uchet_org
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
-                    for (int i = 0; i < menuItems.Count; i++)
+                    foreach (string t in menuItems)
                     {
-                        items = menu.Items.Find(menuItems[i].ToString(), false);
-                        if (items.Count() > 0)
+                        items = menu.Items.Find(t, false);
+                        if (items.Any())
                             items[0].Enabled = isEnabled;
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
                     //menuItems.Add("copyToOtherListMenuItem");
-                    for (int i = 0; i < menuItems.Count; i++)
+                    foreach (string t in menuItems)
                     {
-                        items = menu.Items.Find(menuItems[i].ToString(), false);
-                        if (items.Count() > 0)
+                        items = menu.Items.Find(t, false);
+                        if (items.Any())
                             items[0].Enabled = false;
                     }
 
@@ -627,7 +616,7 @@ namespace Pers_uchet_org
                 long listId = (long)listsView.CurrentRow.Cells["id"].Value;
                 CopyPacketOtherYearForm copyPacketOtherYear = new CopyPacketOtherYearForm(listId);
 
-                if (copyPacketOtherYear.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (copyPacketOtherYear.ShowDialog() == DialogResult.OK)
                 {
                     if (MainForm.ShowQuestionMessage("Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Копирование пакета") == DialogResult.No)
                         return;
@@ -661,7 +650,7 @@ namespace Pers_uchet_org
                     return;
                 long listId = (long)listsView.CurrentRow.Cells["id"].Value;
                 MovePacketOtherYearForm movePacketOtherYear = new MovePacketOtherYearForm(listId);
-                if (movePacketOtherYear.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (movePacketOtherYear.ShowDialog() == DialogResult.OK)
                 {
                     if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                         return;
@@ -706,7 +695,7 @@ namespace Pers_uchet_org
                     return;
                 long listId = (long)listsView.CurrentRow.Cells[Lists.id].Value;
                 CopyPacketOtherOrgForm movePacketForm = new CopyPacketOtherOrgForm(_operator, _connection, listId);
-                if (movePacketForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (movePacketForm.ShowDialog() == DialogResult.OK)
                 {
                     if (MainForm.ShowQuestionMessage("Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Копирование пакета") == DialogResult.No)
                         return;
@@ -751,7 +740,7 @@ namespace Pers_uchet_org
                     return;
                 long listId = (long)listsView.CurrentRow.Cells[Lists.id].Value;
                 MovePacketOtherOrgForm movePacketForm = new MovePacketOtherOrgForm(_operator, _connection, listId);
-                if (movePacketForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (movePacketForm.ShowDialog() == DialogResult.OK)
                 {
                     if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                         return;
@@ -781,13 +770,12 @@ namespace Pers_uchet_org
             try
             {
                 ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _currentListId, _connection);
-                if (choicePersonForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (choicePersonForm.ShowDialog() == DialogResult.OK)
                 {
                     AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
-                    if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    if (szv1Form.ShowDialog() == DialogResult.OK)
                     {
                         _listsBS_CurrentChanged(_listsBS, new EventArgs());
-
                         _docsBS.Position = _docsBS.Find(DocsView.id, szv1Form.CurrentDocId);
                     }
                 }
@@ -811,7 +799,6 @@ namespace Pers_uchet_org
                 if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
-
                     _docsBS.Position = _docsBS.Find(DocsView.id, szv1Form.CurrentDocId);
                 }
             }
@@ -832,7 +819,7 @@ namespace Pers_uchet_org
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList = new List<long>();
+                List<long> docIdList;
                 docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
@@ -893,7 +880,7 @@ namespace Pers_uchet_org
             docView.EndEdit();
             docView.Refresh();
 
-            List<long> docIdList = new List<long>();
+            List<long> docIdList;
             docIdList = GetSelectedDocIds();
             if (docIdList.Count < 1)
                 if (_docsBS.Current != null)
@@ -955,7 +942,7 @@ namespace Pers_uchet_org
         private void printDocStripButton_Click(object sender, EventArgs e)
         {
             PrintStajForm printStajForm = new PrintStajForm();
-            if (printStajForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (printStajForm.ShowDialog() == DialogResult.OK)
             { }
         }
 
@@ -975,7 +962,7 @@ namespace Pers_uchet_org
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList = new List<long>();
+                List<long> docIdList;
                 docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
@@ -987,7 +974,7 @@ namespace Pers_uchet_org
                 string listFio = GetFioForSelectedDocIds(docIdList);
 
                 CopyDocumentForm moveDocForm = new CopyDocumentForm(_organization, _repYear, _connection);
-                if (moveDocForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (moveDocForm.ShowDialog() == DialogResult.OK)
                 {
                     if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Копирование документа(ов) СЗВ-1") == DialogResult.No)
                         return;
@@ -1039,7 +1026,7 @@ namespace Pers_uchet_org
                 //docId = (long)row[Docs.id];
 
                 MoveDocumentForm moveDocForm = new MoveDocumentForm(_organization, _repYear, _connection);
-                if (moveDocForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (moveDocForm.ShowDialog() == DialogResult.OK)
                 {
                     if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите переместить выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Перемещение документа(ов) СЗВ-1") == DialogResult.No)
                         return;
@@ -1089,23 +1076,18 @@ namespace Pers_uchet_org
         #region Методы - свои
         private List<long> GetSelectedDocIds()
         {
-            List<long> list = new List<long>();
             docView.EndEdit();
-            foreach (DataRowView docRow in _docsBS)
-                if ((bool)docRow[CHECK])
-                    list.Add((long)docRow["id"]);
-            return list;
+            return (from DataRowView docRow in _docsBS where (bool) docRow[CHECK] select (long) docRow["id"]).ToList();
         }
 
         private string GetFioForSelectedDocIds(List<long> docIdList)
         {
             string listFio = String.Empty;
             StringBuilder builder = new StringBuilder();
-            int position = 0;
             //Формирование списка выбранных документов
             foreach (var item in docIdList)
             {
-                position = _docsBS.Find(DocsView.id, item);
+                int position = _docsBS.Find(DocsView.id, item);
                 builder.AppendFormat("\n{0} {1}", (_docsBS[position] as DataRowView)[DocsView.fio].ToString(), (_docsBS[position] as DataRowView)[DocsView.socNumber].ToString());
             }
             return builder.ToString();
@@ -1133,11 +1115,10 @@ namespace Pers_uchet_org
 
         private void CopyDocsByDocId(List<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
         {
-            long newDocId = -1;
             foreach (long oldDocId in docIdList)
             {
                 //Сохранение в таблицу Doc
-                newDocId = Docs.CopyDocByDocId(oldDocId, newListId, connection, transaction);
+                long newDocId = Docs.CopyDocByDocId(oldDocId, newListId, connection, transaction);
                 if (newDocId < 1)
                     throw new SQLiteException("Невозможно создать документ.");
 
@@ -1155,11 +1136,11 @@ namespace Pers_uchet_org
                     throw new SQLiteException("Невозможно создать документ. Таблица " + IndDocs.tablename + ".");
                 }
                 //Сохранение в таблицу Gen_period
-                res = GeneralPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
+                GeneralPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
                 //Сохранение в таблицу Dop_period
-                res = DopPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
+                DopPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
                 //Сохранение в таблицу Spec_period
-                res = SpecialPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
+                SpecialPeriod.CopyPeriodByDocId(oldDocId, newDocId, connection, transaction);
                 //Сохранение в таблицу Salary_Info
                 res = SalaryInfo.CopySalaryInfoByDocId(oldDocId, newDocId, connection, transaction);
                 if (res < 1)
@@ -1198,7 +1179,7 @@ namespace Pers_uchet_org
 
         private long CopyListToOtherYear(long listId, int newRepYear, SQLiteConnection connection, SQLiteTransaction transaction)
         {
-            long newListId = -1;
+            long newListId;
             using (SQLiteCommand command = connection.CreateCommand())
             {
                 command.Transaction = transaction;
@@ -1216,9 +1197,8 @@ namespace Pers_uchet_org
 
                 Lists.UpdateYear(newListId, newRepYear, connection, transaction);
 
-                long res = 0;
                 //Сохранение в таблицу Fixdata
-                res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, listId, _operator.nameVal, DateTime.Now, connection, transaction);
+                long res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, newListId, _operator.nameVal, DateTime.Now, connection, transaction);
                 if (res < 1)
                 {
                     throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");

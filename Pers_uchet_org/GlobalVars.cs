@@ -31,9 +31,7 @@ namespace Pers_uchet_org
 
         static public void ShowWebPage(WebBrowser wb)
         {
-            Form webForm = new Form();
-            webForm.Width = 850;
-            webForm.Height = 600;
+            Form webForm = new Form { Width = 850, Height = 600 };
             webForm.Controls.Add(wb);
             wb.Dock = DockStyle.Fill;
             wb.Show();
@@ -2258,6 +2256,82 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class DocsViewForXml
+    {
+        static public string tablename = "Docs_View_For_Xml";
+
+        #region Названия полей в представления БД
+        public static string id = "id";
+        public static string listId = "list_id";
+        public static string repYear = "rep_year";
+        public static string socNumber = "soc_number";
+        public static string lName = "l_name";
+        public static string fName = "f_name";
+        public static string mName = "m_name";
+        public static string citizen1Id = "citizen1_id";
+        public static string citizen1Name = "citizen1_name";
+        public static string citizen2Id = "citizen2_id";
+        public static string citizen2Name = "citizen2_name";
+        public static string classificatorId = "classificator_id";
+        public static string code = "code";
+        public static string privilegeId = "privilege_id";
+        public static string privilegeName = "privilege_name";
+        public static string docTypeId = "doc_type_id";
+        public static string isGeneral = "is_general";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(listId, typeof(long));
+            table.Columns.Add(repYear, typeof(int));
+            table.Columns.Add(socNumber, typeof(string));
+            table.Columns.Add(lName, typeof(string));
+            table.Columns.Add(fName, typeof(string));
+            table.Columns.Add(mName, typeof(string));
+            table.Columns.Add(citizen1Id, typeof(string));
+            table.Columns.Add(citizen1Name, typeof(string));
+            table.Columns.Add(citizen2Id, typeof(string));
+            table.Columns.Add(citizen2Name, typeof(string));
+            table.Columns.Add(classificatorId, typeof(string));
+            table.Columns.Add(code, typeof(string));
+            table.Columns.Add(privilegeId, typeof(string));
+            table.Columns.Add(privilegeName, typeof(string));
+            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add(isGeneral, typeof(long));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectTextByListId(long list_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2} ", listId, list_id, lName);
+        }
+
+        static public string GetSelectTextByDocId(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
+        }
+
+        static public DataRow GetRow(long doc_id, string connection_str)
+        {
+            DataTable table = DocsViewForXml.CreateTable();
+            DataRow rowRes = null;
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByDocId(doc_id), connection_str);
+            adapter.Fill(table);
+            if (table.Rows.Count > 0)
+                rowRes = table.Rows[0];
+            return rowRes;
+        }
+        #endregion
+    }
+
     public class Docs
     {
         static public string tablename = "Docs";
@@ -3142,7 +3216,7 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(long doc_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2}", docId, doc_id, beginDate);
         }
 
         static public string GetInsertText(long doc_id, DateTime begin_date, DateTime end_date)
@@ -3482,8 +3556,6 @@ namespace Pers_uchet_org
         static public string endDate = "end_date";
         #endregion
 
-
-
         #region Методы - статические
         static public DataTable CreateTable()
         {
@@ -3564,7 +3636,7 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(long doc_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", docId, doc_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2}", docId, doc_id, beginDate);
         }
 
         static public string GetInsertText(long doc_id, long part_condition, long staj_base, long serv_year_base, DateTime begin_date, DateTime end_date, int _month, int _day, int _hour, int _minute, string _profession)
@@ -4239,7 +4311,7 @@ namespace Pers_uchet_org
         {
             return string.Format("{0} WHERE {1} = {2} ORDER BY {3}", GetSelectText(), mergeID, merge_id, groupID);
         }
-        
+
         static public string GetDeleteText(long merge_id)
         {
             return string.Format("DELETE FROM {0} WHERE {1}={2}",
