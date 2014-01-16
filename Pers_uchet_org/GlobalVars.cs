@@ -59,10 +59,26 @@ namespace Pers_uchet_org
             }
         }
 
+        static public void ShowWebPage(string htmlStr)
+        {
+            Form prevForm = new Form();
+            WebBrowser wb = new WebBrowser();
+            wb.DocumentText = htmlStr;
+            ShowWebPage(wb);
+        }
+
         static public void PrintWebPage(WebBrowser wb)
         {
             MyPrinter.SetPrintSettings();
             wb.Print();
+        }
+
+        static public void PrintWebPage(string htmlStr)
+        {
+            Form prevForm = new Form();
+            WebBrowser wb = new WebBrowser();
+            wb.DocumentText = htmlStr;
+            PrintWebPage(wb);
         }
     }
 
@@ -3901,6 +3917,11 @@ namespace Pers_uchet_org
             table.Columns.Add(docCount, typeof(int));
             table.Columns.Add(actual, typeof(bool));
             return table;
+        }
+
+        static public DataRow CreateRow()
+        {
+            return CreateTable().NewRow();
         }
 
         static public string GetSelectText()
