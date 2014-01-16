@@ -441,7 +441,7 @@ namespace Pers_uchet_org
                 col3.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3]).ToString("F2").Replace(',', '.');
                 col4.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4]).ToString("F2").Replace(',', '.');
                 col5.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5]).ToString("F2").Replace(',', '.');
-                col6.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6]).ToString("F2").Replace(',', '.');
+                col6.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6].ToString();
                 month.AppendChild(col1);
                 month.AppendChild(col2);
                 month.AppendChild(col3);
@@ -540,7 +540,7 @@ namespace Pers_uchet_org
             docInfo.AppendChild(dopStaj);
             #endregion
 
-            string formStr = XmlData.FormatXml(xmlRes.InnerXml);
+            //string formStr = XmlData.FormatXml(xmlRes.InnerXml);
             return xmlRes;
         }
 
