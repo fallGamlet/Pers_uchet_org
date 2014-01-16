@@ -385,8 +385,8 @@ namespace Pers_uchet_org
             workPlace.InnerText = docRow[DocsViewForXml.isGeneral].ToString();
             repYear.InnerText = docRow[DocsViewForXml.repYear].ToString();
 
-            firmAdd.InnerText = salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)][SalaryInfo.sum].ToString();
-            firmPay.InnerText = salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)][SalaryInfo.sum].ToString();
+            firmAdd.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)][SalaryInfo.sum]).ToString("F2");
+            firmPay.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)][SalaryInfo.sum]).ToString("F2");
 
             #endregion
 
@@ -436,12 +436,12 @@ namespace Pers_uchet_org
                 XmlElement col4 = xmlRes.CreateElement(tagCol4);
                 XmlElement col5 = xmlRes.CreateElement(tagCol5);
                 XmlElement col6 = xmlRes.CreateElement(tagCol6);
-                col1.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col1].ToString().Replace(',', '.');
-                col2.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col2].ToString().Replace(',', '.');
-                col3.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3].ToString().Replace(',', '.');
-                col4.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4].ToString().Replace(',', '.');
-                col5.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5].ToString().Replace(',', '.');
-                col6.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6].ToString().Replace(',', '.');
+                col1.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col1]).ToString("F2").Replace(',', '.');
+                col2.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col2]).ToString("F2").Replace(',', '.');
+                col3.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3]).ToString("F2").Replace(',', '.');
+                col4.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4]).ToString("F2").Replace(',', '.');
+                col5.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5]).ToString("F2").Replace(',', '.');
+                col6.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6]).ToString("F2").Replace(',', '.');
                 month.AppendChild(col1);
                 month.AppendChild(col2);
                 month.AppendChild(col3);
@@ -487,7 +487,7 @@ namespace Pers_uchet_org
                 XmlElement specHours = xmlRes.CreateElement(tagSpecHours);
                 XmlElement specMinutes = xmlRes.CreateElement(tagSpecMinutes);
                 XmlElement specProfession = xmlRes.CreateElement(tagSpecProfession);
-                specStart.InnerText =  (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
+                specStart.InnerText = (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
                 specEnd.InnerText = (DateTime.Parse(row[SpecialPeriodView.endDate].ToString())).ToString("dd.MM.yyyy");
                 specPartConditionId.InnerText = row[SpecialPeriodView.partCondition].ToString();
                 specPartConditionName.InnerText = row[SpecialPeriodView.partCode].ToString();
