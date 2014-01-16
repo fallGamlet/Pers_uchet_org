@@ -2432,7 +2432,7 @@ namespace Pers_uchet_org
         {
             return string.Format(@"SELECT d.{0}, count(distinct d.{1}) as [count] 
                                     FROM {2} d
-                                    LEFT JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
+                                    INNER JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
                                     WHERE {6} = {7}
                                     GROUP BY {0}",
                                 docTypeId, id, 
@@ -2469,7 +2469,7 @@ namespace Pers_uchet_org
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(docTypeId, typeof(long));
-            table.Columns.Add("count", typeof(string));
+            table.Columns.Add("count", typeof(int));
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectCountText(list_id), connectionStr);
             adapter.Fill(table);
             return table;

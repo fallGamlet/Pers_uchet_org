@@ -352,7 +352,7 @@ namespace Pers_uchet_org
 
     public class Szv2Xml
     {
-        static public string name = "СЗВ-3";
+        static public string name = "СЗВ-2";
         #region названия тегов, присутствующих в xml
         static public string tagInddocs = "inddocs";
         static public string tagInddoc = "inddoc";
@@ -366,27 +366,135 @@ namespace Pers_uchet_org
         static public string tagCol5 = "col_5";
         #endregion
 
-        static public XmlDocument GetXml()
+        #region Методы - статические
+        static void NormalizeDocsCountTable(DataTable docsCount)
         {
+            bool init, correct, cancel, granting;
+            init = correct = cancel = granting = false;
+            long docTypeID;
+            foreach(DataRow row in docsCount.Rows)
+            {
+                docTypeID = (long)row[Docs.docTypeId];
+                if (docTypeID == DocTypes.InitialFormId)
+                    init = true;
+                else if (docTypeID == DocTypes.CorrectionFormId)
+                    correct = true;
+                else if (docTypeID == DocTypes.CancelingFormId)
+                    cancel = true;
+                else if (docTypeID == DocTypes.GrantingPensionId)
+                    granting = true;
+            }
+            if (!init)
+                docsCount.Rows.Add(DocTypes.InitialFormId, 0);
+            if (!correct)
+                docsCount.Rows.Add(DocTypes.CorrectionFormId, 0);
+            if (!cancel)
+                docsCount.Rows.Add(DocTypes.CancelingFormId, 0);
+            if (!granting)
+                docsCount.Rows.Add(DocTypes.GrantingPensionId, 0);
+        }
+
+        /// <summary>
+        /// Получить XML объект формы СЗВ-2
+        /// </summary>
+        /// <param name="docsCount">Таблица с количеством документов сгруппированных по типам документов</param>
+        /// <param name="docsSums">Таблицы сумм документов сгруппированных по типам документов и типам групп документов</param>
+        /// <returns>объект XML документа</returns>
+        static public XmlDocument GetXml(DataTable docsCount, DataTable docsSums)
+        {
+            NormalizeDocsCountTable(docsCount);
+
             XmlDocument xmlRes = new XmlDocument();
             XmlElement inddocs = xmlRes.CreateElement(tagInddocs);
-            XmlElement inddoc = xmlRes.CreateElement(tagInddoc);
-            XmlElement typeID = xmlRes.CreateElement(tagTypeID);
-            XmlElement count = xmlRes.CreateElement(tagCount);
-            XmlElement summaryInfo = xmlRes.CreateElement(tagSummaryInfo);
-            XmlElement col1 = xmlRes.CreateElement(tagCol1);
-            XmlElement col2 = xmlRes.CreateElement(tagCol2);
-            XmlElement col3 = xmlRes.CreateElement(tagCol3);
-            XmlElement col4 = xmlRes.CreateElement(tagCol4);
-            XmlElement col5 = xmlRes.CreateElement(tagCol5);
+            xmlRes.AppendChild(inddocs);
 
+            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeId);
+            //docsSums.DefaultView.Sort = string.Format("{0}, {1} asc", Docs.docTypeId, SalaryInfo.salaryGroupsId);
+            foreach (DataRowView row in docsCount.DefaultView)
+            {
+                XmlElement inddoc = xmlRes.CreateElement(tagInddoc);
+                XmlElement typeID = xmlRes.CreateElement(tagTypeID);
+                XmlElement count = xmlRes.CreateElement(tagCount);
+                XmlElement summaryInfo = xmlRes.CreateElement(tagSummaryInfo);
+                XmlElement col1 = xmlRes.CreateElement(tagCol1);
+                XmlElement col2 = xmlRes.CreateElement(tagCol2);
+                XmlElement col3 = xmlRes.CreateElement(tagCol3);
+                XmlElement col4 = xmlRes.CreateElement(tagCol4);
+                XmlElement col5 = xmlRes.CreateElement(tagCol5);
+                
+                long curDoctypeID = (long)row[Docs.docTypeId];
+                typeID.InnerText = curDoctypeID.ToString();
+                count.InnerText = row["count"].ToString();
+                inddocs.AppendChild(inddoc);
+                inddoc.AppendChild(typeID);
+                inddoc.AppendChild(count);
+                inddoc.AppendChild(summaryInfo);
+                summaryInfo.AppendChild(col1);
+                summaryInfo.AppendChild(col2);
+                summaryInfo.AppendChild(col3);
+                summaryInfo.AppendChild(col4);
+                summaryInfo.AppendChild(col5);
+
+                col1.InnerText = col2.InnerText = 
+                                col3.InnerText = 
+                                col4.InnerText = 
+                                col5.InnerText = "0.00";
+
+                foreach(DataRow sumRow in docsSums.Rows)
+                {
+                    long doctypeID = (long)sumRow[Docs.docTypeId];
+                    double val = (double)sumRow[SalaryInfo.sum];
+                    if (doctypeID == curDoctypeID)
+                    {
+                        long salarygroupID = (long)sumRow[SalaryInfo.salaryGroupsId];
+                        string valStr = val.ToString("F2").Replace(',', '.');
+                        switch (salarygroupID)
+                        {
+                            case 1:
+                                col1.InnerText = valStr;
+                                break;
+                            case 2:
+                                col2.InnerText = valStr;
+                                break;
+                            case 3:
+                                col3.InnerText = valStr;
+                                break;
+                            case 4:
+                                col4.InnerText = valStr;
+                                break;
+                            case 5:
+                                col5.InnerText = valStr;
+                                break;
+                        }
+                    }
+                }
+            }
+            //
             return xmlRes;
         }
 
+        /// <summary>
+        /// Получить XML объект формы СЗВ-2
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <param name="connectionStr">строка подключения к БД</param>
+        /// <returns>объект XML документа</returns>
+        static public XmlDocument GetXml(long list_id, string connectionStr)
+        {
+            DataTable docsCount = Docs.CountDocsByListAndType(list_id, connectionStr);
+            DataTable docsSums = Docs.SumsByDocType(list_id, connectionStr);
+            return GetXml(docsCount, docsSums);
+        }
+
+        /// <summary>
+        /// Получить путь к пустому бланку отчета СЗВ-2
+        /// </summary>
+        /// <returns></returns>
         static public string GetReportUrl()
         {
             return Properties.Settings.Default.report_szv2;
         }
+        #endregion
     }
 
     public class Szv3Xml
@@ -407,13 +515,30 @@ namespace Pers_uchet_org
         static public string tagMonthCol6 = "col_6";
         #endregion
 
+        #region Методы - статические
+        /// <summary>
+        /// Получить XML объект формы СЗВ-3
+        /// </summary>
+        /// <param name="merge_id">Идентификатор сводной ведомости</param>
+        /// <param name="coinnectionStr">Строка подключения к БД</param>
+        /// <returns>объект XML документа</returns>
         static public XmlDocument GetXml(long merge_id, string coinnectionStr)
         {
             DataRow mergeRow = Mergies.GetRow(merge_id, coinnectionStr);
             DataTable mergeInfo = MergeInfo.GetTable(merge_id, coinnectionStr);
             DataTable mergeInfoT = MergeInfoTranspose.CreateTable();
             MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
-            
+            return GetXml(mergeRow, mergeInfoT);
+        }
+
+        /// <summary>
+        /// Получить XML объект формы СЗВ-3
+        /// </summary>
+        /// <param name="mergeRow">Строка сводной ведомости</param>
+        /// <param name="mergeInfoT">Таблицы с суммами сводной ведомости (транспонированная)</param>
+        /// <returns></returns>
+        static public XmlDocument GetXml(DataRow mergeRow, DataTable mergeInfoT)
+        {
             XmlDocument xmlRes = new XmlDocument();
             XmlElement svod = xmlRes.CreateElement(tagSvod);
             XmlElement packsCount = xmlRes.CreateElement(tagPacks);
@@ -456,10 +581,15 @@ namespace Pers_uchet_org
             return xmlRes;
         }
 
+        /// <summary>
+        /// Получить путь к пустому бланку отчета СЗВ-3
+        /// </summary>
+        /// <returns></returns>
         static public string GetReportUrl()
         {
             return Properties.Settings.Default.report_szv3;
         }
+        #endregion
     }
 
     
