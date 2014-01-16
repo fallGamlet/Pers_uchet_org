@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Xml;
+using System.Xml.XPath;
+using System.Xml.Xsl;
+using System.Xml.Linq;
+using System.IO;
 
 namespace Pers_uchet_org
 {
@@ -284,7 +289,28 @@ namespace Pers_uchet_org
 
         private void printButton_Click(object sender, EventArgs e)
         {
-
+            if (_mergeRow == null || _mergeRow.RowState == DataRowState.Added)
+            {
+                MainForm.ShowInfoMessage("no row in DB", "Warning");
+                return;
+            }
+            string xslfname = String.Concat(@"d:\Git_repositories\Pers_uchet_for_orgs\Pers_uchet_org\Static\xsl\svodstyle.xsl");
+            XmlDocument xmlDoc = Szv3Xml.GetXml((long)_mergeRow[Mergies.id], _connection);
+            XPathNavigator xpn = xmlDoc.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslfname);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            Form prevForm = new Form();
+            WebBrowser wb = new WebBrowser();
+            wb.DocumentText = htmlStr;
+            MyPrinter.ShowWebPage(wb);
         }
 
         private void saveButton_Click(object sender, EventArgs e)

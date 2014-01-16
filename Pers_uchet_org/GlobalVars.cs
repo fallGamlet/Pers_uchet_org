@@ -2484,6 +2484,105 @@ namespace Pers_uchet_org
             SQLiteCommand command = new SQLiteCommand(GetCountDocsByYearText(year, person_id), connection, transaction);
             return Convert.ToInt64(command.ExecuteScalar());
         }
+
+        /// <summary>
+        /// Получить текст запроса на количество документов в указанном пакете с указанным типом документа
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <param name="docType_id">идентификатор типа документа</param>
+        /// <returns></returns>
+        static public string GetSelectCountText(long list_id, long docType_id)
+        {
+            return string.Format("SELECT count(distinct {0}) as [count] FROM {1} WHERE {2}={3} AND {4}={5} ",
+                                id, tablename, listId, list_id, docTypeId, docType_id);
+        }
+
+        /// <summary>
+        /// Получить текст запроса на выборку сгруппированных количеств документов по типам документов
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <returns></returns>
+        static public string GetSelectCountText(long list_id)
+        {
+            return string.Format(@"SELECT d.{0}, count(distinct d.{1}) as [count] 
+                                    FROM {2} d
+                                    INNER JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
+                                    WHERE {6} = {7}
+                                    GROUP BY {0}",
+                                docTypeId, id, 
+                                tablename, 
+                                DocTypes.tablename, DocTypes.id, DocTypes.listTypeId, 
+                                listId, list_id);
+        }
+
+        /// <summary>
+        /// Получить значение количества документов в указанном пакете с указанным типом документа
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <param name="docType_id">идентификатор типа документа</param>
+        /// <param name="connectionStr">строка подключения к БД</param>
+        /// <returns></returns>
+        static public long CountDocsByListAndType(long list_id, long docType_id, string connectionStr)
+        {
+            long res;
+            SQLiteConnection connection = new SQLiteConnection(connectionStr);
+            SQLiteCommand command = new SQLiteCommand(GetSelectCountText(list_id, docType_id), connection);
+            connection.Open();
+            res = (long)command.ExecuteScalar();
+            connection.Close();
+            return res;
+        }
+
+        /// <summary>
+        /// Получить таблицу с типами документов и количествами этих типов документов
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <param name="connectionStr">строка подключения к БД</param>
+        /// <returns>Таблицы со столбцами Тип документа, Количество документов ("count")</returns>
+        static public DataTable CountDocsByListAndType(long list_id, string connectionStr)
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add("count", typeof(int));
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectCountText(list_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
+        /// <summary>
+        /// Получить текст запроса для выборки сумм, сгруппированных по типам документов и группам сумм (1,2,3,4,5)
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <returns></returns>
+        static public string GetSumsByDocTypeText(long list_id)
+        {
+            return string.Format(@"SELECT d.{0}, si.{1}, sum(si.{2}) as {2}
+                                FROM {3} d INNER JOIN {4} si ON si.{5} = d.{6} and si.{1} in (1,2,3,4,5)
+                                WHERE d.{7} = {8}
+                                GROUP BY d.{0}, si.{1}
+                                ORDER BY d.{0}, si.{1}",
+                                docTypeId, SalaryInfo.salaryGroupsId, SalaryInfo.sum,
+                                tablename, SalaryInfo.tablename, SalaryInfo.docId, id,
+                                listId, list_id);
+        }
+
+        /// <summary>
+        /// Получить таблицу с выборкой сумм, сгруппированных по типам документов и группам сумм (1,2,3,4,5)
+        /// </summary>
+        /// <param name="list_id">идентификатор пакета</param>
+        /// <param name="connectionStr">строка подключения к БД</param>
+        /// <returns>Таблица с столбцами: Тип документа, Группа суммы, Сумма</returns>
+        static public DataTable SumsByDocType(long list_id, string connectionStr)
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add(SalaryInfo.salaryGroupsId, typeof(long));
+            table.Columns.Add(SalaryInfo.sum, typeof(double));
+
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSumsByDocTypeText(list_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
         #endregion
     }
 
