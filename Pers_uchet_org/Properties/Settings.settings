@@ -29,5 +29,14 @@
     <Setting Name="report_szv3" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Static/template/report_(форма СЗВ-3).html</Value>
     </Setting>
+    <Setting Name="xsl_szv1" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Static/xsl/szvstyle.xsl</Value>
+    </Setting>
+    <Setting Name="xsl_szv2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Static/xsl/szvopisstyle.xsl</Value>
+    </Setting>
+    <Setting Name="xsl_szv3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Static/xsl/svodstyle.xsl</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

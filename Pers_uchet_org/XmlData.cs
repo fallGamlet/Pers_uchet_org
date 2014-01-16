@@ -5,6 +5,9 @@ using System.Text;
 using System.Xml;
 using System.Data;
 using System.IO;
+using System.Xml.XPath;
+using System.Xml.Xsl;
+using System.Windows.Forms;
 
 namespace Pers_uchet_org
 {
@@ -582,15 +585,52 @@ namespace Pers_uchet_org
         }
 
         /// <summary>
-        /// Получить путь к пустому бланку отчета СЗВ-3
+        /// Получить путь к пустому бланку отчета формы СЗВ-3 относительно старта директории программы
         /// </summary>
         /// <returns></returns>
         static public string GetReportUrl()
         {
             return Properties.Settings.Default.report_szv3;
         }
+
+        /// <summary>
+        /// Получить путь к файлу стиля XSL для формы СЗВ-3 относительно старта директории программы
+        /// </summary>
+        /// <returns></returns>
+        static public string GetXslUrl()
+        {
+            return Properties.Settings.Default.xsl_szv3;
+        }
+
+        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        {
+            XPathNavigator xpn = xmlDoc.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslFilename);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
+
+        static public string GetHTML(XmlDocument xmlDoc)
+        {
+            return GetHTML(xmlDoc, GetXslUrl());
+        }
+
+        static public string GetHTML(DataRow mergeRow, DataTable mergeInfoT)
+        {
+            return GetHTML(GetXml(mergeRow, mergeInfoT));
+        }
+
+        static public string GetHTML(long merge_id, string coinnectionStr)
+        {
+            return GetHTML(GetXml(merge_id, coinnectionStr));
+        }
         #endregion
     }
-
-    
 }
