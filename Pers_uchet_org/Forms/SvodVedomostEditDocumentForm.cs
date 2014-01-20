@@ -289,10 +289,9 @@ namespace Pers_uchet_org
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            DataRow mergeRow = _mergeRow == null ? Mergies.CreateRow() : _mergeRow;
-            //XmlDocument xml = Szv3Xml.GetXml(mergeRow, _svodTable);
-            XmlDocument xml = new XmlDocument();
-            MyPrinter.ShowWebPage(Szv3Xml.GetHTML(xml));
+            DataRow mergeRow = _mergeRow ?? Mergies.CreateRow();
+            XmlDocument xml = Szv3Xml.GetXml(mergeRow, _svodTable);
+            MyPrinter.ShowWebPage(Szv3Xml.GetHtml(xml));
         }
 
         private void saveButton_Click(object sender, EventArgs e)

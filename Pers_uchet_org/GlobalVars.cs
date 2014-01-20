@@ -2253,6 +2253,25 @@ namespace Pers_uchet_org
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
         }
+
+        static public string GetCountDocsInListText(long list_id)
+        {
+            return string.Format("SELECT count(*) FROM {0} WHERE {1} = {2}", tablename, listId, list_id);
+        }
+
+        public static int GetCountDocsInList(long NewListId, string _connection)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(_connection))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = GetCountDocsInListText(NewListId);
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
         #endregion
     }
 
@@ -2328,6 +2347,11 @@ namespace Pers_uchet_org
             if (table.Rows.Count > 0)
                 rowRes = table.Rows[0];
             return rowRes;
+        }
+
+        public static DataRow NewRow()
+        {
+            return CreateTable().NewRow();
         }
         #endregion
     }
@@ -2525,9 +2549,9 @@ namespace Pers_uchet_org
                                     INNER JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
                                     WHERE {6} = {7}
                                     GROUP BY {0}",
-                                docTypeId, id, 
-                                tablename, 
-                                DocTypes.tablename, DocTypes.id, DocTypes.listTypeId, 
+                                docTypeId, id,
+                                tablename,
+                                DocTypes.tablename, DocTypes.id, DocTypes.listTypeId,
                                 listId, list_id);
         }
 

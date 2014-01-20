@@ -748,7 +748,7 @@
             this.toolStripSeparator3,
             this.delListMenuItem});
             this.cmsLists.Name = "cmsLists";
-            this.cmsLists.Size = new System.Drawing.Size(276, 242);
+            this.cmsLists.Size = new System.Drawing.Size(276, 220);
             // 
             // addListMenuItem
             // 
@@ -839,7 +839,7 @@
             this.toolStripSeparator6,
             this.delDocMenuItem});
             this.cmsDocs.Name = "cmsLists";
-            this.cmsDocs.Size = new System.Drawing.Size(234, 176);
+            this.cmsDocs.Size = new System.Drawing.Size(234, 198);
             // 
             // addDocMenuItem
             // 
@@ -872,6 +872,7 @@
             this.previewDocMenuItem.Name = "previewDocMenuItem";
             this.previewDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.previewDocMenuItem.Text = "Предварительный просмотр";
+            this.previewDocMenuItem.Click += new System.EventHandler(this.previewDocMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
