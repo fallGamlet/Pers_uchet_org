@@ -787,6 +787,68 @@ namespace Pers_uchet_org
         {
             return Properties.Settings.Default.report_szv2;
         }
+
+        /// <summary>
+        /// Получить путь к файлу стиля XSL для формы СЗВ-2 относительно старта директории программы
+        /// </summary>
+        /// <returns></returns>
+        static public string GetXslUrl()
+        {
+            return Properties.Settings.Default.xsl_szv2;
+        }
+
+        /// <summary>
+        /// Получить текст с HTML, применив XSL стиль к XML документу
+        /// </summary>
+        /// <param name="xmlDoc">объект XML документа</param>
+        /// <param name="xslFilename">название файла XSL стиля</param>
+        /// <returns>Текст HTML</returns>
+        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        {
+            XPathNavigator xpn = xmlDoc.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslFilename);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
+
+        /// <summary>
+        /// Получить текст с HTML, применив XSL стиль к XML документу
+        /// </summary>
+        /// <param name="xmlDoc">объект XML документа</param>
+        /// <returns></returns>
+        static public string GetHTML(XmlDocument xmlDoc)
+        {
+            return GetHTML(xmlDoc, GetXslUrl());
+        }
+
+        /// <summary>
+        /// Получить текст с HTML
+        /// </summary>
+        /// <param name="docsCountTable">Таблица с записями Тип документа/Количество </param>
+        /// <param name="docsSumsTable">Таблица с записями Тип документа/Тип группы/Сумма</param>
+        /// <returns></returns>
+        static public string GetHTML(DataTable docsCountTable, DataTable docsSumsTable)
+        {
+            return GetHTML(GetXml(docsCountTable, docsSumsTable));
+        }
+
+        /// <summary>
+        /// Получить текст с HTML
+        /// </summary>
+        /// <param name="list_id">Идентификатор пакета</param>
+        /// <param name="coinnectionStr">Строка подключения к БД</param>
+        /// <returns></returns>
+        static public string GetHTML(long list_id, string coinnectionStr)
+        {
+            return GetHTML(GetXml(list_id, coinnectionStr));
+        }
         #endregion
     }
 
@@ -892,17 +954,55 @@ namespace Pers_uchet_org
             return Properties.Settings.Default.xsl_szv3;
         }
 
-        static public string GetHtml(XmlDocument xmlDoc)
+        /// <summary>
+        /// Получить текст с HTML, применив XSL стиль к XML документу
+        /// </summary>
+        /// <param name="xmlDoc">объект XML документа</param>
+        /// <param name="xslFilename">название файла XSL стиля</param>
+        /// <returns>Текст HTML</returns>
+        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        {
+            XPathNavigator xpn = xmlDoc.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslFilename);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
+
+        /// <summary>
+        /// Получить текст с HTML, применив XSL стиль к XML документу
+        /// </summary>
+        /// <param name="xmlDoc">объект XML документа</param>
+        /// <returns></returns>
+        static public string GetHTML(XmlDocument xmlDoc)
         {
             return XmlData.GetHTML(xmlDoc, GetXslUrl());
         }
 
-        static public string GetHtml(DataRow mergeRow, DataTable mergeInfoT)
+        /// <summary>
+        /// Получить текст с HTML
+        /// </summary>
+        /// <param name="mergeRow">Строка с данными данными сводной ведомости с форматом таблицы Mergies</param>
+        /// <param name="mergeInfoT">Транспонированная тaблица MergeInfo с числовыпи данными</param>
+        /// <returns></returns>
+        static public string GetHTML(DataRow mergeRow, DataTable mergeInfoT)
         {
             return GetHtml(GetXml(mergeRow, mergeInfoT));
         }
 
-        static public string GetHtml(long merge_id, string coinnectionStr)
+        /// <summary>
+        /// Получить текст с HTML
+        /// </summary>
+        /// <param name="merge_id">Идентификатор сводной ведомости</param>
+        /// <param name="coinnectionStr">Строка подключения к БД</param>
+        /// <returns></returns>
+        static public string GetHTML(long merge_id, string coinnectionStr)
         {
             return GetHtml(GetXml(merge_id, coinnectionStr));
         }
