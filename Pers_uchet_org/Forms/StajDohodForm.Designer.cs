@@ -459,7 +459,7 @@
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(588, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(601, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";
@@ -511,8 +511,8 @@
             this.printDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printDocStripButton.Image")));
             this.printDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printDocStripButton.Name = "printDocStripButton";
-            this.printDocStripButton.Size = new System.Drawing.Size(194, 22);
-            this.printDocStripButton.Text = "Просмотр форм СЗВ-1, СЗВ-2";
+            this.printDocStripButton.Size = new System.Drawing.Size(176, 22);
+            this.printDocStripButton.Text = "Печать форм СЗВ-1, СЗВ-2";
             this.printDocStripButton.Click += new System.EventHandler(this.printDocStripButton_Click);
             // 
             // toolStripSeparator9
@@ -767,6 +767,7 @@
             this.viewOpisMenuItem.Name = "viewOpisMenuItem";
             this.viewOpisMenuItem.Size = new System.Drawing.Size(275, 22);
             this.viewOpisMenuItem.Text = "Просмотреть опись \"СЗВ-2\"";
+            this.viewOpisMenuItem.Click += new System.EventHandler(this.viewOpisMenuItem_Click);
             // 
             // calcMenuItem
             // 
@@ -839,7 +840,7 @@
             this.toolStripSeparator6,
             this.delDocMenuItem});
             this.cmsDocs.Name = "cmsLists";
-            this.cmsDocs.Size = new System.Drawing.Size(234, 198);
+            this.cmsDocs.Size = new System.Drawing.Size(234, 176);
             // 
             // addDocMenuItem
             // 

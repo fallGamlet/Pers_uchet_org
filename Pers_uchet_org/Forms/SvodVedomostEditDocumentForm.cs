@@ -279,11 +279,7 @@ namespace Pers_uchet_org
             }
             if (tmpSumBox == null)
                 return;
-            double sum = 0.0;
-            foreach (DataRow row in _svodTable.Rows)
-            {
-                sum += (double)row[e.Column];
-            }
+            double sum = _svodTable.Rows.Cast<DataRow>().Sum(row => (double) row[e.Column]);
             tmpSumBox.Text = Math.Round(sum, 2).ToString("N2");
         }
 

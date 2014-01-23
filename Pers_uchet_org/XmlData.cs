@@ -803,7 +803,7 @@ namespace Pers_uchet_org
         /// <param name="xmlDoc">объект XML документа</param>
         /// <param name="xslFilename">название файла XSL стиля</param>
         /// <returns>Текст HTML</returns>
-        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        static public string GetHtml(XmlDocument xmlDoc, string xslFilename)
         {
             XPathNavigator xpn = xmlDoc.CreateNavigator();
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
@@ -823,9 +823,9 @@ namespace Pers_uchet_org
         /// </summary>
         /// <param name="xmlDoc">объект XML документа</param>
         /// <returns></returns>
-        static public string GetHTML(XmlDocument xmlDoc)
+        static public string GetHtml(XmlDocument xmlDoc)
         {
-            return GetHTML(xmlDoc, GetXslUrl());
+            return GetHtml(xmlDoc, GetXslUrl());
         }
 
         /// <summary>
@@ -834,9 +834,9 @@ namespace Pers_uchet_org
         /// <param name="docsCountTable">Таблица с записями Тип документа/Количество </param>
         /// <param name="docsSumsTable">Таблица с записями Тип документа/Тип группы/Сумма</param>
         /// <returns></returns>
-        static public string GetHTML(DataTable docsCountTable, DataTable docsSumsTable)
+        static public string GetHtml(DataTable docsCountTable, DataTable docsSumsTable)
         {
-            return GetHTML(GetXml(docsCountTable, docsSumsTable));
+            return GetHtml(GetXml(docsCountTable, docsSumsTable));
         }
 
         /// <summary>
@@ -845,9 +845,9 @@ namespace Pers_uchet_org
         /// <param name="list_id">Идентификатор пакета</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns></returns>
-        static public string GetHTML(long list_id, string coinnectionStr)
+        static public string GetHtml(long list_id, string coinnectionStr)
         {
-            return GetHTML(GetXml(list_id, coinnectionStr));
+            return GetHtml(GetXml(list_id, coinnectionStr));
         }
         #endregion
     }
@@ -960,7 +960,7 @@ namespace Pers_uchet_org
         /// <param name="xmlDoc">объект XML документа</param>
         /// <param name="xslFilename">название файла XSL стиля</param>
         /// <returns>Текст HTML</returns>
-        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        static public string GetHtml(XmlDocument xmlDoc, string xslFilename)
         {
             XPathNavigator xpn = xmlDoc.CreateNavigator();
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
@@ -980,7 +980,7 @@ namespace Pers_uchet_org
         /// </summary>
         /// <param name="xmlDoc">объект XML документа</param>
         /// <returns></returns>
-        static public string GetHTML(XmlDocument xmlDoc)
+        static public string GetHtml(XmlDocument xmlDoc)
         {
             return XmlData.GetHTML(xmlDoc, GetXslUrl());
         }
@@ -991,7 +991,7 @@ namespace Pers_uchet_org
         /// <param name="mergeRow">Строка с данными данными сводной ведомости с форматом таблицы Mergies</param>
         /// <param name="mergeInfoT">Транспонированная тaблица MergeInfo с числовыпи данными</param>
         /// <returns></returns>
-        static public string GetHTML(DataRow mergeRow, DataTable mergeInfoT)
+        static public string GetHtml(DataRow mergeRow, DataTable mergeInfoT)
         {
             return GetHtml(GetXml(mergeRow, mergeInfoT));
         }
@@ -1002,7 +1002,7 @@ namespace Pers_uchet_org
         /// <param name="merge_id">Идентификатор сводной ведомости</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns></returns>
-        static public string GetHTML(long merge_id, string coinnectionStr)
+        static public string GetHtml(long merge_id, string coinnectionStr)
         {
             return GetHtml(GetXml(merge_id, coinnectionStr));
         }

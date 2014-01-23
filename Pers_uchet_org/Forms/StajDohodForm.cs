@@ -357,7 +357,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
                     //if (!r.Selected)
@@ -468,6 +468,11 @@ namespace Pers_uchet_org
         private void addListMenuItem_Click(object sender, EventArgs e)
         {
             addListStripButton_Click(sender, e);
+        }
+
+        private void viewOpisMenuItem_Click(object sender, EventArgs e)
+        {
+            reestrListStripButton_Click(sender, e);
         }
 
         private void copyToOtherYearMenuItem_Click(object sender, EventArgs e)
@@ -602,7 +607,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _organization, _connection));
+                MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _connection));
             }
             catch (Exception exception)
             {
@@ -992,8 +997,7 @@ namespace Pers_uchet_org
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList;
-                docIdList = GetSelectedDocIds();
+                List<long> docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
@@ -1015,7 +1019,7 @@ namespace Pers_uchet_org
                         return;
                     }
 
-                    if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Копирование документа(ов) СЗВ-1") == DialogResult.No)
+                    if (MainForm.ShowQuestionFlexMessage(string.Format("Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio), "Копирование документа(ов) СЗВ-1") == DialogResult.No)
                         return;
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
@@ -1048,8 +1052,7 @@ namespace Pers_uchet_org
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList = new List<long>();
-                docIdList = GetSelectedDocIds();
+                List<long> docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
@@ -1128,9 +1131,8 @@ namespace Pers_uchet_org
             return (from DataRowView docRow in _docsBS where (bool)docRow[CHECK] select (long)docRow["id"]).ToList();
         }
 
-        private string GetFioForSelectedDocIds(List<long> docIdList)
+        private string GetFioForSelectedDocIds(IEnumerable<long> docIdList)
         {
-            string listFio = String.Empty;
             StringBuilder builder = new StringBuilder();
             //Формирование списка выбранных документов
             foreach (var item in docIdList)
@@ -1161,7 +1163,7 @@ namespace Pers_uchet_org
             _listsBS.ResetBindings(false);
         }
 
-        private void CopyDocsByDocId(List<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
+        private void CopyDocsByDocId(IEnumerable<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
         {
             foreach (long oldDocId in docIdList)
             {
@@ -1255,9 +1257,5 @@ namespace Pers_uchet_org
             return newListId;
         }
         #endregion
-
-
-
-
     }
 }

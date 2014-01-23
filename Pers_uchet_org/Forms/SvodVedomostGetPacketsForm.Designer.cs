@@ -39,13 +39,13 @@
             this.orgnameBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.packetView = new System.Windows.Forms.DataGridView();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.check_Column = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.list_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operatorEditColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateredactColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.packetView)).BeginInit();
             this.SuspendLayout();
@@ -123,9 +123,9 @@
             this.packetView.AllowUserToAddRows = false;
             this.packetView.AllowUserToDeleteRows = false;
             this.packetView.AllowUserToResizeRows = false;
-            this.packetView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.packetView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.packetView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.packetView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -167,46 +167,6 @@
             this.packetView.Size = new System.Drawing.Size(428, 250);
             this.packetView.TabIndex = 4;
             // 
-            // check_Column
-            // 
-            this.check_Column.DataPropertyName = "check";
-            this.check_Column.HeaderText = "*";
-            this.check_Column.Name = "check_Column";
-            this.check_Column.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.check_Column.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.check_Column.Width = 20;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "№";
-            this.id.MaxInputLength = 50;
-            this.id.MinimumWidth = 50;
-            this.id.Name = "id";
-            this.id.Width = 50;
-            // 
-            // list_type
-            // 
-            this.list_type.DataPropertyName = "name";
-            this.list_type.HeaderText = "Тип пакета";
-            this.list_type.Name = "list_type";
-            this.list_type.Width = 150;
-            // 
-            // operatorEditColumn
-            // 
-            this.operatorEditColumn.DataPropertyName = "name_change";
-            this.operatorEditColumn.HeaderText = "Оператор";
-            this.operatorEditColumn.Name = "operatorEditColumn";
-            // 
-            // dateredactColumn
-            // 
-            this.dateredactColumn.DataPropertyName = "change_date";
-            this.dateredactColumn.HeaderText = "Дата изменения";
-            this.dateredactColumn.MaxInputLength = 50;
-            this.dateredactColumn.MinimumWidth = 80;
-            this.dateredactColumn.Name = "dateredactColumn";
-            this.dateredactColumn.Width = 90;
-            // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -231,6 +191,50 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // check_Column
+            // 
+            this.check_Column.DataPropertyName = "check";
+            this.check_Column.HeaderText = "*";
+            this.check_Column.Name = "check_Column";
+            this.check_Column.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.check_Column.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.check_Column.Width = 20;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "№";
+            this.id.MaxInputLength = 50;
+            this.id.MinimumWidth = 50;
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 50;
+            // 
+            // list_type
+            // 
+            this.list_type.DataPropertyName = "name";
+            this.list_type.HeaderText = "Тип пакета";
+            this.list_type.Name = "list_type";
+            this.list_type.ReadOnly = true;
+            this.list_type.Width = 150;
+            // 
+            // operatorEditColumn
+            // 
+            this.operatorEditColumn.DataPropertyName = "name_change";
+            this.operatorEditColumn.HeaderText = "Отредактировал";
+            this.operatorEditColumn.Name = "operatorEditColumn";
+            this.operatorEditColumn.ReadOnly = true;
+            // 
+            // dateredactColumn
+            // 
+            this.dateredactColumn.DataPropertyName = "change_date";
+            this.dateredactColumn.HeaderText = "Дата изменения";
+            this.dateredactColumn.MaxInputLength = 50;
+            this.dateredactColumn.MinimumWidth = 80;
+            this.dateredactColumn.Name = "dateredactColumn";
+            this.dateredactColumn.ReadOnly = true;
+            this.dateredactColumn.Width = 90;
+            // 
             // SvodVedomostGetPacketsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -243,8 +247,8 @@
             this.MinimumSize = new System.Drawing.Size(468, 400);
             this.Name = "SvodVedomostGetPacketsForm";
             this.Text = "Пакеты";
-            this.Load += new System.EventHandler(this.SvodVedomostGetPacketsForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SvodVedomostGetPacketsForm_FormClosing);
+            this.Load += new System.EventHandler(this.SvodVedomostGetPacketsForm_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.packetView)).EndInit();
