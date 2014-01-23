@@ -46,7 +46,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(334, 177);
+            this.cancelButton.Location = new System.Drawing.Point(334, 147);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 7;
@@ -55,35 +55,35 @@
             // 
             // buhfioorgBox
             // 
-            this.buhfioorgBox.Location = new System.Drawing.Point(156, 122);
+            this.buhfioorgBox.Location = new System.Drawing.Point(156, 116);
             this.buhfioorgBox.Name = "buhfioorgBox";
             this.buhfioorgBox.Size = new System.Drawing.Size(253, 20);
             this.buhfioorgBox.TabIndex = 5;
             // 
             // bosspostorgBox
             // 
-            this.bosspostorgBox.Location = new System.Drawing.Point(156, 70);
+            this.bosspostorgBox.Location = new System.Drawing.Point(156, 64);
             this.bosspostorgBox.Name = "bosspostorgBox";
             this.bosspostorgBox.Size = new System.Drawing.Size(253, 20);
             this.bosspostorgBox.TabIndex = 3;
             // 
             // bossfioorgBox
             // 
-            this.bossfioorgBox.Location = new System.Drawing.Point(156, 96);
+            this.bossfioorgBox.Location = new System.Drawing.Point(156, 90);
             this.bossfioorgBox.Name = "bossfioorgBox";
             this.bossfioorgBox.Size = new System.Drawing.Size(253, 20);
             this.bossfioorgBox.TabIndex = 4;
             // 
             // nameorgBox
             // 
-            this.nameorgBox.Location = new System.Drawing.Point(156, 44);
+            this.nameorgBox.Location = new System.Drawing.Point(156, 38);
             this.nameorgBox.Name = "nameorgBox";
             this.nameorgBox.Size = new System.Drawing.Size(253, 20);
             this.nameorgBox.TabIndex = 2;
             // 
             // regnumorgBox
             // 
-            this.regnumorgBox.Location = new System.Drawing.Point(156, 18);
+            this.regnumorgBox.Location = new System.Drawing.Point(156, 12);
             this.regnumorgBox.Name = "regnumorgBox";
             this.regnumorgBox.Size = new System.Drawing.Size(253, 20);
             this.regnumorgBox.TabIndex = 1;
@@ -91,7 +91,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 125);
+            this.label6.Location = new System.Drawing.Point(12, 119);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(93, 13);
             this.label6.TabIndex = 0;
@@ -100,7 +100,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 99);
+            this.label5.Location = new System.Drawing.Point(12, 93);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 13);
             this.label5.TabIndex = 0;
@@ -109,7 +109,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 73);
+            this.label4.Location = new System.Drawing.Point(12, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(138, 13);
             this.label4.TabIndex = 0;
@@ -118,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 47);
+            this.label3.Location = new System.Drawing.Point(12, 41);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 0;
@@ -127,7 +127,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 21);
+            this.label2.Location = new System.Drawing.Point(12, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 0;
@@ -137,20 +137,20 @@
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.acceptButton.Location = new System.Drawing.Point(253, 177);
+            this.acceptButton.Location = new System.Drawing.Point(223, 147);
             this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(75, 23);
+            this.acceptButton.Size = new System.Drawing.Size(105, 23);
             this.acceptButton.TabIndex = 6;
-            this.acceptButton.Text = "Принять";
+            this.acceptButton.Text = "Сохранить";
             this.acceptButton.UseVisualStyleBackColor = true;
             // 
-            // SettingsEditOrgForm
+            // EditOrgForm
             // 
             this.AcceptButton = this.acceptButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(421, 212);
+            this.ClientSize = new System.Drawing.Size(421, 182);
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.buhfioorgBox);
             this.Controls.Add(this.bosspostorgBox);
@@ -166,7 +166,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SettingsEditOrgForm";
+            this.Name = "EditOrgForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Изменение данных организации";
             this.ResumeLayout(false);
