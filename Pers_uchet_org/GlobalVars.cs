@@ -1174,8 +1174,7 @@ namespace Pers_uchet_org
         static public string editDate = "edit_date";
         static public string operName = "operator";
         #endregion
-
-
+        
         #region Времменные статические переменные
         //static IEnumerable<DataRow> PrintRows;
         #endregion
@@ -1290,7 +1289,7 @@ namespace Pers_uchet_org
         static public string fio = "fio";
         #endregion
 
-        #region
+        #region Методы - статические
         static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
@@ -2246,14 +2245,107 @@ namespace Pers_uchet_org
 
         static public string GetSelectTextByListId(long list_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1} ORDER BY {2} ", listId, list_id, fio);
+            return string.Format("{0} WHERE {1} = {2} ORDER BY {3} ", GetSelectText(), listId, list_id, fio);
+        }
+
+        static public string GetSelectTextByListId(IEnumerable<long> list_id)
+        {
+            string instr = "( ";
+            foreach (long val in list_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+            return string.Format("{0} WHERE {1} = {2} ORDER BY {3}, {4} ", GetSelectText(), listId, instr, listId, docTypeId);
         }
 
         static public string GetSelectTextByDocId(long doc_id)
         {
             return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
         }
+
+        static public DataTable GetDocs(long list_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByListId(list_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
+        static public DataTable GetDocs(IEnumerable<long> list_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByListId(list_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
         #endregion
+    }
+
+    public class DocsShortView
+    {
+        // название таблицы
+        static public string tablename = Docs.tablename;
+        
+        #region Названия полей в представления БД
+        static public string id = Docs.id;
+        static public string docTypeId = Docs.docTypeId;
+        static public string listId = Docs.listId;
+        static public string socNumber = PersonInfo.socNumber;
+        static public string fname = PersonInfo.fname;
+        static public string mname = PersonInfo.mname;
+        static public string lname = PersonInfo.lname;
+        #endregion
+
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(docTypeId, typeof(int));
+            table.Columns.Add(listId, typeof(long));
+            table.Columns.Add(socNumber, typeof(string));
+            table.Columns.Add(fname, typeof(string));
+            table.Columns.Add(mname, typeof(string));
+            table.Columns.Add(lname, typeof(string));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format(@"SELECT d.[{0}] as {0},d.[{1}] as {1},d.[{2}] as {2}
+		                            ,pi.[{3}] as {3},pi.[{4}] as {4},pi.[{5}] as {5},pi.[{6}] as {6}
+	                            FROM [{7}] d
+	                            INNER JOIN {8} pi ON d.{9} = pi.{10}
+	                            ORDER BY d.{1}",
+                                id, docTypeId, listId, socNumber, fname, mname, lname,
+                                tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id);
+        }
+
+        static public string GetSelectText(IEnumerable<long> list_id)
+        {
+            string instr = "( ";
+            foreach (long val in list_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+            return string.Format(@"SELECT d.[{0}] as {0}, d.[{1}] as {1}, d.[{2}] as {2}
+		                            ,pi.[{3}] as {3}, pi.[{4}] as {4}, pi.[{5}] as {5}, pi.[{6}] as {6}
+                                FROM [{7}] d
+                                INNER JOIN {8} pi ON d.{9} = pi.{10}
+                                WHERE d.{2} in {11}
+                                ORDER BY d.{1}",
+                                id, docTypeId, listId, socNumber, fname, mname, lname,
+                                tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id,
+                                instr);
+        }
+
+        static public DataTable GetDocs(IEnumerable<long> list_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectText(list_id), connectionStr);
+            adapter.Fill(table);
+            //
+            return table;
+        }
     }
 
     public class DocsViewForXml
@@ -2598,6 +2690,39 @@ namespace Pers_uchet_org
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSumsByDocTypeText(list_id), connectionStr);
             adapter.Fill(table);
             return table;
+        }
+
+        /// <summary>
+        /// Получить текст запроса на выборку идентификаторов документов
+        /// </summary>
+        /// <param name="list_id">Идентификатор пакета</param>
+        /// <returns></returns>
+        static public string GetSelectDocsIDText(long list_id)
+        {
+            return string.Format("SELECT {0} FROM {1}  WHERE {2} = {3}", id, tablename, listId, list_id);
+        }
+
+        /// <summary>
+        /// Получить массив идентификаторов документов в указанном пакете
+        /// </summary>
+        /// <param name="list_id">Идентификатор пакетов</param>
+        /// <param name="connectionStr">Строка подключения к БД</param>
+        /// <returns></returns>
+        static public long[] GetDocsID(long list_id, string connectionStr)
+        {
+            LinkedList<long> idArray = new LinkedList<long>();
+            SQLiteConnection connection = new SQLiteConnection(connectionStr);
+            SQLiteCommand command = new SQLiteCommand(GetSelectDocsIDText(list_id), connection);
+            connection.Open();
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                idArray.AddLast((long)reader[Docs.id]);
+            }
+            reader.Close();
+            connection.Close();
+            //
+            return idArray.ToArray();
         }
         #endregion
     }
@@ -3953,6 +4078,17 @@ namespace Pers_uchet_org
         static public string GetSelectActualText(long org_id, int rep_year)
         {
             return string.Format("{0} WHERE ({1}={2} AND {3}=1 AND {4}={5})", GetSelectText(), orgID, org_id, actual, repYear, rep_year);
+        }
+
+        static public DataRow GetActualRow(long org_id, int rep_year, string connectionStr)
+        {
+            DataTable table = Mergies.CreateTable();
+            DataRow rowRes = null;
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectActualText(org_id, rep_year), connectionStr);
+            adapter.Fill(table);
+            if (table.Rows.Count > 0)
+                rowRes = table.Rows[0];
+            return rowRes;
         }
 
         static public string GetInsertText(long org_id, int rep_year, int list_count, int doc_count)

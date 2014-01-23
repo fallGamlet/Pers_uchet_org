@@ -23,7 +23,7 @@
 								<TD style="font-size:8pt;">Форма СЗВ-3</TD>
 							</TR>
 							<TR>
-								<TD align="center" style="font-size:10pt;font-weight:bold;color:#999;">Государственный Пенсионный Фонд Приднестровской Молдавской Республики</TD>
+								<TD align="center" style="font-size:10pt;font-weight:bold;color:#999;">Единый Государственный Фонд Социального Страхования Приднестровской Молдавской Республики</TD>
 							</TR>
 							<TR>
 								<TD align="center" style="font-size:12pt;font-weight:bold;">Сводная ведомость<br/>форм документов СЗВ-1, передаваемых страхователем в Фонд</TD>
@@ -43,7 +43,7 @@
 						</TABLE>
 						<BR/>
 
-						<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse">
+						<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse;">
 							<TR style="font-size:8pt; text-align:center; background:#ddd;">
 								<TD width="5%" rowspan="2" style="border-color:black;">Месяц</TD>
 								<TD width="17%" rowspan="2" style="border-color:black;">Сумма дохода,на который начислены страховые взносы</TD>

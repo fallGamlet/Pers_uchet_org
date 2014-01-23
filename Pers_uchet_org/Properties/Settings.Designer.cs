@@ -136,5 +136,17 @@ namespace Pers_uchet_org.Properties {
                 this["xsl_szv3"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Static/xsl/mapstyle.xsl")]
+        public string xsl_map {
+            get {
+                return ((string)(this["xsl_map"]));
+            }
+            set {
+                this["xsl_map"] = value;
+            }
+        }
     }
 }

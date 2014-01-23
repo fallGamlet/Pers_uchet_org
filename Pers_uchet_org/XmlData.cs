@@ -285,7 +285,19 @@ namespace Pers_uchet_org
         public static string tagDopEnd = "dop_end";
         #endregion
 
-        public static XmlDocument GetXml(long doc_id, Org org, string connection_str)
+        static public IEnumerable<XmlDocument> GetXml(IEnumerable<long> doc_id, Org org, string connection_str)
+        {
+            List<XmlDocument> xmlArray = new List<XmlDocument>();
+            foreach (long id in doc_id)
+            {
+                XmlDocument xmlDoc = GetXml(id, org, connection_str);
+                xmlArray.Add(xmlDoc);
+            }
+            //
+            return xmlArray;
+        }
+
+        static public XmlDocument GetXml(long doc_id, Org org, string connection_str)
         {
             #region Считывание данных
 
@@ -444,7 +456,7 @@ namespace Pers_uchet_org
                 col3.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3]).ToString("F2").Replace(',', '.');
                 col4.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4]).ToString("F2").Replace(',', '.');
                 col5.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5]).ToString("F2").Replace(',', '.');
-                col6.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6]).ToString("F2").Replace(',', '.');
+                col6.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6].ToString();
                 month.AppendChild(col1);
                 month.AppendChild(col2);
                 month.AppendChild(col3);
@@ -795,6 +807,22 @@ namespace Pers_uchet_org
             MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
             return GetXml(mergeRow, mergeInfoT);
         }
+        
+        /// <summary>
+        /// Получить XML объект формы СЗВ-3 для актуальной сводной ведомости организации указанного года
+        /// </summary>
+        /// <param name="org_id">Идентификатор организации</param>
+        /// <param name="rep_year">Год</param>
+        /// <param name="coinnectionStr">Строка подключения к БД</param>
+        /// <returns></returns>
+        static public XmlDocument GetXml(long org_id, int rep_year, string coinnectionStr)
+        {
+            DataRow mergeRow = Mergies.GetActualRow(org_id, rep_year, coinnectionStr);
+            DataTable mergeInfo = MergeInfo.GetTable((long)mergeRow[Mergies.id], coinnectionStr);
+            DataTable mergeInfoT = MergeInfoTranspose.CreateTable();
+            MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
+            return GetXml(mergeRow, mergeInfoT);
+        }
 
         /// <summary>
         /// Получить XML объект формы СЗВ-3
@@ -915,6 +943,155 @@ namespace Pers_uchet_org
         static public string GetHTML(long merge_id, string coinnectionStr)
         {
             return GetHTML(GetXml(merge_id, coinnectionStr));
+        }
+        #endregion
+    }
+
+    public class MapXml
+    {
+        static private Random rand = new Random((int)DateTime.Now.Ticks);
+        // название
+        static public string name = "map";
+
+        #region названия тегов, присутствующих в xml
+        static public string tagTopics = "TOPICS";
+        static public string tagSvod = "SVOD";
+        static public string tagTitle = "TITLE";
+        static public string tagFilename = "FILENAME";
+        static public string tagPath = "PATH";
+        static public string tagOpis = "OPIS";
+        static public string tagTopic = "TOPIC";
+        static public string tagDoctype = "DOCTYPE";
+        static public string tagRegnum = "REGNUM";
+
+        static public string paramType = "TYPE";
+        static public string paramID = "ID";
+        #endregion
+
+        #region Методы - статические
+        static public string GetImito(long value)
+        {
+            return value.ToString("X16");
+        }
+
+        static public string GetImito(DateTime datetime)
+        {
+            return GetImito(datetime.Ticks);
+        }
+
+        static public string GetImito()
+        {
+            long tick = DateTime.Now.Ticks * rand.Next();
+            return GetImito(tick);
+        }
+
+        static public XmlDocument GetXml(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>>szv1Array)
+        {
+            int docCount, packetCount;
+            packetCount = szv2Array.Count();
+            
+            XmlDocument xmlRes = new XmlDocument();
+            XmlElement root = xmlRes.CreateElement(tagTopics);
+            root.SetAttribute(paramType, "Индивидуальные сведения");
+            root.SetAttribute(paramID, "4");
+            XmlElement svod = xmlRes.CreateElement(tagSvod);
+            XmlElement svodTitle = xmlRes.CreateElement(tagTitle);
+            XmlElement svodFilename = xmlRes.CreateElement(tagFilename);
+            XmlElement svodPath = xmlRes.CreateElement(tagPath);
+            xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xmlRes.AppendChild(root);
+            root.AppendChild(svod);
+            svod.AppendChild(svodTitle);
+            svod.AppendChild(svodFilename);
+            svod.AppendChild(svodPath);
+
+            svodTitle.InnerText = "Сводная ведомость";
+            svodFilename.InnerText = GetImito();
+            svodPath.InnerText = "4";
+
+            for (int i = 0; i < packetCount; i++)
+            {
+                string packetID = string.Format("{0:000}", i+1);
+                XmlElement topics = xmlRes.CreateElement(tagTopics);
+                topics.SetAttribute(paramType, string.Format("Пакет {0}",packetID));
+                topics.SetAttribute(paramID, packetID);
+                XmlElement opis = xmlRes.CreateElement(tagOpis);
+                XmlElement opisTitle = xmlRes.CreateElement(tagTitle);
+                XmlElement opisFilename = xmlRes.CreateElement(tagFilename);
+                XmlElement opisPath = xmlRes.CreateElement(tagPath);
+
+                root.AppendChild(topics);
+                topics.AppendChild(opis);
+                opis.AppendChild(opisTitle);
+                opis.AppendChild(opisFilename);
+                opis.AppendChild(opisPath);
+
+                opisTitle.InnerText = "Опись документов";
+                opisFilename.InnerText = GetImito();
+                opisPath.InnerText = string.Format("4\\{0}\\", packetID);
+
+                IEnumerable<XmlDocument> szv1Docs = szv1Array.ElementAt(i);
+                docCount = szv1Docs.Count();
+                for (int j = 0; j < docCount; j++)
+                {
+                    XmlElement topicNode = xmlRes.CreateElement(tagTopic);
+                    XmlElement topicNodeTitle = xmlRes.CreateElement(tagTitle);
+                    XmlElement topicNodeFilename = xmlRes.CreateElement(tagFilename);
+                    XmlElement topicNodeDoctype = xmlRes.CreateElement(tagDoctype);
+                    XmlElement topicNodePath = xmlRes.CreateElement(tagPath);
+                    XmlElement topicNodeRegnum = xmlRes.CreateElement(tagRegnum);
+
+                    topics.AppendChild(topicNode);
+                    topicNode.AppendChild(topicNodeTitle);
+                    topicNode.AppendChild(topicNodeFilename);
+                    topicNode.AppendChild(topicNodeDoctype);
+                    topicNode.AppendChild(topicNodePath);
+                    topicNode.AppendChild(topicNodeRegnum);
+
+                    string fio = string.Format("{0} {1} {2}",
+                                             szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagLname)[0].InnerText
+                                            ,szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFname)[0].InnerText
+                                            ,szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagMname)[0].InnerText
+                                            );
+                    topicNodeTitle.InnerText = fio;
+                    topicNodeFilename.InnerText = GetImito(); ;
+                    topicNodeRegnum.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagPersonRegnum)[0].InnerText;
+                    topicNodeDoctype.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFormType)[0].InnerText;
+                    topicNodePath.InnerText = string.Format("4\\{0}\\", packetID);
+                }
+            }
+            //
+            return xmlRes;
+        }
+
+        static public string GetXslUrl()
+        {
+            return Properties.Settings.Default.xsl_map;
+        }
+
+        static public string GetHTML(XmlDocument mapXml, string xslFilename)
+        {
+            XPathNavigator xpn = mapXml.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslFilename);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
+
+        static public string GetHTML(XmlDocument mapXml)
+        {
+            return GetHTML(mapXml, GetXslUrl());
+        }
+
+        static public string GetHTML(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>> szv1Array)
+        {
+            return GetHTML(GetXml(szv2Array, szv1Array));
         }
         #endregion
     }
