@@ -439,7 +439,7 @@ namespace JR.Utils.GUI.Forms
             /// <returns>The string rows as 1-dimensional array</returns>
             private static string[] GetStringRows(string message)
             {
-                if (string.IsNullOrEmpty(message)) return null;
+                if (string.IsNullOrEmpty(message)) return new string[] {""};
 
                 var messageRows = message.Split(new char[] { '\n' }, StringSplitOptions.None);
                 return messageRows;

@@ -11,31 +11,87 @@ using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Diagnostics;
 using OpenMcdf;
+using System.Data.SQLite;
 
 namespace Pers_uchet_org
 {
     public partial class ExchangeForm : Form
     {
         #region Поля
+        private Operator _operator;
+        private Org _organization;
+        private string _connection;
+        // таблица пакетов
+        DataTable _listsTable;
+        // биндинг сорс для таблиц
+        BindingSource _listsBS;
+        // адаптер для чтения данных из БД
+        SQLiteDataAdapter _listsAdapter;
+        // названия добавочного виртуального столбца
+        const string CHECK = "check";
+        // переменная содержит текущий используемый год
+        int _repYear;
 
+        // количество выбранных документов
+        long _checkedCountDocs;
+        // количество выбранных пакетов
+        long _checkedCountLists;
+
+        // количество документов по сводной
+        long _mergiesCountDocs;
+        // количество пакетов по сводной
+        long _mergiesCountLists;
+        // label с сообщением о ненайденной сводной
         #endregion
 
         #region Конструктор и инициализатор
-        public ExchangeForm()
+        private ExchangeForm()
         {
             InitializeComponent();
+            szv3WarningLabel = new System.Windows.Forms.Label();
+        }
+
+        public ExchangeForm(Operator _operator, Org org, string mainConnection)
+            : this()
+        {
+            this._operator = _operator;
+            this._organization = org;
+            this._connection = mainConnection;
         }
 
         private void ExchangeForm_Load(object sender, EventArgs e)
         {
+            yearBox.Value = MainForm.RepYear;
             tabControl1.SelectedTab = tabPage2;
+            tabControl1.TabPages.Remove(tabPage1);
+
+            // инициализация таблиц
+            _listsTable = ListsView2.CreateTable();
+            _listsTable.Columns.Add(CHECK, typeof(bool));
+            _listsTable.Columns[CHECK].DefaultValue = false;
+
+            // инициализация биндинг сорса к таблице пакетов
+            _listsBS = new BindingSource();
+            //_listsBS.CurrentChanged += new EventHandler(_listsBS_CurrentChanged);
+            //_listsBS.ListChanged += new ListChangedEventHandler(_listsBS_ListChanged);
+            _listsBS.DataSource = _listsTable;
+
+            // присвоение источника dataGrid
+            this.packetsView.AutoGenerateColumns = false;
+            this.packetsView.Columns["checkColumn"].DataPropertyName = CHECK;
+            this.packetsView.Columns["packetNumColumn"].DataPropertyName = ListsView2.id;
+            this.packetsView.Columns["docCountColumn"].DataPropertyName = ListsView2.countDocs;
+            this.packetsView.DataSource = _listsBS;
+
+            ReloadLists();
+
             driveBox_Click(sender, e);
             flashBox_Click(sender, e);
         }
         #endregion
 
         #region Методы - свои
-        private void disableControlsBeforeCreateFile()
+        private void DisableControlsBeforeCreateFile()
         {
             yearGroupBox.Enabled = false;
             tabControl1.Enabled = false;
@@ -46,9 +102,10 @@ namespace Pers_uchet_org
             groupBox5.Enabled = false;
             xmlPathButton.Enabled = false;
             xmlPathTextBox.Enabled = false;
+            packetsView.Enabled = false;
         }
 
-        private void enableControlsAfterCreateFile()
+        private void EnableControlsAfterCreateFile()
         {
             yearGroupBox.Enabled = true;
             tabControl1.Enabled = true;
@@ -59,9 +116,107 @@ namespace Pers_uchet_org
             flashRButton_CheckedChanged(new object(), new EventArgs());
             xmlPathButton.Enabled = true;
             xmlPathTextBox.Enabled = true;
+            packetsView.Enabled = true;
         }
 
+        private void ReloadLists()
+        {
+            if (_listsBS == null)
+                return;
+            if (_listsTable == null)
+                return;
 
+            //отключение события ListChangedEventHandler , что б не мерцали кнопки при обновлении
+            _listsBS.RaiseListChangedEvents = false;
+
+            _listsTable.Clear();
+            string commandStr = ListsView2.GetSelectText(_organization.idVal, _repYear, ListTypes.PersonalInfo);
+            _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
+            _listsAdapter.Fill(_listsTable);
+
+            //включение события ListChangedEventHandler 
+            _listsBS.RaiseListChangedEvents = true;
+            _listsBS.ResetBindings(false);
+
+            _checkedCountLists = 0;
+            _checkedCountDocs = 0;
+
+            checkedPacketCountBox.Text = _checkedCountLists.ToString();
+            chekedDocCountBox.Text = _checkedCountDocs.ToString();
+
+            DisableCheckBoxInPacketView();
+        }
+
+        private void DisableCheckBoxInPacketView()
+        {
+            for (int i = 0; i < packetsView.Rows.Count; i++)
+            {
+                if (Convert.ToInt32((_listsBS[i] as DataRowView)[ListsView2.countPens]) > 0)
+                    packetsView["checkColumn", i].ReadOnly = true;
+            }
+
+        }
+
+        private void SumCheckedLists()
+        {
+            packetsView.EndEdit();
+            _checkedCountLists = 0;
+            _checkedCountDocs = 0;
+            foreach (DataRowView row in _listsBS.Cast<DataRowView>().Where(row => Convert.ToBoolean(row[CHECK])))
+            {
+                _checkedCountLists++;
+                _checkedCountDocs += Convert.ToInt32(row[ListsView2.countDocs]);
+            }
+            checkedPacketCountBox.Text = _checkedCountLists.ToString();
+            chekedDocCountBox.Text = _checkedCountDocs.ToString();
+        }
+
+        private void GetCountsFromMergies()
+        {
+            _mergiesCountLists = 0;
+            _mergiesCountDocs = 0;
+
+            using (SQLiteConnection connection = new SQLiteConnection(_connection))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = MergiesView.GetSelectActualText(_organization.idVal, _repYear);
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        _mergiesCountLists = Convert.ToInt32(reader[MergiesView.listCount]);
+                        _mergiesCountDocs = Convert.ToInt32(reader[MergiesView.docCount]);
+                        szvGroupBox.Visible = true;
+                        this.tabPage2.Controls.Remove(this.szv3WarningLabel);
+
+                    }
+                    else
+                    {
+                        _mergiesCountLists = -1;
+                        _mergiesCountDocs = -1;
+
+                        szvGroupBox.Visible = false;
+                        // 
+                        // szv3WarningLabel
+                        // 
+                        this.szv3WarningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                        this.szv3WarningLabel.ForeColor = System.Drawing.Color.Red;
+                        this.szv3WarningLabel.Location = new System.Drawing.Point(6, 342);
+                        this.szv3WarningLabel.Name = "szv3WarningLabel";
+                        this.szv3WarningLabel.Size = new System.Drawing.Size(286, 53);
+                        this.szv3WarningLabel.TabIndex = 12;
+                        this.szv3WarningLabel.Text = "Сводная ведомость (СЗВ-3) не обнаружена!\r\nФормирование электронных данных невозможно!";
+                        this.szv3WarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                        this.tabPage2.Controls.Add(this.szv3WarningLabel);
+                    }
+                }
+            }
+
+            packetCountBox.Text = _mergiesCountLists.ToString();
+            docCountBox.Text = _mergiesCountDocs.ToString();
+        }
         #endregion
 
         #region Методы - обработчики событий
@@ -93,29 +248,14 @@ namespace Pers_uchet_org
 
         private void createDataFileButton_Click(object sender, EventArgs e)
         {
-            disableControlsBeforeCreateFile();
+            DisableControlsBeforeCreateFile();
 
             try
             {
                 if (tabControl1.SelectedTab == tabPage2)
                 {
-                    int packetCount, docCount, packetSzvCount, docSzvCount;
-                    packetCount = int.Parse(checkedPacketCountBox.Text);
-                    docCount = int.Parse(chekedDocCountBox.Text);
-                    packetSzvCount = int.Parse(packetCountBox.Text);
-                    docSzvCount = int.Parse(docCountBox.Text);
-
-                    if (packetCount < packetSzvCount)
-                    {
-                        if (MessageBox.Show("Количество выбранных пакетов документов: " + packetCount + "\nменьше, чем указано в сводной ведомости: " + packetSzvCount + ".\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == System.Windows.Forms.DialogResult.No)
-                            return;
-                    }
-
-                    if (docCount < docSzvCount)
-                    {
-                        if (MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + packetCount + "\nменьше, чем указано в сводной ведомости: " + packetSzvCount + ".\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == System.Windows.Forms.DialogResult.No)
-                            return;
-                    }
+                    if (!CheckTabPage2())
+                        return;
                 }
 
                 if (driveBox.SelectedItem == null)
@@ -140,16 +280,18 @@ namespace Pers_uchet_org
                 //byte[] arr = ReadKey.HexToBin("60FB8A6AA1EFF871E08187E197F0A209D1F833D47665A0F72B3C7C6F29F40AFB");
                 //long l = ReadKey.Date2Julian(DateTime.Parse("16.11.2012"));
 
-        //        if (DateTime.TryParse(endDateStr, out result))
-        //        {
-        //            if (DateTime.Compare(DateTime.Now.Date, result) == 1)
-        //            {
-        //                throw new Exception("Вы не можете формировать электронные данные,\nт.к. истёк срок действия ключа!");
-        //            }
-        //        }
-        //        else
-        //            throw new Exception("Ошибка чтения ключевого диска.");
+                //        if (DateTime.TryParse(endDateStr, out result))
+                //        {
+                //            if (DateTime.Compare(DateTime.Now.Date, result) == 1)
+                //            {
+                //                throw new Exception("Вы не можете формировать электронные данные,\nт.к. истёк срок действия ключа!");
+                //            }
+                //        }
+                //        else
+                //            throw new Exception("Ошибка чтения ключевого диска.");
+
                 #region Переменные
+
                 string key = "";
                 string key1 = "";
                 string table = "";
@@ -158,7 +300,9 @@ namespace Pers_uchet_org
                 byte[] keyArr;
                 byte[] tableArr;
                 byte[] syncArr;
+
                 #endregion
+
 
                 shift = 2048;
                 //Читаем ключ
@@ -167,75 +311,74 @@ namespace Pers_uchet_org
                 table = ReadKey.ReadCD(driveBox.Text.Substring(0, 2), shift * 2);
                 table1 = ReadKey.ReadCD(driveBox.Text.Substring(0, 2), shift * 3);
 
-                //Получаем ключ в HEX виде
-                for (int i = shift * 2 - 2; i >= shift * 2 - 1024 + 30; i -= 32)
-                {
-                    key += key1.Substring(i, 2);
-                }
-
-
-                string tempKey = key;
-
-                //key = key + key + key;
-                //for(int j = tempKey.Length - 2; j >= 0; j-=2)
+                #region Тест
+                ////Получаем ключ в HEX виде
+                //for (int i = shift*2 - 2; i >= shift*2 - 1024 + 30; i -= 32)
                 //{
-                //    key += tempKey.Substring(j, 2);
+                //    key += key1.Substring(i, 2);
                 //}
 
-                keyArr = new byte[key.Length / 2];
-                keyArr = ReadKey.HexToBin(key);
-                table = table.Substring(0, 1024) + table1.Substring(0, 1024);
-                tableArr = new byte[table.Length / 2];
-                tableArr = ReadKey.HexToBin(table);
-                //----------------------
-                string tempData = "0000000000000000";
-                key = "546D203368656C326973652073736E62206167796967747473656865202C3D73";
-                table = "040A09020D08000E060B010C070F05030E0B040C060D0F0A02030801000705090508010D0A0304020E0F0C070600090B070D0A010008090F0E04060C0B020503060C0701050F0D08040A090E00030B02040B0A000702010D03060805090C0F0E0D0B0401030F0509000A0E070608020C010F0D0005070A040902030E060B080C";
-                string sync = "1111111122222222";
 
-                keyArr = new byte[key.Length / 2];
-                keyArr = ReadKey.HexToBin(key);
-                tableArr = new byte[table.Length / 2];
-                tableArr = ReadKey.HexToBin(table);
-                byte[] dataArr = new byte[tempData.Length / 2];
-                dataArr = ReadKey.HexToBin(tempData);
-                syncArr = ReadKey.HexToBin(sync);
-                //sync = ReadKey.ArrayToString(syncArr);
+                //string tempKey = key;
+
+                ////key = key + key + key;
+                ////for(int j = tempKey.Length - 2; j >= 0; j-=2)
+                ////{
+                ////    key += tempKey.Substring(j, 2);
+                ////}
+
+                //keyArr = new byte[key.Length/2];
+                //keyArr = ReadKey.HexToBin(key);
+                //table = table.Substring(0, 1024) + table1.Substring(0, 1024);
+                //tableArr = new byte[table.Length/2];
+                //tableArr = ReadKey.HexToBin(table);
+                ////----------------------
+                //string tempData = "0000000000000000";
+                //key = "546D203368656C326973652073736E62206167796967747473656865202C3D73";
+                //table =
+                //    "040A09020D08000E060B010C070F05030E0B040C060D0F0A02030801000705090508010D0A0304020E0F0C070600090B070D0A010008090F0E04060C0B020503060C0701050F0D08040A090E00030B02040B0A000702010D03060805090C0F0E0D0B0401030F0509000A0E070608020C010F0D0005070A040902030E060B080C";
+                //string sync = "1111111122222222";
+
+                //keyArr = new byte[key.Length/2];
+                //keyArr = ReadKey.HexToBin(key);
+                //tableArr = new byte[table.Length/2];
+                //tableArr = ReadKey.HexToBin(table);
+                //byte[] dataArr = new byte[tempData.Length/2];
+                //dataArr = ReadKey.HexToBin(tempData);
+                //syncArr = ReadKey.HexToBin(sync);
+                ////sync = ReadKey.ArrayToString(syncArr);
+                ////syncArr = ReadKey.StringToArray(sync);
+
+                //string tmp = "";
+                //tmp = ReadKey.ArrayToString(syncArr);
+                ////tmp = ReadKey.ArrayToString(keyArr);
+                ////tmp = ReadKey.ArrayToString(tableArr);
+
+
+                //if (syncArr.Length != 8)
+                //    syncArr = new byte[8];
+                //Gost28147_89.GostSimple(ref dataArr, keyArr, tableArr, 32, true);
+                ////Gost28147_89.GostGama(ref dataArr, ref syncArr, keyArr, tableArr);
+
+                ////Debug.Print("syncArr " + string.Join(" ", syncArr));
+
+                //string resultStr;
+                //resultStr = ReadKey.ArrayToString(dataArr);
+                //tempData = ReadKey.BinToHex(resultStr);
+
+
+                ////---Расшифровка
+                //dataArr = new byte[tempData.Length/2];
+                //dataArr = ReadKey.HexToBin(tempData);
+                //sync = "";
                 //syncArr = ReadKey.StringToArray(sync);
+                //if (syncArr.Length != 8)
+                //    syncArr = new byte[8];
 
-                string tmp = "";
-                tmp = ReadKey.ArrayToString(syncArr);
-                //tmp = ReadKey.ArrayToString(keyArr);
-                //tmp = ReadKey.ArrayToString(tableArr);
-
-
-                if (syncArr.Length != 8)
-                    syncArr = new byte[8];
-                Gost28147_89.GostSimple(ref dataArr, keyArr, tableArr, 32, true);
                 //Gost28147_89.GostGama(ref dataArr, ref syncArr, keyArr, tableArr);
-
-                //Debug.Print("syncArr " + string.Join(" ", syncArr));
-
-                string resultStr;
-                resultStr = ReadKey.ArrayToString(dataArr);
-                tempData = ReadKey.BinToHex(resultStr);
-
-
-                //---Расшифровка
-                dataArr = new byte[tempData.Length / 2];
-                dataArr = ReadKey.HexToBin(tempData);
-                sync = "";
-                syncArr = ReadKey.StringToArray(sync);
-                if (syncArr.Length != 8)
-                    syncArr = new byte[8];
-
-                Gost28147_89.GostGama(ref dataArr, ref syncArr, keyArr, tableArr);
-                resultStr = ReadKey.ArrayToString(dataArr);
-                //---
-
-
-                //----------------
-
+                //resultStr = ReadKey.ArrayToString(dataArr);
+                ////---
+                #endregion
 
                 //Debug.Print(keyStr);
                 long beginDate = Convert.ToInt32("0x" + key1.Substring((2048 * 2) - 1024 + 100, 8), 16);
@@ -243,6 +386,8 @@ namespace Pers_uchet_org
                 string beginDateStr = ReadKey.Julian2Date(beginDate);
                 string endDateStr = ReadKey.Julian2Date(endDate);
                 keyDateLabel.Text = string.Format(keyDateLabel.Tag.ToString(), beginDateStr, endDateStr);
+
+                
 
                 DateTime result;
                 if (DateTime.TryParse(beginDateStr, out result))
@@ -278,8 +423,91 @@ namespace Pers_uchet_org
             }
             finally
             {
-                enableControlsAfterCreateFile();
+                EnableControlsAfterCreateFile();
             }
+        }
+
+        private bool CheckTabPage2()
+        {
+            bool result = true;
+
+            if (_mergiesCountLists < 0)
+            {
+                MessageBox.Show("Сводная ведомость (СЗВ-3) не обнаружена!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_mergiesCountLists < 1)
+            {
+                MessageBox.Show("Количество пакетов документов в сводной ведомости: " + _mergiesCountLists +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_mergiesCountDocs < 1)
+            {
+                MessageBox.Show("Количество документов \"СЗВ-1\" в сводной ведомости: " + _mergiesCountDocs +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountLists < 1)
+            {
+                MessageBox.Show("Количество выбранных пакетов документов: " + _checkedCountLists +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountDocs < 1)
+            {
+                MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountLists > _mergiesCountLists)
+            {
+                MessageBox.Show(
+                    "Количество выбранных пакетов документов: " + _checkedCountLists +
+                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountLists, "Предупреждение", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountDocs > _mergiesCountDocs)
+            {
+                MessageBox.Show(
+                    "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountDocs, "Предупреждение", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+
+            if (_checkedCountLists < _mergiesCountLists)
+            {
+                result = (MessageBox.Show(
+                        "Количество выбранных пакетов документов: " + _checkedCountLists +
+                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountLists +
+                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
+            }
+
+            if (_checkedCountDocs < _mergiesCountDocs)
+            {
+                result = (MessageBox.Show(
+                        "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountDocs +
+                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
+
+            }
+            return result;
         }
 
         private void flashRButton_CheckedChanged(object sender, EventArgs e)
@@ -301,11 +529,11 @@ namespace Pers_uchet_org
             FolderBrowserDialog xmlFolderBrowser = new FolderBrowserDialog();
             xmlFolderBrowser.RootFolder = Environment.SpecialFolder.MyComputer;
             xmlFolderBrowser.ShowNewFolderButton = false;
-            if (xmlFolderBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (xmlFolderBrowser.ShowDialog() == DialogResult.OK)
                 xmlPathTextBox.Text = xmlFolderBrowser.SelectedPath;
         }
 
-        private void viewdataButton_Click(object sender, EventArgs e)
+        private void viewDataButton_Click(object sender, EventArgs e)
         {
             //string data = "123321";
             //string synchro = "C0E1205FF4F0CE01";
@@ -343,10 +571,110 @@ namespace Pers_uchet_org
             File.WriteAllText(path + "map_new.xml", Encoding.GetEncoding(1251).GetString(res), Encoding.GetEncoding(1251));
         }
 
-        private void senddataButton_Click(object sender, EventArgs e)
+        private void sendDataButton_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void checkAllButton_Click(object sender, EventArgs e)
+        {
+            this.packetsView.EndEdit();
+            bool allchecked = true;
+
+            foreach (DataRowView row in _listsBS.Cast<DataRowView>().Where(row => Convert.ToInt32(row[ListsView2.countPens]) <= 0))
+            {
+                allchecked &= Convert.ToBoolean(row[CHECK]);
+            }
+
+            foreach (DataRowView row in _listsBS.Cast<DataRowView>().Where(row => Convert.ToInt32(row[ListsView2.countPens]) <= 0))
+            {
+                row[CHECK] = !allchecked;
+            }
+
+            this.packetsView.Refresh();
+        }
+
+        private void packetsView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex == -1 && e.ColumnIndex == 0)
+                {
+                    checkAllButton_Click(sender, e);
+                }
+
+                if (_listsBS.Current == null)
+                    return;
+                if (e.RowIndex >= 0 && e.ColumnIndex == 0 &&
+                    Convert.ToInt32((_listsBS.Current as DataRowView)[ListsView2.countPens]) > 0)
+                {
+                    MainForm.ShowInfoFlexMessage(
+                        "В текущем пакете содержаться формы разных типов!\nДокументы типа \"Назначение пенсии\" должны находится в отдельном пакете!",
+                        "Ошибка выбора пакета");
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void packetsView_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Space)
+                {
+                    if (_listsBS.Current == null)
+                        return;
+
+                    if (Convert.ToInt32((_listsBS.Current as DataRowView)[ListsView2.countPens]) > 0)
+                    {
+                        MainForm.ShowInfoFlexMessage(
+                            "В текущем пакете содержаться формы разных типов!\nДокументы типа \"Назначение пенсии\" должны находится в отдельном пакете!",
+                            "Предупреждение");
+                    }
+                    else
+                    {
+                        (_listsBS.Current as DataRowView)[CHECK] =
+                            !Convert.ToBoolean((_listsBS.Current as DataRowView)[CHECK]);
+                        (_listsBS.Current as DataRowView).EndEdit();
+                        SumCheckedLists();
+                    }
+                    (sender as DataGridView).Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void packetsView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            (sender as DataGridView).EndEdit();
+            (sender as DataGridView).Refresh();
+
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            {
+                SumCheckedLists();
+            }
+        }
+
+        private void packetsView_Sorted(object sender, EventArgs e)
+        {
+            DisableCheckBoxInPacketView();
+        }
+
+        private void yearBox_ValueChanged(object sender, EventArgs e)
+        {
+            _repYear = (int)yearBox.Value;
+            MainForm.RepYear = _repYear;
+            ReloadLists();
+            GetCountsFromMergies();
         }
         #endregion
+
+
     }
 }

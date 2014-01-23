@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Xml;
 
 namespace Pers_uchet_org
 {
@@ -356,7 +357,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
                     //if (!r.Selected)
@@ -469,6 +470,11 @@ namespace Pers_uchet_org
             addListStripButton_Click(sender, e);
         }
 
+        private void viewOpisMenuItem_Click(object sender, EventArgs e)
+        {
+            reestrListStripButton_Click(sender, e);
+        }
+
         private void copyToOtherYearMenuItem_Click(object sender, EventArgs e)
         {
             copyToYearListStripButton_Click(sender, e);
@@ -502,6 +508,11 @@ namespace Pers_uchet_org
         private void editDocMenuItem_Click(object sender, EventArgs e)
         {
             editDocStripButton_Click(sender, e);
+        }
+
+        private void previewDocMenuItem_Click(object sender, EventArgs e)
+        {
+            previewDocStripButton_Click(sender, e);
         }
 
         private void changeTypeDocMenuItem_Click(object sender, EventArgs e)
@@ -594,7 +605,14 @@ namespace Pers_uchet_org
 
         private void reestrListStripButton_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _connection));
+            }
+            catch (Exception exception)
+            {
+                MainForm.ShowErrorFlexMessage(exception.Message, "Ошибка открытия предварительного просмотра");
+            }
         }
 
         private void calcListStripButton_Click(object sender, EventArgs e)
@@ -769,6 +787,13 @@ namespace Pers_uchet_org
         {
             try
             {
+                if (_docsBS.Count >= 200)
+                {
+                    MainForm.ShowInfoFlexMessage(
+                        "В данном пакете находится 200 документов СЗВ-1,\nдля добавления новых документов создайте новый пакет.",
+                        "Добавление документа(ов)");
+                    return;
+                }
                 ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _currentListId, _connection);
                 if (choicePersonForm.ShowDialog() == DialogResult.OK)
                 {
@@ -796,7 +821,7 @@ namespace Pers_uchet_org
                 PersonId = (long)(_docsBS.Current as DataRowView)[DocsView.personID];
                 FlagDoc = (int)(_docsBS.Current as DataRowView)[DocsView.docTypeId];
                 AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
-                if (szv1Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (szv1Form.ShowDialog() == DialogResult.OK)
                 {
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
                     _docsBS.Position = _docsBS.Find(DocsView.id, szv1Form.CurrentDocId);
@@ -948,7 +973,17 @@ namespace Pers_uchet_org
 
         private void previewDocStripButton_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (_docsBS.Current == null)
+                    return;
+                long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
+                MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docId, _organization, _connection));
+            }
+            catch (Exception exception)
+            {
+                MainForm.ShowErrorFlexMessage(exception.Message, "Ошибка открытия предварительного просмотра");
+            }
         }
 
         private void copyToListDocStripButton_Click(object sender, EventArgs e)
@@ -962,8 +997,7 @@ namespace Pers_uchet_org
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList;
-                docIdList = GetSelectedDocIds();
+                List<long> docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
@@ -973,10 +1007,19 @@ namespace Pers_uchet_org
 
                 string listFio = GetFioForSelectedDocIds(docIdList);
 
-                CopyDocumentForm moveDocForm = new CopyDocumentForm(_organization, _repYear, _connection);
-                if (moveDocForm.ShowDialog() == DialogResult.OK)
+                CopyDocumentForm copyDocForm = new CopyDocumentForm(_organization, _repYear, _connection);
+                if (copyDocForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Копирование документа(ов) СЗВ-1") == DialogResult.No)
+                    int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
+                    if (docIdList.Count + docCount > 200)
+                    {
+                        MainForm.ShowInfoFlexMessage(
+                            "Невозможно скопировать выбранные документы СЗВ-1,\nтак как количество документов в пакете превысит 200!",
+                            "Копирование документа(ов) СЗВ-1");
+                        return;
+                    }
+
+                    if (MainForm.ShowQuestionFlexMessage(string.Format("Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio), "Копирование документа(ов) СЗВ-1") == DialogResult.No)
                         return;
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
@@ -1009,8 +1052,7 @@ namespace Pers_uchet_org
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList = new List<long>();
-                docIdList = GetSelectedDocIds();
+                List<long> docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
@@ -1028,6 +1070,15 @@ namespace Pers_uchet_org
                 MoveDocumentForm moveDocForm = new MoveDocumentForm(_organization, _repYear, _connection);
                 if (moveDocForm.ShowDialog() == DialogResult.OK)
                 {
+                    int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
+                    if (docIdList.Count + docCount > 200)
+                    {
+                        MainForm.ShowInfoFlexMessage(
+                            "Невозможно переместить выбранные документы СЗВ-1,\nтак как количество документов в пакете превысит 200!",
+                            "Перемещение документа(ов) СЗВ-1");
+                        return;
+                    }
+
                     if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите переместить выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Перемещение документа(ов) СЗВ-1") == DialogResult.No)
                         return;
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -1077,12 +1128,11 @@ namespace Pers_uchet_org
         private List<long> GetSelectedDocIds()
         {
             docView.EndEdit();
-            return (from DataRowView docRow in _docsBS where (bool) docRow[CHECK] select (long) docRow["id"]).ToList();
+            return (from DataRowView docRow in _docsBS where (bool)docRow[CHECK] select (long)docRow["id"]).ToList();
         }
 
-        private string GetFioForSelectedDocIds(List<long> docIdList)
+        private string GetFioForSelectedDocIds(IEnumerable<long> docIdList)
         {
-            string listFio = String.Empty;
             StringBuilder builder = new StringBuilder();
             //Формирование списка выбранных документов
             foreach (var item in docIdList)
@@ -1113,7 +1163,7 @@ namespace Pers_uchet_org
             _listsBS.ResetBindings(false);
         }
 
-        private void CopyDocsByDocId(List<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
+        private void CopyDocsByDocId(IEnumerable<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
         {
             foreach (long oldDocId in docIdList)
             {
@@ -1207,7 +1257,5 @@ namespace Pers_uchet_org
             return newListId;
         }
         #endregion
-
-
     }
 }

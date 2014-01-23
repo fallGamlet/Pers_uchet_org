@@ -279,19 +279,15 @@ namespace Pers_uchet_org
             }
             if (tmpSumBox == null)
                 return;
-            double sum = 0.0;
-            foreach (DataRow row in _svodTable.Rows)
-            {
-                sum += (double)row[e.Column];
-            }
+            double sum = _svodTable.Rows.Cast<DataRow>().Sum(row => (double) row[e.Column]);
             tmpSumBox.Text = Math.Round(sum, 2).ToString("N2");
         }
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            DataRow mergeRow = _mergeRow == null ? Mergies.CreateRow() : _mergeRow;
+            DataRow mergeRow = _mergeRow ?? Mergies.CreateRow();
             XmlDocument xml = Szv3Xml.GetXml(mergeRow, _svodTable);
-            MyPrinter.ShowWebPage(Szv3Xml.GetHTML(xml));
+            MyPrinter.ShowWebPage(Szv3Xml.GetHtml(xml));
         }
 
         private void saveButton_Click(object sender, EventArgs e)

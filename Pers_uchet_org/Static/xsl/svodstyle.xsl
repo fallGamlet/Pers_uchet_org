@@ -23,7 +23,7 @@
 								<TD style="font-size:8pt;">Форма СЗВ-3</TD>
 							</TR>
 							<TR>
-								<TD align="center" style="font-size:10pt;font-weight:bold;color:#999;">Единый Государственный Фонд Социального Страхования Приднестровской Молдавской Республики</TD>
+								<TD align="center" style="font-size:10pt;font-weight:bold;color:#999;">Единый государственный фонд социального страхования<BR/>Приднестровской Молдавской Республики</TD>
 							</TR>
 							<TR>
 								<TD align="center" style="font-size:12pt;font-weight:bold;">Сводная ведомость<br/>форм документов СЗВ-1, передаваемых страхователем в Фонд</TD>

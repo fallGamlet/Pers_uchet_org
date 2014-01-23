@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Xml;
 
 namespace Pers_uchet_org
 {
@@ -1213,7 +1214,47 @@ namespace Pers_uchet_org
         {
             try
             {
-                Szv1Xml.GetXml(CurrentDocId, _org, _connectionStr);
+                DataRow docRow = DocsViewForXml.NewRow();
+                if (docRow == null)
+                    throw new NullReferenceException("Документ не найден");
+
+                docRow[DocsViewForXml.listId] = _currentListId;
+                docRow[DocsViewForXml.repYear] = _repYear;
+
+                using (_connection = new SQLiteConnection(_connectionStr))
+                {
+                    if (_connection.State != ConnectionState.Open)
+                        _connection.Open();
+                    _command = _connection.CreateCommand();
+                    //Выбор ФИО, страхового номера, гражданства из базы
+                    _command.CommandText = PersonView.GetSelectText(_org.idVal, _personId);
+                    if (_connection.State != ConnectionState.Open)
+                        _connection.Open();
+                    _reader = _command.ExecuteReader();
+                    if (_reader.Read())
+                    {
+                        docRow[DocsViewForXml.socNumber] = _reader[PersonView.socNumber].ToString();
+                        docRow[DocsViewForXml.lName] = _reader[PersonView.lName].ToString();
+                        docRow[DocsViewForXml.fName] = _reader[PersonView.fName].ToString();
+                        docRow[DocsViewForXml.mName] = _reader[PersonView.mName].ToString();
+                    }
+                    _reader.Close();
+                }
+
+                docRow[DocsViewForXml.citizen1Id] = (long)(_citizen1BS.Current as DataRowView)[Country.id];
+                docRow[DocsViewForXml.citizen1Name] = (_citizen1BS.Current as DataRowView)[Country.name].ToString();
+                docRow[DocsViewForXml.citizen2Id] = (long)(_citizen2BS.Current as DataRowView)[Country.id];
+                docRow[DocsViewForXml.citizen2Name] = (_citizen2BS.Current as DataRowView)[Country.name].ToString();
+
+                docRow[DocsViewForXml.classificatorId] = (_classpercentView100BS.Current as DataRowView)[ClasspercentView.classificatorID].ToString();
+                docRow[DocsViewForXml.code] = (_classpercentView100BS.Current as DataRowView)[ClasspercentView.code].ToString();
+                docRow[DocsViewForXml.privilegeId] = (_classpercentView100BS.Current as DataRowView)[ClasspercentView.privilegeID].ToString() == "0" ? "" : (_classpercentView100BS.Current as DataRowView)[ClasspercentView.privilegeID].ToString();
+                docRow[DocsViewForXml.privilegeName] = (_classpercentView100BS.Current as DataRowView)[ClasspercentView.privilegeName].ToString().Trim('-');
+
+                docRow[DocsViewForXml.docTypeId] = _flagDocType.ToString();
+                docRow[DocsViewForXml.isGeneral] = additionalRadioButton.Checked ? IndDocs.Job.Second : IndDocs.Job.General;
+
+                MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docRow, _org, _salaryInfoTable, _salaryInfoTableTranspose, _generalPeriodTable, _specPeriodTable, _dopPeriodTable));
             }
             catch (Exception exception)
             {

@@ -218,6 +218,21 @@ namespace Pers_uchet_org
                 return Xml;
             }
         }
+
+        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        {
+            XPathNavigator xpn = xmlDoc.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslFilename);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
     }
 
     public class Szv1Xml
@@ -245,7 +260,7 @@ namespace Pers_uchet_org
         public static string tagFirm = "firm";
         public static string tagFirmRegnum = "regnum";
         public static string tagFirmName = "name";
-        public static string tagFormType = "form_type";
+        public static string tagFormType = "formtype";
         public static string tagWorkPlace = "work_place";
         public static string tagRepYear = "rep_year";
         public static string tagFirmAdd = "firm_add";
@@ -296,7 +311,14 @@ namespace Pers_uchet_org
             //
             return xmlArray;
         }
-
+        
+	/// <summary>
+        /// Получить XML объект формы СЗВ-1
+        /// </summary>
+        /// <param name="doc_id">Идентификатор документа</param>
+        /// <param name="org">Объект данных об организации</param>
+        /// <param name="connection_str">Строка подключения к БД</param>
+        /// <returns>Объект XML документа</returns>
         static public XmlDocument GetXml(long doc_id, Org org, string connection_str)
         {
             #region Считывание данных
@@ -336,6 +358,17 @@ namespace Pers_uchet_org
             return GetXml(docRow, org, salaryInfoTable, salaryInfoTableTranspose, generalTable, specTable, dopTable);
         }
 
+        /// <summary>
+        /// Получить XML объект формы СЗВ-1
+        /// </summary>
+        /// <param name="docRow">Строка с данными о документе и персоне</param>
+        /// <param name="org">Объект данных об организации</param>
+        /// <param name="salaryInfoTable">Таблица с суммами</param>
+        /// <param name="salaryInfoTableTranspose">Таблица с суммами (транспонированная)</param>
+        /// <param name="generalTable">Таблица с основными стажами</param>
+        /// <param name="specTable">Таблица со специальными стажами</param>
+        /// <param name="dopTable">Таблица с дополнительными стажами</param>
+        /// <returns>Объект XML документа</returns>
         static public XmlDocument GetXml(DataRow docRow, Org org, DataTable salaryInfoTable, DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
         {
             #region Создание xml элементов
@@ -400,8 +433,8 @@ namespace Pers_uchet_org
             workPlace.InnerText = docRow[DocsViewForXml.isGeneral].ToString();
             repYear.InnerText = docRow[DocsViewForXml.repYear].ToString();
 
-            firmAdd.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)][SalaryInfo.sum]).ToString("F2");
-            firmPay.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)][SalaryInfo.sum]).ToString("F2");
+            firmAdd.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)][SalaryInfo.sum]).ToString("F2").Replace(',', '.');
+            firmPay.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)][SalaryInfo.sum]).ToString("F2").Replace(',', '.');
 
             #endregion
 
@@ -472,6 +505,8 @@ namespace Pers_uchet_org
 
             foreach (DataRow row in generalTable.Rows)
             {
+                if (row.RowState == DataRowState.Deleted)
+                    continue;
                 XmlElement period = xmlRes.CreateElement(tagPeriod);
                 XmlElement genStart = xmlRes.CreateElement(tagGenStart);
                 XmlElement genEnd = xmlRes.CreateElement(tagGenEnd);
@@ -488,6 +523,8 @@ namespace Pers_uchet_org
 
             foreach (DataRow row in specTable.Rows)
             {
+                if (row.RowState == DataRowState.Deleted)
+                    continue;
                 XmlElement spec = xmlRes.CreateElement(tagSpec);
                 XmlElement specStart = xmlRes.CreateElement(tagSpecStart);
                 XmlElement specEnd = xmlRes.CreateElement(tagSpecEnd);
@@ -537,6 +574,8 @@ namespace Pers_uchet_org
 
             foreach (DataRow row in dopTable.Rows)
             {
+                if (row.RowState == DataRowState.Deleted)
+                    continue;
                 XmlElement dopRecord = xmlRes.CreateElement(tagDopRecord);
                 XmlElement dopCodeId = xmlRes.CreateElement(tagDopCodeID);
                 XmlElement dopCodeName = xmlRes.CreateElement(tagDopCodeName);
@@ -555,13 +594,64 @@ namespace Pers_uchet_org
             docInfo.AppendChild(dopStaj);
             #endregion
 
-            string formStr = XmlData.FormatXml(xmlRes.InnerXml);
+            //string formStr = XmlData.FormatXml(xmlRes.InnerXml);
             return xmlRes;
         }
 
+        /// <summary>
+        /// Получить путь к пустому бланку отчета формы СЗВ-1 относительно старта директории программы
+        /// </summary>
+        /// <returns></returns>
         static public string GetReportUrl()
         {
             return Properties.Settings.Default.report_szv1;
+        }
+
+        /// <summary>
+        /// Получить путь к файлу стиля XSL для формы СЗВ-1 относительно старта директории программы
+        /// </summary>
+        /// <returns></returns>
+        static public string GetXslUrl()
+        {
+            return Properties.Settings.Default.xsl_szv1;
+        }
+
+        /// <summary>
+        /// Получить Html строку формы СЗВ-1
+        /// </summary>
+        /// <param name="xmlDoc">Объект XML документа</param>
+        /// <returns>Html строка</returns>
+        static public string GetHtml(XmlDocument xmlDoc)
+        {
+            return XmlData.GetHTML(xmlDoc, GetXslUrl());
+        }
+
+        /// <summary>
+        /// Получить Html строку формы СЗВ-1
+        /// </summary>
+        /// <param name="docRow">Строка с данными о документе и персоне</param>
+        /// <param name="org">Объект данных об организации</param>
+        /// <param name="salaryInfoTable">Таблица с суммами</param>
+        /// <param name="salaryInfoTableTranspose">Таблица с суммами (транспонированная)</param>
+        /// <param name="generalTable">Таблица с основными стажами</param>
+        /// <param name="specTable">Таблица со специальными стажами</param>
+        /// <param name="dopTable">Таблица с дополнительными стажами</param>
+        /// <returns>Html строка</returns>
+        static public string GetHtml(DataRow docRow, Org org, DataTable salaryInfoTable, DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
+        {
+            return GetHtml(GetXml(docRow, org, salaryInfoTable, salaryInfoTableTranspose, generalTable, specTable, dopTable));
+        }
+
+        /// <summary>
+        /// Получить Html строку формы СЗВ-1
+        /// </summary>
+        /// <param name="doc_id">Идентификатор документа</param>
+        /// <param name="org">Объект данных об организации</param>
+        /// <param name="connection_str">Строка подключения к БД</param>
+        /// <returns>Html строка</returns>
+        static public string GetHtml(long doc_id, Org org, string connection_str)
+        {
+            return GetHtml(GetXml(doc_id, org, connection_str));
         }
     }
 
@@ -587,7 +677,7 @@ namespace Pers_uchet_org
             bool init, correct, cancel, granting;
             init = correct = cancel = granting = false;
             long docTypeID;
-            foreach(DataRow row in docsCount.Rows)
+            foreach (DataRow row in docsCount.Rows)
             {
                 docTypeID = (long)row[Docs.docTypeId];
                 if (docTypeID == DocTypes.InitialFormId)
@@ -636,7 +726,7 @@ namespace Pers_uchet_org
                 XmlElement col3 = xmlRes.CreateElement(tagCol3);
                 XmlElement col4 = xmlRes.CreateElement(tagCol4);
                 XmlElement col5 = xmlRes.CreateElement(tagCol5);
-                
+
                 long curDoctypeID = (long)row[Docs.docTypeId];
                 typeID.InnerText = curDoctypeID.ToString();
                 count.InnerText = row["count"].ToString();
@@ -650,12 +740,12 @@ namespace Pers_uchet_org
                 summaryInfo.AppendChild(col4);
                 summaryInfo.AppendChild(col5);
 
-                col1.InnerText = col2.InnerText = 
-                                col3.InnerText = 
-                                col4.InnerText = 
+                col1.InnerText = col2.InnerText =
+                                col3.InnerText =
+                                col4.InnerText =
                                 col5.InnerText = "0.00";
 
-                foreach(DataRow sumRow in docsSums.Rows)
+                foreach (DataRow sumRow in docsSums.Rows)
                 {
                     long doctypeID = (long)sumRow[Docs.docTypeId];
                     double val = (double)sumRow[SalaryInfo.sum];
@@ -725,7 +815,7 @@ namespace Pers_uchet_org
         /// <param name="xmlDoc">объект XML документа</param>
         /// <param name="xslFilename">название файла XSL стиля</param>
         /// <returns>Текст HTML</returns>
-        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        static public string GetHtml(XmlDocument xmlDoc, string xslFilename)
         {
             XPathNavigator xpn = xmlDoc.CreateNavigator();
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
@@ -745,9 +835,9 @@ namespace Pers_uchet_org
         /// </summary>
         /// <param name="xmlDoc">объект XML документа</param>
         /// <returns></returns>
-        static public string GetHTML(XmlDocument xmlDoc)
+        static public string GetHtml(XmlDocument xmlDoc)
         {
-            return GetHTML(xmlDoc, GetXslUrl());
+            return GetHtml(xmlDoc, GetXslUrl());
         }
 
         /// <summary>
@@ -756,9 +846,9 @@ namespace Pers_uchet_org
         /// <param name="docsCountTable">Таблица с записями Тип документа/Количество </param>
         /// <param name="docsSumsTable">Таблица с записями Тип документа/Тип группы/Сумма</param>
         /// <returns></returns>
-        static public string GetHTML(DataTable docsCountTable, DataTable docsSumsTable)
+        static public string GetHtml(DataTable docsCountTable, DataTable docsSumsTable)
         {
-            return GetHTML(GetXml(docsCountTable, docsSumsTable));
+            return GetHtml(GetXml(docsCountTable, docsSumsTable));
         }
 
         /// <summary>
@@ -767,9 +857,9 @@ namespace Pers_uchet_org
         /// <param name="list_id">Идентификатор пакета</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns></returns>
-        static public string GetHTML(long list_id, string coinnectionStr)
+        static public string GetHtml(long list_id, string coinnectionStr)
         {
-            return GetHTML(GetXml(list_id, coinnectionStr));
+            return GetHtml(GetXml(list_id, coinnectionStr));
         }
         #endregion
     }
@@ -798,7 +888,7 @@ namespace Pers_uchet_org
         /// </summary>
         /// <param name="merge_id">Идентификатор сводной ведомости</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
-        /// <returns>объект XML документа</returns>
+        /// <returns>Объект XML документа</returns>
         static public XmlDocument GetXml(long merge_id, string coinnectionStr)
         {
             DataRow mergeRow = Mergies.GetRow(merge_id, coinnectionStr);
@@ -845,7 +935,7 @@ namespace Pers_uchet_org
             xmlRes.AppendChild(svod);
             svod.AppendChild(packsCount);
             svod.AppendChild(docsCount);
-            
+
             svod.AppendChild(payment);
             for (int i = 0; i < 12; i++)
             {
@@ -898,7 +988,7 @@ namespace Pers_uchet_org
         /// <param name="xmlDoc">объект XML документа</param>
         /// <param name="xslFilename">название файла XSL стиля</param>
         /// <returns>Текст HTML</returns>
-        static public string GetHTML(XmlDocument xmlDoc, string xslFilename)
+        static public string GetHtml(XmlDocument xmlDoc, string xslFilename)
         {
             XPathNavigator xpn = xmlDoc.CreateNavigator();
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
@@ -918,9 +1008,9 @@ namespace Pers_uchet_org
         /// </summary>
         /// <param name="xmlDoc">объект XML документа</param>
         /// <returns></returns>
-        static public string GetHTML(XmlDocument xmlDoc)
+        static public string GetHtml(XmlDocument xmlDoc)
         {
-            return GetHTML(xmlDoc, GetXslUrl());
+            return XmlData.GetHTML(xmlDoc, GetXslUrl());
         }
 
         /// <summary>
@@ -929,9 +1019,9 @@ namespace Pers_uchet_org
         /// <param name="mergeRow">Строка с данными данными сводной ведомости с форматом таблицы Mergies</param>
         /// <param name="mergeInfoT">Транспонированная тaблица MergeInfo с числовыпи данными</param>
         /// <returns></returns>
-        static public string GetHTML(DataRow mergeRow, DataTable mergeInfoT)
+        static public string GetHtml(DataRow mergeRow, DataTable mergeInfoT)
         {
-            return GetHTML(GetXml(mergeRow, mergeInfoT));
+            return GetHtml(GetXml(mergeRow, mergeInfoT));
         }
 
         /// <summary>
@@ -940,9 +1030,9 @@ namespace Pers_uchet_org
         /// <param name="merge_id">Идентификатор сводной ведомости</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns></returns>
-        static public string GetHTML(long merge_id, string coinnectionStr)
+        static public string GetHtml(long merge_id, string coinnectionStr)
         {
-            return GetHTML(GetXml(merge_id, coinnectionStr));
+            return GetHtml(GetXml(merge_id, coinnectionStr));
         }
         #endregion
     }

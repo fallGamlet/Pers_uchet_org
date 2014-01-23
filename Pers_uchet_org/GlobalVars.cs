@@ -2066,6 +2066,46 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class ListsView2
+    {
+        static public string tablename = "Lists_View_2";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string listTypeId = "list_type_id";
+        static public string nameType = "name";
+        static public string orgID = "org_id";
+        static public string repYear = "rep_year";
+        static public string countDocs = "count_docs";
+        static public string countPens = "count_pens";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(listTypeId, typeof(int));
+            table.Columns.Add(nameType, typeof(string));
+            table.Columns.Add(orgID, typeof(long));
+            table.Columns.Add(repYear, typeof(int));
+            table.Columns.Add(countDocs, typeof(int));
+            table.Columns.Add(countPens, typeof(int));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long org_id, int rep_year, long list_type_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} AND {2} = {3} AND {4} = {5} AND {6} > 0",listTypeId, list_type_id, orgID, org_id, repYear, rep_year, countDocs);
+        }
+        #endregion
+    }
+
     public class Lists
     {
         static public string tablename = "Lists";
@@ -2263,7 +2303,7 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
         }
 
-        static public DataTable GetDocs(long list_id, string connectionStr)
+ static public DataTable GetDocs(long list_id, string connectionStr)
         {
             DataTable table = CreateTable();
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByListId(list_id), connectionStr);
@@ -2278,6 +2318,27 @@ namespace Pers_uchet_org
             adapter.Fill(table);
             return table;
         }
+ static public string GetCountDocsInListText(long list_id)
+        {
+            return string.Format("SELECT count(*) FROM {0} WHERE {1} = {2}", tablename, listId, list_id);
+        }
+
+        public static int GetCountDocsInList(long NewListId, string _connection)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(_connection))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = GetCountDocsInListText(NewListId);
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
+
+        
+                        
         #endregion
     }
 
@@ -2420,6 +2481,11 @@ namespace Pers_uchet_org
             if (table.Rows.Count > 0)
                 rowRes = table.Rows[0];
             return rowRes;
+        }
+
+        public static DataRow NewRow()
+        {
+            return CreateTable().NewRow();
         }
         #endregion
     }
@@ -2617,9 +2683,9 @@ namespace Pers_uchet_org
                                     INNER JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
                                     WHERE {6} = {7}
                                     GROUP BY {0}",
-                                docTypeId, id, 
-                                tablename, 
-                                DocTypes.tablename, DocTypes.id, DocTypes.listTypeId, 
+                                docTypeId, id,
+                                tablename,
+                                DocTypes.tablename, DocTypes.id, DocTypes.listTypeId,
                                 listId, list_id);
         }
 
