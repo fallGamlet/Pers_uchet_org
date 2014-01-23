@@ -50,9 +50,9 @@
             this.editorgButton = new System.Windows.Forms.Button();
             this.addorgButton = new System.Windows.Forms.Button();
             this.orgView = new System.Windows.Forms.DataGridView();
+            this.closeButton = new System.Windows.Forms.Button();
             this.regnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.closeButton = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.depView)).BeginInit();
@@ -62,7 +62,9 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.bookerfioorgBox);
             this.groupBox3.Controls.Add(this.chiefpostorgBox);
             this.groupBox3.Controls.Add(this.chieffioorgBox);
@@ -76,49 +78,64 @@
             this.groupBox3.Location = new System.Drawing.Point(262, 10);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(410, 180);
+            this.groupBox3.Size = new System.Drawing.Size(342, 179);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             // 
             // bookerfioorgBox
             // 
-            this.bookerfioorgBox.Location = new System.Drawing.Point(150, 132);
+            this.bookerfioorgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bookerfioorgBox.Location = new System.Drawing.Point(150, 123);
             this.bookerfioorgBox.Name = "bookerfioorgBox";
-            this.bookerfioorgBox.Size = new System.Drawing.Size(253, 20);
+            this.bookerfioorgBox.ReadOnly = true;
+            this.bookerfioorgBox.Size = new System.Drawing.Size(186, 20);
             this.bookerfioorgBox.TabIndex = 11;
             // 
             // chiefpostorgBox
             // 
-            this.chiefpostorgBox.Location = new System.Drawing.Point(150, 80);
+            this.chiefpostorgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chiefpostorgBox.Location = new System.Drawing.Point(150, 71);
             this.chiefpostorgBox.Name = "chiefpostorgBox";
-            this.chiefpostorgBox.Size = new System.Drawing.Size(253, 20);
+            this.chiefpostorgBox.ReadOnly = true;
+            this.chiefpostorgBox.Size = new System.Drawing.Size(186, 20);
             this.chiefpostorgBox.TabIndex = 10;
             // 
             // chieffioorgBox
             // 
-            this.chieffioorgBox.Location = new System.Drawing.Point(150, 106);
+            this.chieffioorgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chieffioorgBox.Location = new System.Drawing.Point(150, 97);
             this.chieffioorgBox.Name = "chieffioorgBox";
-            this.chieffioorgBox.Size = new System.Drawing.Size(253, 20);
+            this.chieffioorgBox.ReadOnly = true;
+            this.chieffioorgBox.Size = new System.Drawing.Size(186, 20);
             this.chieffioorgBox.TabIndex = 9;
             // 
             // nameorgBox
             // 
-            this.nameorgBox.Location = new System.Drawing.Point(150, 54);
+            this.nameorgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nameorgBox.Location = new System.Drawing.Point(150, 45);
             this.nameorgBox.Name = "nameorgBox";
-            this.nameorgBox.Size = new System.Drawing.Size(253, 20);
+            this.nameorgBox.ReadOnly = true;
+            this.nameorgBox.Size = new System.Drawing.Size(186, 20);
             this.nameorgBox.TabIndex = 8;
             // 
             // regnumorgBox
             // 
-            this.regnumorgBox.Location = new System.Drawing.Point(150, 28);
+            this.regnumorgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.regnumorgBox.Location = new System.Drawing.Point(150, 19);
             this.regnumorgBox.Name = "regnumorgBox";
-            this.regnumorgBox.Size = new System.Drawing.Size(253, 20);
+            this.regnumorgBox.ReadOnly = true;
+            this.regnumorgBox.Size = new System.Drawing.Size(186, 20);
             this.regnumorgBox.TabIndex = 7;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 135);
+            this.label6.Location = new System.Drawing.Point(6, 129);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(93, 13);
             this.label6.TabIndex = 6;
@@ -127,7 +144,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 109);
+            this.label5.Location = new System.Drawing.Point(6, 103);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 13);
             this.label5.TabIndex = 5;
@@ -136,7 +153,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 83);
+            this.label4.Location = new System.Drawing.Point(6, 77);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(138, 13);
             this.label4.TabIndex = 4;
@@ -145,7 +162,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 57);
+            this.label3.Location = new System.Drawing.Point(6, 51);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 3;
@@ -154,7 +171,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 31);
+            this.label2.Location = new System.Drawing.Point(6, 22);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 2;
@@ -162,7 +179,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.groupBox2.Controls.Add(this.depView);
             this.groupBox2.Controls.Add(this.removedepButton);
             this.groupBox2.Controls.Add(this.editdepButton);
@@ -171,7 +187,7 @@
             this.groupBox2.Location = new System.Drawing.Point(262, 192);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(409, 162);
+            this.groupBox2.Size = new System.Drawing.Size(409, 157);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Структурные подразделения (отделы, цехи и т.п.)";
@@ -197,7 +213,7 @@
             this.depView.ReadOnly = true;
             this.depView.RowHeadersVisible = false;
             this.depView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.depView.Size = new System.Drawing.Size(394, 108);
+            this.depView.Size = new System.Drawing.Size(394, 103);
             this.depView.TabIndex = 5;
             // 
             // dep_name_Column
@@ -213,7 +229,7 @@
             // removedepButton
             // 
             this.removedepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.removedepButton.Location = new System.Drawing.Point(248, 133);
+            this.removedepButton.Location = new System.Drawing.Point(248, 128);
             this.removedepButton.Name = "removedepButton";
             this.removedepButton.Size = new System.Drawing.Size(75, 23);
             this.removedepButton.TabIndex = 4;
@@ -223,7 +239,7 @@
             // editdepButton
             // 
             this.editdepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editdepButton.Location = new System.Drawing.Point(167, 133);
+            this.editdepButton.Location = new System.Drawing.Point(167, 128);
             this.editdepButton.Name = "editdepButton";
             this.editdepButton.Size = new System.Drawing.Size(75, 23);
             this.editdepButton.TabIndex = 4;
@@ -233,7 +249,7 @@
             // adddepButton
             // 
             this.adddepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.adddepButton.Location = new System.Drawing.Point(86, 133);
+            this.adddepButton.Location = new System.Drawing.Point(86, 128);
             this.adddepButton.Name = "adddepButton";
             this.adddepButton.Size = new System.Drawing.Size(75, 23);
             this.adddepButton.TabIndex = 4;
@@ -251,7 +267,7 @@
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 344);
+            this.groupBox1.Size = new System.Drawing.Size(250, 179);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Список организаций";
@@ -259,7 +275,7 @@
             // removeorgButton
             // 
             this.removeorgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.removeorgButton.Location = new System.Drawing.Point(168, 315);
+            this.removeorgButton.Location = new System.Drawing.Point(168, 150);
             this.removeorgButton.Name = "removeorgButton";
             this.removeorgButton.Size = new System.Drawing.Size(75, 23);
             this.removeorgButton.TabIndex = 4;
@@ -270,7 +286,7 @@
             // editorgButton
             // 
             this.editorgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editorgButton.Location = new System.Drawing.Point(87, 315);
+            this.editorgButton.Location = new System.Drawing.Point(87, 150);
             this.editorgButton.Name = "editorgButton";
             this.editorgButton.Size = new System.Drawing.Size(75, 23);
             this.editorgButton.TabIndex = 4;
@@ -281,7 +297,7 @@
             // addorgButton
             // 
             this.addorgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addorgButton.Location = new System.Drawing.Point(6, 315);
+            this.addorgButton.Location = new System.Drawing.Point(6, 150);
             this.addorgButton.Name = "addorgButton";
             this.addorgButton.Size = new System.Drawing.Size(75, 23);
             this.addorgButton.TabIndex = 4;
@@ -297,11 +313,10 @@
             this.orgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.orgView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.orgView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.orgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.orgView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.orgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.orgView.ColumnHeadersVisible = false;
             this.orgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.regnumColumn,
             this.nameColumn});
@@ -310,8 +325,19 @@
             this.orgView.ReadOnly = true;
             this.orgView.RowHeadersVisible = false;
             this.orgView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orgView.Size = new System.Drawing.Size(237, 290);
+            this.orgView.Size = new System.Drawing.Size(237, 125);
             this.orgView.TabIndex = 0;
+            // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(595, 381);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(75, 23);
+            this.closeButton.TabIndex = 9;
+            this.closeButton.Text = "Закрыть";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Visible = false;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // regnumColumn
             // 
@@ -322,39 +348,27 @@
             this.regnumColumn.MinimumWidth = 70;
             this.regnumColumn.Name = "regnumColumn";
             this.regnumColumn.ReadOnly = true;
-            this.regnumColumn.Width = 70;
+            this.regnumColumn.Width = 88;
             // 
             // nameColumn
             // 
             this.nameColumn.DataPropertyName = "name";
             this.nameColumn.HeaderText = "Наименование";
             this.nameColumn.MaxInputLength = 200;
-            this.nameColumn.MinimumWidth = 150;
+            this.nameColumn.MinimumWidth = 100;
             this.nameColumn.Name = "nameColumn";
             this.nameColumn.ReadOnly = true;
-            this.nameColumn.Width = 150;
-            // 
-            // closeButton
-            // 
-            this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.closeButton.Location = new System.Drawing.Point(595, 386);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 9;
-            this.closeButton.Text = "Закрыть";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // OrgForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 421);
+            this.ClientSize = new System.Drawing.Size(614, 199);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.MinimumSize = new System.Drawing.Size(698, 459);
+            this.MinimumSize = new System.Drawing.Size(500, 213);
             this.Name = "OrgForm";
             this.Text = "Информация об организациях";
             this.Load += new System.EventHandler(this.OrgForm_Load);

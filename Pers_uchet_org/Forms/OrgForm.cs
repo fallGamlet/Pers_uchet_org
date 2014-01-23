@@ -69,7 +69,7 @@ namespace Pers_uchet_org.Forms
             EditOrgForm tmpForm = new EditOrgForm();
             tmpForm.Owner = this;
             DialogResult dRes = tmpForm.ShowDialog(this);
-            if (dRes == System.Windows.Forms.DialogResult.OK)
+            if (dRes == DialogResult.OK)
             {
                 DataRowView row = _orgBS.AddNew() as DataRowView;
                 if (row != null)
