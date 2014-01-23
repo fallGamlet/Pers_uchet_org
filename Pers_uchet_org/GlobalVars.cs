@@ -2067,6 +2067,46 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class ListsView2
+    {
+        static public string tablename = "Lists_View_2";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string listTypeId = "list_type_id";
+        static public string nameType = "name";
+        static public string orgID = "org_id";
+        static public string repYear = "rep_year";
+        static public string countDocs = "count_docs";
+        static public string countPens = "count_pens";
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(listTypeId, typeof(int));
+            table.Columns.Add(nameType, typeof(string));
+            table.Columns.Add(orgID, typeof(long));
+            table.Columns.Add(repYear, typeof(int));
+            table.Columns.Add(countDocs, typeof(int));
+            table.Columns.Add(countPens, typeof(int));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(long org_id, int rep_year, long list_type_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} AND {2} = {3} AND {4} = {5} AND {6} > 0",listTypeId, list_type_id, orgID, org_id, repYear, rep_year, countDocs);
+        }
+        #endregion
+    }
+
     public class Lists
     {
         static public string tablename = "Lists";

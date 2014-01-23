@@ -19,20 +19,20 @@
 		</TR>
 		<TR>
 			<TD align="center" style="font-size:10pt;font-weight:bold;color:gray;">
-				Государственный Пенсионный Фонд Приднестровской Молдавской Республики</TD>
+				Единый государственный фонд социального страхования<BR/>Приднестровской Молдавской Республики</TD>
 		</TR>
 		<TR>
 			<TD></TD>
 		</TR>
 		<TR>
 			<TD align="center" style="font-size:12pt;font-weight:bold;">
-				Опись документов, переданных работодателем в ПФ</TD>
+				Опись документов, переданных работодателем</TD>
 		</TR>
 	</TABLE>
 	<BR/>
 
-	<TABLE width="100%" border="1" style="border-color:black black black black;">
-		<TR style="font-size:8pt;text-align:center;background-color:silver;">
+	<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse;">
+		<TR style="font-size:8pt;text-align:center;background-color:#ddd;">
 			<TD width="70%" style="border-color:black black black black;">
 				Тип формы документа &quot;Индивидуальные сведения&quot;<br/>
 				&#40;Форма СЗВ-1&#41;</TD>
@@ -44,25 +44,25 @@
 		<xsl:choose>
 		<xsl:when test="type_id=21">
 			<TD width="70%" style="font-size:10pt;text-align:left;color:navy;font-weight:bold;border-color:black black black black;">
-				&#45; исходная форма</TD>
+				исходная форма</TD>
 			<TD width="30%" style="font-size:10pt;text-align:center;color:navy;font-weight:bold;border-color:black black black black;">
 				<xsl:value-of select="format-number(count, '##0', 'rusformat')"/></TD>
 		</xsl:when>
 		<xsl:when test="type_id=22">
 			<TD width="70%" style="font-size:10pt;text-align:left;color:navy;font-weight:bold;border-color:black black black black;">
-				&#45; корректирующая форма</TD>
+				корректирующая форма</TD>
 			<TD width="30%" style="font-size:10pt;text-align:center;color:navy;font-weight:bold;border-color:black black black black;">
 				<xsl:value-of select="format-number(count, '##0', 'rusformat')"/></TD>
 		</xsl:when>
 		<xsl:when test="type_id=23">
 			<TD width="70%" style="font-size:10pt;text-align:left;color:navy;font-weight:bold;border-color:black black black black;">
-				&#45; отменяющая форма</TD>
+				отменяющая форма</TD>
 			<TD width="30%" style="font-size:10pt;text-align:center;color:navy;font-weight:bold;border-color:black black black black;">
 				<xsl:value-of select="format-number(count, '##0', 'rusformat')"/></TD>
 		</xsl:when>
 		<xsl:when test="type_id=24">
 			<TD width="70%" style="font-size:10pt;text-align:left;color:navy;font-weight:bold;border-color:black black black black;">
-				&#45; назначение пенсии</TD>
+				назначение пенсии</TD>
 			<TD width="30%" style="font-size:10pt;text-align:center;color:navy;font-weight:bold;border-color:black black black black;">
 				<xsl:value-of select="format-number(count, '##0', 'rusformat')"/></TD>
 		</xsl:when>
@@ -81,8 +81,8 @@
 	</TABLE>
 	<BR/>
 
-	<TABLE width="100%" border="1" style="border-color:black black black black;">
-		<TR style="font-size:8pt;text-align:center;background-color:silver;">
+	<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse;">
+		<TR style="font-size:8pt;text-align:center;background-color:#ddd;">
 			<TD rowspan="2" width="25%" style="border-color:black black black black;">
 				Тип формы</TD>
 			<TD rowspan="2" width="15%" style="border-color:black black black black;">
@@ -94,7 +94,7 @@
 			<TD rowspan="2" width="15%" style="border-color:black black black black;">
 				Сумма<br/>обязательных,<br/>страховых взносов</TD>
 		</TR>
-		<TR style="font-size:8pt;text-align:center;background-color:silver;">
+		<TR style="font-size:8pt;text-align:center;background-color:#ddd;">
 			<TD width="15%" style="border-color:black black black black;">
 				Начисленных<br/>страхователем</TD>
 			<TD width="15%" style="border-color:black black black black;">

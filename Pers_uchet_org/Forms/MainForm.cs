@@ -307,7 +307,21 @@ namespace Pers_uchet_org
         // открыть форму для электронного обмена данными с ЕГФСС
         private void elobmenMenuItem_Click(object sender, EventArgs e)
         {
-            ExchangeForm tmpForm = new ExchangeForm();
+            DataRowView orgRow = _orgBS.Current as DataRowView;
+            if (orgRow == null)
+            {
+                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                return;
+            }
+            Org org = new Org();
+            org.idVal = (long)orgRow[Org.id];
+            org.regnumVal = orgRow[Org.regnum] as string;
+            org.nameVal = orgRow[Org.name] as string;
+            org.chiefpostVal = orgRow[Org.chief_post] as string;
+            org.chieffioVal = orgRow[Org.chief_fio] as string;
+            org.bookerfioVal = orgRow[Org.booker_fio] as string;
+
+            ExchangeForm tmpForm = new ExchangeForm(_operator, org, _mainConnection);
             tmpForm.ShowDialog();
         }
         // открыть форму для редактирования информации об операторах и их уровни доступа
