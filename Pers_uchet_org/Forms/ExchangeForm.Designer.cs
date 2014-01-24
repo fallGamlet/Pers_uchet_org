@@ -239,9 +239,9 @@
             this.packetsView.AllowUserToAddRows = false;
             this.packetsView.AllowUserToDeleteRows = false;
             this.packetsView.AllowUserToResizeRows = false;
-            this.packetsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.packetsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.packetsView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.packetsView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.packetsView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -264,10 +264,10 @@
             this.packetsView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.packetsView.Size = new System.Drawing.Size(286, 226);
             this.packetsView.TabIndex = 2;
-            this.packetsView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetsView_CellClick);
-            this.packetsView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetsView_CellContentClick);
             this.packetsView.Sorted += new System.EventHandler(this.packetsView_Sorted);
+            this.packetsView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetsView_CellClick);
             this.packetsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.packetsView_KeyDown);
+            this.packetsView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetsView_CellContentClick);
             // 
             // checkColumn
             // 
@@ -301,7 +301,7 @@
             this.label3.Size = new System.Drawing.Size(286, 55);
             this.label3.TabIndex = 0;
             this.label3.Text = "Выберите пакеты документов СЗВ-1, \r\nкоторые Вы собираетесь предоставить в отделен" +
-    "ие Единого фонда социального страхования ПМР";
+                "ие Единого фонда социального страхования ПМР";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // checkAllButton
@@ -337,7 +337,7 @@
             this.label11.Size = new System.Drawing.Size(286, 60);
             this.label11.TabIndex = 13;
             this.label11.Text = "С описанием структуры и месторасположения XML-файлов можно ознакомиться в справоч" +
-    "ной системе программы.";
+                "ной системе программы.";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label10
@@ -348,8 +348,8 @@
             this.label10.Size = new System.Drawing.Size(286, 91);
             this.label10.TabIndex = 12;
             this.label10.Text = "Модуль упаковки XML-файлов в электронный контейнер осуществляет предварительную п" +
-    "роверку заранее подготовленных XML-файлов, шифрование, упаковку файлов в электро" +
-    "нный контейнер и электронную подпись.";
+                "роверку заранее подготовленных XML-файлов, шифрование, упаковку файлов в электро" +
+                "нный контейнер и электронную подпись.";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // xmlPathButton
@@ -413,8 +413,8 @@
             // 
             // viewdataButton
             // 
-            this.viewdataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewdataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.viewdataButton.Location = new System.Drawing.Point(6, 19);
             this.viewdataButton.Name = "viewdataButton";
             this.viewdataButton.Size = new System.Drawing.Size(397, 23);
@@ -557,8 +557,8 @@
             // 
             // createDataFileButton
             // 
-            this.createDataFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.createDataFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.createDataFileButton.Location = new System.Drawing.Point(6, 19);
             this.createDataFileButton.Name = "createDataFileButton";
             this.createDataFileButton.Size = new System.Drawing.Size(397, 23);
@@ -590,8 +590,8 @@
             // 
             // senddataButton
             // 
-            this.senddataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.senddataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.senddataButton.Location = new System.Drawing.Point(6, 19);
             this.senddataButton.Name = "senddataButton";
             this.senddataButton.Size = new System.Drawing.Size(397, 23);

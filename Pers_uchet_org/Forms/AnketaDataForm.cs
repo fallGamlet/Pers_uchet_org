@@ -282,15 +282,7 @@ namespace Pers_uchet_org
         }
 
         private void printButton_Click(object sender, EventArgs e)
-        {
-            System.Xml.XmlDocument mapXml, szv3Xml;
-            IEnumerable<System.Xml.XmlDocument> szv2Array;
-            IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array;
-            Storage.MakeXml(2013, _org, new long[] { 75 }, _connection, out mapXml, out szv3Xml, out szv2Array, out szv1Array);
-            string htmlStr = MapXml.GetHTML(mapXml);
-            MyPrinter.ShowWebPage(htmlStr);
-            return;
-            
+        {            
             List<DataRowView> selectedRowList = this.GetSelectedRows();
             if (selectedRowList.Count <= 0)
             {

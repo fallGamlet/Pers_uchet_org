@@ -300,6 +300,7 @@ namespace Pers_uchet_org
         public static string tagDopEnd = "dop_end";
         #endregion
 
+<<<<<<< HEAD
         static public IEnumerable<XmlDocument> GetXml(IEnumerable<long> doc_id, Org org, string connection_str)
         {
             List<XmlDocument> xmlArray = new List<XmlDocument>();
@@ -311,15 +312,18 @@ namespace Pers_uchet_org
             //
             return xmlArray;
         }
-        
-	/// <summary>
+
+        static public XmlDocument GetXml(long doc_id, Org org, string connection_str)
+=======
+        /// <summary>
         /// Получить XML объект формы СЗВ-1
         /// </summary>
         /// <param name="doc_id">Идентификатор документа</param>
         /// <param name="org">Объект данных об организации</param>
         /// <param name="connection_str">Строка подключения к БД</param>
         /// <returns>Объект XML документа</returns>
-        static public XmlDocument GetXml(long doc_id, Org org, string connection_str)
+        public static XmlDocument GetXml(long doc_id, Org org, string connection_str)
+>>>>>>> 8a25ddc7c45c7c84da7ca8f13c6571f13829ac93
         {
             #region Считывание данных
 
@@ -711,8 +715,6 @@ namespace Pers_uchet_org
 
             XmlDocument xmlRes = new XmlDocument();
             XmlElement inddocs = xmlRes.CreateElement(tagInddocs);
-
-            xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
             xmlRes.AppendChild(inddocs);
 
             docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeId);

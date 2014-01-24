@@ -11,11 +11,11 @@
 		LI UL { display:none; margin-left:16px; }
 		LI { font-weight:bold; list-style-type:square; cursor:default; }
 		LI.clsHasKids { list-style-type:none; cursor:hand; color:maroon; }
+		LI.clsHasKids:hover { text-decoration:underline; background-color:#ddd;}
 		A:link, A:visited, A:active { margin:auto 5px; font-weight:normal; color:blue; text-decoration:none; font-size:110%; }
 		A:hover { text-decoration:underline;}
 		BUTTON { font-family:tahoma; font-size:100%; }
 		TD { font-family:tahome; font-size:110%; }
-		SPAN:hover { text-decoration:underline;}
 	</STYLE>
 	<SCRIPT LANGUAGE="javascript"><xsl:comment><![CDATA[
 	function GetChildElem(eSrc,sTagName)
@@ -57,8 +57,8 @@
 	</SCRIPT>
 	</HEAD>
 	<BODY onLoad="ShowFirst()">
-	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:visible ;">Показать все</BUTTON>
-	<BUTTON ONCLICK="HideAll('UL')" style="visibility:visible ;">Свернуть все</BUTTON>
+	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:visible;">Показать все</BUTTON>
+	<BUTTON ONCLICK="HideAll('UL')" style="visibility:visible;">Свернуть все</BUTTON>
 	<UL>
 		<xsl:apply-templates select="TOPICS" />
 	</UL>
@@ -90,7 +90,7 @@
 
 <xsl:template match="TOPICS">
 <LI CLASS="clsHasKids">
-	<SPAN><xsl:value-of select="@TYPE" /></SPAN>
+	<xsl:value-of select="@TYPE" />
 	
 	<xsl:for-each select="SVOD">
 		<A TARGET="_self">

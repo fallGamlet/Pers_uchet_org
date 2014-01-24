@@ -41,19 +41,65 @@ namespace Pers_uchet_org
             return res;
         }
 
-        static public int MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml, 
+        static public CompoundFile MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml, 
                                         IEnumerable<XmlDocument> szv2XmlArray, 
                                         IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
         {
-            CompoundFile cf = new CompoundFile();
-            CFStorage rootDir = cf.RootStorage.AddStorage("4");
-            CFStream svod = rootDir.AddStream("Сводная ведомость");
-            //myStream.SetData(Encoding.GetEncoding(1251).GetBytes(res));
-            
+            XmlElement rootMap = mapXml[MapXml.tagTopics];
+            XmlElement svodRootMap = rootMap[MapXml.tagSvod];
+            XmlNodeList lists = rootMap.GetElementsByTagName(MapXml.tagTopics);
 
-            cf.Save("D:\\PersUchetContainer\\MyCompoundFile.cfs");
-            cf.Close();
-            return 0;
+            if (lists.Count != szv2XmlArray.Count() || lists.Count != szv1XmlArray.Count())
+            {
+                return null;
+            }
+            
+            CompoundFile cf = new CompoundFile();
+            CFStorage dir4 = cf.RootStorage.AddStorage(rootMap.GetAttribute(MapXml.paramID));
+
+            for (int i=0; i< szv2XmlArray.Count(); i++)
+            {
+                XmlElement curList = lists[i] as XmlElement;
+                XmlElement curOpis = curList[MapXml.tagOpis];
+                
+                CFStorage curDir = dir4.AddStorage(curList.GetAttribute(MapXml.paramID));
+                XmlDocument szv2Xml = szv2XmlArray.ElementAt(i);
+
+                CFStream opisStream = curDir.AddStream(curOpis[MapXml.tagFilename].InnerText);
+                opisStream.SetData(Encoding.GetEncoding(1251).GetBytes(szv2Xml.InnerXml));
+
+                XmlNodeList docs = curList.GetElementsByTagName(MapXml.tagTopic);
+                if (docs.Count != szv1XmlArray.ElementAt(i).Count())
+                    continue;
+
+                for (int j = 0; j < szv1XmlArray.ElementAt(i).Count(); j++)
+                {
+                    XmlDocument szv1Xml = szv1XmlArray.ElementAt(i).ElementAt(j);
+                    XmlElement curDoc = docs[j] as XmlElement;
+                    CFStream docStream = curDir.AddStream(curDoc[MapXml.tagFilename].InnerText);
+                    docStream.SetData(Encoding.GetEncoding(1251).GetBytes(szv1Xml.InnerXml));
+                }
+            }
+
+            CFStream svod = dir4.AddStream(svodRootMap[MapXml.tagFilename].InnerText);
+            svod.SetData(Encoding.GetEncoding(1251).GetBytes(szv3Xml.InnerXml));
+
+
+            CFStream map = cf.RootStorage.AddStream("map");
+            map.SetData(Encoding.GetEncoding(1251).GetBytes(mapXml.InnerXml));
+
+            CFStorage styleDir = cf.RootStorage.AddStorage("styles");
+            CFStream mapStyleStream = styleDir.AddStream("map_style");
+            CFStream szv1StyleStream = styleDir.AddStream("szv_style");
+            CFStream szv3StyleStream = styleDir.AddStream("svod_style");
+            CFStream szv2StyleStream = styleDir.AddStream("szv_opis_style");
+
+            mapStyleStream.SetData(System.IO.File.ReadAllBytes(MapXml.GetXslUrl()));
+            szv1StyleStream.SetData(System.IO.File.ReadAllBytes(Szv1Xml.GetXslUrl()));
+            szv3StyleStream.SetData(System.IO.File.ReadAllBytes(Szv3Xml.GetXslUrl()));
+            szv2StyleStream.SetData(System.IO.File.ReadAllBytes(Szv2Xml.GetXslUrl()));
+
+            return cf;
         }
     }
 }
