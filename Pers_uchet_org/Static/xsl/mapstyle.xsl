@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="Windows-1251"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="/">
 	<HTML>
@@ -7,14 +7,15 @@
 	<STYLE>
 		BODY { font-family:tahoma; font-size:70%; }
 		H1 { font-size:120%; font-style:italic; color:navy; }
-		UL { margin-left:0px; margin-bottom:5px; }
+		UL { margin-left:5px; margin-bottom:5px; }
 		LI UL { display:none; margin-left:16px; }
 		LI { font-weight:bold; list-style-type:square; cursor:default; }
 		LI.clsHasKids { list-style-type:none; cursor:hand; color:maroon; }
-		A:link, A:visited, A:active { font-weight:normal; color:blue; text-decoration:none; font-size:110%; }
-		A:hover { text-decoration:underline; font-weight:bold; }
+		A:link, A:visited, A:active { margin:auto 5px; font-weight:normal; color:blue; text-decoration:none; font-size:110%; }
+		A:hover { text-decoration:underline;}
 		BUTTON { font-family:tahoma; font-size:100%; }
 		TD { font-family:tahome; font-size:110%; }
+		SPAN:hover { text-decoration:underline;}
 	</STYLE>
 	<SCRIPT LANGUAGE="javascript"><xsl:comment><![CDATA[
 	function GetChildElem(eSrc,sTagName)
@@ -26,22 +27,13 @@
 		}
 		return false;
 	}
-	function document.onmousedown()
+	document.onmousedown = function()
 	{
 		var mBtn = window.event.button;
-		if (mBtn == 1)
+		var eSrc = window.event.srcElement;
+		if ("clsHasKids" == eSrc.className && (eChild = GetChildElem(eSrc,"UL")))
 		{
-			var eSrc = window.event.srcElement;
-			if ("clsHasKids" == eSrc.className && (eChild = GetChildElem(eSrc,"UL")))
-			{
-				eChild.style.display = ("block" == eChild.style.display ? "none" : "block");
-			}
-		}
-		else
-		{
-			alert('Use left button, please');
-			window.event.cancelBubble = true;
-			return;
+			eChild.style.display = ("block" == eChild.style.display ? "none" : "block");
 		}
 	}
 	function ShowAll(sTagName)
@@ -65,9 +57,11 @@
 	</SCRIPT>
 	</HEAD>
 	<BODY onLoad="ShowFirst()">
-	<UL><xsl:apply-templates select="TOPICS" /></UL>
-	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:'hidden';">Показать все</BUTTON>
-	<BUTTON ONCLICK="HideAll('UL')" style="visibility:'hidden';">Свернуть все</BUTTON>
+	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:visible ;">Показать все</BUTTON>
+	<BUTTON ONCLICK="HideAll('UL')" style="visibility:visible ;">Свернуть все</BUTTON>
+	<UL>
+		<xsl:apply-templates select="TOPICS" />
+	</UL>
 	<DIV STYLE="BORDER: buttonhighlight 2px outset; FONT-SIZE: 8pt; Z-INDEX: 
 		4; FONT-FAMILY: Tahoma; POSITION: absolute; BACKGROUND-COLOR: buttonface; 
 		DISPLAY: none; WIDTH: 350px; CURSOR: default" ID="divProgressDialog" 
@@ -96,7 +90,8 @@
 
 <xsl:template match="TOPICS">
 <LI CLASS="clsHasKids">
-	<xsl:value-of select="@TYPE" />
+	<SPAN><xsl:value-of select="@TYPE" /></SPAN>
+	
 	<xsl:for-each select="SVOD">
 		<A TARGET="_self">
 		<xsl:attribute name="HREF">
@@ -104,23 +99,27 @@
 		</xsl:attribute>
 		<xsl:value-of select="TITLE" /></A>
 	</xsl:for-each>
+	
 	<xsl:for-each select="OPIS">
 		<A TARGET="_self">
 		<xsl:attribute name="HREF">
-			ops:<xsl:value-of select="PATH" />\<xsl:value-of select="FILENAME" />
+			ops:<xsl:value-of select="PATH" /><xsl:value-of select="FILENAME" />
 		</xsl:attribute>
 		<xsl:value-of select="TITLE" /></A>
 	</xsl:for-each>
+	
 	<UL>
-		<xsl:for-each select="TOPIC" order-by="DOCTYPE;TITLE">
+		<xsl:for-each select="TOPIC">
+		<xsl:sort order="ascending" select="TITLE"/>
+		<xsl:sort order="ascending" select="DOCTYPE"/>
 		<LI>
-			<FONT style="color:'green';"><xsl:value-of select="REGNUM" /></FONT>
-			<A TARGET="_self">
+			<SPAN style="color:green; display:inline-block; width:100px;"><xsl:value-of select="REGNUM" /></SPAN>
+			<A TARGET="_self" style="display:inline-block; width:210px;">
 			<xsl:attribute name="HREF">
-				ind:<xsl:value-of select="PATH" />\<xsl:value-of select="FILENAME" />
+				ind:<xsl:value-of select="PATH" /><xsl:value-of select="FILENAME" />
 			</xsl:attribute>
 			<xsl:value-of select="TITLE" /></A>
-			<FONT style="color:'black';"> (
+			<FONT style="color:black;"> (
 			<xsl:choose>
 				<xsl:when test="DOCTYPE[.='1']">Анкета</xsl:when>
 				<xsl:when test="DOCTYPE[.='2']">Листок исправлений</xsl:when>
@@ -134,7 +133,7 @@
 			</FONT>
 		</LI>
 		</xsl:for-each>
-		<xsl:if test="TOPICS"><xsl:apply-templates /></xsl:if>
+		<xsl:if test="TOPICS"><xsl:apply-templates select="TOPICS" /></xsl:if>
 	</UL>
 </LI>
 </xsl:template>

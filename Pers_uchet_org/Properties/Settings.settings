@@ -38,5 +38,8 @@
     <Setting Name="xsl_szv3" Type="System.String" Scope="User">
       <Value Profile="(Default)">Static/xsl/svodstyle.xsl</Value>
     </Setting>
+    <Setting Name="xsl_map" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Static/xsl/mapstyle.xsl</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

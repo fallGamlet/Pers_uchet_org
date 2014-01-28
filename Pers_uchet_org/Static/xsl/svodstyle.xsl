@@ -43,7 +43,7 @@
 						</TABLE>
 						<BR/>
 
-						<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse">
+						<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse;">
 							<TR style="font-size:8pt; text-align:center; background:#ddd;">
 								<TD width="5%" rowspan="2" style="border-color:black;">ћес€ц</TD>
 								<TD width="17%" rowspan="2" style="border-color:black;">—умма дохода,на который начислены страховые взносы</TD>
