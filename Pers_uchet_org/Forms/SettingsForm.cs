@@ -9,7 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Ionic.Zip;
 using Pers_uchet_org.Properties;
+
 
 namespace Pers_uchet_org
 {
@@ -105,6 +107,10 @@ namespace Pers_uchet_org
             process.Close();
         }
 
+        //void zip_AddProgress(object sender, AddProgressEventArgs e)
+        //{
+        //    this.Text = "";
+        //}
         #endregion
 
         #region Методы - обработчики событий
@@ -134,7 +140,7 @@ namespace Pers_uchet_org
             backupMaxCountBox.Enabled = isBackupEnableCheckBox.Checked;
             backupPathTextBox.Enabled = isBackupEnableCheckBox.Checked;
             backupBrowseButton.Enabled = isBackupEnableCheckBox.Checked;
-            createBackupButton.Enabled = isBackupEnableCheckBox.Checked;
+            //createBackupButton.Enabled = isBackupEnableCheckBox.Checked;
         }
 
         private void databaseBrowseButton_Click(object sender, EventArgs e)
@@ -211,11 +217,24 @@ namespace Pers_uchet_org
                 return;
             }
 
-            string backupPath = backupPathTextBox.Text.Trim();
-            string databasePath = databasePathTextBox.Text.Trim();
-
-
+            try
+            {
+                createBackupButton.Enabled = false;
+                string backupPath = backupPathTextBox.Text.Trim().Trim('\\');
+                string databasePath = databasePathTextBox.Text.Trim();
+                Backup.CreateBackup(backupPath, databasePath, Backup.TypeBackup.ManualBackup);
+                MainForm.ShowInfoMessage("Резервная копия успешно создана!", "Создание резервной копии");
+            }
+            catch (Exception exception)
+            {
+                MainForm.ShowErrorMessage(exception.Message, "Ошибка создания резервной копии");
+            }
+            finally
+            {
+                createBackupButton.Enabled = true;
+            }
         }
+
         #endregion
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
 {
@@ -15,10 +16,11 @@ namespace Pers_uchet_org
         #region Поля
 
         private DataTable backupTable;
-        private string columnDateTimeName = "dateTime";
-        private string columnPathName = "path";
 
         #endregion
+
+        #region Инициализаторы и конструкторы
+
         public RestoreDBForm()
         {
             InitializeComponent();
@@ -26,12 +28,14 @@ namespace Pers_uchet_org
 
         private void RestoreDBForm_Load(object sender, EventArgs e)
         {
-            if (!Properties.Settings.Default.IsBackupEnabled)
+            if (!Settings.Default.IsBackupEnabled)
             {
                 MainForm.ShowInfoMessage("Резервное копирование отключено в настройках!", "Предупреждение");
                 restoreButton.Enabled = false;
             }
-            string backupPath = Properties.Settings.Default.BackupPath;
+
+            string backupPath = Settings.Default.BackupPath;
+            backupFolderLabel.Text += backupPath;
             DirectoryInfo directoryInfo = new DirectoryInfo(backupPath);
             if (!Directory.Exists(backupPath))
             {
@@ -40,34 +44,18 @@ namespace Pers_uchet_org
             else
             {
                 //copyListBox.Items.Clear();
-                backupTable = new DataTable();
-                backupTable.Columns.Add(columnDateTimeName, typeof(string));
-                backupTable.Columns.Add(columnPathName, typeof(string));
-                foreach (FileInfo backupFile in directoryInfo.GetFiles("pu_bkp_????-??-??_(??-??-??).zip", SearchOption.TopDirectoryOnly))
-                {
-                    DataRow row = backupTable.NewRow();
-                    row[columnDateTimeName] = ExtractDateTimeFromBackupName(backupFile.Name);
-                    row[columnPathName] = backupFile.Name;
-                    backupTable.Rows.Add(row);
-                }
+                backupTable = Backup.CreateTable();
+                Backup.FillTable(backupTable, directoryInfo, Backup.SearchPatternType.All);
 
                 copyListBox.DataSource = backupTable;
-                copyListBox.ValueMember = columnPathName;
-                copyListBox.DisplayMember = columnDateTimeName;
+                copyListBox.ValueMember = Backup.columnPathName;
+                copyListBox.DisplayMember = Backup.columnDateTimeName;
             }
         }
 
-        private object ExtractDateTimeFromBackupName(string fileName)
-        {
-            string result = fileName.Substring(7, 4);
-            result += "." + fileName.Substring(12, 2);
-            result += "." + fileName.Substring(15, 2);
-            result += "   " + fileName.Substring(19, 2);
-            result += ":" + fileName.Substring(22, 2);
-            result += ":" + fileName.Substring(25, 2);
+        #endregion
 
-            return result;
-        }
+        #region Методы - обработчики событий
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
@@ -81,7 +69,60 @@ namespace Pers_uchet_org
                 MainForm.ShowInfoMessage("Резервная копия не выбрана!", "Ошибка восстановления");
                 return;
             }
-            string backupStr = copyListBox.SelectedValue.ToString();
+
+            string databaseFilePath = Settings.Default.DataBasePath;
+
+            if (!File.Exists(Settings.Default.BackupPath + "\\" + copyListBox.SelectedValue.ToString()))
+            {
+                MainForm.ShowErrorMessage("Файл резервной копии не найден!", "Ошибка восстановления");
+                return;
+            }
+
+            //if (!File.Exists(databaseFilePath.Trim()))
+            //{
+            //    MainForm.ShowErrorMessage("Файл базы данных не найден!", "Ошибка восстановления");
+            //    return;
+            //}
+
+            if (MainForm.ShowQuestionMessage(
+                "Убедитесь, что в данный момент больше никто не работает с программой!\nПосле восстановления программа будет перезапущена!\n\nПродолжить восстановление?",
+                "Восстановление из резервной копии") != DialogResult.Yes)
+            {
+                return;
+            }
+            try
+            {
+                restoreButton.Enabled = false;
+                File.Delete(databaseFilePath + ".tmp");
+                Backup.RestoreBackup(Settings.Default.BackupPath, copyListBox.SelectedValue.ToString(),
+                    databaseFilePath);
+                MainForm.ShowInfoMessage("Восстановление успешно!", "Восстановление из резервной копии");
+                Backup.isBackupCreate = false;
+
+                //Перезапустить программу
+                Application.Restart();
+            }
+            catch (Exception exception)
+            {
+                MainForm.ShowErrorMessage(exception.Message, "Ошибка восстановления из резервной копии");
+            }
+            finally
+            {
+                restoreButton.Enabled = true;
+            }
         }
+
+        private void copyListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (copyListBox.SelectedValue != null)
+            {
+                backupFileNameLabel.Text = "Имя файла: " + copyListBox.SelectedValue.ToString();
+            }
+        }
+
+        #endregion
+
+
+
     }
 }

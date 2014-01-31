@@ -32,6 +32,8 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.restoreButton = new System.Windows.Forms.Button();
             this.copyListBox = new System.Windows.Forms.ListBox();
+            this.backupFileNameLabel = new System.Windows.Forms.Label();
+            this.backupFolderLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -74,10 +76,31 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.copyListBox.FormattingEnabled = true;
-            this.copyListBox.Location = new System.Drawing.Point(12, 55);
+            this.copyListBox.Location = new System.Drawing.Point(12, 48);
             this.copyListBox.Name = "copyListBox";
-            this.copyListBox.Size = new System.Drawing.Size(260, 160);
+            this.copyListBox.Size = new System.Drawing.Size(260, 147);
             this.copyListBox.TabIndex = 3;
+            this.copyListBox.SelectedValueChanged += new System.EventHandler(this.copyListBox_SelectedValueChanged);
+            // 
+            // backupFileNameLabel
+            // 
+            this.backupFileNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.backupFileNameLabel.AutoSize = true;
+            this.backupFileNameLabel.Location = new System.Drawing.Point(12, 211);
+            this.backupFileNameLabel.Name = "backupFileNameLabel";
+            this.backupFileNameLabel.Size = new System.Drawing.Size(79, 13);
+            this.backupFileNameLabel.TabIndex = 4;
+            this.backupFileNameLabel.Text = "Имя файла: ...";
+            // 
+            // backupFolderLabel
+            // 
+            this.backupFolderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.backupFolderLabel.AutoSize = true;
+            this.backupFolderLabel.Location = new System.Drawing.Point(12, 198);
+            this.backupFolderLabel.Name = "backupFolderLabel";
+            this.backupFolderLabel.Size = new System.Drawing.Size(45, 13);
+            this.backupFolderLabel.TabIndex = 5;
+            this.backupFolderLabel.Text = "Папка: ";
             // 
             // RestoreDBForm
             // 
@@ -85,6 +108,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.backupFolderLabel);
+            this.Controls.Add(this.backupFileNameLabel);
             this.Controls.Add(this.copyListBox);
             this.Controls.Add(this.restoreButton);
             this.Controls.Add(this.cancelButton);
@@ -94,6 +119,7 @@
             this.Text = "Восстановление данных из резервной копии";
             this.Load += new System.EventHandler(this.RestoreDBForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -103,5 +129,7 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button restoreButton;
         private System.Windows.Forms.ListBox copyListBox;
+        private System.Windows.Forms.Label backupFileNameLabel;
+        private System.Windows.Forms.Label backupFolderLabel;
     }
 }

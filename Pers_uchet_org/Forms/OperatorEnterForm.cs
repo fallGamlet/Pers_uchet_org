@@ -90,8 +90,8 @@ namespace Pers_uchet_org.Forms
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 string login = loginComboBox.Text.Trim();
                 string password = passwordBox.Text;
 
@@ -114,11 +114,16 @@ namespace Pers_uchet_org.Forms
                 }
 
                 this.DialogResult = DialogResult.OK;
-            //}
-            //catch (Exception exception)
-            //{
-            //    MainForm.ShowErrorMessage(exception.Message, "Ошибка");
-            //}
+            }
+            catch (Exception exception)
+            {
+                MainForm.ShowErrorMessage(exception.Message, "Ошибка");
+                if (MainForm.ShowQuestionMessage("Файл базы данных не найден или поврежден!\nЖелаете попробовать восстановить базу из резервной копии?", "Ошибка") == DialogResult.Yes)
+                {
+                    RestoreDBForm tmpForm = new RestoreDBForm();
+                    tmpForm.ShowDialog();
+                }
+            }
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

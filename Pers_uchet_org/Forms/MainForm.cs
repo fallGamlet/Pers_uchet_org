@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Pers_uchet_org.Forms;
 using JR.Utils.GUI.Forms;
+using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
 {
@@ -59,7 +61,15 @@ namespace Pers_uchet_org
             //}
             //if (isLogedin != 2)
             //    this.Close();
-            changeoperatorMenuItem_Click(sender, e);
+            if (File.Exists(Settings.Default.DataBasePath))
+                changeoperatorMenuItem_Click(sender, e);
+            else
+            {
+                if (MainForm.ShowQuestionMessage("Файл базы данных не найден!\nЖелаете попробовать восстановить базу из резервной копии?", "Ошибка") == DialogResult.Yes)
+                {
+                    vosstanovleniebdMenuItem_Click(sender, e);
+                }
+            }
         }
         #endregion
 
@@ -148,13 +158,16 @@ namespace Pers_uchet_org
             switch (dRes)
             {
                 case DialogResult.Cancel:
+                    Backup.isBackupCreate = false;
                     return 0;//Отмена входа
                 case DialogResult.OK:
                     _operator = enterForm.Operator;
                     return 1; //Вход удачен
                 case DialogResult.Abort:
-                    return 2; //3 раза ввели неправильный логин или пароль
+                    Backup.isBackupCreate = false;
+                    return 2; //n раз(а) ввели неправильный логин или пароль
                 default:
+                    Backup.isBackupCreate = false;
                     return -1;
             }
         }

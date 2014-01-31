@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
+using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
 {
@@ -13,7 +14,7 @@ namespace Pers_uchet_org
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             CultureInfo culture = new CultureInfo("ru-RU");
             culture.DateTimeFormat.DateSeparator = ".";
@@ -52,6 +53,23 @@ namespace Pers_uchet_org
             Application.SetCompatibleTextRenderingDefault(false);
             Application.CurrentCulture = culture;
             Application.Run(new MainForm());
+
+            try
+            {
+                bool isCreateBackup = Settings.Default.IsBackupEnabled;
+                isCreateBackup = Backup.isBackupCreate;
+                if (isCreateBackup)
+                {
+                    Backup.CreateBackup(Settings.Default.BackupPath, Settings.Default.DataBasePath, Backup.TypeBackup.Auto);
+                    Backup.DeleteOldBackups(Settings.Default.BackupPath, (int)Settings.Default.BackupMaxCount, Backup.TypeBackup.Auto);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorMessage(ex.Message, "Ошибка создания резервной копии");
+            }
+
+
         }
     }
 }
