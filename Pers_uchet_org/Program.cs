@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
@@ -49,11 +51,32 @@ namespace Pers_uchet_org
 
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = culture;
 
+            Process process = RunningInstance();
+            if (process != null)
+            {
+                if (MainForm.ShowQuestionMessage("Другая копия программы уже запущена!\nЖелаете запустить еще одну копию?", "Предупреждение") != DialogResult.Yes)
+                    return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.CurrentCulture = culture;
             Application.Run(new MainForm());
 
+            CreateBackup();
+        }
+
+        public static Process RunningInstance()
+        {
+            Process current = Process.GetCurrentProcess();
+            Process[] processes = Process.GetProcessesByName(current.ProcessName);
+
+            //Просматриваем все процессы 
+            return processes.Where(process => process.Id != current.Id).FirstOrDefault(process => Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName);
+        }
+
+        private static void CreateBackup()
+        {
             try
             {
                 bool isCreateBackup = Settings.Default.IsBackupEnabled;
@@ -68,8 +91,6 @@ namespace Pers_uchet_org
             {
                 MainForm.ShowErrorMessage(ex.Message, "Ошибка создания резервной копии");
             }
-
-
         }
     }
 }
