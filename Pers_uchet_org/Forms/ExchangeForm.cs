@@ -42,6 +42,10 @@ namespace Pers_uchet_org
         // количество пакетов по сводной
         long _mergiesCountLists;
         // label с сообщением о ненайденной сводной
+
+        CompoundFile _container;
+        byte[] _diskKey;
+        byte[] _diskTable;
         #endregion
 
         #region Конструктор и инициализатор
@@ -155,6 +159,17 @@ namespace Pers_uchet_org
                     packetsView["checkColumn", i].ReadOnly = true;
             }
 
+        }
+
+        private long[] MarkedLists()
+        {
+            List<long> lists = new List<long>();
+            foreach (DataRowView row in _listsBS)
+            {
+                if((bool)row[CHECK])
+                    lists.Add((long)row[ListsView2.id]);
+            }
+            return lists.ToArray();
         }
 
         private void SumCheckedLists()
@@ -356,155 +371,70 @@ namespace Pers_uchet_org
                 {
                     throw new DriveNotFoundException("Не найден диск с ключевой информацией.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали диск с ключевой информацией (шаг 1).");
                 }
-                //Отключено на время дебага
-                //if (flashBox.SelectedItem == null)
-                //{
-                //    throw new DriveNotFoundException("Не найден флеш накопитель.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали накопитель (шаг 2).");
-                //    return;
-                //}
 
-                //if (String.IsNullOrEmpty(driveBox.Text))
-                //{
-                //    throw new DriveNotFoundException("Не найден диск с ключевой информацией.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали диск с ключевой информацией (шаг 1).");
-                //    return;
-                //}
+                if (flashBox.SelectedItem == null)
+                {
+                    throw new DriveNotFoundException("Не найден флеш накопитель.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали накопитель (шаг 2).");
+                }
 
+                if (String.IsNullOrEmpty(driveBox.Text))
+                {
+                    throw new DriveNotFoundException("Не найден диск с ключевой информацией.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали диск с ключевой информацией (шаг 1).");
+                }
 
+                _diskKey = ReadKey.Read(driveBox.Text.Substring(0, 2), ReadKey.DeviceType.CD, ReadKey.DataType.Key);
+                _diskTable = ReadKey.Read(driveBox.Text.Substring(0, 2), ReadKey.DeviceType.CD, ReadKey.DataType.Table);
 
-                //byte[] arr = ReadKey.HexToBin("60FB8A6AA1EFF871E08187E197F0A209D1F833D47665A0F72B3C7C6F29F40AFB");
-                //long l = ReadKey.Date2Julian(DateTime.Parse("16.11.2012"));
+                DateTime beginDate, endDate;
+                ReadKey.ReadDates(driveBox.Text.Substring(0, 2), ReadKey.DeviceType.CD, out beginDate, out endDate);
 
-                //        if (DateTime.TryParse(endDateStr, out result))
-                //        {
-                //            if (DateTime.Compare(DateTime.Now.Date, result) == 1)
-                //            {
-                //                throw new Exception("Вы не можете формировать электронные данные,\nт.к. истёк срок действия ключа!");
-                //            }
-                //        }
-                //        else
-                //            throw new Exception("Ошибка чтения ключевого диска.");
+                this.keyDateLabel.Text = string.Format(keyDateLabel.Tag.ToString(), beginDate.ToShortDateString(), endDate.ToShortDateString());
 
-                #region Переменные
+                if (DateTime.Compare(DateTime.Now.Date, beginDate) == -1)
+                {
+                    throw new Exception("Вы не можете формировать электронные данные,\nт.к. период действия ключа ещё не наступил!");
+                }
+                if (DateTime.Compare(DateTime.Now.Date, endDate) == 1)
+                {
+                    throw new Exception("Вы не можете формировать электронные данные,\nт.к. истёк срок действия ключа!");
+                }
 
-                string key = "";
-                string key1 = "";
-                string table = "";
-                string table1 = "";
-                int shift = 0;
-                byte[] keyArr;
-                byte[] tableArr;
-                byte[] syncArr;
-
-                #endregion
-
-
-                shift = 2048;
-                //Читаем ключ
-                key1 = ReadKey.ReadCD(driveBox.Text.Substring(0, 2), shift);
-                //Читаем таблицу
-                table = ReadKey.ReadCD(driveBox.Text.Substring(0, 2), shift * 2);
-                table1 = ReadKey.ReadCD(driveBox.Text.Substring(0, 2), shift * 3);
-
-                #region Тест
-                ////Получаем ключ в HEX виде
-                //for (int i = shift*2 - 2; i >= shift*2 - 1024 + 30; i -= 32)
-                //{
-                //    key += key1.Substring(i, 2);
-                //}
-
-
-                //string tempKey = key;
-
-                ////key = key + key + key;
-                ////for(int j = tempKey.Length - 2; j >= 0; j-=2)
-                ////{
-                ////    key += tempKey.Substring(j, 2);
-                ////}
-
-                //keyArr = new byte[key.Length/2];
-                //keyArr = ReadKey.HexToBin(key);
-                //table = table.Substring(0, 1024) + table1.Substring(0, 1024);
-                //tableArr = new byte[table.Length/2];
-                //tableArr = ReadKey.HexToBin(table);
-                ////----------------------
-                //string tempData = "0000000000000000";
-                //key = "546D203368656C326973652073736E62206167796967747473656865202C3D73";
-                //table =
-                //    "040A09020D08000E060B010C070F05030E0B040C060D0F0A02030801000705090508010D0A0304020E0F0C070600090B070D0A010008090F0E04060C0B020503060C0701050F0D08040A090E00030B02040B0A000702010D03060805090C0F0E0D0B0401030F0509000A0E070608020C010F0D0005070A040902030E060B080C";
-                //string sync = "1111111122222222";
-
-                //keyArr = new byte[key.Length/2];
-                //keyArr = ReadKey.HexToBin(key);
-                //tableArr = new byte[table.Length/2];
-                //tableArr = ReadKey.HexToBin(table);
-                //byte[] dataArr = new byte[tempData.Length/2];
-                //dataArr = ReadKey.HexToBin(tempData);
-                //syncArr = ReadKey.HexToBin(sync);
-                ////sync = ReadKey.ArrayToString(syncArr);
-                ////syncArr = ReadKey.StringToArray(sync);
-
-                //string tmp = "";
-                //tmp = ReadKey.ArrayToString(syncArr);
-                ////tmp = ReadKey.ArrayToString(keyArr);
-                ////tmp = ReadKey.ArrayToString(tableArr);
-
-
-                //if (syncArr.Length != 8)
-                //    syncArr = new byte[8];
-                //Gost28147_89.GostSimple(ref dataArr, keyArr, tableArr, 32, true);
-                ////Gost28147_89.GostGama(ref dataArr, ref syncArr, keyArr, tableArr);
-
-                ////Debug.Print("syncArr " + string.Join(" ", syncArr));
-
-                //string resultStr;
-                //resultStr = ReadKey.ArrayToString(dataArr);
-                //tempData = ReadKey.BinToHex(resultStr);
-
-
-                ////---Расшифровка
-                //dataArr = new byte[tempData.Length/2];
-                //dataArr = ReadKey.HexToBin(tempData);
-                //sync = "";
-                //syncArr = ReadKey.StringToArray(sync);
-                //if (syncArr.Length != 8)
-                //    syncArr = new byte[8];
-
-                //Gost28147_89.GostGama(ref dataArr, ref syncArr, keyArr, tableArr);
-                //resultStr = ReadKey.ArrayToString(dataArr);
-                ////---
-                #endregion
-
-                //Debug.Print(keyStr);
-                long beginDate = Convert.ToInt32("0x" + key1.Substring((2048 * 2) - 1024 + 100, 8), 16);
-                long endDate = Convert.ToInt32("0x" + key1.Substring((2048 * 2) - 1024 + 200, 8), 16);
-                string beginDateStr = ReadKey.Julian2Date(beginDate);
-                string endDateStr = ReadKey.Julian2Date(endDate);
-                keyDateLabel.Text = string.Format(keyDateLabel.Tag.ToString(), beginDateStr, endDateStr);
-
+                DateTime createStart, createEnd;
                 
+                System.Xml.XmlDocument mapXml, szv3Xml;
+                IEnumerable<System.Xml.XmlDocument> szv2Array;
+                IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array;
+                long[] markedLists = MarkedLists();
+                createStart = DateTime.Now;
+                Storage.MakeXml(_repYear, _organization, markedLists, _connection, 
+                                out mapXml, out szv3Xml, out szv2Array, out szv1Array);
+                createEnd = DateTime.Now;
+                OrgPropXml orgProp = new OrgPropXml();
+                orgProp.orgName = _organization.nameVal;
+                orgProp.orgRegnum = _organization.regnumVal;
+                orgProp.directorType = _organization.chiefpostVal;
+                orgProp.directorFIO = _organization.chieffioVal;
+                orgProp.bookkeeperFIO = _organization.bookerfioVal;
+                orgProp.operatorName = _operator.nameVal;
+                
+                if (_container != null)
+                    _container.Close();
 
-                DateTime result;
-                if (DateTime.TryParse(beginDateStr, out result))
-                {
-                    if (DateTime.Compare(DateTime.Now.Date, result) == -1)
-                    {
-                        throw new Exception("Вы не можете формировать электронные данные,\nт.к. период действия ключа ещё не наступил!");
-                    }
-                }
-                else
-                    throw new Exception("Ошибка чтения ключевого диска.\nВозможно:\n\t- не указан диск с ключевой информацией (шаг 1);\n\t- указанный диск не является ключевым;\n\t- диск поврежден или не может быть прочитан.");
+                _container = Storage.MakeContainer(orgProp.GetXml(), mapXml, szv3Xml, szv2Array, szv1Array,
+                                            _diskTable, _diskKey);
 
-                if (DateTime.TryParse(endDateStr, out result))
-                {
-                    if (DateTime.Compare(DateTime.Now.Date, result) == 1)
-                    {
-                        throw new Exception("Вы не можете формировать электронные данные,\nт.к. истёк срок действия ключа!");
-                    }
-                }
-                else
-                    throw new Exception("Ошибка чтения ключевого диска.\nВозможно:\n\t- не указан диск с ключевой информацией (шаг 1);\n\t- указанный диск не является ключевым;\n\t- диск поврежден или не может быть прочитан.");
+                string flashRoot = flashBox.Text.Substring(0,1);
+                DirectoryInfo dir = Directory.CreateDirectory(string.Format(
+                                                            @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
+                                                            flashRoot,
+                                                            _organization.regnumVal,
+                                                            _repYear));
+                _container.Save(dir.FullName + @"\container.pfs");
+                _container.Close();
 
-
+                TimeSpan createSpan;
+                createSpan = new TimeSpan(createEnd.Ticks - createStart.Ticks);
+                MainForm.ShowInfoMessage(string.Format("Файл с электронными данными успешно сформирован и готов к предоставлению в Фонд.\nДлительность операции: {0:0.00} секунд(ы)", createSpan.TotalSeconds), "Формирование завершено");
 
             }
             catch (DriveNotFoundException drvExc)
@@ -546,47 +476,45 @@ namespace Pers_uchet_org
 
         private void viewDataButton_Click(object sender, EventArgs e)
         {
-            //CompoundFile cf = new CompoundFile(@"C:\Temp\Государственный пенсионный фонд ПМР\Т001230.2005\edatacon.pfs");
-            //IList<CFItem> list = cf.GetAllNamedEntries(cf.RootStorage.Name);
-
-            //CFStorage rootStore = cf.RootStorage;
-            //CFStream stream = rootStore.GetStream(rootStore.Name);
-            //string data = Encoding.GetEncoding(1251).GetString(stream.GetData());
-
-            //string data = "123321";
-            //string synchro = "C0E1205FF4F0CE01";
-            string table = "E4EAE9E2EDE8E0EEE6EBE1ECE7EFE5E3B4BAB9B2BDB8B0BEB6BBB1BCB7BFB5B3444A49424D48404E464B414C474F4543C4CAC9C2CDC8C0CEC6CBC1CCC7CFC5C3646A69626D68606E666B616C676F6563D4DAD9D2DDD8D0DED6DBD1DCD7DFD5D3F4FAF9F2FDF8F0FEF6FBF1FCF7FFF5F3A4AAA9A2ADA8A0AEA6ABA1ACA7AFA5A3242A29222D28202E262B212C272F2523343A39323D38303E363B313C373F3533848A89828D88808E868B818C878F8583141A19121D18101E161B111C171F1513040A09020D08000E060B010C070F0503747A79727D78707E767B717C777F7573545A59525D58505E565B515C575F5553949A99929D98909E969B919C979F95937578717D7A7374727E7F7C777670797BD5D8D1DDDAD3D4D2DEDFDCD7D6D0D9DBA5A8A1ADAAA3A4A2AEAFACA7A6A0A9AB1518111D1A1314121E1F1C171610191B0508010D0A0304020E0F0C070600090B8588818D8A8384828E8F8C878680898B9598919D9A9394929E9F9C979690999BF5F8F1FDFAF3F4F2FEFFFCF7F6F0F9FBE5E8E1EDEAE3E4E2EEEFECE7E6E0E9EB4548414D4A4344424E4F4C474640494B6568616D6A6364626E6F6C676660696BC5C8C1CDCAC3C4C2CECFCCC7C6C0C9CBB5B8B1BDBAB3B4B2BEBFBCB7B6B0B9BB2528212D2A2324222E2F2C272620292B5558515D5A5354525E5F5C575650595B3538313D3A3334323E3F3C373630393B464C4741454F4D48444A494E40434B42B6BCB7B1B5BFBDB8B4BAB9BEB0B3BBB2A6ACA7A1A5AFADA8A4AAA9AEA0A3ABA2060C0701050F0D08040A090E00030B02767C7771757F7D78747A797E70737B72262C2721252F2D28242A292E20232B22161C1711151F1D18141A191E10131B12D6DCD7D1D5DFDDD8D4DAD9DED0D3DBD2363C3731353F3D38343A393E30333B32666C6761656F6D68646A696E60636B62868C8781858F8D88848A898E80838B82565C5751555F5D58545A595E50535B52969C9791959F9D98949A999E90939B92C6CCC7C1C5CFCDC8C4CAC9CEC0C3CBC2F6FCF7F1F5FFFDF8F4FAF9FEF0F3FBF2E6ECE7E1E5EFEDE8E4EAE9EEE0E3EBE21D1B1411131F1519101A1E171618121CFDFBF4F1F3FFF5F9F0FAFEF7F6F8F2FCDDDBD4D1D3DFD5D9D0DADED7D6D8D2DC0D0B0401030F0509000A0E070608020C5D5B5451535F5559505A5E575658525C7D7B7471737F7579707A7E777678727CADABA4A1A3AFA5A9A0AAAEA7A6A8A2AC4D4B4441434F4549404A4E474648424C9D9B9491939F9599909A9E979698929C2D2B2421232F2529202A2E272628222C3D3B3431333F3539303A3E373638323CEDEBE4E1E3EFE5E9E0EAEEE7E6E8E2EC6D6B6461636F6569606A6E676668626CBDBBB4B1B3BFB5B9B0BABEB7B6B8B2BC8D8B8481838F8589808A8E878688828CCDCBC4C1C3CFC5C9C0CACEC7C6C8C2CC";
-            string key = "D7015B32B81E11FD409A867CD7AB89899628A3EC4488FE0AFEEE4486746BD987";
-            key = key + key + key + "87D96B748644EEFE0AFE8844ECA328968989ABD77C869A40FD111EB8325B01D7";
-            string path = @"d:\Bins Б000044.2012\"; //map.bin mapstyle.bin svodstyle.bin   szvopisstyle.bin   szvstyle.bin
-
-            int i;
-            byte[] bData = File.ReadAllBytes(path + "map.bin");
-            char[] buf = { '0', '0' };
-            byte[] bKey, bTable, bSynchro;
-            bSynchro = new byte[8];
-            Array.Copy(bData, bData.Length - 8, bSynchro, 0, 8);
-            bData = bData.Take(bData.Length - 8).ToArray();
-
-            bKey = new byte[key.Length / 2];
-            for (i = 0; i < key.Length; i += 2)
+            if (_diskKey == null || _diskTable == null)
+                return;
+            string flashRoot = flashBox.Text.Substring(0, 1);
+            string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\container.pfs",
+                                            flashRoot, _organization.regnumVal, _repYear);
+            if (!File.Exists(filename))
             {
-                buf[0] = key[i];
-                buf[1] = key[i + 1];
-                int tmp = int.Parse(new string(buf), System.Globalization.NumberStyles.HexNumber);
-                bKey[i / 2] = Convert.ToByte(tmp);
+                MainForm.ShowInfoMessage("Сначала необходимо сформировать электронный файл для обмена с ЕГФСС", "Внимание");
+                return;
             }
-            bTable = new byte[table.Length / 2];
-            for (i = 0; i < table.Length; i += 2)
-            {
-                buf[0] = table[i];
-                buf[1] = table[i + 1];
-                int tmp = int.Parse(new string(buf), System.Globalization.NumberStyles.HexNumber);
-                bTable[i / 2] = Convert.ToByte(tmp);
-            }
+            _container = new CompoundFile(filename);
+            CFStream mapStream = _container.RootStorage.GetStream("map");
+            byte[] mapBytes = Storage.DecryptStream(mapStream, _diskKey, _diskTable);
+            CFStorage stylesDir = _container.RootStorage.GetStorage("styles");
+            CFStream mapStyleStream = stylesDir.GetStream("map_style");
+            byte[] mapStyleBytes = Storage.DecryptStream(mapStyleStream, _diskKey, _diskTable);
 
-            byte[] res = Mathdll.GostGamma(bData, bKey, bTable, bSynchro);
-            File.WriteAllText(path + "map_new.xml", Encoding.GetEncoding(1251).GetString(res), Encoding.GetEncoding(1251));
+            string htmlStr = MapXml.GetHTML(mapBytes, mapStyleBytes);
+            WebBrowser reportWB = new WebBrowser();
+            reportWB.DocumentText = htmlStr;
+            MyPrinter.ShowWebPage(reportWB);
+            reportWB.Navigating += new WebBrowserNavigatingEventHandler(reportWB_Navigating);
+            //_container.Close();
+        }
+
+        void reportWB_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+            string uri =  e.Url.ToString();
+            if (uri != "about:blank")
+            {
+                e.Cancel = true;
+                if (_diskKey != null && _diskTable != null)
+                {
+                    string html = Storage.GetHTML(_container, uri, _diskKey, _diskTable);
+                    if (html == null)
+                        return;
+                    MyPrinter.ShowWebPage(html);
+                }
+            }
         }
 
         private void sendDataButton_Click(object sender, EventArgs e)
@@ -692,8 +620,12 @@ namespace Pers_uchet_org
             ReloadLists();
             GetCountsFromMergies();
         }
+
+        private void ExchangeForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_container != null)
+                _container.Close();
+        }
         #endregion
-
-
     }
 }

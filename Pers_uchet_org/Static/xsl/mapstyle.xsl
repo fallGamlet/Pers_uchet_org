@@ -15,7 +15,6 @@
 		A:hover { text-decoration:underline;}
 		BUTTON { font-family:tahoma; font-size:100%; }
 		TD { font-family:tahome; font-size:110%; }
-		SPAN:hover { text-decoration:underline;}
 	</STYLE>
 	<SCRIPT LANGUAGE="javascript"><xsl:comment><![CDATA[
 	function GetChildElem(eSrc,sTagName)
@@ -29,7 +28,6 @@
 	}
 	document.onmousedown = function()
 	{
-		var mBtn = window.event.button;
 		var eSrc = window.event.srcElement;
 		if ("clsHasKids" == eSrc.className && (eChild = GetChildElem(eSrc,"UL")))
 		{
@@ -57,8 +55,8 @@
 	</SCRIPT>
 	</HEAD>
 	<BODY onLoad="ShowFirst()">
-	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:visible ;">Показать все</BUTTON>
-	<BUTTON ONCLICK="HideAll('UL')" style="visibility:visible ;">Свернуть все</BUTTON>
+	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:visible;">Показать все</BUTTON>
+	<BUTTON ONCLICK="HideAll('UL')" style="visibility:visible;">Свернуть все</BUTTON>
 	<UL>
 		<xsl:apply-templates select="TOPICS" />
 	</UL>
@@ -90,7 +88,7 @@
 
 <xsl:template match="TOPICS">
 <LI CLASS="clsHasKids">
-	<SPAN><xsl:value-of select="@TYPE" /></SPAN>
+	<xsl:value-of select="@TYPE" />
 	
 	<xsl:for-each select="SVOD">
 		<A TARGET="_self">

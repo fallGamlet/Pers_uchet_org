@@ -19,7 +19,6 @@ namespace Pers_uchet_org
         private static void Main()
         {
             #region Установка настроек культуры
-
             CultureInfo culture = new CultureInfo("ru-RU");
             culture.DateTimeFormat.DateSeparator = ".";
             culture.DateTimeFormat.LongDatePattern = "d MMMM yyyy 'г.'";
