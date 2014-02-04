@@ -116,6 +116,7 @@
             this.Controls.Add(this.label1);
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "RestoreDBForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Восстановление данных из резервной копии";
             this.Load += new System.EventHandler(this.RestoreDBForm_Load);
             this.ResumeLayout(false);

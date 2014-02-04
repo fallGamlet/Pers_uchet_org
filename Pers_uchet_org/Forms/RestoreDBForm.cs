@@ -31,7 +31,7 @@ namespace Pers_uchet_org
             if (!Settings.Default.IsBackupEnabled)
             {
                 MainForm.ShowInfoMessage("Резервное копирование отключено в настройках!", "Предупреждение");
-                restoreButton.Enabled = false;
+                //restoreButton.Enabled = false;
             }
 
             string backupPath = Settings.Default.BackupPath;
