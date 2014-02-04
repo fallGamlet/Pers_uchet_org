@@ -32,14 +32,29 @@
     <Setting Name="xsl_szv1" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Static/xsl/szvstyle.xsl</Value>
     </Setting>
-    <Setting Name="xsl_szv2" Type="System.String" Scope="User">
+    <Setting Name="xsl_szv2" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Static/xsl/szvopisstyle.xsl</Value>
     </Setting>
-    <Setting Name="xsl_szv3" Type="System.String" Scope="User">
+    <Setting Name="xsl_szv3" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Static/xsl/svodstyle.xsl</Value>
     </Setting>
-    <Setting Name="xsl_map" Type="System.String" Scope="User">
+    <Setting Name="xsl_map" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Static/xsl/mapstyle.xsl</Value>
+    </Setting>
+    <Setting Name="IsBackupEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="BackupPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Backup</Value>
+    </Setting>
+    <Setting Name="BackupMaxCount" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="DataBasePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//SRV3-STATEPF/e$/Programmers Archive/Db_for_orgs/orgDB.db</Value>
+    </Setting>
+    <Setting Name="DataBaseFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">orgDB.db</Value>
     </Setting>
   </Settings>
 </SettingsFile>

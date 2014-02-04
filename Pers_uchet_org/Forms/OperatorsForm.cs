@@ -77,7 +77,7 @@ namespace Pers_uchet_org
             // добавление виртуального столбца, для возможности отмечать
             _operOrgTable.Columns.Add(check, typeof(bool));
             _operOrgTable.Columns[check].DefaultValue = false;
-            
+
             // создание чисто виртуальной таблицы для хранения уровня
             _accessTable = new DataTable();
             // добавление необходимых столбцов
@@ -506,7 +506,13 @@ namespace Pers_uchet_org
             if (dRes == DialogResult.OK)
             {
                 // получение данных с формы-диалога
-                string operName = tmpForm.OperatorName;
+                string operName = tmpForm.OperatorName.Trim();
+                if (_operatorBS.Find(Operator.name, operName) > 0)
+                {
+                    MainForm.ShowInfoMessage("Пользователь с таким именем уже существует!", "Ошибка добавления оператора");
+                    return;
+                }
+
                 // парольт пока пустой
                 string operPassword = "";
                 //создание формы для указания пароля

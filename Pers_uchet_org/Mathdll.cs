@@ -18,7 +18,7 @@ namespace Pers_uchet_org
         /// <param name="key">Ключ</param>
         /// <param name="table">Таблица</param>
         /// <param name="synchro">Синхро посылка</param>
-        /// <returns></returns>
+        /// <returns>Возврает зашифрованный/расшифрованный массив байт</returns>
         static public byte[] GostGamma(byte[] data, byte[] key, byte[] table, byte[] synchro)
         {
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
@@ -79,7 +79,6 @@ namespace Pers_uchet_org
         /// <param name="key">Ключ</param>
         /// <param name="table">Таблица</param>
         /// <param name="synchro">Синхро посылка</param>
-        /// <returns></returns>
         /// <param name="encoding"></param>
         /// <returns>Возврает зашифрованную/расшифрованную строку</returns>
         static public string GostGamma(string data, string key, string table, string synchro, Encoding encoding)

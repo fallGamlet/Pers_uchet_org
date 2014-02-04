@@ -186,6 +186,94 @@ namespace Pers_uchet_org
             chekedDocCountBox.Text = _checkedCountDocs.ToString();
         }
 
+        private bool CheckTabPage3()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CheckTabPage2()
+        {
+            bool result = true;
+
+            if (_mergiesCountLists < 0)
+            {
+                MessageBox.Show("Сводная ведомость (СЗВ-3) не обнаружена!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_mergiesCountLists < 1)
+            {
+                MessageBox.Show("Количество пакетов документов в сводной ведомости: " + _mergiesCountLists +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_mergiesCountDocs < 1)
+            {
+                MessageBox.Show("Количество документов \"СЗВ-1\" в сводной ведомости: " + _mergiesCountDocs +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountLists < 1)
+            {
+                MessageBox.Show("Количество выбранных пакетов документов: " + _checkedCountLists +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountDocs < 1)
+            {
+                MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+                    "\nФормирование электронных данных невозможно!", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountLists > _mergiesCountLists)
+            {
+                MessageBox.Show(
+                    "Количество выбранных пакетов документов: " + _checkedCountLists +
+                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountLists, "Предупреждение", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+            if (_checkedCountDocs > _mergiesCountDocs)
+            {
+                MessageBox.Show(
+                    "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountDocs, "Предупреждение", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                return false;
+            }
+
+
+            if (_checkedCountLists < _mergiesCountLists)
+            {
+                result = (MessageBox.Show(
+                        "Количество выбранных пакетов документов: " + _checkedCountLists +
+                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountLists +
+                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
+            }
+
+            if (_checkedCountDocs < _mergiesCountDocs)
+            {
+                result = (MessageBox.Show(
+                        "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountDocs +
+                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
+
+            }
+            return result;
+        }
+
         private void GetCountsFromMergies()
         {
             _mergiesCountLists = 0;
@@ -273,6 +361,12 @@ namespace Pers_uchet_org
                         return;
                 }
 
+                if (tabControl1.SelectedTab == tabPage3)
+                {
+                    if (!CheckTabPage3())
+                        return;
+                }
+
                 if (driveBox.SelectedItem == null)
                 {
                     throw new DriveNotFoundException("Не найден диск с ключевой информацией.\nФормирование файла невозможно.\nВозможно Вы:\n\t- не указали диск с ключевой информацией (шаг 1).");
@@ -355,89 +449,6 @@ namespace Pers_uchet_org
             {
                 EnableControlsAfterCreateFile();
             }
-        }
-
-        private bool CheckTabPage2()
-        {
-            bool result = true;
-
-            if (_mergiesCountLists < 0)
-            {
-                MessageBox.Show("Сводная ведомость (СЗВ-3) не обнаружена!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_mergiesCountLists < 1)
-            {
-                MessageBox.Show("Количество пакетов документов в сводной ведомости: " + _mergiesCountLists +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_mergiesCountDocs < 1)
-            {
-                MessageBox.Show("Количество документов \"СЗВ-1\" в сводной ведомости: " + _mergiesCountDocs +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountLists < 1)
-            {
-                MessageBox.Show("Количество выбранных пакетов документов: " + _checkedCountLists +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountDocs < 1)
-            {
-                MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountLists > _mergiesCountLists)
-            {
-                MessageBox.Show(
-                    "Количество выбранных пакетов документов: " + _checkedCountLists +
-                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountLists, "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountDocs > _mergiesCountDocs)
-            {
-                MessageBox.Show(
-                    "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountDocs, "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-
-            if (_checkedCountLists < _mergiesCountLists)
-            {
-                result = (MessageBox.Show(
-                        "Количество выбранных пакетов документов: " + _checkedCountLists +
-                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountLists +
-                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
-            }
-
-            if (_checkedCountDocs < _mergiesCountDocs)
-            {
-                result = (MessageBox.Show(
-                        "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountDocs +
-                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
-
-            }
-            return result;
         }
 
         private void flashRButton_CheckedChanged(object sender, EventArgs e)
@@ -527,6 +538,7 @@ namespace Pers_uchet_org
             }
 
             this.packetsView.Refresh();
+            SumCheckedLists();
         }
 
         private void packetsView_CellClick(object sender, DataGridViewCellEventArgs e)

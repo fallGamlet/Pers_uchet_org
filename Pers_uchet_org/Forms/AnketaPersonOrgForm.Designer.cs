@@ -44,7 +44,7 @@
             // personDataLabel
             // 
             this.personDataLabel.AutoSize = true;
-            this.personDataLabel.Location = new System.Drawing.Point(12, 9);
+            this.personDataLabel.Location = new System.Drawing.Point(7, 9);
             this.personDataLabel.Name = "personDataLabel";
             this.personDataLabel.Size = new System.Drawing.Size(201, 13);
             this.personDataLabel.TabIndex = 0;
@@ -52,14 +52,14 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.orgView);
-            this.groupBox1.Location = new System.Drawing.Point(10, 44);
+            this.groupBox1.Location = new System.Drawing.Point(10, 35);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(414, 174);
+            this.groupBox1.Size = new System.Drawing.Size(337, 189);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Список организаций";
@@ -89,7 +89,7 @@
             this.orgView.Name = "orgView";
             this.orgView.RowHeadersVisible = false;
             this.orgView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orgView.Size = new System.Drawing.Size(408, 155);
+            this.orgView.Size = new System.Drawing.Size(331, 170);
             this.orgView.TabIndex = 3;
             // 
             // checkorgColumn
@@ -123,18 +123,18 @@
             // acceptButton
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.Location = new System.Drawing.Point(266, 227);
+            this.acceptButton.Location = new System.Drawing.Point(170, 228);
             this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(75, 23);
+            this.acceptButton.Size = new System.Drawing.Size(96, 23);
             this.acceptButton.TabIndex = 2;
-            this.acceptButton.Text = "Принять";
+            this.acceptButton.Text = "Сохранить";
             this.acceptButton.UseVisualStyleBackColor = true;
             this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.Location = new System.Drawing.Point(347, 227);
+            this.cancelButton.Location = new System.Drawing.Point(272, 228);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
@@ -146,7 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 262);
+            this.ClientSize = new System.Drawing.Size(359, 263);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.groupBox1);

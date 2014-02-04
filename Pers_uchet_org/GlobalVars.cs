@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
+using Ionic.Zip;
 
 namespace Pers_uchet_org
 {
@@ -1097,6 +1100,8 @@ namespace Pers_uchet_org
 
         static public bool IsExist(string socnumber, string connectionStr)
         {
+            if (String.IsNullOrEmpty(socnumber))
+                return false;
             SQLiteConnection connection = new SQLiteConnection(connectionStr);
             SQLiteCommand command = new SQLiteCommand(GetSelectIDText(socnumber));
             command.Connection = connection;
@@ -1117,7 +1122,7 @@ namespace Pers_uchet_org
             command.Connection.Close();
         }
 
-        static public string CorrectSocnumber(string socnumber)
+        static public string CorrectSocnumberRusToEn(string socnumber)
         {
             string rus = "АВСЕНКМРТХ";
             string eng = "ABCEHKMPTX";
@@ -1130,6 +1135,18 @@ namespace Pers_uchet_org
             }
             return new string(chars);
         }
+
+        public static bool IsCorrectSocNumber(string socNumber)
+        {
+            if (socNumber == String.Empty)
+                return true;
+
+            socNumber = CorrectSocnumberRusToEn(socNumber);
+            string regExprStr = @"0[2-9]-[\p{Ll}ABCEHKMPTXАВСЕНКМРТХ]\d{1}[\p{Ll}ABCEHKMPTXАВСЕНКМРТХ]\d{2}[\p{Ll}ABCEHKMPTXАВСЕНКМРТХ]\d{2}\s*";
+            Regex regEx = new Regex(regExprStr);
+            return regEx.IsMatch(socNumber);
+        }
+
         #endregion
     }
 
@@ -1174,7 +1191,7 @@ namespace Pers_uchet_org
         static public string editDate = "edit_date";
         static public string operName = "operator";
         #endregion
-        
+
         #region Времменные статические переменные
         //static IEnumerable<DataRow> PrintRows;
         #endregion
@@ -2101,7 +2118,7 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(long org_id, int rep_year, long list_type_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1} AND {2} = {3} AND {4} = {5} AND {6} > 0",listTypeId, list_type_id, orgID, org_id, repYear, rep_year, countDocs);
+            return GetSelectText() + string.Format(" WHERE {0} = {1} AND {2} = {3} AND {4} = {5} AND {6} > 0", listTypeId, list_type_id, orgID, org_id, repYear, rep_year, countDocs);
         }
         #endregion
     }
@@ -2303,7 +2320,7 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
         }
 
- static public DataTable GetDocs(long list_id, string connectionStr)
+        static public DataTable GetDocs(long list_id, string connectionStr)
         {
             DataTable table = CreateTable();
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByListId(list_id), connectionStr);
@@ -2318,7 +2335,7 @@ namespace Pers_uchet_org
             adapter.Fill(table);
             return table;
         }
- static public string GetCountDocsInListText(long list_id)
+        static public string GetCountDocsInListText(long list_id)
         {
             return string.Format("SELECT count(*) FROM {0} WHERE {1} = {2}", tablename, listId, list_id);
         }
@@ -2337,8 +2354,8 @@ namespace Pers_uchet_org
             }
         }
 
-        
-                        
+
+
         #endregion
     }
 
@@ -2346,7 +2363,7 @@ namespace Pers_uchet_org
     {
         // название таблицы
         static public string tablename = Docs.tablename;
-        
+
         #region Названия полей в представления БД
         static public string id = Docs.id;
         static public string docTypeId = Docs.docTypeId;
@@ -3462,7 +3479,7 @@ namespace Pers_uchet_org
 
         static public void SetDocId(DataTable table, long doc_id)
         {
-            foreach (DataRow row in table.Rows)
+            foreach (DataRow row in table.Rows.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted))
             {
                 row[docId] = doc_id;
                 row.EndEdit();
@@ -3645,7 +3662,7 @@ namespace Pers_uchet_org
 
         static public void SetDocId(DataTable table, long doc_id)
         {
-            foreach (DataRow row in table.Rows)
+            foreach (DataRow row in table.Rows.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted))
             {
                 row[docId] = doc_id;
                 row.EndEdit();
@@ -4002,7 +4019,7 @@ namespace Pers_uchet_org
 
         static public void SetDocId(DataTable table, long doc_id)
         {
-            foreach (DataRow row in table.Rows)
+            foreach (DataRow row in table.Rows.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted))
             {
                 row[docId] = doc_id;
                 row.EndEdit();
@@ -4874,5 +4891,147 @@ namespace Pers_uchet_org
             return Convert.ToInt64(command.ExecuteScalar());
         }
         #endregion
+    }
+
+    public class Backup
+    {
+        public static bool isBackupCreate = true;
+        public static string columnDateTimeName = "dateTime";
+        public static string columnPathName = "path";
+        public enum TypeBackup { Auto = 0, ManualBackup = 1, RestoreBackup = 2 }
+
+        public enum SearchPatternType
+        {
+            AutoBackup = 0,
+            ManualBackup = 1,
+            RestoreBackup = 2,
+            All = 3
+        }
+
+        public static DataTable CreateTable()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(columnDateTimeName, typeof(string));
+            table.Columns.Add(columnPathName, typeof(string));
+            return table;
+        }
+
+        public static void FillTable(DataTable table, DirectoryInfo directoryInfo, SearchPatternType searchPatternType)
+        {
+            foreach (FileInfo backupFile in GetBackupFilesInDirectory(directoryInfo, searchPatternType))
+            {
+                DataRow row = table.NewRow();
+                row[columnDateTimeName] = ExtractDateTimeFromBackupName(backupFile.Name);
+                row[columnPathName] = backupFile.Name;
+                table.Rows.Add(row);
+            }
+        }
+
+        private static IEnumerable<FileInfo> GetBackupFilesInDirectory(DirectoryInfo directoryInfo, SearchPatternType searchPatternType)
+        {
+            string searchPattern;
+            switch (searchPatternType)
+            {
+                case SearchPatternType.AutoBackup:
+                    searchPattern = "pu_bkp_????-??-??_(??-??-??).zip";
+                    break;
+                case SearchPatternType.ManualBackup:
+                    searchPattern = "pu_bkp_????-??-??_(??-??-??)_manual.zip";
+                    break;
+                case SearchPatternType.RestoreBackup:
+                    searchPattern = "pu_bkp_????-??-??_(??-??-??)_restore.zip";
+                    break;
+                case SearchPatternType.All:
+                    searchPattern = "pu_bkp_????-??-??_(??-??-??)*.zip";
+                    break;
+                default:
+                    searchPattern = "*.zip";
+                    break;
+            }
+            return directoryInfo.GetFiles(searchPattern, SearchOption.TopDirectoryOnly).OrderBy(f => f.Name).AsEnumerable();
+        }
+
+        public static string ExtractDateTimeFromBackupName(string fileName)
+        {
+            string result = fileName.Substring(7, 4);
+            result += "." + fileName.Substring(12, 2);
+            result += "." + fileName.Substring(15, 2);
+            result += "   " + fileName.Substring(19, 2);
+            result += ":" + fileName.Substring(22, 2);
+            result += ":" + fileName.Substring(25, 2);
+
+            return result;
+        }
+
+        //public delegate void ProgressDelegate(object sender, AddProgressEventArgs e);
+
+        //public static ProgressDelegate AddProgress;
+
+        public static void CreateBackup(string backupFolderPath, string databaseFilePath, TypeBackup type)
+        {
+            string backupFileName = GetSearchPatternString(type);
+
+            using (ZipFile zip = new ZipFile())
+            {
+                //zip.AddProgress += new EventHandler<AddProgressEventArgs>(AddProgress);
+                //zip.AddProgress += new EventHandler<AddProgressEventArgs>(zip_AddProgress);
+                zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestCompression;
+                zip.AddDirectoryWillTraverseReparsePoints = false;
+                zip.Comment = "Fai`l rezervnoi` kopii bazy` danny`kh dlia programmy` \"Personifitcirovanny`i` uchet dlia organizatcii`\".";
+                zip.AddFile(databaseFilePath, "");
+                zip.Save(backupFolderPath + "\\" + backupFileName);
+            }
+
+            //Очистка от лишних архивов
+        }
+
+        private static string GetSearchPatternString(TypeBackup type)
+        {
+            string backupFileName;
+            switch (type)
+            {
+                case TypeBackup.Auto:
+                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(H-mm-ss)") + ".zip";
+                    break;
+                case TypeBackup.ManualBackup:
+                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(H-mm-ss)") + "_manual.zip";
+                    break;
+                case TypeBackup.RestoreBackup:
+                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(H-mm-ss)") + "_restore.zip";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return backupFileName;
+        }
+
+        //static void zip_AddProgress(object sender, AddProgressEventArgs e)
+        //{
+        //    Console.Write(e.BytesTransferred);
+        //}
+
+        public static void RestoreBackup(string backupFolderPath, string backupFileName, string databaseFilePath)
+        {
+            if (File.Exists(databaseFilePath))
+                CreateBackup(backupFolderPath, databaseFilePath, TypeBackup.RestoreBackup);
+            string databaseFolderPath = databaseFilePath.Substring(0, databaseFilePath.LastIndexOf("/"));
+            using (ZipFile zip = ZipFile.Read(backupFolderPath + "\\" + backupFileName))
+            {
+                foreach (ZipEntry e in zip)
+                {
+                    e.Extract(databaseFolderPath, ExtractExistingFileAction.OverwriteSilently);
+                }
+            }
+        }
+
+        public static void DeleteOldBackups(string backupFolderPath, int maxCount, TypeBackup type)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(backupFolderPath);
+            IEnumerable<FileInfo> fileInfo = GetBackupFilesInDirectory(directoryInfo, SearchPatternType.AutoBackup);
+            for (int i = 0; i < fileInfo.Count() - maxCount; i++)
+            {
+                fileInfo.ElementAt(i).Delete();
+            }
+        }
     }
 }

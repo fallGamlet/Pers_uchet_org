@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Pers_uchet_org.Forms;
 using JR.Utils.GUI.Forms;
+using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
 {
@@ -40,28 +42,34 @@ namespace Pers_uchet_org
         {
             InitializeComponent();
 
-            _mainConnection = @"data source = //SRV3-STATEPF/e$/Programmers Archive/Db_for_orgs/orgDB.db;";
-            //_mainConnection = @"data source = D://orgDB.db;";
             this.Location = new Point(0, 0);
-
             MainForm.RepYear = DateTime.Now.Year;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _orgTable = Org.CreateTable();
-            _orgTable.Columns.Add(viewCol);
-            _orgBS = new BindingSource();
-            _orgBS.DataSource = _orgTable;
-            this.orgBox.DataSource = _orgBS;
-            this.orgBox.DisplayMember = viewCol;
-            int isLogedin = 0;
-            for (int i = 0; i < 3 && isLogedin == 0; i++) 
+            //_orgTable = Org.CreateTable();
+            //_orgTable.Columns.Add(viewCol);
+            //_orgBS = new BindingSource();
+            //_orgBS.DataSource = _orgTable;
+            //this.orgBox.DataSource = _orgBS;
+            //this.orgBox.DisplayMember = viewCol;
+            //int isLogedin = 0;
+            //for (int i = 0; i < 3 && isLogedin == 0; i++)
+            //{
+            //    isLogedin = this.Login();
+            //}
+            //if (isLogedin != 2)
+            //    this.Close();
+            if (File.Exists(Settings.Default.DataBasePath))
+                changeoperatorMenuItem_Click(sender, e);
+            else
             {
-                isLogedin = this.Login();
+                if (MainForm.ShowQuestionMessage("Файл базы данных не найден!\nЖелаете попробовать восстановить базу из резервной копии?", "Ошибка") == DialogResult.Yes)
+                {
+                    vosstanovleniebdMenuItem_Click(sender, e);
+                }
             }
-            if (isLogedin != 2)
-                this.Close();
         }
         #endregion
 
@@ -142,50 +150,25 @@ namespace Pers_uchet_org
 
         private int Login()
         {
-            OperatorEnterForm enterForm = new OperatorEnterForm();
+            _mainConnection = string.Format("data source = {0};", Properties.Settings.Default.DataBasePath);
+            OperatorEnterForm enterForm = new OperatorEnterForm(_mainConnection);
             enterForm.Owner = this;
             DialogResult dRes = enterForm.ShowDialog();
-            if (dRes == DialogResult.OK)
+
+            switch (dRes)
             {
-                string login = enterForm.Login;
-                string password = enterForm.Password;
-
-                Operator oper = Operator.GetOperator(login, password, _mainConnection);
-                if (oper == null)
-                {
-                    MainForm.ShowWarningMessage("Указанные логин и пароль не существуют!", "Не удалось выполнить авторизацию");
-                    return 0;
-                }
-
-                _operator = oper;
-
-                string selectText;
-                if (oper.candeleteVal == 0)
-                {
-                    selectText = Org.GetSelectCommandText();
-                }
-                else
-                {
-                    selectText = Org.GetSelectTextByOperator(oper.idVal);
-                }
-
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectText, _mainConnection);
-                _orgTable.Rows.Clear();
-
-                adapter.Fill(_orgTable);
-                foreach (DataRow rowItem in _orgTable.Rows)
-                {
-                    rowItem[viewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
-                }
-                _orgTable.AcceptChanges();
-                this.SetPrivilege();
-                this.statusLabel.Text = oper.nameVal;
-                MainForm.ShowInfoMessage(string.Format("Добро пожаловать {0}!", oper.nameVal), ";)");
-                return 2;
-            }
-            else
-            {
-                return 1;
+                case DialogResult.Cancel:
+                    Backup.isBackupCreate = false;
+                    return 0;//Отмена входа
+                case DialogResult.OK:
+                    _operator = enterForm.Operator;
+                    return 1; //Вход удачен
+                case DialogResult.Abort:
+                    Backup.isBackupCreate = false;
+                    return 2; //n раз(а) ввели неправильный логин или пароль
+                default:
+                    Backup.isBackupCreate = false;
+                    return -1;
             }
         }
         #endregion
@@ -194,8 +177,40 @@ namespace Pers_uchet_org
         // сменить оператора
         private void changeoperatorMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: в случае ввода неправильных данных текущий пользователь остается в программе, возможно нужно сделать запрос пароля заново. ???
-            this.Login();
+            switch (this.Login())
+            {
+                case 1:
+                    break;
+                case 0:
+                case 2:
+                    this.Close();
+                    return;
+                default:
+                    this.Close();
+                    return;
+            }
+
+            _orgTable = Org.CreateTable();
+            _orgTable.Columns.Add(viewCol);
+            _orgBS = new BindingSource();
+            _orgBS.DataSource = _orgTable;
+            this.orgBox.DataSource = _orgBS;
+            this.orgBox.DisplayMember = viewCol;
+
+            string selectText = _operator.candeleteVal == 0 ? Org.GetSelectCommandText() : Org.GetSelectTextByOperator(_operator.idVal);
+
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectText, _mainConnection);
+            _orgTable.Rows.Clear();
+
+            adapter.Fill(_orgTable);
+            foreach (DataRow rowItem in _orgTable.Rows)
+            {
+                rowItem[viewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
+            }
+            _orgTable.AcceptChanges();
+            this.SetPrivilege();
+            this.statusLabel.Text = _operator.nameVal;
+            MainForm.ShowInfoMessage(string.Format("Добро пожаловать {0}!", _operator.nameVal), ";)");
         }
         // выход из программы
         private void exitMenuItem_Click(object sender, EventArgs e)
