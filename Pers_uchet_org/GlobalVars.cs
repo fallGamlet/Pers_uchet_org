@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
@@ -1099,6 +1100,8 @@ namespace Pers_uchet_org
 
         static public bool IsExist(string socnumber, string connectionStr)
         {
+            if (String.IsNullOrEmpty(socnumber))
+                return false;
             SQLiteConnection connection = new SQLiteConnection(connectionStr);
             SQLiteCommand command = new SQLiteCommand(GetSelectIDText(socnumber));
             command.Connection = connection;
@@ -1119,7 +1122,7 @@ namespace Pers_uchet_org
             command.Connection.Close();
         }
 
-        static public string CorrectSocnumber(string socnumber)
+        static public string CorrectSocnumberRusToEn(string socnumber)
         {
             string rus = "АВСЕНКМРТХ";
             string eng = "ABCEHKMPTX";
@@ -1132,6 +1135,18 @@ namespace Pers_uchet_org
             }
             return new string(chars);
         }
+
+        public static bool IsCorrectSocNumber(string socNumber)
+        {
+            if (socNumber == String.Empty)
+                return true;
+
+            socNumber = CorrectSocnumberRusToEn(socNumber);
+            string regExprStr = @"0[2-9]-[\p{Ll}ABCEHKMPTXАВСЕНКМРТХ]\d{1}[\p{Ll}ABCEHKMPTXАВСЕНКМРТХ]\d{2}[\p{Ll}ABCEHKMPTXАВСЕНКМРТХ]\d{2}\s*";
+            Regex regEx = new Regex(regExprStr);
+            return regEx.IsMatch(socNumber);
+        }
+
         #endregion
     }
 

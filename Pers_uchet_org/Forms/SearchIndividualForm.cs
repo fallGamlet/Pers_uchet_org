@@ -62,7 +62,7 @@ namespace Pers_uchet_org
         {
             string socnum, fname, mname, lname;
             // получить скорректированный номер соц. страхования
-            socnum = PersonInfo.CorrectSocnumber(this.socnumBox.Text.Trim());
+            socnum = PersonInfo.CorrectSocnumberRusToEn(this.socnumBox.Text.Trim());
             // получить имя
             fname = this.fnameBox.Text.Trim();
             // получить отчество

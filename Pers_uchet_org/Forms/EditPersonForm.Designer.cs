@@ -38,7 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.mNameBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.socnumBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.citizen2Box = new System.Windows.Forms.ComboBox();
             this.sexBox = new System.Windows.Forms.ComboBox();
@@ -90,6 +89,7 @@
             this.factRegionBox = new System.Windows.Forms.TextBox();
             this.adressrealCheckBox = new System.Windows.Forms.CheckBox();
             this.dataGroupBox = new System.Windows.Forms.GroupBox();
+            this.socNumBox = new System.Windows.Forms.MaskedTextBox();
             this.documentGroupBox = new System.Windows.Forms.GroupBox();
             this.label31 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
@@ -129,20 +129,20 @@
             this.citizen1Box.Location = new System.Drawing.Point(9, 23);
             this.citizen1Box.Name = "citizen1Box";
             this.citizen1Box.Size = new System.Drawing.Size(128, 21);
-            this.citizen1Box.TabIndex = 1;
+            this.citizen1Box.TabIndex = 0;
             // 
             // birthdayBox
             // 
-            this.birthdayBox.Location = new System.Drawing.Point(112, 122);
+            this.birthdayBox.Location = new System.Drawing.Point(114, 122);
             this.birthdayBox.Name = "birthdayBox";
-            this.birthdayBox.Size = new System.Drawing.Size(165, 20);
+            this.birthdayBox.Size = new System.Drawing.Size(164, 20);
             this.birthdayBox.TabIndex = 5;
             // 
             // lNameBox
             // 
-            this.lNameBox.Location = new System.Drawing.Point(112, 16);
+            this.lNameBox.Location = new System.Drawing.Point(114, 16);
             this.lNameBox.Name = "lNameBox";
-            this.lNameBox.Size = new System.Drawing.Size(165, 20);
+            this.lNameBox.Size = new System.Drawing.Size(164, 20);
             this.lNameBox.TabIndex = 1;
             // 
             // label1
@@ -167,9 +167,9 @@
             // 
             // fNameBox
             // 
-            this.fNameBox.Location = new System.Drawing.Point(112, 42);
+            this.fNameBox.Location = new System.Drawing.Point(114, 42);
             this.fNameBox.Name = "fNameBox";
-            this.fNameBox.Size = new System.Drawing.Size(165, 20);
+            this.fNameBox.Size = new System.Drawing.Size(164, 20);
             this.fNameBox.TabIndex = 2;
             // 
             // label3
@@ -183,9 +183,9 @@
             // 
             // mNameBox
             // 
-            this.mNameBox.Location = new System.Drawing.Point(112, 68);
+            this.mNameBox.Location = new System.Drawing.Point(114, 68);
             this.mNameBox.Name = "mNameBox";
-            this.mNameBox.Size = new System.Drawing.Size(165, 20);
+            this.mNameBox.Size = new System.Drawing.Size(164, 20);
             this.mNameBox.TabIndex = 3;
             // 
             // label4
@@ -197,13 +197,6 @@
             this.label4.TabIndex = 15;
             this.label4.Text = "Страховой №";
             // 
-            // socnumBox
-            // 
-            this.socnumBox.Location = new System.Drawing.Point(112, 150);
-            this.socnumBox.Name = "socnumBox";
-            this.socnumBox.Size = new System.Drawing.Size(165, 20);
-            this.socnumBox.TabIndex = 6;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.citizen2Box);
@@ -211,7 +204,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(6, 190);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(271, 53);
+            this.groupBox2.Size = new System.Drawing.Size(272, 53);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Гражданство *";
@@ -224,7 +217,7 @@
             this.citizen2Box.Location = new System.Drawing.Point(143, 23);
             this.citizen2Box.Name = "citizen2Box";
             this.citizen2Box.Size = new System.Drawing.Size(122, 21);
-            this.citizen2Box.TabIndex = 2;
+            this.citizen2Box.TabIndex = 1;
             // 
             // sexBox
             // 
@@ -233,9 +226,9 @@
             this.sexBox.Items.AddRange(new object[] {
             "женский",
             "мужской"});
-            this.sexBox.Location = new System.Drawing.Point(112, 95);
+            this.sexBox.Location = new System.Drawing.Point(114, 95);
             this.sexBox.Name = "sexBox";
-            this.sexBox.Size = new System.Drawing.Size(165, 21);
+            this.sexBox.Size = new System.Drawing.Size(164, 21);
             this.sexBox.TabIndex = 4;
             // 
             // label5
@@ -349,7 +342,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 7;
-            this.saveButton.Text = "Принять";
+            this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -675,6 +668,7 @@
             // 
             // dataGroupBox
             // 
+            this.dataGroupBox.Controls.Add(this.socNumBox);
             this.dataGroupBox.Controls.Add(this.groupBox2);
             this.dataGroupBox.Controls.Add(this.label5);
             this.dataGroupBox.Controls.Add(this.birthdayBox);
@@ -682,7 +676,6 @@
             this.dataGroupBox.Controls.Add(this.label6);
             this.dataGroupBox.Controls.Add(this.label4);
             this.dataGroupBox.Controls.Add(this.label1);
-            this.dataGroupBox.Controls.Add(this.socnumBox);
             this.dataGroupBox.Controls.Add(this.lNameBox);
             this.dataGroupBox.Controls.Add(this.label3);
             this.dataGroupBox.Controls.Add(this.fNameBox);
@@ -694,6 +687,15 @@
             this.dataGroupBox.Size = new System.Drawing.Size(296, 279);
             this.dataGroupBox.TabIndex = 1;
             this.dataGroupBox.TabStop = false;
+            // 
+            // socNumBox
+            // 
+            this.socNumBox.BeepOnError = true;
+            this.socNumBox.Location = new System.Drawing.Point(114, 150);
+            this.socNumBox.Mask = "00->L0L00L00";
+            this.socNumBox.Name = "socNumBox";
+            this.socNumBox.Size = new System.Drawing.Size(164, 20);
+            this.socNumBox.TabIndex = 6;
             // 
             // documentGroupBox
             // 
@@ -815,7 +817,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MinimumSize = new System.Drawing.Size(615, 600);
             this.Name = "EditPersonForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ввод анкетных данных";
             this.Load += new System.EventHandler(this.EditPersonForm_Load);
             this.groupBox2.ResumeLayout(false);
@@ -846,7 +848,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox mNameBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox socnumBox;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox citizen2Box;
         private System.Windows.Forms.ComboBox sexBox;
@@ -909,5 +910,6 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox docorgBox;
         private System.Windows.Forms.TextBox docnumBox;
+        private System.Windows.Forms.MaskedTextBox socNumBox;
     }
 }
