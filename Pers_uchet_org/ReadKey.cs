@@ -72,14 +72,133 @@ namespace Pers_uchet_org
         public static extern SafeFileHandle CreateFile(string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile);
         #endregion
 
+        public enum DeviceType { CD, CDImage, Diskette, DisketteImage };
+        public enum DataType { Key = 1, Table = 2};
+        private delegate byte[] ReadData(string name, int shift);
+
         #region Методы
-        public static string ReadCD(string driveName, long shift)
+        public static byte[] MakeKey(byte[] key)
+        {
+            byte[] resArr = new byte[key.Length * 4];
+            byte[] reverseKey = new byte[key.Length];
+            Array.Reverse(reverseKey);
+            Array.Copy(key, 0, resArr, 0, key.Length);
+            Array.Copy(key, 0, resArr, key.Length, key.Length);
+            Array.Copy(key, 0, resArr, key.Length * 2, key.Length);
+            Array.Copy(reverseKey, 0, resArr, key.Length * 3, key.Length);
+            //
+            return resArr;
+        }
+
+        public static void ReadDates(string driveName, DeviceType deviceType, out DateTime beginDate, out DateTime endDate)
+        {
+            int shift;
+            ReadData readData = null;
+            byte[] resData = null;
+
+            switch (deviceType)
+            {
+                case DeviceType.CD:
+                    shift = 2048;
+                    readData = ReadCD;
+                    break;
+                case DeviceType.CDImage:
+                    shift = 2048;
+                    readData = ReadCDImage;
+                    break;
+                case DeviceType.Diskette:
+                    shift = 512;
+                    readData = ReadDiskette;
+                    break;
+                case DeviceType.DisketteImage:
+                    shift = 512;
+                    readData = ReadDisketteImage;
+                    break;
+                default:
+                    shift = 2048;
+                    readData = ReadCD;
+                    readData = ReadCDImage;
+                    break;
+            }
+
+            byte[] data = readData(driveName, shift);
+            int iStart = (1024 * 2) - 512 + 50;
+            byte[] arr = new byte[4];
+            Array.Copy(data, iStart, arr, 0, 4);
+            Array.Reverse(arr);
+            long begin = BitConverter.ToInt32(arr,0);
+            Array.Copy(data, iStart+50, arr, 0, 4);
+            Array.Reverse(arr);
+            long end = BitConverter.ToInt32(arr, 0);
+            //
+            beginDate = Julian2Date(begin);
+            endDate = Julian2Date(end);
+        }
+
+        public static byte[] Read(string driveName, DeviceType deviceType, DataType dataType)
+        {
+            int shift;
+            ReadData readData = null;
+            byte[] resData = null;
+
+            switch (deviceType)
+            {
+                case DeviceType.CD:
+                    shift = 2048;
+                    readData = ReadCD;
+                    break;
+                case DeviceType.CDImage:
+                    shift = 2048;
+                    readData = ReadCDImage;
+                    break;
+                case DeviceType.Diskette:
+                    shift = 512;
+                    readData = ReadDiskette;
+                    break;
+                case DeviceType.DisketteImage:
+                    shift = 512;
+                    readData = ReadDisketteImage;
+                    break;
+                default:
+                    shift = 2048;
+                    readData = ReadCD;
+                    readData = ReadCDImage;
+                    break;
+            }
+
+            switch (dataType)
+            {
+                case DataType.Key:
+                    byte[] key = new byte[32];
+                    byte[] data = readData(driveName, shift);
+                    int j = 0;
+                    for (int i = shift - 1; i > shift - 512; i -= 16)
+                    {
+                        key[j] = data[i];
+                        j++;
+                    }
+                    resData = MakeKey(key);
+                    break;
+                case DataType.Table:
+                    byte[] table = new byte[1024];
+                    byte[] data1 = readData(driveName, shift * 2);
+                    byte[] data2 = readData(driveName, shift * 3);
+                    Array.Copy(data1, 0, table, 0, 512);
+                    Array.Copy(data2, 0, table, 512, 512);
+                    resData = table;
+                    break;
+            }
+            //
+            return resData;
+        }
+
+        public static byte[] ReadCD(string driveName, int shift)
         {
             if (shift % 2048 > 0)
             {
                 throw new ArgumentException("Смещение не кратно 2048 байт. Чтение данных невозможно.");
             }
-            byte[] buff = new byte[2048];
+            byte[] resBuff = new byte[2048];
             string lpFileName = @"\\.\" + driveName;
             using (SafeFileHandle drive = CreateFile(
                   lpFileName,
@@ -96,41 +215,53 @@ namespace Pers_uchet_org
                 using (FileStream stream = new FileStream(drive, FileAccess.Read))
                 {
                     stream.Seek(shift, SeekOrigin.Begin);
-                    stream.Read(buff, 0, 2048);
+                    stream.Read(resBuff, 0, 2048);
                 }
-
-                string key;
-                key = ArrayToString(buff);
-                return BinToHex(key);
             }
+            //
+            return resBuff;
         }
 
-        public static string ReadCDImage(string imgFilePath, long shift)
+        public static string ReadCDStr(string driveName, int shift)
+        {
+            byte[] buff = ReadCD(driveName, shift);
+            string key = BitConverter.ToString(buff).Replace("-","");
+            //
+            return key;
+        }
+        
+        public static byte[] ReadCDImage(string imgFilePath, int shift)
         {
             if (shift % 2048 > 0)
             {
                 throw new ArgumentException("Смещение не кратно 2048 байт. Чтение данных невозможно.");
             }
-            byte[] buff = new byte[2048];
+            byte[] resBuff = new byte[2048];
 
             using (FileStream stream = (new FileInfo(imgFilePath)).OpenRead())
             {
                 stream.Seek(shift, SeekOrigin.Begin);
-                stream.Read(buff, 0, 2048);
+                stream.Read(resBuff, 0, 2048);
             }
-
-            string key;
-            key = ArrayToString(buff);
-            return BinToHex(key);
+            //
+            return resBuff;
         }
 
-        public static string ReadDiskette(string driveName, long shift)
+        public static string ReadCDImageStr(string imgFilePath, int shift)
+        {
+            byte[] buff = ReadCDImage(imgFilePath, shift);
+            string key = BitConverter.ToString(buff).Replace("-", "");
+            //
+            return key;
+        }
+
+        public static byte[] ReadDiskette(string driveName, int shift)
         {
             if (shift % 512 > 0)
             {
                 throw new ArgumentException("Смещение не кратно 512 байт. Чтение данных невозможно.");
             }
-            byte[] buff = new byte[512];
+            byte[] resBuff = new byte[512];
             string lpFileName = @"\\.\" + driveName;
             using (SafeFileHandle drive = CreateFile(
                   lpFileName,
@@ -147,16 +278,22 @@ namespace Pers_uchet_org
                 using (FileStream stream = new FileStream(drive, FileAccess.Read))
                 {
                     stream.Seek(shift, SeekOrigin.Begin);
-                    stream.Read(buff, 0, 512);
+                    stream.Read(resBuff, 0, 512);
                 }
 
-                string key;
-                key = ArrayToString(buff);
-                return BinToHex(key);
+                return resBuff;
             }
         }
 
-        public static string ReadDisketteImage(string imgFilePath, long shift)
+        public static string ReadDisketteStr(string driveName, int shift)
+        {
+            byte[] buff = ReadDiskette(driveName, shift);
+            string key = BitConverter.ToString(buff).Replace("-", "");
+            //
+            return key;
+        }
+
+        public static byte[] ReadDisketteImage(string imgFilePath, int shift)
         {
             if (shift % 512 > 0)
             {
@@ -169,30 +306,21 @@ namespace Pers_uchet_org
                 stream.Seek(shift, SeekOrigin.Begin);
                 stream.Read(buff, 0, 512);
             }
-
-            string key;
-            key = ArrayToString(buff);
-            return BinToHex(key);
+            //
+            return buff;
         }
 
-        public static string ArrayToString(byte[] arr)
+        public static string ReadDisketteImageStr(string imgFilePath, int shift)
         {
-            string strOut = String.Empty;
-            foreach (int x in arr)
-            {
-                strOut += (char)x;
-            }
-            return strOut;
+            byte[] buff = ReadDisketteImage(imgFilePath, shift);
+            string key = BitConverter.ToString(buff).Replace("-", "");
+            //
+            return key;
         }
 
-        public static byte[] StringToArray(string str)
+        public static string BinToHex(byte[] bin)
         {
-            byte[] byteArr = new byte[str.Length];
-            for (int i = 0; i < str.Length; i++)
-            {
-                byteArr[i] = (byte)str[i];
-            }
-            return byteArr;
+            return BitConverter.ToString(bin).Replace("-", "");
         }
 
         public static string BinToHex(string binStr)
@@ -222,7 +350,7 @@ namespace Pers_uchet_org
             return byteArr;
         }
 
-        public static string Julian2Date(long jDate)
+        public static DateTime Julian2Date(long jDate)
         {
             long l;
             int n, i, j, dd, mm, yy;
@@ -238,11 +366,11 @@ namespace Pers_uchet_org
                 l = (int)(j / 11);
                 mm = (int)(j + 2 - (12 * l));
                 yy = (int)(100 * (n - 49) + i + l);
-                return dd + "." + mm + "." + yy;
+                return new DateTime(yy, mm, dd);
             }
             catch
             {
-                return "";
+                return new DateTime(0);
             }
         }
 

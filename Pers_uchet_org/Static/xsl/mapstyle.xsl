@@ -11,7 +11,6 @@
 		LI UL { display:none; margin-left:16px; }
 		LI { font-weight:bold; list-style-type:square; cursor:default; }
 		LI.clsHasKids { list-style-type:none; cursor:hand; color:maroon; }
-		LI.clsHasKids:hover { text-decoration:underline; background-color:#ddd;}
 		A:link, A:visited, A:active { margin:auto 5px; font-weight:normal; color:blue; text-decoration:none; font-size:110%; }
 		A:hover { text-decoration:underline;}
 		BUTTON { font-family:tahoma; font-size:100%; }
@@ -29,7 +28,6 @@
 	}
 	document.onmousedown = function()
 	{
-		var mBtn = window.event.button;
 		var eSrc = window.event.srcElement;
 		if ("clsHasKids" == eSrc.className && (eChild = GetChildElem(eSrc,"UL")))
 		{

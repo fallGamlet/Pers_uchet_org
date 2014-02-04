@@ -11,26 +11,26 @@
 	</HEAD>
 	<body style="font-family:'Arial';">
 	<TABLE width="90%" align="center" border="0">
-	<TR><TD>
-
-	<TABLE width="100%" border="0">
-		<TR>
-			<TD style="font-size:8pt;">Форма СЗВ-2</TD>
-		</TR>
-		<TR>
-			<TD align="center" style="font-size:10pt;font-weight:bold;color:gray;">
-				Единый государственный фонд социального страхования<BR/>Приднестровской Молдавской Республики</TD>
-			</TD>
-		</TR>
-		<TR>
-			<TD></TD>
-		</TR>
-		<TR>
-			<TD align="center" style="font-size:12pt;font-weight:bold;">
-				Опись документов, переданных работодателем</TD>
-		</TR>
-	</TABLE>
-	<BR/>
+	<TR>
+		<TD>
+			<TABLE width="100%" border="0">
+				<TR>
+					<TD style="font-size:8pt;">Форма СЗВ-2</TD>
+				</TR>
+				<TR>
+					<TD align="center" style="font-size:10pt;font-weight:bold;color:gray;">
+						Единый государственный фонд социального страхования<BR/>Приднестровской Молдавской Республики
+					</TD>
+				</TR>
+				<TR>
+					<TD></TD>
+				</TR>
+				<TR>
+					<TD align="center" style="font-size:12pt;font-weight:bold;">
+						Опись документов, переданных работодателем</TD>
+				</TR>
+			</TABLE>
+			<BR/>
 
 	<TABLE width="100%" border="1" style="border:solid 1px #000; border-collapse:collapse;">
 		<TR style="font-size:8pt;text-align:center;background-color:#ddd;">

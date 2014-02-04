@@ -617,6 +617,7 @@
             this.Name = "ExchangeForm";
             this.Text = "Электронный обмен с ЕГФСС";
             this.Load += new System.EventHandler(this.ExchangeForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExchangeForm_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

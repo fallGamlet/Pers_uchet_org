@@ -41,7 +41,7 @@ namespace Pers_uchet_org
             InitializeComponent();
 
             _mainConnection = @"data source = //SRV3-STATEPF/e$/Programmers Archive/Db_for_orgs/orgDB.db;";
-            //_mainConnection = "data source = SRV3-STATEPF\\e$\\Programmers Archive\\Db_for_orgs\\orgDB.db ;";
+            //_mainConnection = @"data source = D://orgDB.db;";
             this.Location = new Point(0, 0);
 
             MainForm.RepYear = DateTime.Now.Year;

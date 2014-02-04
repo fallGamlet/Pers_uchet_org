@@ -15,11 +15,6 @@ namespace Pers_uchet_org
         [STAThread]
         static void Main()
         {
-            //Szv3Xml.GetXml(6, @"data source = //SRV3-STATEPF/e$/Programmers Archive/Db_for_orgs/orgDB.db;");
-            //Szv2Xml.GetXml(75, @"data source = //SRV3-STATEPF/e$/Programmers Archive/Db_for_orgs/orgDB.db;");
-            
-
-
             System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("ru-RU");
             culture.DateTimeFormat.DateSeparator = ".";
             culture.DateTimeFormat.LongDatePattern = "d MMMM yyyy 'г.'";

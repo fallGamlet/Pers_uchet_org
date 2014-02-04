@@ -2690,6 +2690,41 @@ namespace Pers_uchet_org
         }
 
         /// <summary>
+        /// Получить текст запроса для количества документов в указанных пакетах
+        /// </summary>
+        /// <param name="list_id">Список идентификаторов пакетов</param>
+        /// <returns>Текст запроса</returns>
+        static public string GetSelectCountText(IEnumerable<long> list_id)
+        {
+            StringBuilder list_id_str = new StringBuilder();
+            foreach (long val in list_id)
+            {
+                list_id_str.Append(val + ",");
+            }
+            list_id_str[list_id_str .Length - 1] = ' ';
+
+            return string.Format(@" SELECT count(distinct {0}) as [count] FROM {1} WHERE {2} in ({3}) ",
+                                id, tablename, listId, list_id_str);
+        }
+
+        /// <summary>
+        /// Получить количество документов в указанных пакетах
+        /// </summary>
+        /// <param name="list_id">Список идентификаторов пакетов</param>
+        /// <param name="connectionStr">Строка подключения к БД</param>
+        /// <returns>Количество документов</returns>
+        static public long Count(IEnumerable<long> list_id, string connectionStr)
+        {
+            SQLiteConnection connection = new SQLiteConnection(connectionStr);
+            SQLiteCommand command = new SQLiteCommand(GetSelectCountText(list_id), connection);
+            connection.Open();
+            object res = command.ExecuteScalar();
+            connection.Close();
+            //
+            return (long)res;
+        }
+
+        /// <summary>
         /// Получить значение количества документов в указанном пакете с указанным типом документа
         /// </summary>
         /// <param name="list_id">идентификатор пакета</param>
@@ -2765,7 +2800,8 @@ namespace Pers_uchet_org
         /// <returns></returns>
         static public string GetSelectDocsIDText(long list_id)
         {
-            return string.Format("SELECT {0} FROM {1}  WHERE {2} = {3}", id, tablename, listId, list_id);
+            return string.Format("SELECT d.{0} FROM {1} d INNER JOIN {2} pi ON d.{3} = pi.{4} AND pi.{5} IS NOT NULL AND TRIM(pi.{5}) <> '' WHERE d.{6} = {7}", 
+                                id, tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id, PersonInfo.socNumber, listId, list_id);
         }
 
         /// <summary>
@@ -3044,7 +3080,6 @@ namespace Pers_uchet_org
 
             return string.Format(@"SELECT 
                              [{0}]
-                            ,COUNT({14}) as {14}
 	                        ,SUM([{1}]) as {1}
 	                        ,SUM([{2}]) as {2}
 	                        ,SUM([{3}]) as {3}
@@ -4828,8 +4863,7 @@ namespace Pers_uchet_org
         {
             return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, tableID, Tables.GetSelectIDText(table_name), rowID, row_id);
         }
-        #endregion
-
+        
         internal static long ExecReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date, SQLiteConnection connection, SQLiteTransaction transaction)
         {
             string commantText = String.Empty;
@@ -4839,5 +4873,6 @@ namespace Pers_uchet_org
             SQLiteCommand command = new SQLiteCommand(GetReplaceText(table_name, fix_type, row_id, oper_name, fix_date), connection, transaction);
             return Convert.ToInt64(command.ExecuteScalar());
         }
+        #endregion
     }
 }
