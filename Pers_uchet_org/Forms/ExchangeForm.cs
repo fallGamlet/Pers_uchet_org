@@ -610,6 +610,7 @@ namespace Pers_uchet_org
             }
 
             this.packetsView.Refresh();
+            SumCheckedLists();
         }
 
         private void packetsView_CellClick(object sender, DataGridViewCellEventArgs e)
