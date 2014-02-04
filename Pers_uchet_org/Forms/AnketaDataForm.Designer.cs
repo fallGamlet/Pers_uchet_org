@@ -28,34 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnketadataForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.editButton = new System.Windows.Forms.Button();
-            this.removeButton = new System.Windows.Forms.Button();
-            this.addButton = new System.Windows.Forms.Button();
-            this.vostanovitButton = new System.Windows.Forms.Button();
+            this.countLabel = new System.Windows.Forms.Label();
+            this.countTextLabel = new System.Windows.Forms.Label();
             this.personView = new System.Windows.Forms.DataGridView();
-            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uvolitButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkallButton = new System.Windows.Forms.Button();
             this.searchFioBox = new System.Windows.Forms.TextBox();
             this.searchSocnumBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.zakrepButton = new System.Windows.Forms.Button();
-            this.printButton = new System.Windows.Forms.Button();
-            this.rabotaRButton = new System.Windows.Forms.RadioButton();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.uvolenRButton = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.countBox = new System.Windows.Forms.TextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.addStripButton = new System.Windows.Forms.ToolStripButton();
+            this.editStripButton = new System.Windows.Forms.ToolStripButton();
+            this.delStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.dismissStripButton = new System.Windows.Forms.ToolStripButton();
+            this.restoreStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.printStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.printAnketsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printUnregisteredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dismissedButton = new System.Windows.Forms.ToolStripButton();
+            this.workButton = new System.Windows.Forms.ToolStripButton();
+            this.attachToOrgButton = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.documentBox = new System.Windows.Forms.TextBox();
@@ -87,89 +86,56 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.closeButton = new System.Windows.Forms.Button();
+            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.editButton);
-            this.groupBox2.Controls.Add(this.removeButton);
-            this.groupBox2.Controls.Add(this.addButton);
-            this.groupBox2.Controls.Add(this.vostanovitButton);
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.countLabel);
+            this.groupBox2.Controls.Add(this.countTextLabel);
             this.groupBox2.Controls.Add(this.personView);
-            this.groupBox2.Controls.Add(this.uvolitButton);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.checkallButton);
             this.groupBox2.Controls.Add(this.searchFioBox);
             this.groupBox2.Controls.Add(this.searchSocnumBox);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(3, 10);
+            this.groupBox2.Location = new System.Drawing.Point(4, 36);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox2.Size = new System.Drawing.Size(408, 445);
+            this.groupBox2.Size = new System.Drawing.Size(393, 451);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
-            // editButton
+            // countLabel
             // 
-            this.editButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.editButton.Location = new System.Drawing.Point(72, 419);
-            this.editButton.Margin = new System.Windows.Forms.Padding(0);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(67, 23);
-            this.editButton.TabIndex = 6;
-            this.editButton.Text = "Изменить";
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.editButton_Click);
+            this.countLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.countLabel.AutoSize = true;
+            this.countLabel.Location = new System.Drawing.Point(50, 434);
+            this.countLabel.Name = "countLabel";
+            this.countLabel.Size = new System.Drawing.Size(13, 13);
+            this.countLabel.TabIndex = 10;
+            this.countLabel.Text = "0";
+            this.countLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // removeButton
+            // countTextLabel
             // 
-            this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.removeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.removeButton.Location = new System.Drawing.Point(139, 419);
-            this.removeButton.Margin = new System.Windows.Forms.Padding(0);
-            this.removeButton.Name = "removeButton";
-            this.removeButton.Size = new System.Drawing.Size(61, 23);
-            this.removeButton.TabIndex = 7;
-            this.removeButton.Text = "Удалить";
-            this.removeButton.UseVisualStyleBackColor = true;
-            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
-            // 
-            // addButton
-            // 
-            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.addButton.Location = new System.Drawing.Point(7, 419);
-            this.addButton.Margin = new System.Windows.Forms.Padding(0);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(65, 23);
-            this.addButton.TabIndex = 5;
-            this.addButton.Text = "Добавить";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
-            // 
-            // vostanovitButton
-            // 
-            this.vostanovitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.vostanovitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.vostanovitButton.Location = new System.Drawing.Point(316, 419);
-            this.vostanovitButton.Margin = new System.Windows.Forms.Padding(0);
-            this.vostanovitButton.Name = "vostanovitButton";
-            this.vostanovitButton.Size = new System.Drawing.Size(86, 23);
-            this.vostanovitButton.TabIndex = 2;
-            this.vostanovitButton.Text = "Восстановить";
-            this.vostanovitButton.UseVisualStyleBackColor = true;
-            this.vostanovitButton.Click += new System.EventHandler(this.vostanovitButton_Click);
+            this.countTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.countTextLabel.AutoSize = true;
+            this.countTextLabel.Location = new System.Drawing.Point(1, 434);
+            this.countTextLabel.Name = "countTextLabel";
+            this.countTextLabel.Size = new System.Drawing.Size(43, 13);
+            this.countTextLabel.TabIndex = 9;
+            this.countTextLabel.Text = "Всего: ";
             // 
             // personView
             // 
@@ -178,252 +144,226 @@
             this.personView.AllowUserToDeleteRows = false;
             this.personView.AllowUserToOrderColumns = true;
             this.personView.AllowUserToResizeRows = false;
-            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.personView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.personView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.personView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
             this.numColumn,
             this.fioColumn,
             this.dismissdateColumn});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.personView.DefaultCellStyle = dataGridViewCellStyle3;
-            this.personView.Location = new System.Drawing.Point(9, 67);
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.personView.DefaultCellStyle = dataGridViewCellStyle7;
+            this.personView.Location = new System.Drawing.Point(4, 56);
             this.personView.MultiSelect = false;
             this.personView.Name = "personView";
             this.personView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.personView.RowHeadersVisible = false;
             this.personView.RowHeadersWidth = 15;
             this.personView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.personView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.personView.Size = new System.Drawing.Size(397, 349);
+            this.personView.Size = new System.Drawing.Size(385, 375);
             this.personView.TabIndex = 4;
-            // 
-            // checkColumn
-            // 
-            this.checkColumn.DataPropertyName = "check";
-            this.checkColumn.FillWeight = 20F;
-            this.checkColumn.Frozen = true;
-            this.checkColumn.HeaderText = "*";
-            this.checkColumn.Name = "checkColumn";
-            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.checkColumn.Width = 20;
-            // 
-            // numColumn
-            // 
-            this.numColumn.DataPropertyName = "soc_number";
-            this.numColumn.HeaderText = "Страховой №";
-            this.numColumn.MaxInputLength = 25;
-            this.numColumn.MinimumWidth = 80;
-            this.numColumn.Name = "numColumn";
-            this.numColumn.ReadOnly = true;
-            this.numColumn.Width = 80;
-            // 
-            // fioColumn
-            // 
-            this.fioColumn.DataPropertyName = "fio";
-            this.fioColumn.HeaderText = "Фамилия И.О.";
-            this.fioColumn.MaxInputLength = 150;
-            this.fioColumn.MinimumWidth = 190;
-            this.fioColumn.Name = "fioColumn";
-            this.fioColumn.ReadOnly = true;
-            this.fioColumn.Width = 210;
-            // 
-            // dismissdateColumn
-            // 
-            this.dismissdateColumn.DataPropertyName = "dismiss_date";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dismissdateColumn.HeaderText = "Дата увольнения";
-            this.dismissdateColumn.MaxInputLength = 25;
-            this.dismissdateColumn.MinimumWidth = 50;
-            this.dismissdateColumn.Name = "dismissdateColumn";
-            this.dismissdateColumn.ReadOnly = true;
-            this.dismissdateColumn.Width = 70;
-            // 
-            // uvolitButton
-            // 
-            this.uvolitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.uvolitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.uvolitButton.Location = new System.Drawing.Point(230, 419);
-            this.uvolitButton.Margin = new System.Windows.Forms.Padding(0);
-            this.uvolitButton.Name = "uvolitButton";
-            this.uvolitButton.Size = new System.Drawing.Size(86, 23);
-            this.uvolitButton.TabIndex = 3;
-            this.uvolitButton.Text = "Уволить";
-            this.uvolitButton.UseVisualStyleBackColor = true;
-            this.uvolitButton.Click += new System.EventHandler(this.uvolitButton_Click);
+            this.personView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellClick);
+            this.personView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellDoubleClick);
+            this.personView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.personView_KeyDown);
+            this.personView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.personView_KeyPress);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(151, 25);
+            this.label4.Location = new System.Drawing.Point(126, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(103, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Поиск по фамилии";
             // 
-            // checkallButton
-            // 
-            this.checkallButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.checkallButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkallButton.Location = new System.Drawing.Point(7, 41);
-            this.checkallButton.Name = "checkallButton";
-            this.checkallButton.Size = new System.Drawing.Size(35, 20);
-            this.checkallButton.TabIndex = 1;
-            this.checkallButton.Text = "***";
-            this.checkallButton.Click += new System.EventHandler(this.checkallButton_Click);
-            // 
             // searchFioBox
             // 
-            this.searchFioBox.Location = new System.Drawing.Point(151, 41);
+            this.searchFioBox.Location = new System.Drawing.Point(129, 30);
             this.searchFioBox.MaxLength = 200;
             this.searchFioBox.Name = "searchFioBox";
-            this.searchFioBox.Size = new System.Drawing.Size(195, 20);
+            this.searchFioBox.Size = new System.Drawing.Size(260, 20);
             this.searchFioBox.TabIndex = 3;
             this.searchFioBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchFioBox_KeyPress);
             // 
             // searchSocnumBox
             // 
-            this.searchSocnumBox.Location = new System.Drawing.Point(46, 41);
+            this.searchSocnumBox.Location = new System.Drawing.Point(8, 30);
             this.searchSocnumBox.MaxLength = 200;
             this.searchSocnumBox.Name = "searchSocnumBox";
-            this.searchSocnumBox.Size = new System.Drawing.Size(99, 20);
+            this.searchSocnumBox.Size = new System.Drawing.Size(115, 20);
             this.searchSocnumBox.TabIndex = 2;
             this.searchSocnumBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchSocnumBox_KeyPress);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(43, 25);
+            this.label2.Location = new System.Drawing.Point(5, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Поиск по страх. №";
             // 
-            // zakrepButton
+            // toolStrip1
             // 
-            this.zakrepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.zakrepButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.zakrepButton.Location = new System.Drawing.Point(10, 419);
-            this.zakrepButton.Margin = new System.Windows.Forms.Padding(0);
-            this.zakrepButton.Name = "zakrepButton";
-            this.zakrepButton.Size = new System.Drawing.Size(75, 23);
-            this.zakrepButton.TabIndex = 1;
-            this.zakrepButton.Text = "Закрепить";
-            this.zakrepButton.UseVisualStyleBackColor = true;
-            this.zakrepButton.Click += new System.EventHandler(this.zakrepButton_Click);
+            this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addStripButton,
+            this.editStripButton,
+            this.delStripButton,
+            this.toolStripSeparator1,
+            this.dismissStripButton,
+            this.restoreStripButton,
+            this.toolStripSeparator2,
+            this.printStripDropDownButton,
+            this.dismissedButton,
+            this.workButton});
+            this.toolStrip1.Location = new System.Drawing.Point(5, 9);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(723, 25);
+            this.toolStrip1.TabIndex = 11;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // printButton
+            // addStripButton
             // 
-            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.printButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.printButton.Location = new System.Drawing.Point(286, 419);
-            this.printButton.Margin = new System.Windows.Forms.Padding(0);
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(70, 23);
-            this.printButton.TabIndex = 4;
-            this.printButton.Text = "Печать";
-            this.printButton.UseVisualStyleBackColor = true;
-            this.printButton.Click += new System.EventHandler(this.printButton_Click);
+            this.addStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addStripButton.Image")));
+            this.addStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addStripButton.Name = "addStripButton";
+            this.addStripButton.Size = new System.Drawing.Size(79, 22);
+            this.addStripButton.Text = "Добавить";
+            this.addStripButton.Click += new System.EventHandler(this.addStripButton_Click);
             // 
-            // rabotaRButton
+            // editStripButton
             // 
-            this.rabotaRButton.AutoSize = true;
-            this.rabotaRButton.Location = new System.Drawing.Point(9, 17);
-            this.rabotaRButton.Name = "rabotaRButton";
-            this.rabotaRButton.Size = new System.Drawing.Size(90, 17);
-            this.rabotaRButton.TabIndex = 3;
-            this.rabotaRButton.TabStop = true;
-            this.rabotaRButton.Text = "Работающие";
-            this.rabotaRButton.UseVisualStyleBackColor = true;
-            this.rabotaRButton.CheckedChanged += new System.EventHandler(this.stateRButton_CheckedChanged);
+            this.editStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editStripButton.Image")));
+            this.editStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editStripButton.Name = "editStripButton";
+            this.editStripButton.Size = new System.Drawing.Size(81, 22);
+            this.editStripButton.Text = "Изменить";
+            this.editStripButton.Click += new System.EventHandler(this.editStripButton_Click);
             // 
-            // groupBox3
+            // delStripButton
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox3.Controls.Add(this.uvolenRButton);
-            this.groupBox3.Controls.Add(this.rabotaRButton);
-            this.groupBox3.Location = new System.Drawing.Point(3, 457);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox3.Size = new System.Drawing.Size(200, 43);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
+            this.delStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delStripButton.Image")));
+            this.delStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.delStripButton.Name = "delStripButton";
+            this.delStripButton.Size = new System.Drawing.Size(71, 22);
+            this.delStripButton.Text = "Удалить";
+            this.delStripButton.Click += new System.EventHandler(this.delStripButton_Click);
             // 
-            // uvolenRButton
+            // toolStripSeparator1
             // 
-            this.uvolenRButton.AutoSize = true;
-            this.uvolenRButton.Location = new System.Drawing.Point(113, 17);
-            this.uvolenRButton.Name = "uvolenRButton";
-            this.uvolenRButton.Size = new System.Drawing.Size(83, 17);
-            this.uvolenRButton.TabIndex = 4;
-            this.uvolenRButton.TabStop = true;
-            this.uvolenRButton.Text = "Уволенные";
-            this.uvolenRButton.UseVisualStyleBackColor = true;
-            this.uvolenRButton.CheckedChanged += new System.EventHandler(this.stateRButton_CheckedChanged);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // label3
+            // dismissStripButton
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Всего: ";
+            this.dismissStripButton.Image = ((System.Drawing.Image)(resources.GetObject("dismissStripButton.Image")));
+            this.dismissStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.dismissStripButton.Name = "dismissStripButton";
+            this.dismissStripButton.Size = new System.Drawing.Size(72, 22);
+            this.dismissStripButton.Text = "Уволить";
+            this.dismissStripButton.Click += new System.EventHandler(this.dismissStripButton_Click);
             // 
-            // groupBox4
+            // restoreStripButton
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox4.Controls.Add(this.countBox);
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Location = new System.Drawing.Point(255, 457);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(1);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(156, 43);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
+            this.restoreStripButton.Image = ((System.Drawing.Image)(resources.GetObject("restoreStripButton.Image")));
+            this.restoreStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.restoreStripButton.Name = "restoreStripButton";
+            this.restoreStripButton.Size = new System.Drawing.Size(102, 22);
+            this.restoreStripButton.Text = "Восстановить";
+            this.restoreStripButton.Click += new System.EventHandler(this.restoreStripButton_Click);
             // 
-            // countBox
+            // toolStripSeparator2
             // 
-            this.countBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.countBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.countBox.Location = new System.Drawing.Point(53, 19);
-            this.countBox.MaxLength = 200;
-            this.countBox.Name = "countBox";
-            this.countBox.ReadOnly = true;
-            this.countBox.Size = new System.Drawing.Size(84, 15);
-            this.countBox.TabIndex = 1;
-            this.countBox.Text = "0";
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // printStripDropDownButton
+            // 
+            this.printStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printAnketsToolStripMenuItem,
+            this.printUnregisteredToolStripMenuItem});
+            this.printStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("printStripDropDownButton.Image")));
+            this.printStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printStripDropDownButton.Name = "printStripDropDownButton";
+            this.printStripDropDownButton.Size = new System.Drawing.Size(75, 22);
+            this.printStripDropDownButton.Text = "Печать";
+            // 
+            // printAnketsToolStripMenuItem
+            // 
+            this.printAnketsToolStripMenuItem.Name = "printAnketsToolStripMenuItem";
+            this.printAnketsToolStripMenuItem.Size = new System.Drawing.Size(319, 22);
+            this.printAnketsToolStripMenuItem.Text = "Печать выбранных анкет";
+            this.printAnketsToolStripMenuItem.Click += new System.EventHandler(this.printAnketsToolStripMenuItem_Click);
+            // 
+            // printUnregisteredToolStripMenuItem
+            // 
+            this.printUnregisteredToolStripMenuItem.Name = "printUnregisteredToolStripMenuItem";
+            this.printUnregisteredToolStripMenuItem.Size = new System.Drawing.Size(319, 22);
+            this.printUnregisteredToolStripMenuItem.Text = "Печать списка анкет без страховых номеров";
+            this.printUnregisteredToolStripMenuItem.Click += new System.EventHandler(this.printUnregisteredToolStripMenuItem_Click);
+            // 
+            // dismissedButton
+            // 
+            this.dismissedButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.dismissedButton.Image = ((System.Drawing.Image)(resources.GetObject("dismissedButton.Image")));
+            this.dismissedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.dismissedButton.Name = "dismissedButton";
+            this.dismissedButton.Size = new System.Drawing.Size(89, 22);
+            this.dismissedButton.Text = "Уволенные";
+            this.dismissedButton.Click += new System.EventHandler(this.stateButton_Click);
+            // 
+            // workButton
+            // 
+            this.workButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.workButton.Image = ((System.Drawing.Image)(resources.GetObject("workButton.Image")));
+            this.workButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.workButton.Name = "workButton";
+            this.workButton.Size = new System.Drawing.Size(99, 22);
+            this.workButton.Text = "Работающие";
+            this.workButton.Click += new System.EventHandler(this.stateButton_Click);
+            // 
+            // attachToOrgButton
+            // 
+            this.attachToOrgButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.attachToOrgButton.Location = new System.Drawing.Point(4, 422);
+            this.attachToOrgButton.Margin = new System.Windows.Forms.Padding(0);
+            this.attachToOrgButton.Name = "attachToOrgButton";
+            this.attachToOrgButton.Size = new System.Drawing.Size(191, 23);
+            this.attachToOrgButton.TabIndex = 1;
+            this.attachToOrgButton.Text = "Закрепить за организацией";
+            this.attachToOrgButton.UseVisualStyleBackColor = true;
+            this.attachToOrgButton.Click += new System.EventHandler(this.attachToOrgButton_Click);
             // 
             // groupBox6
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.Controls.Add(this.zakrepButton);
-            this.groupBox6.Controls.Add(this.printButton);
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.attachToOrgButton);
             this.groupBox6.Controls.Add(this.groupBox1);
             this.groupBox6.Controls.Add(this.operatorBox);
             this.groupBox6.Controls.Add(this.editdateBox);
@@ -445,18 +385,18 @@
             this.groupBox6.Controls.Add(this.label10);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label6);
-            this.groupBox6.Location = new System.Drawing.Point(413, 10);
+            this.groupBox6.Location = new System.Drawing.Point(399, 36);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox6.Size = new System.Drawing.Size(365, 490);
+            this.groupBox6.Size = new System.Drawing.Size(329, 450);
             this.groupBox6.TabIndex = 4;
             this.groupBox6.TabStop = false;
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.documentBox);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.docseriaBox);
@@ -466,29 +406,29 @@
             this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.label23);
             this.groupBox1.Controls.Add(this.docvidanBox);
-            this.groupBox1.Location = new System.Drawing.Point(4, 278);
+            this.groupBox1.Location = new System.Drawing.Point(4, 256);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(358, 127);
+            this.groupBox1.Size = new System.Drawing.Size(319, 127);
             this.groupBox1.TabIndex = 56;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Документ, удостоверяющий личность";
             // 
             // documentBox
             // 
-            this.documentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.documentBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.documentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.documentBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.documentBox.Location = new System.Drawing.Point(6, 19);
             this.documentBox.MaxLength = 200;
             this.documentBox.Name = "documentBox";
             this.documentBox.ReadOnly = true;
-            this.documentBox.Size = new System.Drawing.Size(346, 20);
+            this.documentBox.Size = new System.Drawing.Size(307, 20);
             this.documentBox.TabIndex = 12;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 43);
+            this.label18.Location = new System.Drawing.Point(3, 42);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(38, 13);
             this.label18.TabIndex = 31;
@@ -496,8 +436,8 @@
             // 
             // docseriaBox
             // 
-            this.docseriaBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.docseriaBox.Location = new System.Drawing.Point(6, 59);
+            this.docseriaBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.docseriaBox.Location = new System.Drawing.Point(6, 58);
             this.docseriaBox.MaxLength = 200;
             this.docseriaBox.Name = "docseriaBox";
             this.docseriaBox.ReadOnly = true;
@@ -506,8 +446,8 @@
             // 
             // docnumBox
             // 
-            this.docnumBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.docnumBox.Location = new System.Drawing.Point(105, 59);
+            this.docnumBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.docnumBox.Location = new System.Drawing.Point(105, 58);
             this.docnumBox.MaxLength = 200;
             this.docnumBox.Name = "docnumBox";
             this.docnumBox.ReadOnly = true;
@@ -517,7 +457,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(108, 43);
+            this.label19.Location = new System.Drawing.Point(102, 42);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(41, 13);
             this.label19.TabIndex = 33;
@@ -525,8 +465,8 @@
             // 
             // docdataBox
             // 
-            this.docdataBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.docdataBox.Location = new System.Drawing.Point(201, 59);
+            this.docdataBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.docdataBox.Location = new System.Drawing.Point(201, 58);
             this.docdataBox.MaxLength = 200;
             this.docdataBox.Name = "docdataBox";
             this.docdataBox.ReadOnly = true;
@@ -536,7 +476,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(204, 43);
+            this.label21.Location = new System.Drawing.Point(198, 42);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(73, 13);
             this.label21.TabIndex = 35;
@@ -545,7 +485,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 82);
+            this.label23.Location = new System.Drawing.Point(3, 81);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(63, 13);
             this.label23.TabIndex = 37;
@@ -553,54 +493,53 @@
             // 
             // docvidanBox
             // 
-            this.docvidanBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.docvidanBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.docvidanBox.Location = new System.Drawing.Point(6, 98);
+            this.docvidanBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.docvidanBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.docvidanBox.Location = new System.Drawing.Point(6, 97);
             this.docvidanBox.MaxLength = 200;
             this.docvidanBox.Name = "docvidanBox";
             this.docvidanBox.ReadOnly = true;
-            this.docvidanBox.Size = new System.Drawing.Size(346, 20);
+            this.docvidanBox.Size = new System.Drawing.Size(307, 20);
             this.docvidanBox.TabIndex = 16;
             // 
             // operatorBox
             // 
-            this.operatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.operatorBox.Location = new System.Drawing.Point(202, 466);
+            this.operatorBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.operatorBox.Location = new System.Drawing.Point(4, 399);
             this.operatorBox.MaxLength = 200;
             this.operatorBox.Name = "operatorBox";
             this.operatorBox.ReadOnly = true;
-            this.operatorBox.Size = new System.Drawing.Size(154, 20);
+            this.operatorBox.Size = new System.Drawing.Size(110, 13);
             this.operatorBox.TabIndex = 19;
             this.operatorBox.Text = "Оператор";
             // 
             // editdateBox
             // 
-            this.editdateBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.editdateBox.Location = new System.Drawing.Point(121, 466);
+            this.editdateBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.editdateBox.Location = new System.Drawing.Point(200, 399);
             this.editdateBox.MaxLength = 200;
             this.editdateBox.Name = "editdateBox";
             this.editdateBox.ReadOnly = true;
-            this.editdateBox.Size = new System.Drawing.Size(75, 20);
+            this.editdateBox.Size = new System.Drawing.Size(75, 13);
             this.editdateBox.TabIndex = 18;
             this.editdateBox.Text = "15.04.2013";
             // 
             // newdateBox
             // 
-            this.newdateBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.newdateBox.Location = new System.Drawing.Point(40, 466);
+            this.newdateBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.newdateBox.Location = new System.Drawing.Point(120, 399);
             this.newdateBox.MaxLength = 200;
             this.newdateBox.Name = "newdateBox";
             this.newdateBox.ReadOnly = true;
-            this.newdateBox.Size = new System.Drawing.Size(75, 20);
+            this.newdateBox.Size = new System.Drawing.Size(75, 13);
             this.newdateBox.TabIndex = 17;
             this.newdateBox.Text = "15.04.2013";
             // 
             // label20
             // 
-            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(205, 450);
+            this.label20.Location = new System.Drawing.Point(1, 383);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(56, 13);
             this.label20.TabIndex = 54;
@@ -608,9 +547,8 @@
             // 
             // label16
             // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(124, 450);
+            this.label16.Location = new System.Drawing.Point(197, 383);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 53;
@@ -618,9 +556,8 @@
             // 
             // label15
             // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(46, 450);
+            this.label15.Location = new System.Drawing.Point(117, 383);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(50, 13);
             this.label15.TabIndex = 52;
@@ -628,59 +565,59 @@
             // 
             // adressprojivBox
             // 
-            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.adressprojivBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.adressprojivBox.Location = new System.Drawing.Point(10, 240);
+            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.adressprojivBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.adressprojivBox.Location = new System.Drawing.Point(4, 218);
             this.adressprojivBox.MaxLength = 500;
             this.adressprojivBox.Multiline = true;
             this.adressprojivBox.Name = "adressprojivBox";
             this.adressprojivBox.ReadOnly = true;
-            this.adressprojivBox.Size = new System.Drawing.Size(346, 32);
+            this.adressprojivBox.Size = new System.Drawing.Size(319, 32);
             this.adressprojivBox.TabIndex = 11;
             // 
             // adrespropiskiBox
             // 
-            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.adrespropiskiBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.adrespropiskiBox.Location = new System.Drawing.Point(10, 187);
+            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.adrespropiskiBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.adrespropiskiBox.Location = new System.Drawing.Point(4, 165);
             this.adrespropiskiBox.MaxLength = 500;
             this.adrespropiskiBox.Multiline = true;
             this.adrespropiskiBox.Name = "adrespropiskiBox";
             this.adrespropiskiBox.ReadOnly = true;
-            this.adrespropiskiBox.Size = new System.Drawing.Size(346, 34);
+            this.adrespropiskiBox.Size = new System.Drawing.Size(319, 34);
             this.adrespropiskiBox.TabIndex = 10;
             // 
             // mestorojdBox
             // 
-            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.mestorojdBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.mestorojdBox.Location = new System.Drawing.Point(10, 136);
+            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mestorojdBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.mestorojdBox.Location = new System.Drawing.Point(4, 108);
             this.mestorojdBox.MaxLength = 500;
             this.mestorojdBox.Multiline = true;
             this.mestorojdBox.Name = "mestorojdBox";
             this.mestorojdBox.ReadOnly = true;
-            this.mestorojdBox.Size = new System.Drawing.Size(346, 32);
+            this.mestorojdBox.Size = new System.Drawing.Size(319, 38);
             this.mestorojdBox.TabIndex = 9;
             // 
             // grajdanstvoBox
             // 
-            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.grajdanstvoBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.grajdanstvoBox.Location = new System.Drawing.Point(205, 83);
+            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grajdanstvoBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.grajdanstvoBox.Location = new System.Drawing.Point(179, 69);
             this.grajdanstvoBox.MaxLength = 200;
             this.grajdanstvoBox.Name = "grajdanstvoBox";
             this.grajdanstvoBox.ReadOnly = true;
-            this.grajdanstvoBox.Size = new System.Drawing.Size(151, 20);
+            this.grajdanstvoBox.Size = new System.Drawing.Size(144, 20);
             this.grajdanstvoBox.TabIndex = 8;
             // 
             // polBox
             // 
-            this.polBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.polBox.Location = new System.Drawing.Point(109, 83);
+            this.polBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.polBox.Location = new System.Drawing.Point(94, 69);
             this.polBox.MaxLength = 200;
             this.polBox.Name = "polBox";
             this.polBox.ReadOnly = true;
@@ -689,30 +626,30 @@
             // 
             // datarojdBox
             // 
-            this.datarojdBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.datarojdBox.Location = new System.Drawing.Point(10, 83);
+            this.datarojdBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.datarojdBox.Location = new System.Drawing.Point(4, 69);
             this.datarojdBox.MaxLength = 200;
             this.datarojdBox.Name = "datarojdBox";
             this.datarojdBox.ReadOnly = true;
-            this.datarojdBox.Size = new System.Drawing.Size(86, 20);
+            this.datarojdBox.Size = new System.Drawing.Size(84, 20);
             this.datarojdBox.TabIndex = 6;
             // 
             // fioBox
             // 
-            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.fioBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.fioBox.Location = new System.Drawing.Point(10, 33);
+            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fioBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.fioBox.Location = new System.Drawing.Point(4, 30);
             this.fioBox.MaxLength = 200;
             this.fioBox.Name = "fioBox";
             this.fioBox.ReadOnly = true;
-            this.fioBox.Size = new System.Drawing.Size(346, 20);
+            this.fioBox.Size = new System.Drawing.Size(319, 20);
             this.fioBox.TabIndex = 5;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(10, 224);
+            this.label17.Location = new System.Drawing.Point(1, 202);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(211, 13);
             this.label17.TabIndex = 26;
@@ -721,16 +658,16 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(10, 171);
+            this.label13.Location = new System.Drawing.Point(1, 149);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(110, 13);
+            this.label13.Size = new System.Drawing.Size(104, 13);
             this.label13.TabIndex = 23;
-            this.label13.Text = "Ардесс по прописке";
+            this.label13.Text = "Адрес по прописке";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(10, 120);
+            this.label12.Location = new System.Drawing.Point(1, 92);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(92, 13);
             this.label12.TabIndex = 22;
@@ -739,7 +676,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(208, 67);
+            this.label11.Location = new System.Drawing.Point(176, 53);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(74, 13);
             this.label11.TabIndex = 15;
@@ -748,7 +685,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(112, 67);
+            this.label10.Location = new System.Drawing.Point(91, 53);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(27, 13);
             this.label10.TabIndex = 14;
@@ -757,7 +694,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(10, 67);
+            this.label9.Location = new System.Drawing.Point(1, 53);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(86, 13);
             this.label9.TabIndex = 13;
@@ -766,47 +703,73 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 14);
+            this.label6.Location = new System.Drawing.Point(1, 14);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 13);
             this.label6.TabIndex = 10;
             this.label6.Text = "Фамилия Имя Отчество";
             // 
-            // closeButton
+            // checkColumn
             // 
-            this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.closeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.closeButton.Location = new System.Drawing.Point(685, 540);
-            this.closeButton.Margin = new System.Windows.Forms.Padding(0);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(93, 23);
-            this.closeButton.TabIndex = 5;
-            this.closeButton.Text = "Закрыть";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            this.checkColumn.DataPropertyName = "check";
+            this.checkColumn.FillWeight = 20F;
+            this.checkColumn.Frozen = true;
+            this.checkColumn.HeaderText = "*";
+            this.checkColumn.Name = "checkColumn";
+            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.checkColumn.Width = 20;
+            // 
+            // numColumn
+            // 
+            this.numColumn.DataPropertyName = "soc_number";
+            this.numColumn.HeaderText = "Страховой №";
+            this.numColumn.MaxInputLength = 25;
+            this.numColumn.MinimumWidth = 80;
+            this.numColumn.Name = "numColumn";
+            this.numColumn.ReadOnly = true;
+            this.numColumn.Width = 80;
+            // 
+            // fioColumn
+            // 
+            this.fioColumn.DataPropertyName = "fio";
+            this.fioColumn.HeaderText = "Фамилия И.О.";
+            this.fioColumn.MaxInputLength = 150;
+            this.fioColumn.MinimumWidth = 100;
+            this.fioColumn.Name = "fioColumn";
+            this.fioColumn.ReadOnly = true;
+            this.fioColumn.Width = 150;
+            // 
+            // dismissdateColumn
+            // 
+            this.dismissdateColumn.DataPropertyName = "dismiss_date";
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dismissdateColumn.HeaderText = "Дата увольнения";
+            this.dismissdateColumn.MaxInputLength = 25;
+            this.dismissdateColumn.MinimumWidth = 50;
+            this.dismissdateColumn.Name = "dismissdateColumn";
+            this.dismissdateColumn.ReadOnly = true;
+            this.dismissdateColumn.Width = 130;
             // 
             // AnketadataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 572);
-            this.Controls.Add(this.closeButton);
+            this.ClientSize = new System.Drawing.Size(738, 497);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "AnketadataForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Анкетные данные";
             this.Load += new System.EventHandler(this.AnketadataForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -821,19 +784,10 @@
         private System.Windows.Forms.TextBox searchFioBox;
         private System.Windows.Forms.TextBox searchSocnumBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button checkallButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.RadioButton rabotaRButton;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton uvolenRButton;
-        private System.Windows.Forms.Button editButton;
-        private System.Windows.Forms.Button removeButton;
-        private System.Windows.Forms.Button printButton;
-        private System.Windows.Forms.Button zakrepButton;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button attachToOrgButton;
+        private System.Windows.Forms.Label countTextLabel;
         private System.Windows.Forms.DataGridView personView;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
@@ -861,14 +815,24 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button vostanovitButton;
-        private System.Windows.Forms.Button uvolitButton;
         private System.Windows.Forms.TextBox editdateBox;
         private System.Windows.Forms.TextBox newdateBox;
         private System.Windows.Forms.TextBox operatorBox;
-        private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox countBox;
+        private System.Windows.Forms.Label countLabel;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton addStripButton;
+        private System.Windows.Forms.ToolStripButton editStripButton;
+        private System.Windows.Forms.ToolStripButton delStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton dismissStripButton;
+        private System.Windows.Forms.ToolStripButton restoreStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripDropDownButton printStripDropDownButton;
+        private System.Windows.Forms.ToolStripMenuItem printAnketsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printUnregisteredToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton dismissedButton;
+        private System.Windows.Forms.ToolStripButton workButton;
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn numColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fioColumn;

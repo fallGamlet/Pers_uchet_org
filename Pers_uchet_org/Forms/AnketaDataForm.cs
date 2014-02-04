@@ -63,28 +63,30 @@ namespace Pers_uchet_org
             // запосление таблицы данными с БД
             _personAdapter.Fill(_personTable);
 
-            // получитьм код привилегии (уровня доступа) Оператора к Организации
+            // получить код привилегии (уровня доступа) Оператора к Организации
             if (_operator.IsAdmin())
                 _privilege = OperatorOrg.GetPrivilegeForAdmin();
             else
                 _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
             // отобразить привилегию на форме для пользователя
             this.SetPrivilege(_privilege);
-            // отобразить работающий персон
-            this.rabotaRButton.Checked = true;
-            //this.stateRButton_CheckedChanged(null, null);
+
+            this.workButton.Enabled = false;
+            // отобразить работающих персон
+            stateButton_Click(this.workButton, null);
         }
         #endregion
 
         #region Методы - свои
         private List<DataRowView> GetSelectedRows()
         {
-            List<DataRowView> list = new List<DataRowView>();
-            foreach (DataRowView personRow in _personBS)
-                if ((bool)personRow[CHECK])
-                    list.Add(personRow);
-            if (list.Count <= 0 && _personBS.Current != null)
-                list.Add(_personBS.Current as DataRowView);
+            if (_personBS.Current != null)
+                (_personBS.Current as DataRowView)[CHECK] = true;
+
+            personView.EndEdit();
+            List<DataRowView> list = _personBS.Cast<DataRowView>().Where(personRow => (bool)personRow[CHECK]).ToList();
+            personView.Refresh();
+
             return list;
         }
 
@@ -92,48 +94,34 @@ namespace Pers_uchet_org
         {
             int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(privilegeCode);
             bool canWrite = (anketaAccess == 2);
-            this.addButton.Enabled = canWrite;
-            this.editButton.Enabled = canWrite;
-            this.removeButton.Enabled = canWrite;
-            this.uvolitButton.Enabled = canWrite;
-            this.vostanovitButton.Enabled = canWrite;
-            this.zakrepButton.Enabled = canWrite;
+            this.addStripButton.Enabled = canWrite;
+            this.editStripButton.Enabled = canWrite;
+            this.delStripButton.Enabled = canWrite;
+            this.dismissStripButton.Enabled = canWrite;
+            this.restoreStripButton.Enabled = canWrite;
+            this.attachToOrgButton.Enabled = canWrite;
 
             int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(privilegeCode);
-            this.printButton.Enabled = (anketaPrint > 0);
+            this.printStripDropDownButton.Enabled = (anketaPrint > 0);
         }
         #endregion
 
         #region Методы - обработчики событий
-        void tmpform_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (sender != null && sender is EditPersonForm)
-            {
-                EditPersonForm tmpForm = sender as EditPersonForm;
-                if(tmpForm.DialogResult == DialogResult.OK)
-                {
-                    long personID = tmpForm.PersonID;
-                    _personTable.Rows.Clear();
-                    _personAdapter.Fill(_personTable);
-                    _personBS.Position = _personBS.Find(PersonInfo.id, personID);
-                }
-            }
-        }
 
         void _personBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = _personBS.Current as DataRowView;
             if (row == null)
             {
-                this.vostanovitButton.Enabled = this.uvolitButton.Enabled = false;
+                this.restoreStripButton.Enabled = this.dismissStripButton.Enabled = false;
                 return;
             }
             this.fioBox.Text = row[PersonView.fio] as string;
             this.datarojdBox.Text = row[PersonView.birthday] is DBNull ? "" : ((DateTime)row[PersonView.birthday]).ToShortDateString();
             this.grajdanstvoBox.Text = row[PersonView.citizen1] as string;
-            this.grajdanstvoBox.Text += " "+ row[PersonView.citizen2] as string;
+            this.grajdanstvoBox.Text += " " + row[PersonView.citizen2] as string;
             object sexObj = row[PersonView.sex];
-            this.polBox.Text = sexObj is DBNull? "не определено" : (int)sexObj == 1 ? "мужской" : "женский";
+            this.polBox.Text = sexObj is DBNull ? "не определено" : (int)sexObj == 1 ? "мужской" : "женский";
             this.mestorojdBox.Text = row[PersonView.bornAdress] as string;
             this.adrespropiskiBox.Text = row[PersonView.regAdress] as string;
             this.adressprojivBox.Text = row[PersonView.factAdress] as string;
@@ -143,178 +131,18 @@ namespace Pers_uchet_org
             this.docdataBox.Text = row[PersonView.docDate] is DBNull ? "" : ((DateTime)row[PersonView.docDate]).ToShortDateString();
             this.docvidanBox.Text = row[PersonView.docOrg] as string;
 
-            this.newdateBox.Text = row[PersonView.newDate] is DBNull ? "":((DateTime)row[PersonView.newDate]).ToShortDateString();
+            this.newdateBox.Text = row[PersonView.newDate] is DBNull ? "" : ((DateTime)row[PersonView.newDate]).ToShortDateString();
             this.editdateBox.Text = row[PersonView.editDate] is DBNull ? "" : ((DateTime)row[PersonView.editDate]).ToShortDateString();
             this.operatorBox.Text = row[PersonView.operName] as string;
 
             object stateObj = row[PersonView.state];
-            this.uvolitButton.Enabled = (stateObj is DBNull) || (int)stateObj == 1 ? true : false;
-            this.vostanovitButton.Enabled = !this.uvolitButton.Enabled;
+            this.dismissStripButton.Enabled = (stateObj is DBNull) || (int)stateObj == 1;
+            this.restoreStripButton.Enabled = !this.dismissStripButton.Enabled;
         }
 
         void _personBS_ListChanged(object sender, ListChangedEventArgs e)
         {
-            this.countBox.Text = _personBS.Count.ToString();
-        }
-
-        private void checkallButton_Click(object sender, EventArgs e)
-        {
-            bool allchecked = true;
-            foreach (DataRowView row in _personBS)
-                if (!(bool)row[CHECK])
-                {
-                    allchecked = false;
-                    break;
-                }
-            foreach (DataRowView row in _personBS)
-                row[CHECK] = !allchecked;
-            this.personView.Refresh();
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            EditPersonForm tmpform = new EditPersonForm(_connection, _operator.nameVal, _org.idVal);
-            tmpform.FormClosed += new FormClosedEventHandler(tmpform_FormClosed);
-            tmpform.Owner = this;
-            tmpform.Show();
-        }
-
-        private void editButton_Click(object sender, EventArgs e)
-        {
-            DataRowView person = _personBS.Current as DataRowView;
-            if(person == null)
-            {
-                MainForm.ShowInfoMessage("Сначала необходимо выбрать запись!", "Не выбрана запись");
-                return;
-            }
-            long person_id = (long)person[PersonInfo.id];
-            EditPersonForm tmpform = new EditPersonForm(_connection, _operator.nameVal, _org.idVal);
-            tmpform.FormClosed += new FormClosedEventHandler(tmpform_FormClosed);
-            tmpform.Owner = this;
-            tmpform.Show();
-
-            tmpform.PersonID = person_id;
-        }
-
-        private void removeButton_Click(object sender, EventArgs e)
-        {
-            List<long> personIdList = new List<long>();
-            List<DataRowView> personList = new List<DataRowView>();
-            foreach (DataRowView personRow in _personBS)
-                if ((bool)personRow[CHECK])
-                {
-                    personList.Add(personRow);
-                    personIdList.Add((long)personRow[PersonView.id]);
-                }
-            if (personIdList.Count <= 0)
-            {
-               MainForm.ShowInfoMessage("Необходимо сначала отметить записи, которые необходимо удалить", 
-                                        "Нет помеченных записей для удаления");
-                return;
-            }
-            try
-            {
-                PersonInfo.Delete(personIdList, _connection);
-                foreach (DataRowView rowItem in personList)
-                {
-                    rowItem[CHECK] = false;
-                    rowItem.Delete();
-                }
-            }
-            catch(Exception err)
-            {
-                MainForm.ShowWarningMessage(err.Message, "Внимание");
-                _personBS.CancelEdit();
-            }
-        }
-
-        private void uvolitButton_Click(object sender, EventArgs e)
-        {
-            AnketaUvolitForm tmpform = new AnketaUvolitForm();
-            tmpform.Owner = this;
-            DialogResult dRes = tmpform.ShowDialog(this);
-            if (dRes == DialogResult.OK)
-            {
-                List<DataRowView> persons = this.GetSelectedRows();
-                List<long> personIDList = new List<long>();
-                foreach(DataRowView rowItem in persons)
-                    personIDList.Add((long)rowItem[PersonView.id]);
-                PersonOrg.SetStateToUvolit(personIDList, _org.idVal, tmpform.DismissDate, _connection);
-                foreach (DataRowView rowItem in persons)
-                {
-                    rowItem[PersonView.state] = (int)PersonView.PersonState.Uvolen;
-                    rowItem[PersonView.dismissDate] = tmpform.DismissDate;
-                    rowItem[CHECK] = false;
-                    rowItem.EndEdit();
-                }
-                _personBS.MoveFirst();
-            }
-        }
-
-        private void vostanovitButton_Click(object sender, EventArgs e)
-        {
-            List<DataRowView> persons = this.GetSelectedRows();
-            List<long> personIDList = new List<long>();
-            foreach (DataRowView rowItem in persons)
-                personIDList.Add((long)rowItem[PersonView.id]);
-            PersonOrg.SetStateToRabotaet(personIDList, _org.idVal, _connection);
-            foreach (DataRowView rowItem in persons)
-            {
-                rowItem[PersonView.state] = (int)PersonView.PersonState.Rabotaet;
-                rowItem[PersonView.dismissDate] = DBNull.Value;
-                rowItem[CHECK] = false;
-                rowItem.EndEdit();
-            }
-            _personBS.MoveFirst();
-        }
-
-        private void zakrepButton_Click(object sender, EventArgs e)
-        {
-            DataRowView curPersonRow = _personBS.Current as DataRowView;
-            if (curPersonRow == null)
-            {
-                MainForm.ShowInfoMessage("Необходимо указать(выделить) запись.","Внимание");
-                return;
-            }
-            AnketaPersonOrgForm tmpform = new AnketaPersonOrgForm(curPersonRow.Row, _operator, _org.idVal,_connection);
-            tmpform.Owner = this;
-            tmpform.ShowDialog(this);
-        }
-
-        private void printButton_Click(object sender, EventArgs e)
-        {
-            //System.Xml.XmlDocument mapXml, szv3Xml;
-            //IEnumerable<System.Xml.XmlDocument> szv2Array;
-            //IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array;
-            //Storage.MakeXml(2013, _org, new long[] { 75 }, _connection, out mapXml, out szv3Xml, out szv2Array, out szv1Array);
-            //string htmlStr = MapXml.GetHTML(mapXml);
-            //MyPrinter.ShowWebPage(htmlStr);
-            //return;
-            
-            List<DataRowView> selectedRowList = this.GetSelectedRows();
-            if (selectedRowList.Count <= 0)
-            {
-                DataRowView personRow = _personBS.Current as DataRowView;
-                if (personRow != null)
-                {
-                    selectedRowList.Add(personRow);
-                }
-            }
-            if (selectedRowList.Count <= 0)
-            {
-                MainForm.ShowInfoMessage("Необходимо отметить или выделить хотя бы одну запись!", "Внимание");
-                return;
-            }
-            List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
-            foreach (DataRowView rowItem in selectedRowList)
-                rowList.Add(rowItem.Row);
-
-            PersonView.Print(rowList);
-        }
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
+            this.countLabel.Text = _personBS.Count.ToString();
         }
 
         private void searchSocnumBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -361,25 +189,246 @@ namespace Pers_uchet_org
             }
         }
 
-        private void stateRButton_CheckedChanged(object sender, EventArgs e)
+        private void stateButton_Click(object sender, EventArgs e)
         {
-            foreach (DataRowView personRow in _personBS)
-                if ((bool)personRow[CHECK])
-                {
-                    personRow[CHECK] = false;
-                    personRow.EndEdit();
-                }
-            if (sender == this.uvolenRButton)
+            foreach (DataRowView personRow in _personBS.Cast<DataRowView>().Where(personRow => (bool)personRow[CHECK]))
             {
-                _personBS.Filter = string.Format("{0} = {1}",PersonView.state, (int)PersonView.PersonState.Uvolen);
-                this.dismissdateColumn.Visible = true;
+                personRow[CHECK] = false;
+                personRow.EndEdit();
             }
-            else if (sender == this.rabotaRButton)
+
+            if (sender == this.dismissedButton)
             {
-                _personBS.Filter = string.Format("{0} is NULL OR {0} = {1}",PersonView.state, (int)PersonView.PersonState.Rabotaet);
+                _personBS.Filter = string.Format("{0} = {1}", PersonView.state, (int)PersonView.PersonState.Uvolen);
+                this.dismissdateColumn.Visible = true;
+                workButton.Enabled = true;
+                dismissedButton.Enabled = false;
+                addStripButton.Enabled = false;
+            }
+            else if (sender == this.workButton)
+            {
+                _personBS.Filter = string.Format("{0} is NULL OR {0} = {1}", PersonView.state, (int)PersonView.PersonState.Rabotaet);
                 this.dismissdateColumn.Visible = false;
+                workButton.Enabled = false;
+                dismissedButton.Enabled = true;
+                addStripButton.Enabled = true;
             }
         }
+
         #endregion
+
+        private void addStripButton_Click(object sender, EventArgs e)
+        {
+            EditPersonForm tmpform = new EditPersonForm(_connection, _operator.nameVal, _org.idVal);
+            tmpform.FormClosed += new FormClosedEventHandler(EditPersonForm_FormClosed);
+            tmpform.Owner = this;
+            tmpform.Show();
+        }
+
+        void EditPersonForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (sender != null && sender is EditPersonForm)
+            {
+                EditPersonForm tmpForm = sender as EditPersonForm;
+                if (tmpForm.DialogResult == DialogResult.OK)
+                {
+                    long personID = tmpForm.PersonID;
+                    _personTable.Rows.Clear();
+                    _personAdapter.Fill(_personTable);
+                    _personBS.Position = _personBS.Find(PersonInfo.id, personID);
+                }
+            }
+        }
+
+        private void editStripButton_Click(object sender, EventArgs e)
+        {
+            DataRowView person = _personBS.Current as DataRowView;
+            if (person == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора анкеты");
+                return;
+            }
+            long personId = (long)person[PersonInfo.id];
+            EditPersonForm tmpform = new EditPersonForm(_connection, _operator.nameVal, _org.idVal);
+            tmpform.FormClosed += new FormClosedEventHandler(EditPersonForm_FormClosed);
+            tmpform.Owner = this;
+            tmpform.Show();
+
+            tmpform.PersonID = personId;
+        }
+
+        private void delStripButton_Click(object sender, EventArgs e)
+        {
+            List<DataRowView> personList = this.GetSelectedRows();
+            List<long> personIdList = new List<long>();
+            StringBuilder personFios = new StringBuilder();
+            foreach (DataRowView rowItem in personList)
+            {
+                personIdList.Add((long)rowItem[PersonView.id]);
+                personFios.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(), rowItem[PersonView.socNumber].ToString());
+            }
+
+            if (personIdList.Count <= 0)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора анкеты");
+                return;
+            }
+
+            if (MainForm.ShowQuestionFlexMessage("При удаление анкет так же будут удалены документы о стаже и доходе \"СЗВ-1\"!\nВы действительно хотите удалить выбранные анкеты?\n\n" + personFios, "Удаление анкеты") != DialogResult.Yes)
+            {
+                return;
+            }
+            try
+            {
+                PersonInfo.Delete(personIdList, _connection);
+                foreach (DataRowView rowItem in personList)
+                {
+                    rowItem[CHECK] = false;
+                    rowItem.Delete();
+                }
+            }
+            catch (Exception err)
+            {
+                MainForm.ShowWarningMessage(err.Message, "Внимание");
+                _personBS.CancelEdit();
+            }
+        }
+
+        private void dismissStripButton_Click(object sender, EventArgs e)
+        {
+            AnketaUvolitForm tmpform = new AnketaUvolitForm();
+            tmpform.Owner = this;
+            DialogResult dRes = tmpform.ShowDialog(this);
+            if (dRes == DialogResult.OK)
+            {
+                List<DataRowView> persons = this.GetSelectedRows();
+                List<long> personIdList = new List<long>();
+                foreach (DataRowView rowItem in persons)
+                    personIdList.Add((long)rowItem[PersonView.id]);
+
+                PersonOrg.SetStateToUvolit(personIdList, _org.idVal, tmpform.DismissDate, _connection);
+                foreach (DataRowView rowItem in persons)
+                {
+                    rowItem[PersonView.state] = (int)PersonView.PersonState.Uvolen;
+                    rowItem[PersonView.dismissDate] = tmpform.DismissDate;
+                    rowItem[CHECK] = false;
+                    rowItem.EndEdit();
+                }
+                _personBS.MoveFirst();
+            }
+        }
+
+        private void restoreStripButton_Click(object sender, EventArgs e)
+        {
+            List<DataRowView> persons = this.GetSelectedRows();
+            List<long> personIdList = new List<long>();
+            foreach (DataRowView rowItem in persons)
+                personIdList.Add((long)rowItem[PersonView.id]);
+
+            PersonOrg.SetStateToRabotaet(personIdList, _org.idVal, _connection);
+            foreach (DataRowView rowItem in persons)
+            {
+                rowItem[PersonView.state] = (int)PersonView.PersonState.Rabotaet;
+                rowItem[PersonView.dismissDate] = DBNull.Value;
+                rowItem[CHECK] = false;
+                rowItem.EndEdit();
+            }
+            _personBS.MoveFirst();
+        }
+
+        private void printAnketsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<DataRowView> selectedRowList = this.GetSelectedRows();
+
+            if (selectedRowList.Count <= 0)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора анкеты");
+                return;
+            }
+            List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
+            foreach (DataRowView rowItem in selectedRowList)
+                rowList.Add(rowItem.Row);
+
+            PersonView.Print(rowList);
+        }
+
+        private void printUnregisteredToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void personView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex == -1 && e.ColumnIndex == 0)
+                {
+                    personView.EndEdit();
+                    bool allchecked = _personBS.Cast<DataRowView>().All(row => (bool)row[CHECK]);
+                    foreach (DataRowView row in _personBS)
+                        row[CHECK] = !allchecked;
+                }
+                this.personView.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void personView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1)
+                return;
+            editStripButton_Click(sender, e);
+        }
+
+        private void attachToOrgButton_Click(object sender, EventArgs e)
+        {
+            DataRowView curPersonRow = _personBS.Current as DataRowView;
+            if (curPersonRow == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Внимание");
+                return;
+            }
+            AnketaPersonOrgForm tmpform = new AnketaPersonOrgForm(curPersonRow.Row, _operator, _org.idVal, _connection);
+            tmpform.Owner = this;
+            tmpform.ShowDialog(this);
+        }
+
+        private void personView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void personView_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Delete)
+                {
+                    delStripButton_Click(sender, e);
+                }
+
+                if (e.KeyCode == Keys.Enter)
+                {
+                    editStripButton_Click(sender, e);
+                }
+
+                if (e.KeyCode == Keys.Space)
+                {
+                    if ((sender as DataGridView).CurrentRow == null)
+                        return;
+
+                    (_personBS.Current as DataRowView)[CHECK] = !Convert.ToBoolean((_personBS.Current as DataRowView)[CHECK]);
+                    (sender as DataGridView).EndEdit();
+                    (sender as DataGridView).Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
     }
 }
