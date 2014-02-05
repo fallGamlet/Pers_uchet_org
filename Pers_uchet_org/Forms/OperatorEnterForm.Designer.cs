@@ -39,9 +39,9 @@
             // acceptButton
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.Location = new System.Drawing.Point(107, 68);
+            this.acceptButton.Location = new System.Drawing.Point(115, 68);
             this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(110, 23);
+            this.acceptButton.Size = new System.Drawing.Size(80, 23);
             this.acceptButton.TabIndex = 3;
             this.acceptButton.Text = "Вход";
             this.acceptButton.UseVisualStyleBackColor = true;
@@ -50,9 +50,9 @@
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.Location = new System.Drawing.Point(223, 68);
+            this.cancelButton.Location = new System.Drawing.Point(201, 68);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(58, 23);
+            this.cancelButton.Size = new System.Drawing.Size(80, 23);
             this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Выход";
             this.cancelButton.UseVisualStyleBackColor = true;

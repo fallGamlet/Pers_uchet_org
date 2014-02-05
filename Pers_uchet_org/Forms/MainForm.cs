@@ -158,16 +158,17 @@ namespace Pers_uchet_org
             switch (dRes)
             {
                 case DialogResult.Cancel:
-                    Backup.isBackupCreate = false;
+                    Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
                     return 0;//Отмена входа
                 case DialogResult.OK:
                     _operator = enterForm.Operator;
+                    Backup.isBackupCreate = Backup.BackupCreate.None;
                     return 1; //Вход удачен
                 case DialogResult.Abort:
-                    Backup.isBackupCreate = false;
+                    Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
                     return 2; //n раз(а) ввели неправильный логин или пароль
                 default:
-                    Backup.isBackupCreate = false;
+                    Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
                     return -1;
             }
         }

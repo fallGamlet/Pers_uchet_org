@@ -97,7 +97,7 @@ namespace Pers_uchet_org
                 Backup.RestoreBackup(Settings.Default.BackupPath, copyListBox.SelectedValue.ToString(),
                     databaseFilePath);
                 MainForm.ShowInfoMessage("Восстановление успешно!", "Восстановление из резервной копии");
-                Backup.isBackupCreate = false;
+                Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
 
                 //Перезапустить программу
                 Application.Restart();
