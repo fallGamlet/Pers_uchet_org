@@ -25,7 +25,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Конструктор и Инициализатор
-        public SvodVedomostForm(Org org, Operator oper,string connectionStr)
+        public SvodVedomostForm(Org org, Operator oper, string connectionStr)
         {
             InitializeComponent();
             _connection = connectionStr;
@@ -76,49 +76,6 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - обработчики событий
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org);
-            tmpform.Owner = this;
-            tmpform.RepYear = (int)this.yearBox.Value;
-            DialogResult dRes = tmpform.ShowDialog();
-            if (dRes == DialogResult.OK)
-            {
-                RefillData((int)this.yearBox.Value);
-            }
-        }
-
-        private void editButton_Click(object sender, EventArgs e)
-        {
-            DataRowView curRow = _mergeBS.Current as DataRowView;
-            if (curRow == null)
-            {
-                MainForm.ShowInfoMessage("Необходимо сначала выбрать запись для редактирования!", "Внимание");
-                return;
-            }
-            SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org, curRow.Row);
-            tmpform.Owner = this;
-            DialogResult dRes = tmpform.ShowDialog();
-            if (dRes == DialogResult.OK)
-            {
-                RefillData((int)this.yearBox.Value);
-            }
-        }
-
-        private void removeButton_Click(object sender, EventArgs e)
-        {
-            DataRowView curRow = _mergeBS.Current as DataRowView;
-            Mergies.DeleteExecute(curRow.Row, _connection);
-            RefillData((int)this.yearBox.Value);
-        }
-
-        private void printButton_Click(object sender, EventArgs e)
-        {
-            SvodVedomostPrintForm tmpform = new SvodVedomostPrintForm();
-            tmpform.Owner = this;
-            tmpform.ShowDialog();
-        }
-
         private void yearBox_ValueChanged(object sender, EventArgs e)
         {
             MainForm.RepYear = (int)yearBox.Value;
@@ -135,18 +92,84 @@ namespace Pers_uchet_org
             DataRowView curRow = _mergeBS.Current as DataRowView;
             if (curRow == null)
             {
-                this.editButton.Enabled = false;
+                this.editStripButton.Enabled = false;
+                this.delStripButton.Enabled = false;
+                this.printStripButton.Enabled = false;
                 return;
             }
-            this.editButton.Enabled = true;
+
+            this.editStripButton.Enabled = true;
+            this.delStripButton.Enabled = true;
+            this.printStripButton.Enabled = true;
+
             if ((bool)curRow[MergiesView.actual])
             {
-                this.editButton.Text = editStateText;
+                this.editStripButton.Text = editStateText;
             }
             else
             {
-                this.editButton.Text = viewStateText;
+                this.editStripButton.Text = viewStateText;
             }
+        }
+
+        private void addStripButton_Click(object sender, EventArgs e)
+        {
+            SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org);
+            tmpform.Owner = this;
+            tmpform.RepYear = (int)this.yearBox.Value;
+            DialogResult dRes = tmpform.ShowDialog();
+            if (dRes == DialogResult.OK)
+            {
+                RefillData((int)this.yearBox.Value);
+            }
+        }
+
+        private void editStripButton_Click(object sender, EventArgs e)
+        {
+            DataRowView curRow = _mergeBS.Current as DataRowView;
+            if (curRow == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора сводной");
+                return;
+            }
+            SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org, curRow.Row);
+            tmpform.Owner = this;
+            DialogResult dRes = tmpform.ShowDialog();
+            if (dRes == DialogResult.OK)
+            {
+                RefillData((int)this.yearBox.Value);
+            }
+        }
+
+        private void delStripButton_Click(object sender, EventArgs e)
+        {
+            DataRowView curRow = _mergeBS.Current as DataRowView;
+            if (curRow == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора сводной");
+                return;
+            }
+
+            if (MainForm.ShowQuestionMessage("Вы действительно хотите удалить сводную ведомость СЗВ-3?", "Удаление сводной") != DialogResult.Yes)
+            {
+               return;
+            }
+            Mergies.DeleteExecute(curRow.Row, _connection);
+            RefillData((int)this.yearBox.Value);
+        }
+
+        private void printStripButton_Click(object sender, EventArgs e)
+        {
+            DataRowView curRow = _mergeBS.Current as DataRowView;
+            if (curRow == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора сводной");
+                return;
+            }
+
+            SvodVedomostPrintForm tmpform = new SvodVedomostPrintForm();
+            tmpform.Owner = this;
+            tmpform.ShowDialog();
         }
         #endregion
     }

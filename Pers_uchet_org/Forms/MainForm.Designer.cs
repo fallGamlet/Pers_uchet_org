@@ -373,7 +373,7 @@
             this.MinimumSize = new System.Drawing.Size(560, 128);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "ЕГФСС ПМР --- Персональный учет";
+            this.Text = "ЕГФСС ПМР --- Персонифицированный учет";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
