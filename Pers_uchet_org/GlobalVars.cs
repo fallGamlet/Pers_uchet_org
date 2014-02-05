@@ -1057,10 +1057,10 @@ namespace Pers_uchet_org
                                 person_id);
         }
 
-        static public string GetSelectIDText(string socnumber)
+        static public string GetSelectIDText(long person_id, string soc_number)
         {
-            return string.Format(" SELECT {0} FROM {1} WHERE {2} = '{3}' ",
-                                id, tablename, socNumber, socnumber);
+            return string.Format(" SELECT {0} FROM {1} WHERE {2} = '{3}' AND {4} <> {5}",
+                                id, tablename, socNumber, soc_number, id, person_id);
         }
 
         static public string GetChangeStateText(long person_id, object stateVal)
@@ -1098,12 +1098,12 @@ namespace Pers_uchet_org
                                     tablename, id, instr);
         }
 
-        static public bool IsExist(string socnumber, string connectionStr)
+        static public bool IsExist(long person_id, string socnumber, string connectionStr)
         {
             if (String.IsNullOrEmpty(socnumber))
                 return false;
             SQLiteConnection connection = new SQLiteConnection(connectionStr);
-            SQLiteCommand command = new SQLiteCommand(GetSelectIDText(socnumber));
+            SQLiteCommand command = new SQLiteCommand(GetSelectIDText(person_id, socnumber));
             command.Connection = connection;
             connection.Open();
             object res = command.ExecuteScalar();
@@ -2718,7 +2718,7 @@ namespace Pers_uchet_org
             {
                 list_id_str.Append(val + ",");
             }
-            list_id_str[list_id_str .Length - 1] = ' ';
+            list_id_str[list_id_str.Length - 1] = ' ';
 
             return string.Format(@" SELECT count(distinct {0}) as [count] FROM {1} WHERE {2} in ({3}) ",
                                 id, tablename, listId, list_id_str);
@@ -2817,7 +2817,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         static public string GetSelectDocsIDText(long list_id)
         {
-            return string.Format("SELECT d.{0} FROM {1} d INNER JOIN {2} pi ON d.{3} = pi.{4} AND pi.{5} IS NOT NULL AND TRIM(pi.{5}) <> '' WHERE d.{6} = {7}", 
+            return string.Format("SELECT d.{0} FROM {1} d INNER JOIN {2} pi ON d.{3} = pi.{4} AND pi.{5} IS NOT NULL AND TRIM(pi.{5}) <> '' WHERE d.{6} = {7}",
                                 id, tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id, PersonInfo.socNumber, listId, list_id);
         }
 
@@ -4880,7 +4880,7 @@ namespace Pers_uchet_org
         {
             return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, tableID, Tables.GetSelectIDText(table_name), rowID, row_id);
         }
-        
+
         internal static long ExecReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date, SQLiteConnection connection, SQLiteTransaction transaction)
         {
             string commantText = String.Empty;
@@ -4895,7 +4895,15 @@ namespace Pers_uchet_org
 
     public class Backup
     {
-        public static bool isBackupCreate = true;
+        public static BackupCreate isBackupCreate = BackupCreate.None;
+
+        public enum BackupCreate
+        {
+            Create = 0,
+            None = 1,
+            DoNotCreate = 2
+        }
+
         public static string columnDateTimeName = "dateTime";
         public static string columnPathName = "path";
         public enum TypeBackup { Auto = 0, ManualBackup = 1, RestoreBackup = 2 }
