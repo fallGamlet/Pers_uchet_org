@@ -256,7 +256,7 @@
             this.elobmenMenuItem.Name = "elobmenMenuItem";
             this.elobmenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
             this.elobmenMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.elobmenMenuItem.Text = "Электронный обмен с ГПФ";
+            this.elobmenMenuItem.Text = "Электронный обмен с фондом";
             this.elobmenMenuItem.Click += new System.EventHandler(this.elobmenMenuItem_Click);
             // 
             // adminMenu

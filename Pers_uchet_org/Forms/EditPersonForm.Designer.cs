@@ -818,7 +818,7 @@
             this.MinimumSize = new System.Drawing.Size(615, 600);
             this.Name = "EditPersonForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ввод анкетных данных";
+            this.Text = "Добавление\\редактирование анкетных данных";
             this.Load += new System.EventHandler(this.EditPersonForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.bornplaceGroupBox.ResumeLayout(false);

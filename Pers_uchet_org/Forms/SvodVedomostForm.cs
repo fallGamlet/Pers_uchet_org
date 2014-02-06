@@ -171,6 +171,11 @@ namespace Pers_uchet_org
             tmpform.Owner = this;
             tmpform.ShowDialog();
         }
+
+        private void mergeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            editStripButton_Click(sender, e);
+        }
         #endregion
     }
 }

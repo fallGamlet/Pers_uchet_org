@@ -149,21 +149,23 @@ namespace Pers_uchet_org
         {
             if (e.KeyChar == '\r')
             {
-                int pos;
-                string sval = this.searchSocnumBox.Text;
-                for (pos = 0; pos < _personBS.Count; pos++)
-                {
-                    DataRowView row = _personBS[pos] as DataRowView;
-                    if (row != null)
-                    {
-                        string sucnum = row[PersonView.socNumber] as string;
-                        if (sucnum != null && sucnum.Contains(sval))
-                        {
-                            _personBS.Position = pos;
-                            break;
-                        }
-                    }
-                }
+                searchFioBox.Text = "";
+                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.socNumber, this.searchSocnumBox.Text);
+                //int pos;
+                //string sval = this.searchSocnumBox.Text;
+                //for (pos = 0; pos < _personBS.Count; pos++)
+                //{
+                //    DataRowView row = _personBS[pos] as DataRowView;
+                //    if (row != null)
+                //    {
+                //        string sucnum = row[PersonView.socNumber] as string;
+                //        if (sucnum != null && sucnum.Contains(sval))
+                //        {
+                //            _personBS.Position = pos;
+                //            break;
+                //        }
+                //    }
+                //}
             }
         }
 
@@ -171,21 +173,23 @@ namespace Pers_uchet_org
         {
             if (e.KeyChar == '\r')
             {
-                int pos;
-                string sval = this.searchFioBox.Text;
-                for (pos = 0; pos < _personBS.Count; pos++)
-                {
-                    DataRowView row = _personBS[pos] as DataRowView;
-                    if (row != null)
-                    {
-                        string fio = row[PersonView.fio] as string;
-                        if (fio != null && fio.Contains(sval))
-                        {
-                            _personBS.Position = pos;
-                            break;
-                        }
-                    }
-                }
+                searchSocnumBox.Text = "";
+                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.fio, this.searchFioBox.Text);
+                //int pos;
+                //string sval = this.searchFioBox.Text;
+                //for (pos = 0; pos < _personBS.Count; pos++)
+                //{
+                //    DataRowView row = _personBS[pos] as DataRowView;
+                //    if (row != null)
+                //    {
+                //        string fio = row[PersonView.fio] as string;
+                //        if (fio != null && fio.Contains(sval))
+                //        {
+                //            _personBS.Position = pos;
+                //            break;
+                //        }
+                //    }
+                //}
             }
         }
 

@@ -37,16 +37,20 @@ namespace Pers_uchet_org.Forms
             this.regnumBox.Text = _org.regnumVal;
             this.yearBox.Text = _repYear.ToString();
 
-            _packetTable = ListsView.CreateTable();
+            _packetTable = ListsView2.CreateTable();
             _packetTable.Columns.Add(CHECK, typeof(bool)).DefaultValue = false;
-
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(ListsView.GetSelectText(_org.idVal, _repYear), _connection);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(ListsView2.GetSelectText(_org.idVal, _repYear, ListTypes.PersonalInfo), _connection);
             adapter.Fill(_packetTable);
 
-            this.packetView.AutoGenerateColumns = false;
             _packetBS = new BindingSource();
-            this.packetView.DataSource = _packetBS;
             _packetBS.DataSource = _packetTable;
+
+            // присвоение источника dataGrid
+            this.packetView.AutoGenerateColumns = false;
+            this.packetView.Columns["checkColumn"].DataPropertyName = CHECK;
+            this.packetView.Columns["packetNumColumn"].DataPropertyName = ListsView2.id;
+            this.packetView.Columns["docCountColumn"].DataPropertyName = ListsView2.countDocs;
+            this.packetView.DataSource = _packetBS;
         }
         #endregion
 
@@ -71,7 +75,7 @@ namespace Pers_uchet_org.Forms
         #region Методы - обработчики событий
         private void saveButton_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -85,8 +89,62 @@ namespace Pers_uchet_org.Forms
             {
                 MainForm.ShowInfoMessage("Необходимо выбрать хотя бы один пакет", "Внимание");
                 e.Cancel = true;
+                return;
+            }
+
+            if (this.DialogResult == DialogResult.OK && MainForm.ShowQuestionFlexMessage("Вы собираетесь заполнить документ \"СЗВ-З - Сводная ведомость\"\n" +
+                                                                                         "расчётными данными, полученными в результате суммирования\n" +
+                                                                                         "введённых в программе сведений по работникам Вашей организации!\n\n" +
+                                                                                         "Напоминаем, что форма \"СЗВ-З - Сводная ведомость\" должна\n" +
+                                                                                         "содержать сведения в целом по организации за отчётный год\n" +
+                                                                                         "такие же, какие были предоставлены в налоговую инспекцию!\n\n" +
+                                                                                         "Вы уверенны, что хотите сформировать \"СЗВ-З - Сводная ведомость\"\n" +
+                                                                                         "на основе расчётных данных?", "Внимание") != DialogResult.Yes)
+            {
+                e.Cancel = true;
+                return;
             }
         }
+
+        private void packetView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex == -1 && e.ColumnIndex == 0)
+                {
+                    (sender as DataGridView).EndEdit();
+                    bool allchecked = _packetBS.Cast<DataRowView>().All(row => (bool)row[CHECK]);
+                    foreach (DataRowView row in _packetBS)
+                        row[CHECK] = !allchecked;
+                }
+                (sender as DataGridView).Refresh();
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void packetView_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Space)
+                {
+                    if ((sender as DataGridView).CurrentRow == null)
+                        return;
+
+                    (_packetBS.Current as DataRowView)[CHECK] = !Convert.ToBoolean((_packetBS.Current as DataRowView)[CHECK]);
+                    (sender as DataGridView).EndEdit();
+                    (sender as DataGridView).Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
         #endregion
     }
 }

@@ -376,7 +376,7 @@ namespace Pers_uchet_org
                                 UPDATE {0} SET
                                  {1} = {2}, {3} = {4}, {5} = {6}
                                 ,{7} = {8}, {9} = {10} 
-                                WHERE{11} = {12};",
+                                WHERE {11} = {12};",
                             tablename,
                             regnum, pRegnum, name, pName, chief_post, pChief_post,
                             chief_fio, pChief_fio, booker_fio, pBooker_fio,
@@ -3015,22 +3015,22 @@ namespace Pers_uchet_org
         static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(id, typeof(long));
-            table.Columns.Add(docId, typeof(long));
-            table.Columns.Add(salaryGroupsId, typeof(long));
-            table.Columns.Add(january, typeof(double));
-            table.Columns.Add(february, typeof(double));
-            table.Columns.Add(march, typeof(double));
-            table.Columns.Add(april, typeof(double));
-            table.Columns.Add(may, typeof(double));
-            table.Columns.Add(june, typeof(double));
-            table.Columns.Add(july, typeof(double));
-            table.Columns.Add(august, typeof(double));
-            table.Columns.Add(september, typeof(double));
-            table.Columns.Add(october, typeof(double));
-            table.Columns.Add(november, typeof(double));
-            table.Columns.Add(december, typeof(double));
-            table.Columns.Add(sum, typeof(double));
+            table.Columns.Add(id, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(docId, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(salaryGroupsId, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(january, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(february, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(march, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(april, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(may, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(june, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(july, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(august, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(september, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(october, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(november, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(december, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(sum, typeof(double)).DefaultValue = 0.0;
             return table;
         }
 

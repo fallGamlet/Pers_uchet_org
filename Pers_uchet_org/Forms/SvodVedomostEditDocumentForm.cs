@@ -58,8 +58,8 @@ namespace Pers_uchet_org
 
             if (_mergeRow == null)
             {
-                this.packetcountBox.Value = 0;
-                this.documentcountBox.Value = 0;
+                //this.packetcountBox.Value = 0;
+                //this.documentcountBox.Value = 0;
                 _mergeInfoTable = null;
             }
             else
