@@ -42,7 +42,7 @@
             this.saveButton.Location = new System.Drawing.Point(108, 61);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 11;
+            this.saveButton.TabIndex = 4;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -54,7 +54,7 @@
             this.cancelButton.Location = new System.Drawing.Point(189, 61);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 10;
+            this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -64,7 +64,7 @@
             this.label22.Location = new System.Drawing.Point(12, 35);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(83, 13);
-            this.label22.TabIndex = 15;
+            this.label22.TabIndex = 1;
             this.label22.Text = "Конец периода";
             // 
             // label21
@@ -73,7 +73,7 @@
             this.label21.Location = new System.Drawing.Point(12, 9);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(89, 13);
-            this.label21.TabIndex = 14;
+            this.label21.TabIndex = 0;
             this.label21.Text = "Начало периода";
             // 
             // endDateTimePicker
@@ -84,7 +84,7 @@
             this.endDateTimePicker.Location = new System.Drawing.Point(140, 32);
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(124, 20);
-            this.endDateTimePicker.TabIndex = 13;
+            this.endDateTimePicker.TabIndex = 3;
             // 
             // beginDateTimePicker
             // 
@@ -95,7 +95,7 @@
             this.beginDateTimePicker.Location = new System.Drawing.Point(140, 6);
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(124, 20);
-            this.beginDateTimePicker.TabIndex = 12;
+            this.beginDateTimePicker.TabIndex = 2;
             this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
             // 
             // AddEditGeneralPeriodForm

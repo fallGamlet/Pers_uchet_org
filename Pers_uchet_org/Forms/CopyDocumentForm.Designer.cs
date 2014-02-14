@@ -59,7 +59,7 @@
             this.cancelButton.Location = new System.Drawing.Point(169, 55);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 5;
+            this.cancelButton.TabIndex = 3;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -70,11 +70,11 @@
             this.moveDocButton.Location = new System.Drawing.Point(75, 55);
             this.moveDocButton.Name = "moveDocButton";
             this.moveDocButton.Size = new System.Drawing.Size(88, 23);
-            this.moveDocButton.TabIndex = 6;
+            this.moveDocButton.TabIndex = 2;
             this.moveDocButton.Text = "Копировать";
             this.moveDocButton.UseVisualStyleBackColor = true;
             // 
-            // MoveDocumentForm
+            // CopyDocumentForm
             // 
             this.AcceptButton = this.moveDocButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -88,7 +88,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MoveDocumentForm";
+            this.Name = "CopyDocumentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Копирование документа(ов) СЗВ-1";
             this.Load += new System.EventHandler(this.MoveDocumentForm_Load);

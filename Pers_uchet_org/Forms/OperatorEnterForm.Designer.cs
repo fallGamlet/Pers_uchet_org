@@ -43,7 +43,7 @@
             this.acceptButton.Location = new System.Drawing.Point(115, 68);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(80, 23);
-            this.acceptButton.TabIndex = 3;
+            this.acceptButton.TabIndex = 5;
             this.acceptButton.Text = "Вход";
             this.acceptButton.UseVisualStyleBackColor = true;
             this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
@@ -54,7 +54,7 @@
             this.cancelButton.Location = new System.Drawing.Point(201, 68);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(80, 23);
-            this.cancelButton.TabIndex = 4;
+            this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "Выход";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -65,7 +65,7 @@
             this.label1.Location = new System.Drawing.Point(12, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 5;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Логин";
             // 
             // passwordBox
@@ -75,7 +75,7 @@
             this.passwordBox.Location = new System.Drawing.Point(78, 38);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.Size = new System.Drawing.Size(174, 20);
-            this.passwordBox.TabIndex = 2;
+            this.passwordBox.TabIndex = 3;
             this.passwordBox.UseSystemPasswordChar = true;
             this.passwordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordBox_KeyDown);
             // 
@@ -85,7 +85,7 @@
             this.label2.Location = new System.Drawing.Point(12, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 1;
             this.label2.Text = "Пароль";
             // 
             // loginComboBox
@@ -99,7 +99,7 @@
             this.loginComboBox.Location = new System.Drawing.Point(78, 12);
             this.loginComboBox.Name = "loginComboBox";
             this.loginComboBox.Size = new System.Drawing.Size(203, 21);
-            this.loginComboBox.TabIndex = 1;
+            this.loginComboBox.TabIndex = 2;
             this.loginComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.loginComboBox_KeyDown);
             // 
             // showPassButton
@@ -111,7 +111,7 @@
             this.showPassButton.Location = new System.Drawing.Point(258, 36);
             this.showPassButton.Name = "showPassButton";
             this.showPassButton.Size = new System.Drawing.Size(23, 23);
-            this.showPassButton.TabIndex = 10;
+            this.showPassButton.TabIndex = 4;
             this.showPassButton.Text = "V";
             this.showPassButton.UseVisualStyleBackColor = false;
             this.showPassButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseDown);

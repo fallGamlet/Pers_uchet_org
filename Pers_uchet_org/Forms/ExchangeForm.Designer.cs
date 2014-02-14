@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExchangeForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -99,7 +99,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(306, 424);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
@@ -117,7 +117,7 @@
             this.label8.Location = new System.Drawing.Point(6, 136);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(286, 60);
-            this.label8.TabIndex = 3;
+            this.label8.TabIndex = 0;
             this.label8.Text = "КОМПОНЕНТ НАХОДИТСЯ В РАЗРАБОТКЕ";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -145,7 +145,7 @@
             this.chekedDocCountBox.Name = "chekedDocCountBox";
             this.chekedDocCountBox.ReadOnly = true;
             this.chekedDocCountBox.Size = new System.Drawing.Size(54, 20);
-            this.chekedDocCountBox.TabIndex = 10;
+            this.chekedDocCountBox.TabIndex = 5;
             this.chekedDocCountBox.Text = "0";
             this.chekedDocCountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -156,7 +156,7 @@
             this.checkedPacketCountBox.Name = "checkedPacketCountBox";
             this.checkedPacketCountBox.ReadOnly = true;
             this.checkedPacketCountBox.Size = new System.Drawing.Size(45, 20);
-            this.checkedPacketCountBox.TabIndex = 9;
+            this.checkedPacketCountBox.TabIndex = 3;
             this.checkedPacketCountBox.Text = "0";
             this.checkedPacketCountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -170,7 +170,7 @@
             this.szvGroupBox.Location = new System.Drawing.Point(6, 342);
             this.szvGroupBox.Name = "szvGroupBox";
             this.szvGroupBox.Size = new System.Drawing.Size(289, 50);
-            this.szvGroupBox.TabIndex = 8;
+            this.szvGroupBox.TabIndex = 6;
             this.szvGroupBox.TabStop = false;
             this.szvGroupBox.Text = "Сводная ведомость (СЗВ-3)";
             // 
@@ -180,7 +180,7 @@
             this.docCountBox.Name = "docCountBox";
             this.docCountBox.ReadOnly = true;
             this.docCountBox.Size = new System.Drawing.Size(54, 20);
-            this.docCountBox.TabIndex = 8;
+            this.docCountBox.TabIndex = 3;
             this.docCountBox.Text = "0";
             this.docCountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -190,7 +190,7 @@
             this.packetCountBox.Name = "packetCountBox";
             this.packetCountBox.ReadOnly = true;
             this.packetCountBox.Size = new System.Drawing.Size(45, 20);
-            this.packetCountBox.TabIndex = 7;
+            this.packetCountBox.TabIndex = 1;
             this.packetCountBox.Text = "0";
             this.packetCountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -200,7 +200,7 @@
             this.label7.Location = new System.Drawing.Point(150, 22);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 13);
-            this.label7.TabIndex = 6;
+            this.label7.TabIndex = 2;
             this.label7.Text = ", документов";
             // 
             // label6
@@ -209,7 +209,7 @@
             this.label6.Location = new System.Drawing.Point(6, 22);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 13);
-            this.label6.TabIndex = 5;
+            this.label6.TabIndex = 0;
             this.label6.Text = "Пакетов";
             // 
             // label5
@@ -229,7 +229,7 @@
             this.label4.Location = new System.Drawing.Point(3, 319);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 13);
-            this.label4.TabIndex = 3;
+            this.label4.TabIndex = 2;
             this.label4.Text = "Выбрано пакетов";
             // 
             // packetsView
@@ -243,14 +243,14 @@
             this.packetsView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.packetsView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.packetsView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.packetsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.packetsView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.packetsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.packetsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
@@ -261,7 +261,7 @@
             this.packetsView.RowHeadersVisible = false;
             this.packetsView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.packetsView.Size = new System.Drawing.Size(286, 249);
-            this.packetsView.TabIndex = 2;
+            this.packetsView.TabIndex = 1;
             this.packetsView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetsView_CellClick);
             this.packetsView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetsView_CellContentClick);
             this.packetsView.Sorted += new System.EventHandler(this.packetsView_Sorted);
@@ -323,7 +323,7 @@
             this.label11.Location = new System.Drawing.Point(6, 144);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(286, 60);
-            this.label11.TabIndex = 13;
+            this.label11.TabIndex = 4;
             this.label11.Text = "С описанием структуры и месторасположения XML-файлов можно ознакомиться в справоч" +
     "ной системе программы.";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -334,7 +334,7 @@
             this.label10.Location = new System.Drawing.Point(6, 43);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(286, 91);
-            this.label10.TabIndex = 12;
+            this.label10.TabIndex = 3;
             this.label10.Text = "Модуль упаковки XML-файлов в электронный контейнер осуществляет предварительную п" +
     "роверку заранее подготовленных XML-файлов, шифрование, упаковку файлов в электро" +
     "нный контейнер и электронную подпись.";
@@ -345,7 +345,7 @@
             this.xmlPathButton.Location = new System.Drawing.Point(249, 17);
             this.xmlPathButton.Name = "xmlPathButton";
             this.xmlPathButton.Size = new System.Drawing.Size(43, 23);
-            this.xmlPathButton.TabIndex = 11;
+            this.xmlPathButton.TabIndex = 2;
             this.xmlPathButton.Text = "...";
             this.xmlPathButton.UseVisualStyleBackColor = true;
             this.xmlPathButton.Click += new System.EventHandler(this.xmlPathButton_Click);
@@ -356,7 +356,7 @@
             this.xmlPathTextBox.Name = "xmlPathTextBox";
             this.xmlPathTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.xmlPathTextBox.Size = new System.Drawing.Size(237, 20);
-            this.xmlPathTextBox.TabIndex = 10;
+            this.xmlPathTextBox.TabIndex = 1;
             this.xmlPathTextBox.Text = "C:\\XML-ROOT\\";
             // 
             // label9
@@ -365,7 +365,7 @@
             this.label9.Location = new System.Drawing.Point(6, 3);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(173, 13);
-            this.label9.TabIndex = 4;
+            this.label9.TabIndex = 0;
             this.label9.Text = "Место размещения XML-файлов";
             // 
             // groupBox1
@@ -375,7 +375,7 @@
             this.groupBox1.Location = new System.Drawing.Point(324, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(409, 144);
-            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "1";
             // 
@@ -385,7 +385,7 @@
             this.label1.Location = new System.Drawing.Point(6, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(397, 86);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -396,7 +396,7 @@
             this.driveBox.Location = new System.Drawing.Point(166, 105);
             this.driveBox.Name = "driveBox";
             this.driveBox.Size = new System.Drawing.Size(231, 21);
-            this.driveBox.TabIndex = 6;
+            this.driveBox.TabIndex = 1;
             this.driveBox.Click += new System.EventHandler(this.driveBox_Click);
             // 
             // viewdataButton
@@ -406,7 +406,7 @@
             this.viewdataButton.Location = new System.Drawing.Point(6, 19);
             this.viewdataButton.Name = "viewdataButton";
             this.viewdataButton.Size = new System.Drawing.Size(397, 23);
-            this.viewdataButton.TabIndex = 3;
+            this.viewdataButton.TabIndex = 0;
             this.viewdataButton.Text = "Просмотреть файл электронных данных";
             this.viewdataButton.UseVisualStyleBackColor = true;
             this.viewdataButton.Click += new System.EventHandler(this.viewDataButton_Click);
@@ -418,7 +418,7 @@
             this.flashRButton.Location = new System.Drawing.Point(6, 19);
             this.flashRButton.Name = "flashRButton";
             this.flashRButton.Size = new System.Drawing.Size(118, 17);
-            this.flashRButton.TabIndex = 5;
+            this.flashRButton.TabIndex = 0;
             this.flashRButton.TabStop = true;
             this.flashRButton.Text = "Флеш накопитель";
             this.flashRButton.UseVisualStyleBackColor = true;
@@ -431,7 +431,7 @@
             this.yearGroupBox.Location = new System.Drawing.Point(68, 12);
             this.yearGroupBox.Name = "yearGroupBox";
             this.yearGroupBox.Size = new System.Drawing.Size(181, 52);
-            this.yearGroupBox.TabIndex = 7;
+            this.yearGroupBox.TabIndex = 0;
             this.yearGroupBox.TabStop = false;
             // 
             // label2
@@ -440,7 +440,7 @@
             this.label2.Location = new System.Drawing.Point(8, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 13);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Отчетный год";
             // 
             // yearBox
@@ -459,7 +459,7 @@
             0});
             this.yearBox.Name = "yearBox";
             this.yearBox.Size = new System.Drawing.Size(85, 20);
-            this.yearBox.TabIndex = 0;
+            this.yearBox.TabIndex = 1;
             this.yearBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.yearBox.Value = new decimal(new int[] {
             2013,
@@ -474,7 +474,7 @@
             this.groupBox2.Location = new System.Drawing.Point(324, 162);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(409, 89);
-            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "2";
             // 
@@ -486,7 +486,7 @@
             this.modeGroupBox.Location = new System.Drawing.Point(6, 19);
             this.modeGroupBox.Name = "modeGroupBox";
             this.modeGroupBox.Size = new System.Drawing.Size(397, 65);
-            this.modeGroupBox.TabIndex = 12;
+            this.modeGroupBox.TabIndex = 0;
             this.modeGroupBox.TabStop = false;
             this.modeGroupBox.Text = "Укажите способ передачи";
             // 
@@ -497,7 +497,7 @@
             this.flashBox.Location = new System.Drawing.Point(160, 18);
             this.flashBox.Name = "flashBox";
             this.flashBox.Size = new System.Drawing.Size(231, 21);
-            this.flashBox.TabIndex = 7;
+            this.flashBox.TabIndex = 1;
             this.flashBox.Click += new System.EventHandler(this.flashBox_Click);
             // 
             // internetRButton
@@ -506,7 +506,7 @@
             this.internetRButton.Location = new System.Drawing.Point(6, 42);
             this.internetRButton.Name = "internetRButton";
             this.internetRButton.Size = new System.Drawing.Size(73, 17);
-            this.internetRButton.TabIndex = 6;
+            this.internetRButton.TabIndex = 2;
             this.internetRButton.Text = "Интернет";
             this.internetRButton.UseVisualStyleBackColor = true;
             // 
@@ -518,7 +518,7 @@
             this.groupBox3.Location = new System.Drawing.Point(324, 257);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(409, 114);
-            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "3";
             // 
@@ -529,7 +529,7 @@
             this.progresLabel.Location = new System.Drawing.Point(93, 75);
             this.progresLabel.Name = "progresLabel";
             this.progresLabel.Size = new System.Drawing.Size(95, 16);
-            this.progresLabel.TabIndex = 6;
+            this.progresLabel.TabIndex = 2;
             this.progresLabel.Text = "Прогресс: 0%";
             // 
             // keyDateLabel
@@ -539,7 +539,7 @@
             this.keyDateLabel.Location = new System.Drawing.Point(55, 45);
             this.keyDateLabel.Name = "keyDateLabel";
             this.keyDateLabel.Size = new System.Drawing.Size(207, 16);
-            this.keyDateLabel.TabIndex = 5;
+            this.keyDateLabel.TabIndex = 1;
             this.keyDateLabel.Tag = "Ключ действителен с {0} до {1}";
             this.keyDateLabel.Text = "Ключ действителен с {0} до {1}";
             // 
@@ -550,7 +550,7 @@
             this.createDataFileButton.Location = new System.Drawing.Point(6, 19);
             this.createDataFileButton.Name = "createDataFileButton";
             this.createDataFileButton.Size = new System.Drawing.Size(397, 23);
-            this.createDataFileButton.TabIndex = 4;
+            this.createDataFileButton.TabIndex = 0;
             this.createDataFileButton.Text = "Сформировать файл электронных данных";
             this.createDataFileButton.UseVisualStyleBackColor = true;
             this.createDataFileButton.Click += new System.EventHandler(this.createDataFileButton_Click);
@@ -561,7 +561,7 @@
             this.groupBox4.Location = new System.Drawing.Point(324, 377);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(409, 56);
-            this.groupBox4.TabIndex = 10;
+            this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "4";
             // 
@@ -572,7 +572,7 @@
             this.groupBox5.Location = new System.Drawing.Point(324, 439);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(409, 55);
-            this.groupBox5.TabIndex = 11;
+            this.groupBox5.TabIndex = 6;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "5";
             // 
@@ -583,7 +583,7 @@
             this.senddataButton.Location = new System.Drawing.Point(6, 19);
             this.senddataButton.Name = "senddataButton";
             this.senddataButton.Size = new System.Drawing.Size(397, 23);
-            this.senddataButton.TabIndex = 4;
+            this.senddataButton.TabIndex = 0;
             this.senddataButton.Text = "Отправить данные в ЕГФСС через Интернет";
             this.senddataButton.UseVisualStyleBackColor = true;
             this.senddataButton.Click += new System.EventHandler(this.sendDataButton_Click);

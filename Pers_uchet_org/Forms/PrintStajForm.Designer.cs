@@ -96,7 +96,7 @@
             this.allDocsRadioButton.Location = new System.Drawing.Point(6, 65);
             this.allDocsRadioButton.Name = "allDocsRadioButton";
             this.allDocsRadioButton.Size = new System.Drawing.Size(205, 17);
-            this.allDocsRadioButton.TabIndex = 7;
+            this.allDocsRadioButton.TabIndex = 2;
             this.allDocsRadioButton.TabStop = true;
             this.allDocsRadioButton.Text = "Печатать все документы из пакета";
             this.allDocsRadioButton.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             this.checkedDocsRadioButton.Location = new System.Drawing.Point(6, 42);
             this.checkedDocsRadioButton.Name = "checkedDocsRadioButton";
             this.checkedDocsRadioButton.Size = new System.Drawing.Size(196, 17);
-            this.checkedDocsRadioButton.TabIndex = 6;
+            this.checkedDocsRadioButton.TabIndex = 1;
             this.checkedDocsRadioButton.TabStop = true;
             this.checkedDocsRadioButton.Text = "Печатать отмеченные документы";
             this.checkedDocsRadioButton.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             this.curDocRadioButton.Location = new System.Drawing.Point(6, 19);
             this.curDocRadioButton.Name = "curDocRadioButton";
             this.curDocRadioButton.Size = new System.Drawing.Size(169, 17);
-            this.curDocRadioButton.TabIndex = 5;
+            this.curDocRadioButton.TabIndex = 0;
             this.curDocRadioButton.TabStop = true;
             this.curDocRadioButton.Text = "Печатать текущий документ";
             this.curDocRadioButton.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             this.cancelButton.Location = new System.Drawing.Point(180, 210);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 7;
+            this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -157,7 +157,7 @@
             this.printButton.Location = new System.Drawing.Point(99, 210);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(75, 23);
-            this.printButton.TabIndex = 8;
+            this.printButton.TabIndex = 7;
             this.printButton.Text = "Печатать";
             this.printButton.UseVisualStyleBackColor = true;
             // 

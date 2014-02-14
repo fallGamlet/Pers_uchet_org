@@ -79,7 +79,7 @@
             this.editButton.Location = new System.Drawing.Point(87, 46);
             this.editButton.Name = "editButton";
             this.editButton.Size = new System.Drawing.Size(75, 23);
-            this.editButton.TabIndex = 8;
+            this.editButton.TabIndex = 3;
             this.editButton.Text = "Изменить";
             this.editButton.UseVisualStyleBackColor = true;
             this.editButton.Click += new System.EventHandler(this.editButton_Click);
@@ -89,7 +89,7 @@
             this.addButton.Location = new System.Drawing.Point(6, 46);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 23);
-            this.addButton.TabIndex = 7;
+            this.addButton.TabIndex = 2;
             this.addButton.Text = "Добавить";
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
@@ -99,7 +99,7 @@
             this.removeButton.Location = new System.Drawing.Point(168, 46);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(75, 23);
-            this.removeButton.TabIndex = 6;
+            this.removeButton.TabIndex = 4;
             this.removeButton.Text = "Удалить";
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
@@ -121,7 +121,7 @@
             this.operatorBox.Location = new System.Drawing.Point(6, 19);
             this.operatorBox.Name = "operatorBox";
             this.operatorBox.Size = new System.Drawing.Size(418, 21);
-            this.operatorBox.TabIndex = 0;
+            this.operatorBox.TabIndex = 1;
             // 
             // groupBox2
             // 
@@ -225,7 +225,7 @@
             this.importanketaCheckBox.Location = new System.Drawing.Point(6, 158);
             this.importanketaCheckBox.Name = "importanketaCheckBox";
             this.importanketaCheckBox.Size = new System.Drawing.Size(198, 17);
-            this.importanketaCheckBox.TabIndex = 9;
+            this.importanketaCheckBox.TabIndex = 5;
             this.importanketaCheckBox.Text = "Импорт анкет из др. организаций";
             this.importanketaCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -245,7 +245,7 @@
             this.exchangedataCheckBox.Location = new System.Drawing.Point(6, 135);
             this.exchangedataCheckBox.Name = "exchangedataCheckBox";
             this.exchangedataCheckBox.Size = new System.Drawing.Size(251, 17);
-            this.exchangedataCheckBox.TabIndex = 6;
+            this.exchangedataCheckBox.TabIndex = 4;
             this.exchangedataCheckBox.Text = "Обмен электронными данными с ГПФ ПМР";
             this.exchangedataCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -255,7 +255,7 @@
             this.paystajprintCheckBox.Location = new System.Drawing.Point(6, 101);
             this.paystajprintCheckBox.Name = "paystajprintCheckBox";
             this.paystajprintCheckBox.Size = new System.Drawing.Size(259, 17);
-            this.paystajprintCheckBox.TabIndex = 5;
+            this.paystajprintCheckBox.TabIndex = 3;
             this.paystajprintCheckBox.Text = "Печать сведений о стаже и заработной плате";
             this.paystajprintCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -265,7 +265,7 @@
             this.paystajaccessCheckBox.Location = new System.Drawing.Point(6, 78);
             this.paystajaccessCheckBox.Name = "paystajaccessCheckBox";
             this.paystajaccessCheckBox.Size = new System.Drawing.Size(277, 17);
-            this.paystajaccessCheckBox.TabIndex = 3;
+            this.paystajaccessCheckBox.TabIndex = 2;
             this.paystajaccessCheckBox.Text = "Доступ к сведениям о стаже и заработной плате";
             this.paystajaccessCheckBox.UseVisualStyleBackColor = true;
             this.paystajaccessCheckBox.CheckedChanged += new System.EventHandler(this.paystajaccessCheckBox_CheckedChanged);
@@ -276,7 +276,7 @@
             this.anketaprintCheckBox.Location = new System.Drawing.Point(6, 44);
             this.anketaprintCheckBox.Name = "anketaprintCheckBox";
             this.anketaprintCheckBox.Size = new System.Drawing.Size(153, 17);
-            this.anketaprintCheckBox.TabIndex = 2;
+            this.anketaprintCheckBox.TabIndex = 1;
             this.anketaprintCheckBox.Text = "Печать анкетных данных";
             this.anketaprintCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -288,7 +288,7 @@
             this.anketaaccesslevelBox.Location = new System.Drawing.Point(294, 19);
             this.anketaaccesslevelBox.Name = "anketaaccesslevelBox";
             this.anketaaccesslevelBox.Size = new System.Drawing.Size(130, 21);
-            this.anketaaccesslevelBox.TabIndex = 1;
+            this.anketaaccesslevelBox.TabIndex = 6;
             // 
             // anketaaccessCheckBox
             // 
@@ -307,7 +307,7 @@
             this.closeButton.Location = new System.Drawing.Point(361, 430);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 3;
+            this.closeButton.TabIndex = 4;
             this.closeButton.Text = "Отмена";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
@@ -318,7 +318,7 @@
             this.saveButton.Location = new System.Drawing.Point(280, 430);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 4;
+            this.saveButton.TabIndex = 3;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);

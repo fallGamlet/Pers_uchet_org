@@ -114,14 +114,6 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.sumLabel = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.info2GroupBox = new System.Windows.Forms.GroupBox();
@@ -217,7 +209,7 @@
             this.cancelButton.Location = new System.Drawing.Point(705, 479);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 7;
+            this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -227,7 +219,7 @@
             this.saveButton.Location = new System.Drawing.Point(574, 479);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(125, 23);
-            this.saveButton.TabIndex = 8;
+            this.saveButton.TabIndex = 4;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -238,7 +230,7 @@
             this.previewButton.Location = new System.Drawing.Point(12, 479);
             this.previewButton.Name = "previewButton";
             this.previewButton.Size = new System.Drawing.Size(177, 23);
-            this.previewButton.TabIndex = 6;
+            this.previewButton.TabIndex = 3;
             this.previewButton.Text = "Предварительный просмотр";
             this.previewButton.UseVisualStyleBackColor = true;
             this.previewButton.Click += new System.EventHandler(this.previewButton_Click);
@@ -735,14 +727,6 @@
             this.tabPage2.Controls.Add(this.sum2Box);
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.dataViewProfit);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.label15);
-            this.tabPage2.Controls.Add(this.label16);
-            this.tabPage2.Controls.Add(this.label17);
-            this.tabPage2.Controls.Add(this.label18);
-            this.tabPage2.Controls.Add(this.label13);
             this.tabPage2.Controls.Add(this.sumLabel);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -761,7 +745,7 @@
             this.panelHint.Location = new System.Drawing.Point(495, 290);
             this.panelHint.Name = "panelHint";
             this.panelHint.Size = new System.Drawing.Size(259, 27);
-            this.panelHint.TabIndex = 13;
+            this.panelHint.TabIndex = 1;
             // 
             // textBoxHint
             // 
@@ -793,7 +777,7 @@
             this.label19.Margin = new System.Windows.Forms.Padding(0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(49, 20);
-            this.label19.TabIndex = 42;
+            this.label19.TabIndex = 12;
             this.label19.Text = "Расчёт";
             this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -804,7 +788,7 @@
             this.sumCalc5Box.Name = "sumCalc5Box";
             this.sumCalc5Box.ReadOnly = true;
             this.sumCalc5Box.Size = new System.Drawing.Size(120, 20);
-            this.sumCalc5Box.TabIndex = 40;
+            this.sumCalc5Box.TabIndex = 11;
             this.sumCalc5Box.TabStop = false;
             this.sumCalc5Box.Text = "0";
             this.sumCalc5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -816,7 +800,7 @@
             this.sumCalc3Box.Name = "sumCalc3Box";
             this.sumCalc3Box.ReadOnly = true;
             this.sumCalc3Box.Size = new System.Drawing.Size(121, 20);
-            this.sumCalc3Box.TabIndex = 37;
+            this.sumCalc3Box.TabIndex = 10;
             this.sumCalc3Box.TabStop = false;
             this.sumCalc3Box.Text = "0";
             this.sumCalc3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -828,7 +812,7 @@
             this.sum1Box.Name = "sum1Box";
             this.sum1Box.ReadOnly = true;
             this.sum1Box.Size = new System.Drawing.Size(121, 20);
-            this.sum1Box.TabIndex = 26;
+            this.sum1Box.TabIndex = 4;
             this.sum1Box.TabStop = false;
             this.sum1Box.Text = "0";
             this.sum1Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -840,7 +824,7 @@
             this.sum10Box.Name = "sum10Box";
             this.sum10Box.ReadOnly = true;
             this.sum10Box.Size = new System.Drawing.Size(100, 20);
-            this.sum10Box.TabIndex = 36;
+            this.sum10Box.TabIndex = 9;
             this.sum10Box.TabStop = false;
             this.sum10Box.Text = "0";
             this.sum10Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -852,7 +836,7 @@
             this.sum5Box.Name = "sum5Box";
             this.sum5Box.ReadOnly = true;
             this.sum5Box.Size = new System.Drawing.Size(120, 20);
-            this.sum5Box.TabIndex = 25;
+            this.sum5Box.TabIndex = 8;
             this.sum5Box.TabStop = false;
             this.sum5Box.Text = "0";
             this.sum5Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -865,7 +849,7 @@
             this.sum4Box.Name = "sum4Box";
             this.sum4Box.ReadOnly = true;
             this.sum4Box.Size = new System.Drawing.Size(120, 20);
-            this.sum4Box.TabIndex = 3;
+            this.sum4Box.TabIndex = 7;
             this.sum4Box.TabStop = false;
             this.sum4Box.Text = "0";
             this.sum4Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -879,7 +863,7 @@
             this.sum3Box.Name = "sum3Box";
             this.sum3Box.ReadOnly = true;
             this.sum3Box.Size = new System.Drawing.Size(121, 20);
-            this.sum3Box.TabIndex = 2;
+            this.sum3Box.TabIndex = 6;
             this.sum3Box.TabStop = false;
             this.sum3Box.Text = "0";
             this.sum3Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -894,7 +878,7 @@
             this.sum2Box.Name = "sum2Box";
             this.sum2Box.ReadOnly = true;
             this.sum2Box.Size = new System.Drawing.Size(119, 20);
-            this.sum2Box.TabIndex = 23;
+            this.sum2Box.TabIndex = 5;
             this.sum2Box.TabStop = false;
             this.sum2Box.Text = "0";
             this.sum2Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -906,7 +890,7 @@
             this.label14.Margin = new System.Windows.Forms.Padding(0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(49, 20);
-            this.label14.TabIndex = 27;
+            this.label14.TabIndex = 3;
             this.label14.Text = "Факт";
             this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -955,7 +939,7 @@
             this.dataViewProfit.RowHeadersVisible = false;
             this.dataViewProfit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataViewProfit.Size = new System.Drawing.Size(753, 317);
-            this.dataViewProfit.TabIndex = 1;
+            this.dataViewProfit.TabIndex = 0;
             this.dataViewProfit.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataViewProfit_CellEnter);
             this.dataViewProfit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataViewProfit_CellFormatting);
             this.dataViewProfit.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataViewProfit_CellValidated);
@@ -1057,96 +1041,6 @@
             this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column6.Width = 96;
             // 
-            // label10
-            // 
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Location = new System.Drawing.Point(414, 33);
-            this.label10.Margin = new System.Windows.Forms.Padding(0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(120, 50);
-            this.label10.TabIndex = 32;
-            this.label10.Text = "уплаченные страхователем";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label8
-            // 
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(654, 3);
-            this.label8.Margin = new System.Windows.Forms.Padding(0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(101, 80);
-            this.label8.TabIndex = 34;
-            this.label8.Text = "Фактически отработанных дней";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label9
-            // 
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Location = new System.Drawing.Point(53, 3);
-            this.label9.Margin = new System.Windows.Forms.Padding(0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(121, 80);
-            this.label9.TabIndex = 28;
-            this.label9.Text = "Сумма дохода, на который начислены страховые взносы";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label15.Location = new System.Drawing.Point(174, 3);
-            this.label15.Margin = new System.Windows.Forms.Padding(0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(119, 80);
-            this.label15.TabIndex = 29;
-            this.label15.Text = "Выплаты, учитываемые для назначения пенсии";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label16
-            // 
-            this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label16.Location = new System.Drawing.Point(293, 3);
-            this.label16.Margin = new System.Windows.Forms.Padding(0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(241, 30);
-            this.label16.TabIndex = 30;
-            this.label16.Text = "Страховые взносы";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label17
-            // 
-            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label17.Location = new System.Drawing.Point(534, 3);
-            this.label17.Margin = new System.Windows.Forms.Padding(0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(120, 80);
-            this.label17.TabIndex = 33;
-            this.label17.Text = "Сумма обязательных страховых взносов";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label18
-            // 
-            this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label18.Location = new System.Drawing.Point(293, 33);
-            this.label18.Margin = new System.Windows.Forms.Padding(0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(121, 50);
-            this.label18.TabIndex = 31;
-            this.label18.Text = "назначенные страхователем";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label13
-            // 
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(3, 3);
-            this.label13.Margin = new System.Windows.Forms.Padding(0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(50, 80);
-            this.label13.TabIndex = 35;
-            this.label13.Text = "Месяц";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label13.UseCompatibleTextRendering = true;
-            // 
             // sumLabel
             // 
             this.sumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1155,7 +1049,7 @@
             this.sumLabel.Location = new System.Drawing.Point(3, 320);
             this.sumLabel.Name = "sumLabel";
             this.sumLabel.Size = new System.Drawing.Size(753, 68);
-            this.sumLabel.TabIndex = 44;
+            this.sumLabel.TabIndex = 2;
             this.sumLabel.Text = "Итого";
             this.sumLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -1185,7 +1079,7 @@
             this.info2GroupBox.Location = new System.Drawing.Point(353, 307);
             this.info2GroupBox.Name = "info2GroupBox";
             this.info2GroupBox.Size = new System.Drawing.Size(401, 81);
-            this.info2GroupBox.TabIndex = 22;
+            this.info2GroupBox.TabIndex = 5;
             this.info2GroupBox.TabStop = false;
             this.info2GroupBox.Text = "Сумма начисленных страховых взносов за указанный период";
             // 
@@ -1238,7 +1132,7 @@
             this.yearGroupBox.Location = new System.Drawing.Point(647, 6);
             this.yearGroupBox.Name = "yearGroupBox";
             this.yearGroupBox.Size = new System.Drawing.Size(107, 75);
-            this.yearGroupBox.TabIndex = 8;
+            this.yearGroupBox.TabIndex = 3;
             this.yearGroupBox.TabStop = false;
             this.yearGroupBox.Text = "Отчетный год";
             // 
@@ -1264,7 +1158,7 @@
             this.infoGroupBox.Location = new System.Drawing.Point(6, 304);
             this.infoGroupBox.Name = "infoGroupBox";
             this.infoGroupBox.Size = new System.Drawing.Size(341, 81);
-            this.infoGroupBox.TabIndex = 18;
+            this.infoGroupBox.TabIndex = 4;
             this.infoGroupBox.TabStop = false;
             this.infoGroupBox.Text = "Сведения о работодателе";
             // 
@@ -1317,7 +1211,7 @@
             this.codeGroupBox.Location = new System.Drawing.Point(136, 6);
             this.codeGroupBox.Name = "codeGroupBox";
             this.codeGroupBox.Size = new System.Drawing.Size(318, 75);
-            this.codeGroupBox.TabIndex = 2;
+            this.codeGroupBox.TabIndex = 1;
             this.codeGroupBox.TabStop = false;
             this.codeGroupBox.Text = "Код категории застрахованного лица";
             // 
@@ -1328,7 +1222,7 @@
             this.percentLabel.Location = new System.Drawing.Point(120, 43);
             this.percentLabel.Name = "percentLabel";
             this.percentLabel.Size = new System.Drawing.Size(74, 24);
-            this.percentLabel.TabIndex = 6;
+            this.percentLabel.TabIndex = 1;
             this.percentLabel.Text = "0,0 %";
             this.percentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1341,7 +1235,7 @@
             this.codeComboBox.Location = new System.Drawing.Point(6, 19);
             this.codeComboBox.Name = "codeComboBox";
             this.codeComboBox.Size = new System.Drawing.Size(306, 21);
-            this.codeComboBox.TabIndex = 1;
+            this.codeComboBox.TabIndex = 0;
             // 
             // workPlaceGroupBox
             // 
@@ -1350,7 +1244,7 @@
             this.workPlaceGroupBox.Location = new System.Drawing.Point(6, 6);
             this.workPlaceGroupBox.Name = "workPlaceGroupBox";
             this.workPlaceGroupBox.Size = new System.Drawing.Size(124, 75);
-            this.workPlaceGroupBox.TabIndex = 1;
+            this.workPlaceGroupBox.TabIndex = 0;
             this.workPlaceGroupBox.TabStop = false;
             this.workPlaceGroupBox.Text = "Место работы";
             // 
@@ -1386,7 +1280,7 @@
             this.citizenshipGroupBox.Location = new System.Drawing.Point(460, 6);
             this.citizenshipGroupBox.Name = "citizenshipGroupBox";
             this.citizenshipGroupBox.Size = new System.Drawing.Size(181, 75);
-            this.citizenshipGroupBox.TabIndex = 3;
+            this.citizenshipGroupBox.TabIndex = 2;
             this.citizenshipGroupBox.TabStop = false;
             this.citizenshipGroupBox.Text = "Гражданство";
             // 
@@ -1588,14 +1482,6 @@
         private System.Windows.Forms.TextBox sum2Box;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridView dataViewProfit;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label sumLabel;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox yearGroupBox;

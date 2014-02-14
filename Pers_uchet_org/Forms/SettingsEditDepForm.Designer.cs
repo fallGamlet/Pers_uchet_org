@@ -41,7 +41,7 @@
             this.cancelButton.Location = new System.Drawing.Point(273, 71);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 0;
+            this.cancelButton.TabIndex = 3;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -51,7 +51,7 @@
             this.label1.Location = new System.Drawing.Point(9, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(234, 13);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Наименование структурного подразделения";
             // 
             // depnameBox
@@ -61,7 +61,7 @@
             this.depnameBox.Location = new System.Drawing.Point(12, 38);
             this.depnameBox.Name = "depnameBox";
             this.depnameBox.Size = new System.Drawing.Size(336, 20);
-            this.depnameBox.TabIndex = 2;
+            this.depnameBox.TabIndex = 1;
             // 
             // acceptButton
             // 
@@ -70,7 +70,7 @@
             this.acceptButton.Location = new System.Drawing.Point(192, 71);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(75, 23);
-            this.acceptButton.TabIndex = 3;
+            this.acceptButton.TabIndex = 2;
             this.acceptButton.Text = "Принять";
             this.acceptButton.UseVisualStyleBackColor = true;
             // 

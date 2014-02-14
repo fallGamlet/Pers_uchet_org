@@ -45,9 +45,9 @@
             this.typedocumentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nastroikiMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.poiskfizlicaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.smenaparoliaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vosstanovleniebdMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smenaparoliaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.poiskfizlicaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.elobmenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.operatoriMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -211,13 +211,13 @@
             this.nastroikiMenuItem.Text = "Настройки";
             this.nastroikiMenuItem.Click += new System.EventHandler(this.nastroikiMenuItem_Click);
             // 
-            // poiskfizlicaMenuItem
+            // vosstanovleniebdMenuItem
             // 
-            this.poiskfizlicaMenuItem.Name = "poiskfizlicaMenuItem";
-            this.poiskfizlicaMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
-            this.poiskfizlicaMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.poiskfizlicaMenuItem.Text = "Поиск физ. лица";
-            this.poiskfizlicaMenuItem.Click += new System.EventHandler(this.poiskfizlicaMenuItem_Click);
+            this.vosstanovleniebdMenuItem.Name = "vosstanovleniebdMenuItem";
+            this.vosstanovleniebdMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
+            this.vosstanovleniebdMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.vosstanovleniebdMenuItem.Text = "Восстановление БД из резервной копии";
+            this.vosstanovleniebdMenuItem.Click += new System.EventHandler(this.vosstanovleniebdMenuItem_Click);
             // 
             // smenaparoliaMenuItem
             // 
@@ -227,13 +227,13 @@
             this.smenaparoliaMenuItem.Text = "Смена пароля";
             this.smenaparoliaMenuItem.Click += new System.EventHandler(this.smenaparoliaMenuItem_Click);
             // 
-            // vosstanovleniebdMenuItem
+            // poiskfizlicaMenuItem
             // 
-            this.vosstanovleniebdMenuItem.Name = "vosstanovleniebdMenuItem";
-            this.vosstanovleniebdMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.vosstanovleniebdMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.vosstanovleniebdMenuItem.Text = "Восстановление БД из резервной копии";
-            this.vosstanovleniebdMenuItem.Click += new System.EventHandler(this.vosstanovleniebdMenuItem_Click);
+            this.poiskfizlicaMenuItem.Name = "poiskfizlicaMenuItem";
+            this.poiskfizlicaMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
+            this.poiskfizlicaMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.poiskfizlicaMenuItem.Text = "Поиск физ. лица";
+            this.poiskfizlicaMenuItem.Click += new System.EventHandler(this.poiskfizlicaMenuItem_Click);
             // 
             // elobmenMenuItem
             // 
@@ -320,7 +320,7 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.statusStrip1.Size = new System.Drawing.Size(544, 22);
-            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusCaptionLabel
@@ -342,7 +342,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 24);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(544, 44);
-            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // MainForm

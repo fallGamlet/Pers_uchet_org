@@ -116,7 +116,7 @@
             this.closeButton.Location = new System.Drawing.Point(522, 537);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 8;
+            this.closeButton.TabIndex = 7;
             this.closeButton.Text = "Отмена";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
@@ -265,7 +265,7 @@
             this.bornplaceGroupBox.Margin = new System.Windows.Forms.Padding(1);
             this.bornplaceGroupBox.Name = "bornplaceGroupBox";
             this.bornplaceGroupBox.Size = new System.Drawing.Size(289, 126);
-            this.bornplaceGroupBox.TabIndex = 2;
+            this.bornplaceGroupBox.TabIndex = 1;
             this.bornplaceGroupBox.TabStop = false;
             this.bornplaceGroupBox.Text = "Место рождения";
             // 
@@ -341,7 +341,7 @@
             this.saveButton.Location = new System.Drawing.Point(441, 537);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 7;
+            this.saveButton.TabIndex = 6;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -368,7 +368,7 @@
             this.adressGroupBox.Margin = new System.Windows.Forms.Padding(1);
             this.adressGroupBox.Name = "adressGroupBox";
             this.adressGroupBox.Size = new System.Drawing.Size(296, 236);
-            this.adressGroupBox.TabIndex = 4;
+            this.adressGroupBox.TabIndex = 3;
             this.adressGroupBox.TabStop = false;
             this.adressGroupBox.Text = "Адресс прописки";
             // 
@@ -523,7 +523,7 @@
             this.adressrealGroupBox.Margin = new System.Windows.Forms.Padding(1);
             this.adressrealGroupBox.Name = "adressrealGroupBox";
             this.adressrealGroupBox.Size = new System.Drawing.Size(289, 236);
-            this.adressrealGroupBox.TabIndex = 6;
+            this.adressrealGroupBox.TabIndex = 4;
             this.adressrealGroupBox.TabStop = false;
             // 
             // label11
@@ -685,7 +685,7 @@
             this.dataGroupBox.Margin = new System.Windows.Forms.Padding(1);
             this.dataGroupBox.Name = "dataGroupBox";
             this.dataGroupBox.Size = new System.Drawing.Size(296, 279);
-            this.dataGroupBox.TabIndex = 1;
+            this.dataGroupBox.TabIndex = 0;
             this.dataGroupBox.TabStop = false;
             // 
             // socNumBox
@@ -713,7 +713,7 @@
             this.documentGroupBox.Margin = new System.Windows.Forms.Padding(1);
             this.documentGroupBox.Name = "documentGroupBox";
             this.documentGroupBox.Size = new System.Drawing.Size(289, 151);
-            this.documentGroupBox.TabIndex = 3;
+            this.documentGroupBox.TabIndex = 2;
             this.documentGroupBox.TabStop = false;
             this.documentGroupBox.Text = "Документ, удостоверяющий личность";
             // 

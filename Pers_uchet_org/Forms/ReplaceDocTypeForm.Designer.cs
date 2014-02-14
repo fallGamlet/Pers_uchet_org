@@ -118,7 +118,7 @@
             this.replaceButton.Location = new System.Drawing.Point(152, 53);
             this.replaceButton.Name = "replaceButton";
             this.replaceButton.Size = new System.Drawing.Size(75, 23);
-            this.replaceButton.TabIndex = 4;
+            this.replaceButton.TabIndex = 2;
             this.replaceButton.Text = "Заменить";
             this.replaceButton.UseVisualStyleBackColor = true;
             // 
@@ -129,7 +129,7 @@
             this.cancelButton.Location = new System.Drawing.Point(233, 53);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 5;
+            this.cancelButton.TabIndex = 3;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 

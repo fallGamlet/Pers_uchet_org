@@ -79,7 +79,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(342, 179);
-            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
             // bookerfioorgBox
@@ -100,7 +100,7 @@
             this.chiefpostorgBox.Name = "chiefpostorgBox";
             this.chiefpostorgBox.ReadOnly = true;
             this.chiefpostorgBox.Size = new System.Drawing.Size(186, 20);
-            this.chiefpostorgBox.TabIndex = 10;
+            this.chiefpostorgBox.TabIndex = 9;
             // 
             // chieffioorgBox
             // 
@@ -110,7 +110,7 @@
             this.chieffioorgBox.Name = "chieffioorgBox";
             this.chieffioorgBox.ReadOnly = true;
             this.chieffioorgBox.Size = new System.Drawing.Size(186, 20);
-            this.chieffioorgBox.TabIndex = 9;
+            this.chieffioorgBox.TabIndex = 0;
             // 
             // nameorgBox
             // 
@@ -268,7 +268,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(250, 179);
-            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Список организаций";
             // 
@@ -278,7 +278,7 @@
             this.removeorgButton.Location = new System.Drawing.Point(168, 150);
             this.removeorgButton.Name = "removeorgButton";
             this.removeorgButton.Size = new System.Drawing.Size(75, 23);
-            this.removeorgButton.TabIndex = 4;
+            this.removeorgButton.TabIndex = 3;
             this.removeorgButton.Text = "Удалить";
             this.removeorgButton.UseVisualStyleBackColor = true;
             this.removeorgButton.Click += new System.EventHandler(this.removeorgButton_Click);
@@ -289,7 +289,7 @@
             this.editorgButton.Location = new System.Drawing.Point(87, 150);
             this.editorgButton.Name = "editorgButton";
             this.editorgButton.Size = new System.Drawing.Size(75, 23);
-            this.editorgButton.TabIndex = 4;
+            this.editorgButton.TabIndex = 2;
             this.editorgButton.Text = "Изменить";
             this.editorgButton.UseVisualStyleBackColor = true;
             this.editorgButton.Click += new System.EventHandler(this.editorgButton_Click);
@@ -300,7 +300,7 @@
             this.addorgButton.Location = new System.Drawing.Point(6, 150);
             this.addorgButton.Name = "addorgButton";
             this.addorgButton.Size = new System.Drawing.Size(75, 23);
-            this.addorgButton.TabIndex = 4;
+            this.addorgButton.TabIndex = 1;
             this.addorgButton.Text = "Добавить";
             this.addorgButton.UseVisualStyleBackColor = true;
             this.addorgButton.Click += new System.EventHandler(this.addorgButton_Click);

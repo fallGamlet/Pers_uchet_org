@@ -62,7 +62,7 @@
             this.countBox.Location = new System.Drawing.Point(53, 161);
             this.countBox.Name = "countBox";
             this.countBox.Size = new System.Drawing.Size(41, 16);
-            this.countBox.TabIndex = 10;
+            this.countBox.TabIndex = 6;
             this.countBox.Text = "0";
             this.countBox.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -73,7 +73,7 @@
             this.label3.Location = new System.Drawing.Point(4, 161);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 9;
+            this.label3.TabIndex = 5;
             this.label3.Text = "Всего: ";
             // 
             // groupBox2
@@ -85,7 +85,7 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox2.Size = new System.Drawing.Size(344, 51);
-            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             // 
             // rawAnketsButton
@@ -93,7 +93,7 @@
             this.rawAnketsButton.Location = new System.Drawing.Point(160, 17);
             this.rawAnketsButton.Name = "rawAnketsButton";
             this.rawAnketsButton.Size = new System.Drawing.Size(180, 23);
-            this.rawAnketsButton.TabIndex = 9;
+            this.rawAnketsButton.TabIndex = 1;
             this.rawAnketsButton.Text = "Необработанные анкеты";
             this.rawAnketsButton.UseVisualStyleBackColor = true;
             this.rawAnketsButton.Click += new System.EventHandler(this.rawAnketsButton_Click);
@@ -103,7 +103,7 @@
             this.allAnketsButton.Location = new System.Drawing.Point(4, 17);
             this.allAnketsButton.Name = "allAnketsButton";
             this.allAnketsButton.Size = new System.Drawing.Size(150, 23);
-            this.allAnketsButton.TabIndex = 8;
+            this.allAnketsButton.TabIndex = 0;
             this.allAnketsButton.Text = "Все анкеты";
             this.allAnketsButton.UseVisualStyleBackColor = true;
             this.allAnketsButton.Click += new System.EventHandler(this.allAnketsButton_Click);
@@ -124,7 +124,7 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox3.Size = new System.Drawing.Size(344, 179);
-            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
             // personView
@@ -188,7 +188,7 @@
             this.label4.Location = new System.Drawing.Point(118, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(103, 13);
-            this.label4.TabIndex = 6;
+            this.label4.TabIndex = 1;
             this.label4.Text = "Поиск по фамилии";
             // 
             // searchFioTextBox
@@ -215,7 +215,7 @@
             this.label2.Location = new System.Drawing.Point(4, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Поиск по страх. №";
             // 
             // choiceButton
@@ -224,7 +224,7 @@
             this.choiceButton.Location = new System.Drawing.Point(148, 327);
             this.choiceButton.Name = "choiceButton";
             this.choiceButton.Size = new System.Drawing.Size(125, 23);
-            this.choiceButton.TabIndex = 8;
+            this.choiceButton.TabIndex = 3;
             this.choiceButton.Text = "Выбрать";
             this.choiceButton.UseVisualStyleBackColor = true;
             this.choiceButton.Click += new System.EventHandler(this.choiceButton_Click);
@@ -236,7 +236,7 @@
             this.cancelButton.Location = new System.Drawing.Point(279, 327);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 9;
+            this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -250,7 +250,7 @@
             this.groupBox4.Location = new System.Drawing.Point(10, 246);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(344, 73);
-            this.groupBox4.TabIndex = 10;
+            this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             // 
             // radioButton4
@@ -271,7 +271,7 @@
             this.radioButton3.Location = new System.Drawing.Point(160, 19);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(130, 17);
-            this.radioButton3.TabIndex = 2;
+            this.radioButton3.TabIndex = 1;
             this.radioButton3.Text = "Отменяющая форма";
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.DocRadioButton_CheckedChanged);
@@ -282,7 +282,7 @@
             this.radioButton2.Location = new System.Drawing.Point(7, 42);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(150, 17);
-            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabIndex = 2;
             this.radioButton2.Text = "Корректирующая форма";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.DocRadioButton_CheckedChanged);

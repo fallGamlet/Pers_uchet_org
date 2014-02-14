@@ -45,7 +45,7 @@
             this.saveButton.Location = new System.Drawing.Point(169, 57);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(88, 23);
-            this.saveButton.TabIndex = 4;
+            this.saveButton.TabIndex = 6;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             // 
@@ -56,7 +56,7 @@
             this.cancelButton.Location = new System.Drawing.Point(263, 57);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(88, 23);
-            this.cancelButton.TabIndex = 5;
+            this.cancelButton.TabIndex = 7;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -75,14 +75,14 @@
             this.numBox.Name = "numBox";
             this.numBox.ReadOnly = true;
             this.numBox.Size = new System.Drawing.Size(49, 20);
-            this.numBox.TabIndex = 9;
+            this.numBox.TabIndex = 1;
             // 
             // dateTimePicker
             // 
             this.dateTimePicker.Location = new System.Drawing.Point(67, 25);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(143, 20);
-            this.dateTimePicker.TabIndex = 2;
+            this.dateTimePicker.TabIndex = 3;
             // 
             // label2
             // 
@@ -90,7 +90,7 @@
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 0;
             this.label2.Text = "№ п/п";
             // 
             // label3
@@ -99,7 +99,7 @@
             this.label3.Location = new System.Drawing.Point(213, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(139, 13);
-            this.label3.TabIndex = 6;
+            this.label3.TabIndex = 4;
             this.label3.Text = "№ присвоенный в ЕГФСС";
             // 
             // numPacketBox
@@ -107,7 +107,7 @@
             this.numPacketBox.Location = new System.Drawing.Point(216, 25);
             this.numPacketBox.Name = "numPacketBox";
             this.numPacketBox.Size = new System.Drawing.Size(136, 20);
-            this.numPacketBox.TabIndex = 3;
+            this.numPacketBox.TabIndex = 5;
             // 
             // PacketDopInfoForm
             // 

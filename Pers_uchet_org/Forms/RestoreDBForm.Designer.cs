@@ -54,7 +54,7 @@
             this.cancelButton.Location = new System.Drawing.Point(197, 227);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 1;
+            this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -65,7 +65,7 @@
             this.restoreButton.Location = new System.Drawing.Point(46, 227);
             this.restoreButton.Name = "restoreButton";
             this.restoreButton.Size = new System.Drawing.Size(145, 23);
-            this.restoreButton.TabIndex = 2;
+            this.restoreButton.TabIndex = 4;
             this.restoreButton.Text = "Восстановить данные";
             this.restoreButton.UseVisualStyleBackColor = true;
             this.restoreButton.Click += new System.EventHandler(this.restoreButton_Click);
@@ -79,7 +79,7 @@
             this.copyListBox.Location = new System.Drawing.Point(12, 48);
             this.copyListBox.Name = "copyListBox";
             this.copyListBox.Size = new System.Drawing.Size(260, 147);
-            this.copyListBox.TabIndex = 3;
+            this.copyListBox.TabIndex = 1;
             this.copyListBox.SelectedValueChanged += new System.EventHandler(this.copyListBox_SelectedValueChanged);
             // 
             // backupFileNameLabel
@@ -89,7 +89,7 @@
             this.backupFileNameLabel.Location = new System.Drawing.Point(12, 211);
             this.backupFileNameLabel.Name = "backupFileNameLabel";
             this.backupFileNameLabel.Size = new System.Drawing.Size(79, 13);
-            this.backupFileNameLabel.TabIndex = 4;
+            this.backupFileNameLabel.TabIndex = 3;
             this.backupFileNameLabel.Text = "Имя файла: ...";
             // 
             // backupFolderLabel
@@ -99,7 +99,7 @@
             this.backupFolderLabel.Location = new System.Drawing.Point(12, 198);
             this.backupFolderLabel.Name = "backupFolderLabel";
             this.backupFolderLabel.Size = new System.Drawing.Size(45, 13);
-            this.backupFolderLabel.TabIndex = 5;
+            this.backupFolderLabel.TabIndex = 2;
             this.backupFolderLabel.Text = "Папка: ";
             // 
             // RestoreDBForm

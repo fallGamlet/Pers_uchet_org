@@ -66,8 +66,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.classgroupView);
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
@@ -107,7 +107,7 @@
             this.classgroupView.RowHeadersVisible = false;
             this.classgroupView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.classgroupView.Size = new System.Drawing.Size(774, 113);
-            this.classgroupView.TabIndex = 2;
+            this.classgroupView.TabIndex = 0;
             // 
             // classgroup_id_Column
             // 
@@ -129,9 +129,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.classificatorView);
             this.groupBox2.Location = new System.Drawing.Point(10, 144);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1);
@@ -212,8 +212,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.commentBox);
             this.groupBox3.Location = new System.Drawing.Point(10, 306);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
@@ -230,13 +230,13 @@
             this.commentBox.Location = new System.Drawing.Point(3, 16);
             this.commentBox.Name = "commentBox";
             this.commentBox.Size = new System.Drawing.Size(774, 47);
-            this.commentBox.TabIndex = 1;
+            this.commentBox.TabIndex = 0;
             this.commentBox.Text = "";
             // 
             // classpersonGroupBox
             // 
-            this.classpersonGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.classpersonGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.classpersonGroupBox.Controls.Add(this.classpercentView);
             this.classpersonGroupBox.Location = new System.Drawing.Point(10, 374);
             this.classpersonGroupBox.Margin = new System.Windows.Forms.Padding(1);
@@ -277,7 +277,7 @@
             this.classpercentView.RowHeadersVisible = false;
             this.classpercentView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.classpercentView.Size = new System.Drawing.Size(466, 126);
-            this.classpercentView.TabIndex = 1;
+            this.classpercentView.TabIndex = 0;
             // 
             // lgotatypeColumn
             // 

@@ -123,7 +123,7 @@
             this.countLabel.Location = new System.Drawing.Point(50, 434);
             this.countLabel.Name = "countLabel";
             this.countLabel.Size = new System.Drawing.Size(13, 13);
-            this.countLabel.TabIndex = 10;
+            this.countLabel.TabIndex = 6;
             this.countLabel.Text = "0";
             this.countLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -134,7 +134,7 @@
             this.countTextLabel.Location = new System.Drawing.Point(1, 434);
             this.countTextLabel.Name = "countTextLabel";
             this.countTextLabel.Size = new System.Drawing.Size(43, 13);
-            this.countTextLabel.TabIndex = 9;
+            this.countTextLabel.TabIndex = 5;
             this.countTextLabel.Text = "Всего: ";
             // 
             // personView
@@ -236,7 +236,7 @@
             this.label4.Location = new System.Drawing.Point(126, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(103, 13);
-            this.label4.TabIndex = 6;
+            this.label4.TabIndex = 1;
             this.label4.Text = "Поиск по фамилии";
             // 
             // searchFioBox
@@ -263,7 +263,7 @@
             this.label2.Location = new System.Drawing.Point(5, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Поиск по страх. №";
             // 
             // toolStrip1
@@ -287,7 +287,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(5, 9);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(723, 25);
-            this.toolStrip1.TabIndex = 11;
+            this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // addStripButton
@@ -397,7 +397,7 @@
             this.attachToOrgButton.Margin = new System.Windows.Forms.Padding(0);
             this.attachToOrgButton.Name = "attachToOrgButton";
             this.attachToOrgButton.Size = new System.Drawing.Size(191, 23);
-            this.attachToOrgButton.TabIndex = 1;
+            this.attachToOrgButton.TabIndex = 20;
             this.attachToOrgButton.Text = "Закрепить за организацией";
             this.attachToOrgButton.UseVisualStyleBackColor = true;
             this.attachToOrgButton.Click += new System.EventHandler(this.attachToOrgButton_Click);
@@ -434,7 +434,7 @@
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox6.Size = new System.Drawing.Size(329, 450);
-            this.groupBox6.TabIndex = 4;
+            this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             // 
             // groupBox1
@@ -453,7 +453,7 @@
             this.groupBox1.Location = new System.Drawing.Point(4, 256);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(319, 127);
-            this.groupBox1.TabIndex = 56;
+            this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Документ, удостоверяющий личность";
             // 
@@ -467,7 +467,7 @@
             this.documentBox.Name = "documentBox";
             this.documentBox.ReadOnly = true;
             this.documentBox.Size = new System.Drawing.Size(307, 20);
-            this.documentBox.TabIndex = 12;
+            this.documentBox.TabIndex = 0;
             // 
             // label18
             // 
@@ -475,7 +475,7 @@
             this.label18.Location = new System.Drawing.Point(3, 42);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(38, 13);
-            this.label18.TabIndex = 31;
+            this.label18.TabIndex = 1;
             this.label18.Text = "Серия";
             // 
             // docseriaBox
@@ -486,7 +486,7 @@
             this.docseriaBox.Name = "docseriaBox";
             this.docseriaBox.ReadOnly = true;
             this.docseriaBox.Size = new System.Drawing.Size(93, 20);
-            this.docseriaBox.TabIndex = 13;
+            this.docseriaBox.TabIndex = 4;
             // 
             // docnumBox
             // 
@@ -496,7 +496,7 @@
             this.docnumBox.Name = "docnumBox";
             this.docnumBox.ReadOnly = true;
             this.docnumBox.Size = new System.Drawing.Size(90, 20);
-            this.docnumBox.TabIndex = 14;
+            this.docnumBox.TabIndex = 5;
             // 
             // label19
             // 
@@ -504,7 +504,7 @@
             this.label19.Location = new System.Drawing.Point(102, 42);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(41, 13);
-            this.label19.TabIndex = 33;
+            this.label19.TabIndex = 2;
             this.label19.Text = "Номер";
             // 
             // docdataBox
@@ -515,7 +515,7 @@
             this.docdataBox.Name = "docdataBox";
             this.docdataBox.ReadOnly = true;
             this.docdataBox.Size = new System.Drawing.Size(75, 20);
-            this.docdataBox.TabIndex = 15;
+            this.docdataBox.TabIndex = 6;
             // 
             // label21
             // 
@@ -523,7 +523,7 @@
             this.label21.Location = new System.Drawing.Point(198, 42);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(73, 13);
-            this.label21.TabIndex = 35;
+            this.label21.TabIndex = 3;
             this.label21.Text = "Дата выдачи";
             // 
             // label23
@@ -532,7 +532,7 @@
             this.label23.Location = new System.Drawing.Point(3, 81);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(63, 13);
-            this.label23.TabIndex = 37;
+            this.label23.TabIndex = 7;
             this.label23.Text = "Кем выдан";
             // 
             // docvidanBox
@@ -545,7 +545,7 @@
             this.docvidanBox.Name = "docvidanBox";
             this.docvidanBox.ReadOnly = true;
             this.docvidanBox.Size = new System.Drawing.Size(307, 20);
-            this.docvidanBox.TabIndex = 16;
+            this.docvidanBox.TabIndex = 8;
             // 
             // operatorBox
             // 
@@ -555,7 +555,8 @@
             this.operatorBox.Name = "operatorBox";
             this.operatorBox.ReadOnly = true;
             this.operatorBox.Size = new System.Drawing.Size(110, 13);
-            this.operatorBox.TabIndex = 19;
+            this.operatorBox.TabIndex = 17;
+            this.operatorBox.TabStop = false;
             this.operatorBox.Text = "Оператор";
             // 
             // editdateBox
@@ -566,7 +567,8 @@
             this.editdateBox.Name = "editdateBox";
             this.editdateBox.ReadOnly = true;
             this.editdateBox.Size = new System.Drawing.Size(75, 13);
-            this.editdateBox.TabIndex = 18;
+            this.editdateBox.TabIndex = 19;
+            this.editdateBox.TabStop = false;
             this.editdateBox.Text = "15.04.2013";
             // 
             // newdateBox
@@ -577,7 +579,8 @@
             this.newdateBox.Name = "newdateBox";
             this.newdateBox.ReadOnly = true;
             this.newdateBox.Size = new System.Drawing.Size(75, 13);
-            this.newdateBox.TabIndex = 17;
+            this.newdateBox.TabIndex = 18;
+            this.newdateBox.TabStop = false;
             this.newdateBox.Text = "15.04.2013";
             // 
             // label20
@@ -586,7 +589,7 @@
             this.label20.Location = new System.Drawing.Point(1, 383);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(56, 13);
-            this.label20.TabIndex = 54;
+            this.label20.TabIndex = 14;
             this.label20.Text = "Оператор";
             // 
             // label16
@@ -595,7 +598,7 @@
             this.label16.Location = new System.Drawing.Point(197, 383);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
-            this.label16.TabIndex = 53;
+            this.label16.TabIndex = 16;
             this.label16.Text = "Изменено";
             // 
             // label15
@@ -604,7 +607,7 @@
             this.label15.Location = new System.Drawing.Point(117, 383);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(50, 13);
-            this.label15.TabIndex = 52;
+            this.label15.TabIndex = 15;
             this.label15.Text = "Внесено";
             // 
             // adressprojivBox
@@ -618,7 +621,7 @@
             this.adressprojivBox.Name = "adressprojivBox";
             this.adressprojivBox.ReadOnly = true;
             this.adressprojivBox.Size = new System.Drawing.Size(319, 32);
-            this.adressprojivBox.TabIndex = 11;
+            this.adressprojivBox.TabIndex = 12;
             // 
             // adrespropiskiBox
             // 
@@ -644,7 +647,7 @@
             this.mestorojdBox.Name = "mestorojdBox";
             this.mestorojdBox.ReadOnly = true;
             this.mestorojdBox.Size = new System.Drawing.Size(319, 38);
-            this.mestorojdBox.TabIndex = 9;
+            this.mestorojdBox.TabIndex = 8;
             // 
             // grajdanstvoBox
             // 
@@ -656,7 +659,7 @@
             this.grajdanstvoBox.Name = "grajdanstvoBox";
             this.grajdanstvoBox.ReadOnly = true;
             this.grajdanstvoBox.Size = new System.Drawing.Size(144, 20);
-            this.grajdanstvoBox.TabIndex = 8;
+            this.grajdanstvoBox.TabIndex = 6;
             // 
             // polBox
             // 
@@ -666,7 +669,7 @@
             this.polBox.Name = "polBox";
             this.polBox.ReadOnly = true;
             this.polBox.Size = new System.Drawing.Size(79, 20);
-            this.polBox.TabIndex = 7;
+            this.polBox.TabIndex = 5;
             // 
             // datarojdBox
             // 
@@ -676,7 +679,7 @@
             this.datarojdBox.Name = "datarojdBox";
             this.datarojdBox.ReadOnly = true;
             this.datarojdBox.Size = new System.Drawing.Size(84, 20);
-            this.datarojdBox.TabIndex = 6;
+            this.datarojdBox.TabIndex = 4;
             // 
             // fioBox
             // 
@@ -688,7 +691,7 @@
             this.fioBox.Name = "fioBox";
             this.fioBox.ReadOnly = true;
             this.fioBox.Size = new System.Drawing.Size(319, 20);
-            this.fioBox.TabIndex = 5;
+            this.fioBox.TabIndex = 1;
             // 
             // label17
             // 
@@ -696,7 +699,7 @@
             this.label17.Location = new System.Drawing.Point(1, 202);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(211, 13);
-            this.label17.TabIndex = 26;
+            this.label17.TabIndex = 11;
             this.label17.Text = "Адрес фактического места проживания";
             // 
             // label13
@@ -705,7 +708,7 @@
             this.label13.Location = new System.Drawing.Point(1, 149);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(104, 13);
-            this.label13.TabIndex = 23;
+            this.label13.TabIndex = 9;
             this.label13.Text = "Адрес по прописке";
             // 
             // label12
@@ -714,7 +717,7 @@
             this.label12.Location = new System.Drawing.Point(1, 92);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(92, 13);
-            this.label12.TabIndex = 22;
+            this.label12.TabIndex = 7;
             this.label12.Text = "Место рождения";
             // 
             // label11
@@ -723,7 +726,7 @@
             this.label11.Location = new System.Drawing.Point(176, 53);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(74, 13);
-            this.label11.TabIndex = 15;
+            this.label11.TabIndex = 3;
             this.label11.Text = "Гражданство";
             // 
             // label10
@@ -732,7 +735,7 @@
             this.label10.Location = new System.Drawing.Point(91, 53);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(27, 13);
-            this.label10.TabIndex = 14;
+            this.label10.TabIndex = 2;
             this.label10.Text = "Пол";
             // 
             // label9
@@ -741,7 +744,7 @@
             this.label9.Location = new System.Drawing.Point(1, 53);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(86, 13);
-            this.label9.TabIndex = 13;
+            this.label9.TabIndex = 2;
             this.label9.Text = "Дата рождения";
             // 
             // label6
@@ -750,7 +753,7 @@
             this.label6.Location = new System.Drawing.Point(1, 14);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 13);
-            this.label6.TabIndex = 10;
+            this.label6.TabIndex = 0;
             this.label6.Text = "Фамилия Имя Отчество";
             // 
             // AnketadataForm

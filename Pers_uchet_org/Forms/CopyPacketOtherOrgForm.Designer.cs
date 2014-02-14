@@ -44,7 +44,7 @@
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(243, 26);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Выберите организацию, в которую \r\nбудет скопирован пакет документов СЗВ-1 № ";
             // 
             // orgsComboBox
@@ -54,7 +54,7 @@
             this.orgsComboBox.Location = new System.Drawing.Point(12, 38);
             this.orgsComboBox.Name = "orgsComboBox";
             this.orgsComboBox.Size = new System.Drawing.Size(321, 21);
-            this.orgsComboBox.TabIndex = 2;
+            this.orgsComboBox.TabIndex = 1;
             // 
             // label3
             // 
@@ -64,7 +64,7 @@
             this.label3.Location = new System.Drawing.Point(119, 62);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(101, 20);
-            this.label3.TabIndex = 3;
+            this.label3.TabIndex = 2;
             this.label3.Text = "Внимание !!!";
             // 
             // label4
@@ -74,7 +74,7 @@
             this.label4.Location = new System.Drawing.Point(12, 82);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(322, 67);
-            this.label4.TabIndex = 4;
+            this.label4.TabIndex = 3;
             this.label4.Text = "Копирование пакета документов СЗВ-1 из одной организации в другую возможно только" +
     " в рамках одного и того же отчетного года!\r\n";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -86,7 +86,7 @@
             this.label5.Location = new System.Drawing.Point(12, 149);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(322, 85);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 4;
             this.label5.Text = "При копировании пакета, всем работникам, по которым имеются документы СЗВ-1 в дан" +
     "ном пакете, будет добавлена принадлежность к новой организации (в которую будет " +
     "скопирован пакет)!";
@@ -99,7 +99,7 @@
             this.cancelButton.Location = new System.Drawing.Point(258, 243);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 8;
+            this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -110,7 +110,7 @@
             this.copyButton.Location = new System.Drawing.Point(156, 243);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(96, 23);
-            this.copyButton.TabIndex = 9;
+            this.copyButton.TabIndex = 5;
             this.copyButton.Text = "Копировать";
             this.copyButton.UseVisualStyleBackColor = true;
             this.copyButton.Click += new System.EventHandler(this.copyButton_Click);

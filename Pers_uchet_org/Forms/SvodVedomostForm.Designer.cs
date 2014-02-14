@@ -62,7 +62,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(168, 43);
-            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // yearBox
@@ -110,7 +110,7 @@
             this.groupBox2.MinimumSize = new System.Drawing.Size(467, 194);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(567, 241);
-            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
             // toolStripSumsSheet
@@ -125,8 +125,8 @@
             this.printStripButton});
             this.toolStripSumsSheet.Location = new System.Drawing.Point(6, 16);
             this.toolStripSumsSheet.Name = "toolStripSumsSheet";
-            this.toolStripSumsSheet.Size = new System.Drawing.Size(273, 25);
-            this.toolStripSumsSheet.TabIndex = 9;
+            this.toolStripSumsSheet.Size = new System.Drawing.Size(242, 25);
+            this.toolStripSumsSheet.TabIndex = 0;
             this.toolStripSumsSheet.Text = "toolStrip1";
             // 
             // addStripButton
@@ -199,7 +199,7 @@
             this.mergeView.RowHeadersVisible = false;
             this.mergeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mergeView.Size = new System.Drawing.Size(555, 191);
-            this.mergeView.TabIndex = 0;
+            this.mergeView.TabIndex = 1;
             this.mergeView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mergeView_CellDoubleClick);
             // 
             // nppColumn

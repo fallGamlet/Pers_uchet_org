@@ -126,6 +126,24 @@ namespace Pers_uchet_org
         {
             confPasswordBox.UseSystemPasswordChar = true;
         }
+
+        private void oldPasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                passwordBox.Focus();
+        }
+       
+        private void passwordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                confPasswordBox.Focus();
+        }
+
+        private void confPasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                okButton.Focus();
+        }
         #endregion
     }
 }

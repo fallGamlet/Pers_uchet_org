@@ -43,7 +43,7 @@
             this.nameBox.Location = new System.Drawing.Point(92, 26);
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(240, 20);
-            this.nameBox.TabIndex = 0;
+            this.nameBox.TabIndex = 1;
             // 
             // closeButton
             // 
@@ -52,7 +52,7 @@
             this.closeButton.Location = new System.Drawing.Point(257, 141);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 1;
+            this.closeButton.TabIndex = 5;
             this.closeButton.Text = "Закрыть";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
@@ -63,7 +63,7 @@
             this.label1.Location = new System.Drawing.Point(12, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Исполнитель";
             // 
             // printButton
@@ -72,7 +72,7 @@
             this.printButton.Location = new System.Drawing.Point(176, 141);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(75, 23);
-            this.printButton.TabIndex = 3;
+            this.printButton.TabIndex = 4;
             this.printButton.Text = "Печатать";
             this.printButton.UseVisualStyleBackColor = true;
             // 
@@ -82,7 +82,7 @@
             this.label2.Location = new System.Drawing.Point(12, 80);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 2;
             this.label2.Text = "Дата печати";
             // 
             // dateTimePicker1
@@ -90,7 +90,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(92, 80);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(142, 20);
-            this.dateTimePicker1.TabIndex = 6;
+            this.dateTimePicker1.TabIndex = 3;
             // 
             // SvodVedomostPrintForm
             // 

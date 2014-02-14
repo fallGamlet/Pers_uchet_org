@@ -32,11 +32,11 @@
             this.personDataLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.orgView = new System.Windows.Forms.DataGridView();
-            this.acceptButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
             this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.regnumorgColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameorgColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.acceptButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).BeginInit();
             this.SuspendLayout();
@@ -91,31 +91,9 @@
             this.orgView.RowHeadersVisible = false;
             this.orgView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.orgView.Size = new System.Drawing.Size(331, 170);
-            this.orgView.TabIndex = 3;
+            this.orgView.TabIndex = 0;
             this.orgView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellClick);
             this.orgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.orgView_KeyDown);
-            // 
-            // acceptButton
-            // 
-            this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.Location = new System.Drawing.Point(170, 228);
-            this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(96, 23);
-            this.acceptButton.TabIndex = 2;
-            this.acceptButton.Text = "Сохранить";
-            this.acceptButton.UseVisualStyleBackColor = true;
-            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.Location = new System.Drawing.Point(272, 228);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
-            this.cancelButton.Text = "Отмена";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // checkColumn
             // 
@@ -144,6 +122,28 @@
             this.nameorgColumn.MinimumWidth = 150;
             this.nameorgColumn.Name = "nameorgColumn";
             this.nameorgColumn.ReadOnly = true;
+            // 
+            // acceptButton
+            // 
+            this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.acceptButton.Location = new System.Drawing.Point(170, 228);
+            this.acceptButton.Name = "acceptButton";
+            this.acceptButton.Size = new System.Drawing.Size(96, 23);
+            this.acceptButton.TabIndex = 2;
+            this.acceptButton.Text = "Сохранить";
+            this.acceptButton.UseVisualStyleBackColor = true;
+            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelButton.Location = new System.Drawing.Point(272, 228);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Отмена";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // AnketaPersonOrgForm
             // 

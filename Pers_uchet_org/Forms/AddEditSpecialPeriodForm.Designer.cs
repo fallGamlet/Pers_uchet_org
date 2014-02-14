@@ -64,7 +64,7 @@
             this.saveButton.Location = new System.Drawing.Point(187, 283);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 19;
+            this.saveButton.TabIndex = 13;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -76,7 +76,7 @@
             this.cancelButton.Location = new System.Drawing.Point(268, 283);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 18;
+            this.cancelButton.TabIndex = 14;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -93,7 +93,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 139);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(331, 68);
-            this.groupBox1.TabIndex = 35;
+            this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Дополнительные сведения (количество)";
             // 
@@ -103,7 +103,7 @@
             this.label27.Location = new System.Drawing.Point(6, 21);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(48, 13);
-            this.label27.TabIndex = 13;
+            this.label27.TabIndex = 0;
             this.label27.Text = "Месяцы";
             // 
             // monthsNumUpDown
@@ -116,7 +116,7 @@
             0});
             this.monthsNumUpDown.Name = "monthsNumUpDown";
             this.monthsNumUpDown.Size = new System.Drawing.Size(74, 20);
-            this.monthsNumUpDown.TabIndex = 12;
+            this.monthsNumUpDown.TabIndex = 4;
             this.monthsNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.monthsNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownFirst_ValueChanged);
             // 
@@ -130,7 +130,7 @@
             0});
             this.daysNumUpDown.Name = "daysNumUpDown";
             this.daysNumUpDown.Size = new System.Drawing.Size(74, 20);
-            this.daysNumUpDown.TabIndex = 14;
+            this.daysNumUpDown.TabIndex = 5;
             this.daysNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.daysNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownFirst_ValueChanged);
             // 
@@ -140,7 +140,7 @@
             this.label30.Location = new System.Drawing.Point(246, 21);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(46, 13);
-            this.label30.TabIndex = 19;
+            this.label30.TabIndex = 3;
             this.label30.Text = "Минуты";
             // 
             // label28
@@ -149,7 +149,7 @@
             this.label28.Location = new System.Drawing.Point(86, 21);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(28, 13);
-            this.label28.TabIndex = 15;
+            this.label28.TabIndex = 1;
             this.label28.Text = "Дни";
             // 
             // minutesNumUpDown
@@ -162,7 +162,7 @@
             0});
             this.minutesNumUpDown.Name = "minutesNumUpDown";
             this.minutesNumUpDown.Size = new System.Drawing.Size(74, 20);
-            this.minutesNumUpDown.TabIndex = 18;
+            this.minutesNumUpDown.TabIndex = 7;
             this.minutesNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.minutesNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownSecond_ValueChanged);
             // 
@@ -176,7 +176,7 @@
             0});
             this.hoursNumUpDown.Name = "hoursNumUpDown";
             this.hoursNumUpDown.Size = new System.Drawing.Size(74, 20);
-            this.hoursNumUpDown.TabIndex = 16;
+            this.hoursNumUpDown.TabIndex = 6;
             this.hoursNumUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.hoursNumUpDown.ValueChanged += new System.EventHandler(this.NumUpDownSecond_ValueChanged);
             // 
@@ -186,7 +186,7 @@
             this.label29.Location = new System.Drawing.Point(166, 21);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(35, 13);
-            this.label29.TabIndex = 17;
+            this.label29.TabIndex = 2;
             this.label29.Text = "Часы";
             // 
             // professionRichTextBox
@@ -195,7 +195,7 @@
             this.professionRichTextBox.Location = new System.Drawing.Point(15, 226);
             this.professionRichTextBox.Name = "professionRichTextBox";
             this.professionRichTextBox.Size = new System.Drawing.Size(328, 51);
-            this.professionRichTextBox.TabIndex = 34;
+            this.professionRichTextBox.TabIndex = 12;
             this.professionRichTextBox.Text = "";
             // 
             // label31
@@ -204,7 +204,7 @@
             this.label31.Location = new System.Drawing.Point(12, 210);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(130, 13);
-            this.label31.TabIndex = 33;
+            this.label31.TabIndex = 11;
             this.label31.Text = "Должность (профессия)";
             // 
             // servYearBaseComboBox
@@ -214,7 +214,7 @@
             this.servYearBaseComboBox.Location = new System.Drawing.Point(187, 112);
             this.servYearBaseComboBox.Name = "servYearBaseComboBox";
             this.servYearBaseComboBox.Size = new System.Drawing.Size(156, 21);
-            this.servYearBaseComboBox.TabIndex = 31;
+            this.servYearBaseComboBox.TabIndex = 9;
             // 
             // stajBaseComboBox
             // 
@@ -223,7 +223,7 @@
             this.stajBaseComboBox.Location = new System.Drawing.Point(187, 85);
             this.stajBaseComboBox.Name = "stajBaseComboBox";
             this.stajBaseComboBox.Size = new System.Drawing.Size(156, 21);
-            this.stajBaseComboBox.TabIndex = 29;
+            this.stajBaseComboBox.TabIndex = 8;
             // 
             // partConditionComboBox
             // 
@@ -232,7 +232,7 @@
             this.partConditionComboBox.Location = new System.Drawing.Point(187, 58);
             this.partConditionComboBox.Name = "partConditionComboBox";
             this.partConditionComboBox.Size = new System.Drawing.Size(156, 21);
-            this.partConditionComboBox.TabIndex = 27;
+            this.partConditionComboBox.TabIndex = 7;
             // 
             // label22
             // 
@@ -240,7 +240,7 @@
             this.label22.Location = new System.Drawing.Point(12, 35);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(83, 13);
-            this.label22.TabIndex = 26;
+            this.label22.TabIndex = 1;
             this.label22.Text = "Конец периода";
             // 
             // label21
@@ -249,7 +249,7 @@
             this.label21.Location = new System.Drawing.Point(12, 9);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(89, 13);
-            this.label21.TabIndex = 25;
+            this.label21.TabIndex = 0;
             this.label21.Text = "Начало периода";
             // 
             // endDateTimePicker
@@ -258,7 +258,7 @@
             this.endDateTimePicker.Location = new System.Drawing.Point(187, 32);
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(156, 20);
-            this.endDateTimePicker.TabIndex = 24;
+            this.endDateTimePicker.TabIndex = 6;
             this.endDateTimePicker.ValueChanged += new System.EventHandler(this.TimePicker_ValueChanged);
             // 
             // beginDateTimePicker
@@ -267,7 +267,7 @@
             this.beginDateTimePicker.Location = new System.Drawing.Point(187, 6);
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(156, 20);
-            this.beginDateTimePicker.TabIndex = 23;
+            this.beginDateTimePicker.TabIndex = 5;
             this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.TimePicker_ValueChanged);
             // 
             // radioButton1
@@ -276,7 +276,7 @@
             this.radioButton1.Location = new System.Drawing.Point(15, 59);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(167, 17);
-            this.radioButton1.TabIndex = 36;
+            this.radioButton1.TabIndex = 2;
             this.radioButton1.Text = "Особые условия труда (код)";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
@@ -287,7 +287,7 @@
             this.radioButton2.Location = new System.Drawing.Point(15, 86);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(164, 17);
-            this.radioButton2.TabIndex = 37;
+            this.radioButton2.TabIndex = 3;
             this.radioButton2.Text = "Трудовой стаж (основание)";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
@@ -298,7 +298,7 @@
             this.radioButton3.Location = new System.Drawing.Point(15, 113);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(151, 17);
-            this.radioButton3.TabIndex = 38;
+            this.radioButton3.TabIndex = 4;
             this.radioButton3.Text = "Выслуга лет (основание)";
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);

@@ -54,7 +54,7 @@
             this.cancelButton.Location = new System.Drawing.Point(197, 47);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
+            this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -66,7 +66,7 @@
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(3);
             this.label1.Size = new System.Drawing.Size(101, 19);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Дата увольнения";
             // 
             // dateBox

@@ -44,7 +44,7 @@
             this.label22.Location = new System.Drawing.Point(12, 62);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(83, 13);
-            this.label22.TabIndex = 21;
+            this.label22.TabIndex = 2;
             this.label22.Text = "Конец периода";
             // 
             // label21
@@ -53,7 +53,7 @@
             this.label21.Location = new System.Drawing.Point(12, 36);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(89, 13);
-            this.label21.TabIndex = 20;
+            this.label21.TabIndex = 1;
             this.label21.Text = "Начало периода";
             // 
             // endDateTimePicker
@@ -62,7 +62,7 @@
             this.endDateTimePicker.Location = new System.Drawing.Point(169, 59);
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(110, 20);
-            this.endDateTimePicker.TabIndex = 19;
+            this.endDateTimePicker.TabIndex = 5;
             // 
             // beginDateTimePicker
             // 
@@ -70,7 +70,7 @@
             this.beginDateTimePicker.Location = new System.Drawing.Point(169, 33);
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(110, 20);
-            this.beginDateTimePicker.TabIndex = 18;
+            this.beginDateTimePicker.TabIndex = 4;
             this.beginDateTimePicker.ValueChanged += new System.EventHandler(this.beginDateTimePicker_ValueChanged);
             // 
             // saveButton
@@ -79,7 +79,7 @@
             this.saveButton.Location = new System.Drawing.Point(123, 88);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 17;
+            this.saveButton.TabIndex = 6;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -91,7 +91,7 @@
             this.cancelButton.Location = new System.Drawing.Point(204, 88);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 16;
+            this.cancelButton.TabIndex = 7;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -101,7 +101,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(151, 13);
-            this.label1.TabIndex = 22;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Код дополнительного стажа";
             // 
             // codeComboBox
@@ -111,7 +111,7 @@
             this.codeComboBox.Location = new System.Drawing.Point(169, 6);
             this.codeComboBox.Name = "codeComboBox";
             this.codeComboBox.Size = new System.Drawing.Size(110, 21);
-            this.codeComboBox.TabIndex = 23;
+            this.codeComboBox.TabIndex = 3;
             // 
             // AddEditAdditionalPeriodForm
             // 

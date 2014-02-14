@@ -50,7 +50,7 @@
             this.canselButton.Location = new System.Drawing.Point(281, 189);
             this.canselButton.Name = "canselButton";
             this.canselButton.Size = new System.Drawing.Size(75, 23);
-            this.canselButton.TabIndex = 5;
+            this.canselButton.TabIndex = 11;
             this.canselButton.Text = "Отмена";
             this.canselButton.UseVisualStyleBackColor = true;
             // 
@@ -62,7 +62,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(344, 98);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -73,9 +73,10 @@
             this.passwordBox.Location = new System.Drawing.Point(153, 136);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.Size = new System.Drawing.Size(174, 20);
-            this.passwordBox.TabIndex = 2;
+            this.passwordBox.TabIndex = 6;
             this.passwordBox.UseSystemPasswordChar = true;
             this.passwordBox.TextChanged += new System.EventHandler(this.passwordBox_TextChanged);
+            this.passwordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordBox_KeyDown);
             // 
             // oldPasswordBox
             // 
@@ -84,8 +85,9 @@
             this.oldPasswordBox.Location = new System.Drawing.Point(153, 110);
             this.oldPasswordBox.Name = "oldPasswordBox";
             this.oldPasswordBox.Size = new System.Drawing.Size(174, 20);
-            this.oldPasswordBox.TabIndex = 1;
+            this.oldPasswordBox.TabIndex = 4;
             this.oldPasswordBox.UseSystemPasswordChar = true;
+            this.oldPasswordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.oldPasswordBox_KeyDown);
             // 
             // confPasswordBox
             // 
@@ -94,9 +96,10 @@
             this.confPasswordBox.Location = new System.Drawing.Point(153, 162);
             this.confPasswordBox.Name = "confPasswordBox";
             this.confPasswordBox.Size = new System.Drawing.Size(174, 20);
-            this.confPasswordBox.TabIndex = 3;
+            this.confPasswordBox.TabIndex = 8;
             this.confPasswordBox.UseSystemPasswordChar = true;
             this.confPasswordBox.TextChanged += new System.EventHandler(this.passwordBox_TextChanged);
+            this.confPasswordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.confPasswordBox_KeyDown);
             // 
             // oldpasswordLabel
             // 
@@ -105,7 +108,7 @@
             this.oldpasswordLabel.Location = new System.Drawing.Point(12, 113);
             this.oldpasswordLabel.Name = "oldpasswordLabel";
             this.oldpasswordLabel.Size = new System.Drawing.Size(84, 13);
-            this.oldpasswordLabel.TabIndex = 6;
+            this.oldpasswordLabel.TabIndex = 1;
             this.oldpasswordLabel.Text = "Старый пароль";
             // 
             // label3
@@ -115,7 +118,7 @@
             this.label3.Location = new System.Drawing.Point(12, 139);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
-            this.label3.TabIndex = 7;
+            this.label3.TabIndex = 2;
             this.label3.Text = "Новый пароль";
             // 
             // label4
@@ -125,7 +128,7 @@
             this.label4.Location = new System.Drawing.Point(12, 165);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(127, 13);
-            this.label4.TabIndex = 8;
+            this.label4.TabIndex = 3;
             this.label4.Text = "Подтверждение пароля";
             // 
             // okButton
@@ -135,7 +138,7 @@
             this.okButton.Location = new System.Drawing.Point(200, 189);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 4;
+            this.okButton.TabIndex = 10;
             this.okButton.Text = "Сохранить";
             this.okButton.UseVisualStyleBackColor = true;
             // 
@@ -146,7 +149,7 @@
             this.showPassButton1.Location = new System.Drawing.Point(333, 108);
             this.showPassButton1.Name = "showPassButton1";
             this.showPassButton1.Size = new System.Drawing.Size(23, 23);
-            this.showPassButton1.TabIndex = 9;
+            this.showPassButton1.TabIndex = 5;
             this.showPassButton1.Text = "V";
             this.showPassButton1.UseVisualStyleBackColor = true;
             this.showPassButton1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton1_MouseDown);
@@ -159,7 +162,7 @@
             this.showPassButton2.Location = new System.Drawing.Point(333, 134);
             this.showPassButton2.Name = "showPassButton2";
             this.showPassButton2.Size = new System.Drawing.Size(23, 23);
-            this.showPassButton2.TabIndex = 10;
+            this.showPassButton2.TabIndex = 7;
             this.showPassButton2.Text = "V";
             this.showPassButton2.UseVisualStyleBackColor = true;
             this.showPassButton2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton2_MouseDown);
@@ -172,7 +175,7 @@
             this.showPassButton3.Location = new System.Drawing.Point(333, 160);
             this.showPassButton3.Name = "showPassButton3";
             this.showPassButton3.Size = new System.Drawing.Size(23, 23);
-            this.showPassButton3.TabIndex = 11;
+            this.showPassButton3.TabIndex = 9;
             this.showPassButton3.Text = "V";
             this.showPassButton3.UseVisualStyleBackColor = true;
             this.showPassButton3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton3_MouseDown);

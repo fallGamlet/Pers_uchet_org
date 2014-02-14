@@ -61,15 +61,15 @@
             this.searchButton.Location = new System.Drawing.Point(154, 139);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(75, 23);
-            this.searchButton.TabIndex = 3;
+            this.searchButton.TabIndex = 8;
             this.searchButton.Text = "Найти";
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // PersonGroupBox
             // 
-            this.PersonGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.PersonGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.PersonGroupBox.Controls.Add(this.personView);
             this.PersonGroupBox.Location = new System.Drawing.Point(263, 9);
             this.PersonGroupBox.Margin = new System.Windows.Forms.Padding(0);
@@ -104,7 +104,7 @@
             this.personView.ReadOnly = true;
             this.personView.RowHeadersVisible = false;
             this.personView.Size = new System.Drawing.Size(414, 149);
-            this.personView.TabIndex = 1;
+            this.personView.TabIndex = 0;
             // 
             // strahnumColumn
             // 
@@ -127,12 +127,12 @@
             // 
             // lnameBox
             // 
-            this.lnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lnameBox.Location = new System.Drawing.Point(86, 54);
             this.lnameBox.Name = "lnameBox";
             this.lnameBox.Size = new System.Drawing.Size(143, 20);
-            this.lnameBox.TabIndex = 2;
+            this.lnameBox.TabIndex = 5;
             // 
             // label1
             // 
@@ -140,7 +140,7 @@
             this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
-            this.label1.TabIndex = 4;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Страховой №";
             // 
             // orgView
@@ -168,7 +168,7 @@
             this.orgView.ReadOnly = true;
             this.orgView.RowHeadersVisible = false;
             this.orgView.Size = new System.Drawing.Size(668, 179);
-            this.orgView.TabIndex = 1;
+            this.orgView.TabIndex = 0;
             // 
             // orgregnumColumn
             // 
@@ -191,8 +191,8 @@
             // 
             // OrgGroupBox
             // 
-            this.OrgGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.OrgGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.OrgGroupBox.Controls.Add(this.orgView);
             this.OrgGroupBox.Location = new System.Drawing.Point(9, 187);
             this.OrgGroupBox.Margin = new System.Windows.Forms.Padding(0);
@@ -222,21 +222,21 @@
             // 
             // mnameBox
             // 
-            this.mnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.mnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mnameBox.Location = new System.Drawing.Point(86, 106);
             this.mnameBox.Name = "mnameBox";
             this.mnameBox.Size = new System.Drawing.Size(143, 20);
-            this.mnameBox.TabIndex = 10;
+            this.mnameBox.TabIndex = 7;
             // 
             // fnameBox
             // 
-            this.fnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.fnameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fnameBox.Location = new System.Drawing.Point(86, 80);
             this.fnameBox.Name = "fnameBox";
             this.fnameBox.Size = new System.Drawing.Size(143, 20);
-            this.fnameBox.TabIndex = 9;
+            this.fnameBox.TabIndex = 6;
             // 
             // label4
             // 
@@ -244,7 +244,7 @@
             this.label4.Location = new System.Drawing.Point(6, 109);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
-            this.label4.TabIndex = 8;
+            this.label4.TabIndex = 3;
             this.label4.Text = "Отчество";
             // 
             // label3
@@ -253,17 +253,17 @@
             this.label3.Location = new System.Drawing.Point(6, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 13);
-            this.label3.TabIndex = 7;
+            this.label3.TabIndex = 2;
             this.label3.Text = "Имя";
             // 
             // socnumBox
             // 
-            this.socnumBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.socnumBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.socnumBox.Location = new System.Drawing.Point(86, 19);
             this.socnumBox.Name = "socnumBox";
             this.socnumBox.Size = new System.Drawing.Size(143, 20);
-            this.socnumBox.TabIndex = 6;
+            this.socnumBox.TabIndex = 4;
             // 
             // label2
             // 
@@ -271,7 +271,7 @@
             this.label2.Location = new System.Drawing.Point(6, 57);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 1;
             this.label2.Text = "Фамилия";
             // 
             // SearchIndividualForm

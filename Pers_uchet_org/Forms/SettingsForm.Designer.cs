@@ -30,27 +30,27 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
-            this.otherPage = new System.Windows.Forms.TabPage();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
             this.backupGroupBox = new System.Windows.Forms.GroupBox();
+            this.createBackupButton = new System.Windows.Forms.Button();
             this.backupBrowseButton = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.backupPathTextBox = new System.Windows.Forms.TextBox();
             this.backupMaxCountBox = new System.Windows.Forms.NumericUpDown();
             this.isBackupEnableCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.otherPage = new System.Windows.Forms.TabPage();
             this.databaseGroupBox = new System.Windows.Forms.GroupBox();
             this.vacuumButton = new System.Windows.Forms.Button();
             this.databaseBrowseButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.databasePathTextBox = new System.Windows.Forms.TextBox();
-            this.createBackupButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.generalPage.SuspendLayout();
-            this.otherPage.SuspendLayout();
             this.backupGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupMaxCountBox)).BeginInit();
+            this.otherPage.SuspendLayout();
             this.databaseGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,40 +80,6 @@
             this.generalPage.Text = "Основные";
             this.generalPage.UseVisualStyleBackColor = true;
             // 
-            // otherPage
-            // 
-            this.otherPage.Controls.Add(this.databaseGroupBox);
-            this.otherPage.Location = new System.Drawing.Point(4, 22);
-            this.otherPage.Name = "otherPage";
-            this.otherPage.Padding = new System.Windows.Forms.Padding(3);
-            this.otherPage.Size = new System.Drawing.Size(524, 274);
-            this.otherPage.TabIndex = 1;
-            this.otherPage.Text = "Дополнительные";
-            this.otherPage.UseVisualStyleBackColor = true;
-            // 
-            // saveButton
-            // 
-            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(336, 312);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(101, 23);
-            this.saveButton.TabIndex = 2;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(443, 312);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 4;
-            this.cancelButton.Text = "Отмена";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
             // backupGroupBox
             // 
             this.backupGroupBox.Controls.Add(this.createBackupButton);
@@ -126,16 +92,26 @@
             this.backupGroupBox.Location = new System.Drawing.Point(8, 6);
             this.backupGroupBox.Name = "backupGroupBox";
             this.backupGroupBox.Size = new System.Drawing.Size(340, 147);
-            this.backupGroupBox.TabIndex = 11;
+            this.backupGroupBox.TabIndex = 0;
             this.backupGroupBox.TabStop = false;
             this.backupGroupBox.Text = "Резервное копирование";
+            // 
+            // createBackupButton
+            // 
+            this.createBackupButton.Location = new System.Drawing.Point(27, 108);
+            this.createBackupButton.Name = "createBackupButton";
+            this.createBackupButton.Size = new System.Drawing.Size(247, 23);
+            this.createBackupButton.TabIndex = 6;
+            this.createBackupButton.Text = "Создать резервную копию сейчас";
+            this.createBackupButton.UseVisualStyleBackColor = true;
+            this.createBackupButton.Click += new System.EventHandler(this.createBackupButton_Click);
             // 
             // backupBrowseButton
             // 
             this.backupBrowseButton.Location = new System.Drawing.Point(280, 80);
             this.backupBrowseButton.Name = "backupBrowseButton";
             this.backupBrowseButton.Size = new System.Drawing.Size(47, 23);
-            this.backupBrowseButton.TabIndex = 15;
+            this.backupBrowseButton.TabIndex = 5;
             this.backupBrowseButton.Text = "...";
             this.backupBrowseButton.UseVisualStyleBackColor = true;
             this.backupBrowseButton.Click += new System.EventHandler(this.backupBrowseButton_Click);
@@ -146,7 +122,7 @@
             this.label11.Location = new System.Drawing.Point(24, 66);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(130, 13);
-            this.label11.TabIndex = 14;
+            this.label11.TabIndex = 3;
             this.label11.Text = "Папка резервных копий";
             // 
             // backupPathTextBox
@@ -154,14 +130,14 @@
             this.backupPathTextBox.Location = new System.Drawing.Point(27, 82);
             this.backupPathTextBox.Name = "backupPathTextBox";
             this.backupPathTextBox.Size = new System.Drawing.Size(247, 20);
-            this.backupPathTextBox.TabIndex = 11;
+            this.backupPathTextBox.TabIndex = 4;
             // 
             // backupMaxCountBox
             // 
             this.backupMaxCountBox.Location = new System.Drawing.Point(237, 42);
             this.backupMaxCountBox.Name = "backupMaxCountBox";
             this.backupMaxCountBox.Size = new System.Drawing.Size(90, 20);
-            this.backupMaxCountBox.TabIndex = 13;
+            this.backupMaxCountBox.TabIndex = 2;
             this.backupMaxCountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // isBackupEnableCheckBox
@@ -170,7 +146,7 @@
             this.isBackupEnableCheckBox.Location = new System.Drawing.Point(6, 19);
             this.isBackupEnableCheckBox.Name = "isBackupEnableCheckBox";
             this.isBackupEnableCheckBox.Size = new System.Drawing.Size(310, 17);
-            this.isBackupEnableCheckBox.TabIndex = 12;
+            this.isBackupEnableCheckBox.TabIndex = 0;
             this.isBackupEnableCheckBox.Text = "Создавать резервные копии при выходе из программы";
             this.isBackupEnableCheckBox.UseVisualStyleBackColor = true;
             this.isBackupEnableCheckBox.CheckedChanged += new System.EventHandler(this.isBackupEnableCheckBox_CheckedChanged);
@@ -181,8 +157,19 @@
             this.label1.Location = new System.Drawing.Point(24, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(207, 13);
-            this.label1.TabIndex = 10;
+            this.label1.TabIndex = 1;
             this.label1.Text = "Максимальное число резервных копий";
+            // 
+            // otherPage
+            // 
+            this.otherPage.Controls.Add(this.databaseGroupBox);
+            this.otherPage.Location = new System.Drawing.Point(4, 22);
+            this.otherPage.Name = "otherPage";
+            this.otherPage.Padding = new System.Windows.Forms.Padding(3);
+            this.otherPage.Size = new System.Drawing.Size(524, 274);
+            this.otherPage.TabIndex = 1;
+            this.otherPage.Text = "Дополнительные";
+            this.otherPage.UseVisualStyleBackColor = true;
             // 
             // databaseGroupBox
             // 
@@ -193,7 +180,7 @@
             this.databaseGroupBox.Location = new System.Drawing.Point(8, 6);
             this.databaseGroupBox.Name = "databaseGroupBox";
             this.databaseGroupBox.Size = new System.Drawing.Size(330, 135);
-            this.databaseGroupBox.TabIndex = 17;
+            this.databaseGroupBox.TabIndex = 0;
             this.databaseGroupBox.TabStop = false;
             this.databaseGroupBox.Text = "База данных";
             // 
@@ -202,7 +189,7 @@
             this.vacuumButton.Location = new System.Drawing.Point(9, 58);
             this.vacuumButton.Name = "vacuumButton";
             this.vacuumButton.Size = new System.Drawing.Size(195, 23);
-            this.vacuumButton.TabIndex = 17;
+            this.vacuumButton.TabIndex = 3;
             this.vacuumButton.Text = "Сжать базу данных (VACUUM)";
             this.vacuumButton.UseVisualStyleBackColor = true;
             this.vacuumButton.Click += new System.EventHandler(this.vacuumButton_Click);
@@ -212,7 +199,7 @@
             this.databaseBrowseButton.Location = new System.Drawing.Point(274, 30);
             this.databaseBrowseButton.Name = "databaseBrowseButton";
             this.databaseBrowseButton.Size = new System.Drawing.Size(47, 23);
-            this.databaseBrowseButton.TabIndex = 15;
+            this.databaseBrowseButton.TabIndex = 2;
             this.databaseBrowseButton.Text = "...";
             this.databaseBrowseButton.UseVisualStyleBackColor = true;
             this.databaseBrowseButton.Click += new System.EventHandler(this.databaseBrowseButton_Click);
@@ -223,7 +210,7 @@
             this.label3.Location = new System.Drawing.Point(6, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(108, 13);
-            this.label3.TabIndex = 14;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Папка базы данных";
             // 
             // databasePathTextBox
@@ -231,17 +218,30 @@
             this.databasePathTextBox.Location = new System.Drawing.Point(9, 32);
             this.databasePathTextBox.Name = "databasePathTextBox";
             this.databasePathTextBox.Size = new System.Drawing.Size(259, 20);
-            this.databasePathTextBox.TabIndex = 11;
+            this.databasePathTextBox.TabIndex = 1;
             // 
-            // createBackupButton
+            // saveButton
             // 
-            this.createBackupButton.Location = new System.Drawing.Point(27, 108);
-            this.createBackupButton.Name = "createBackupButton";
-            this.createBackupButton.Size = new System.Drawing.Size(247, 23);
-            this.createBackupButton.TabIndex = 12;
-            this.createBackupButton.Text = "Создать резервную копию сейчас";
-            this.createBackupButton.UseVisualStyleBackColor = true;
-            this.createBackupButton.Click += new System.EventHandler(this.createBackupButton_Click);
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.Location = new System.Drawing.Point(336, 312);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(101, 23);
+            this.saveButton.TabIndex = 1;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(443, 312);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 2;
+            this.cancelButton.Text = "Отмена";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // SettingsForm
             // 
@@ -258,10 +258,10 @@
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
-            this.otherPage.ResumeLayout(false);
             this.backupGroupBox.ResumeLayout(false);
             this.backupGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupMaxCountBox)).EndInit();
+            this.otherPage.ResumeLayout(false);
             this.databaseGroupBox.ResumeLayout(false);
             this.databaseGroupBox.PerformLayout();
             this.ResumeLayout(false);
