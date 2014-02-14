@@ -21,6 +21,9 @@ namespace Pers_uchet_org
 
         const string CHECK = "check";
         string _connection;
+
+        // организации в которых есть документы на человека
+        List<long> orgIds;
         #endregion
 
         #region Свойства
@@ -72,10 +75,10 @@ namespace Pers_uchet_org
                 int i;
                 DataRowView tmpRow;
                 // отметить из выбранных Организаций те, к которым привязана Персона
-                foreach(long id in orgIDArray)
+                foreach (long id in orgIDArray)
                 {
                     i = _orgBS.Find(Org.id, id);
-                    if(i>=0)
+                    if (i >= 0)
                     {
                         tmpRow = _orgBS[i] as DataRowView;
                         tmpRow[CHECK] = true;
@@ -83,6 +86,11 @@ namespace Pers_uchet_org
                 }
                 // принять изменения (отметки)
                 _orgBS.EndEdit();
+
+                // выбрать организации в которых есть документы на человека
+                orgIds = Org.GetOrgsIdWithDocsForPerson((long)_personRow[PersonView.id], _connection);
+                // сделать readOnly организации в которых есть документы
+                DisableCheckBoxInView();
 
                 // выделить струку с текущей Организацией (усьановить задний фон)
                 this.MarkCurOrgRow();
@@ -101,12 +109,22 @@ namespace Pers_uchet_org
                 orgView.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
             }
         }
+
+        private void DisableCheckBoxInView()
+        {
+            for (int i = 0; i < orgView.Rows.Count; i++)
+            {
+                if (orgIds.Contains((long)(_orgBS[i] as DataRowView)[Org.id]))
+                    orgView["checkColumn", i].ReadOnly = true;
+            }
+        }
         #endregion
 
         #region Методы - обработчики событий
         void orgView_Sorted(object sender, EventArgs e)
         {
             this.MarkCurOrgRow();
+            DisableCheckBoxInView();
         }
 
         private void acceptButton_Click(object sender, EventArgs e)
@@ -136,7 +154,7 @@ namespace Pers_uchet_org
             // то вывести сообщение и прекратить выполнение сохранения в БД
             if (intersect.Length >= orgs.Length)
             {
-                MainForm.ShowWarningMessage("Анкетные данные должны быть привязаны хотя бы к одной организации!","Внимание");
+                MainForm.ShowWarningMessage("Анкетные данные должны быть привязаны хотя бы к одной организации!", "Внимание");
                 return;
             }
             // Вставить записи с отмеченными Организациями и выбранным Пользователем
@@ -150,8 +168,80 @@ namespace Pers_uchet_org
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            //this.Close();
         }
         #endregion
+
+        private void orgView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex == -1 && e.ColumnIndex == 0)
+                {
+                    checkAll();
+                }
+
+                if (_orgBS.Current == null)
+                    return;
+                if (e.RowIndex >= 0 && e.ColumnIndex == 0 && orgIds.Contains(Convert.ToInt64((_orgBS.Current as DataRowView)[Org.id])))
+                {
+                    MainForm.ShowInfoFlexMessage(
+                        "В данной организации на данного человека имеются документы о стаже и доходе.\nОткрепление невозможно!",
+                        "Предупреждение");
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void checkAll()
+        {
+            this.orgView.EndEdit();
+            bool allchecked = true;
+
+            foreach (DataRowView row in _orgBS)
+            {
+                allchecked &= Convert.ToBoolean(row[CHECK]);
+            }
+
+            foreach (DataRowView row in _orgBS.Cast<DataRowView>().Where(row => !orgIds.Contains(Convert.ToInt64(row[Org.id]))))
+            {
+                row[CHECK] = !allchecked;
+            }
+
+            this.orgView.Refresh();
+        }
+
+        private void orgView_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Space)
+                {
+                    if (_orgBS.Current == null)
+                        return;
+
+                    if (orgIds.Contains(Convert.ToInt64((_orgBS.Current as DataRowView)[Org.id])))
+                    {
+                        MainForm.ShowInfoFlexMessage(
+                            "В данной организации на данного человека имеются документы о стаже и доходе.\nОткрепление невозможно!",
+                            "Предупреждение");
+                    }
+                    else
+                    {
+                        (_orgBS.Current as DataRowView)[CHECK] =
+                            !Convert.ToBoolean((_orgBS.Current as DataRowView)[CHECK]);
+                        (_orgBS.Current as DataRowView).EndEdit();
+                    }
+                    (sender as DataGridView).Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
     }
 }
