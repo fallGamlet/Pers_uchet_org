@@ -167,6 +167,7 @@
             this.orgView.TabIndex = 0;
             this.orgView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
             this.orgView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
+            this.orgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.orgView_KeyDown);
             // 
             // org_checkColumn
             // 
@@ -175,7 +176,6 @@
             this.org_checkColumn.MinimumWidth = 20;
             this.org_checkColumn.Name = "org_checkColumn";
             this.org_checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.org_checkColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.org_checkColumn.Width = 20;
             // 
             // regnumColumn

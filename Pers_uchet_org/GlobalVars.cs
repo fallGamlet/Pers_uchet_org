@@ -554,6 +554,7 @@ namespace Pers_uchet_org
             comm.Parameters.Add(new SQLiteParameter(pId, DbType.UInt64, id));
             comm.Parameters.Add(new SQLiteParameter(pOrgID, DbType.String, orgID));
             comm.Parameters.Add(new SQLiteParameter(pOperatorID, DbType.String, operatorID));
+            comm.Parameters.Add(new SQLiteParameter(pCode, DbType.String, code));
             comm.CommandText = string.Format(@"UPDATE {0} SET {1} = {2}, {3} = {4}, {5} = {6} WHERE {7} = {8};",
                                                 tablename, orgID, pOrgID, operatorID, pOperatorID, code, pCode, id, pId);
             return comm;
