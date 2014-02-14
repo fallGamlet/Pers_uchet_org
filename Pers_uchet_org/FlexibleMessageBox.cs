@@ -82,7 +82,7 @@ namespace JR.Utils.GUI.Forms
         /// 
         /// Default is: 70% of the working area width.
         /// </summary>
-        public static double MAX_WIDTH_FACTOR = 0.7;
+        public static double MAX_WIDTH_FACTOR = 0.8;
 
         /// <summary>
         /// Defines the maximum height for all FlexibleMessageBox instances in percent of the working area.
@@ -531,8 +531,8 @@ namespace JR.Utils.GUI.Forms
                 }
 
                 //Set dialog start size
-                flexibleMessageBoxForm.Size = new Size(maxTextRowWidth + flexibleMessageBoxForm.Width - flexibleMessageBoxForm.richTextBoxMessage.Width,
-                                                   Convert.ToInt32(maxTextRowHeight * stringRows.Count()) + flexibleMessageBoxForm.Height - flexibleMessageBoxForm.richTextBoxMessage.Height);
+                flexibleMessageBoxForm.Size = new Size(maxTextRowWidth + flexibleMessageBoxForm.Width - flexibleMessageBoxForm.richTextBoxMessage.Width + 10,
+                                                   Convert.ToInt32(maxTextRowHeight * stringRows.Count()) + flexibleMessageBoxForm.Height - flexibleMessageBoxForm.richTextBoxMessage.Height + 10);
             }
 
             /// <summary>
