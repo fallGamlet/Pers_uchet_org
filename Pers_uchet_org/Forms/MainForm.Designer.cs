@@ -42,12 +42,10 @@
             this.pechatblankMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.klassificatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.typedocumentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nastroikiMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.poiskfizlicaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loсkprogramMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smenaparoliaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vosstanovleniebdMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.elobmenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -172,7 +170,6 @@
             // 
             this.справочникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.klassificatorMenuItem,
-            this.toolStripSeparator3,
             this.typedocumentMenuItem});
             this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
             this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
@@ -186,11 +183,6 @@
             this.klassificatorMenuItem.Text = "Классификатор категорий";
             this.klassificatorMenuItem.Click += new System.EventHandler(this.klassificatorMenuItem_Click);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(283, 6);
-            // 
             // typedocumentMenuItem
             // 
             this.typedocumentMenuItem.Name = "typedocumentMenuItem";
@@ -203,10 +195,9 @@
             // 
             this.сервисToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nastroikiMenuItem,
-            this.poiskfizlicaMenuItem,
-            this.loсkprogramMenuItem,
-            this.smenaparoliaMenuItem,
             this.vosstanovleniebdMenuItem,
+            this.smenaparoliaMenuItem,
+            this.poiskfizlicaMenuItem,
             this.elobmenMenuItem});
             this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
             this.сервисToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
@@ -227,13 +218,6 @@
             this.poiskfizlicaMenuItem.Size = new System.Drawing.Size(332, 22);
             this.poiskfizlicaMenuItem.Text = "Поиск физ. лица";
             this.poiskfizlicaMenuItem.Click += new System.EventHandler(this.poiskfizlicaMenuItem_Click);
-            // 
-            // loсkprogramMenuItem
-            // 
-            this.loсkprogramMenuItem.Name = "loсkprogramMenuItem";
-            this.loсkprogramMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loсkprogramMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.loсkprogramMenuItem.Text = "Заблокировать программу!";
             // 
             // smenaparoliaMenuItem
             // 
@@ -399,12 +383,10 @@
         private System.Windows.Forms.ToolStripMenuItem pechatblankMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справочникиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem klassificatorMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem typedocumentMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сервисToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nastroikiMenuItem;
         private System.Windows.Forms.ToolStripMenuItem poiskfizlicaMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loсkprogramMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smenaparoliaMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vosstanovleniebdMenuItem;
         private System.Windows.Forms.ToolStripMenuItem elobmenMenuItem;
