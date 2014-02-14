@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvodVedomostForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
@@ -126,34 +125,31 @@
             this.printStripButton});
             this.toolStripSumsSheet.Location = new System.Drawing.Point(6, 16);
             this.toolStripSumsSheet.Name = "toolStripSumsSheet";
-            this.toolStripSumsSheet.Size = new System.Drawing.Size(306, 25);
+            this.toolStripSumsSheet.Size = new System.Drawing.Size(273, 25);
             this.toolStripSumsSheet.TabIndex = 9;
             this.toolStripSumsSheet.Text = "toolStrip1";
             // 
             // addStripButton
             // 
-            this.addStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addStripButton.Image")));
             this.addStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addStripButton.Name = "addStripButton";
-            this.addStripButton.Size = new System.Drawing.Size(79, 22);
+            this.addStripButton.Size = new System.Drawing.Size(63, 22);
             this.addStripButton.Text = "Добавить";
             this.addStripButton.Click += new System.EventHandler(this.addStripButton_Click);
             // 
             // editStripButton
             // 
-            this.editStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editStripButton.Image")));
             this.editStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.editStripButton.Name = "editStripButton";
-            this.editStripButton.Size = new System.Drawing.Size(81, 22);
+            this.editStripButton.Size = new System.Drawing.Size(65, 22);
             this.editStripButton.Text = "Изменить";
             this.editStripButton.Click += new System.EventHandler(this.editStripButton_Click);
             // 
             // delStripButton
             // 
-            this.delStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delStripButton.Image")));
             this.delStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.delStripButton.Name = "delStripButton";
-            this.delStripButton.Size = new System.Drawing.Size(71, 22);
+            this.delStripButton.Size = new System.Drawing.Size(55, 22);
             this.delStripButton.Text = "Удалить";
             this.delStripButton.Click += new System.EventHandler(this.delStripButton_Click);
             // 
@@ -164,10 +160,9 @@
             // 
             // printStripButton
             // 
-            this.printStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printStripButton.Image")));
             this.printStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printStripButton.Name = "printStripButton";
-            this.printStripButton.Size = new System.Drawing.Size(66, 22);
+            this.printStripButton.Size = new System.Drawing.Size(50, 22);
             this.printStripButton.Text = "Печать";
             this.printStripButton.Click += new System.EventHandler(this.printStripButton_Click);
             // 

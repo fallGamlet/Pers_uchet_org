@@ -39,8 +39,7 @@
             this.idoc_typeView.AllowUserToAddRows = false;
             this.idoc_typeView.AllowUserToDeleteRows = false;
             this.idoc_typeView.AllowUserToResizeRows = false;
-            this.idoc_typeView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.idoc_typeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.idoc_typeView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.idoc_typeView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.idoc_typeView.ColumnHeadersVisible = false;
             this.idoc_typeView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -77,7 +76,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(357, 337);
             this.Controls.Add(this.idoc_typeView);
             this.MinimumSize = new System.Drawing.Size(320, 250);

@@ -633,7 +633,7 @@ namespace Pers_uchet_org
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.DialogResult = DialogResult.Cancel;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -688,7 +688,7 @@ namespace Pers_uchet_org
             int pos = _operOrgBS.Position;
             // снять фильтр
             _operOrgBS.RemoveFilter();
-            // создание смоединения
+            // создание соединения
             connection = new SQLiteConnection(_connectionStr);
             // создание команды для вставки записи с привелегией в БД
             command = OperatorOrg.CreateInsertCommand();
@@ -734,7 +734,8 @@ namespace Pers_uchet_org
             // восстановить позицию
             _operOrgBS.Position = pos;
 
-            MainForm.ShowInfoMessage("Данные успешно сохранены", "Созранение");
+            MainForm.ShowInfoMessage("Данные успешно сохранены", "Сохранение");
+            this.DialogResult = DialogResult.OK;
         }
 
         private void anketaaccessCheckBox_CheckedChanged(object sender, EventArgs e)

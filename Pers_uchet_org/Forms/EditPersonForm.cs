@@ -284,7 +284,7 @@ namespace Pers_uchet_org
             }
 
             if (!res)
-                MessageBox.Show("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные");
             return res;
         }
 

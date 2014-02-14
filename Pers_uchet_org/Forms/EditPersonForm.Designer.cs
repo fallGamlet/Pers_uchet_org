@@ -117,7 +117,7 @@
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 8;
-            this.closeButton.Text = "Отменить";
+            this.closeButton.Text = "Отмена";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 

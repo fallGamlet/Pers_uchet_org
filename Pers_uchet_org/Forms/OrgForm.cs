@@ -17,6 +17,8 @@ namespace Pers_uchet_org.Forms
         DataTable _orgTable;
         BindingSource _orgBS;
         SQLiteDataAdapter _orgAdapter;
+
+        DialogResult result = DialogResult.Cancel;
         #endregion
 
         #region Конструктор и инициализация
@@ -41,11 +43,13 @@ namespace Pers_uchet_org.Forms
             _orgAdapter = Org.CreateAdapter(_connection); //new SQLiteDataAdapter(Org.GetSelectCommandText(), _connection);
             _orgAdapter.Fill(_orgTable);
 
+            // соединяем прослойки с таблицами
+            _orgBS.DataSource = _orgTable;
+
             // присоединяем GridView-еры к источникам данных (таблицам) через прослойку (BindingSource-ы)
             // соединяем GridView-еры с прослойками
             this.orgView.DataSource = _orgBS;
-            // соединяем прослойки с таблицами
-            _orgBS.DataSource = _orgTable;
+
         }
         #endregion
 
@@ -66,33 +70,37 @@ namespace Pers_uchet_org.Forms
 
         private void addorgButton_Click(object sender, EventArgs e)
         {
-            EditOrgForm tmpForm = new EditOrgForm();
-            tmpForm.Owner = this;
-            DialogResult dRes = tmpForm.ShowDialog(this);
-            if (dRes == DialogResult.OK)
+            try
             {
-                DataRowView row = _orgBS.AddNew() as DataRowView;
-                if (row != null)
+                EditOrgForm tmpForm = new EditOrgForm(_connection);
+                tmpForm.Owner = this;
+                DialogResult dRes = tmpForm.ShowDialog(this);
+                if (dRes == DialogResult.OK)
                 {
-                    row.BeginEdit();
-                    row[Org.regnum] = tmpForm.RegnumOrg;
-                    row[Org.name] = tmpForm.NameOrg;
-                    row[Org.chief_post] = tmpForm.ChiefpostOrg;
-                    row[Org.chief_fio] = tmpForm.ChieffioOrg;
-                    row[Org.booker_fio] = tmpForm.BookerfioOrg;
-                    row.EndEdit();
+                    DataRowView row = _orgBS.AddNew() as DataRowView;
+                    if (row != null)
+                    {
+                        row.BeginEdit();
+                        row[Org.regnum] = tmpForm.RegnumOrg;
+                        row[Org.name] = tmpForm.NameOrg;
+                        row[Org.chief_post] = tmpForm.ChiefpostOrg;
+                        row[Org.chief_fio] = tmpForm.ChieffioOrg;
+                        row[Org.booker_fio] = tmpForm.BookerfioOrg;
+                        row.EndEdit();
 
-                    int pos = _orgBS.Position;
-                    int orgCount = _orgAdapter.Update(_orgTable);
-                    _orgAdapter.Fill(_orgTable);
-                    _orgBS.Position = pos;
-                    //MessageBox.Show(this, "Добавление записи об организации прошло успешно", "Добавление записи",
-                    //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        int pos = _orgBS.Position;
+                        int orgCount = _orgAdapter.Update(_orgTable);
+                        //_orgTable.Clear();
+                        //_orgAdapter.Fill(_orgTable);
+                        _orgBS.Position = pos;
+                        MainForm.ShowInfoMessage("Организация успешно добавлена!", "Добавление организации");
+                        result = DialogResult.OK;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show(this, "Не удалось произвести добавление!", "Добавление организации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorMessage(ex.Message, "Ошибка добавления организации");
             }
         }
 
@@ -101,11 +109,12 @@ namespace Pers_uchet_org.Forms
             DataRowView curOrg = (DataRowView)_orgBS.Current;
             if (curOrg == null)
             {
-                MessageBox.Show("Сначала необходимо выбрать организацию");
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора организации");
                 return;
             }
-            EditOrgForm tmpForm = new EditOrgForm();
+            EditOrgForm tmpForm = new EditOrgForm(_connection);
             tmpForm.Owner = this;
+            tmpForm.OrgId = (long)curOrg[Org.id];
             tmpForm.RegnumOrg = (string)curOrg[Org.regnum];
             tmpForm.NameOrg = (string)curOrg[Org.name];
             tmpForm.ChiefpostOrg = (string)curOrg[Org.chief_post];
@@ -124,10 +133,10 @@ namespace Pers_uchet_org.Forms
 
                 int pos = _orgBS.Position;
                 int orgCount = _orgAdapter.Update(_orgTable);
-                _orgAdapter.Fill(_orgTable);
+                //_orgAdapter.Fill(_orgTable);
                 _orgBS.Position = pos;
-                //MessageBox.Show(this, "Изменение записи об организации прошло успешно", "Изменение записи",
-                //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MainForm.ShowInfoMessage("Изменения успешно сохранены!", "Изменение организации");
+                result = DialogResult.OK;
             }
         }
 
@@ -136,43 +145,50 @@ namespace Pers_uchet_org.Forms
             DataRowView curOrg = (DataRowView)_orgBS.Current;
             if (curOrg == null)
             {
-                MessageBox.Show("Сначала необходимо выбрать организацию");
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора организации");
                 return;
             }
-            DialogResult dRes = MessageBox.Show(this,
-                                            "Вместе с организацией произойдет удаление всех связей с этой организвцией!\nВы действительно желаете удалить организацию?",
-                                            "Удаление организации",
-                                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            long countPersonId = PersonOrg.GetCountPersonId((long)(_orgBS.Current as DataRowView)[Org.id], _connection);
+            if (countPersonId != -1 && countPersonId > 0)
+            {
+                MainForm.ShowInfoMessage("Нельзя удалить организацию,\nтак как в данной организации имеются работники!", "Предупреждение");
+                return;
+            }
+
+            DialogResult dRes = MainForm.ShowQuestionMessage("Вы действительно желаете удалить организацию?", "Удаление организации");
             if (dRes == DialogResult.Yes)
             {
                 _orgBS.Remove(curOrg);
                 _orgAdapter.Update(_orgTable);
-                _orgAdapter.Fill(_orgTable);
+                //_orgAdapter.Fill(_orgTable);
 
-                MessageBox.Show(this,
-                                "Удаление зиписи об организации прошло успешно",
-                                "Удаление организации",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                result = DialogResult.OK;
             }
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        //private void saveButton_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        _orgAdapter.Update(_orgTable);
+        //        MessageBox.Show(this, "Данные были успешно сохранены", "Сохранение прошло успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    catch (Exception err)
+        //    {
+        //        MessageBox.Show(this, "Были обнаружены ошибки при попытке сохранить данные в базу данных. Сообщение: " + err, "Сохранение не было осуществено", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //}
+
+        //private void closeButton_Click(object sender, EventArgs e)
+        //{
+        //    this.Close();
+        //}
+        private void OrgForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                _orgAdapter.Update(_orgTable);
-                MessageBox.Show(this, "Данные были успешно сохранены", "Сохранение прошло успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(this, "Бали обнаружены ошибки при попытке сохранить данные в базу данных. Сообщение: " + err, "Сохранение не было осуществено", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            this.DialogResult = result;
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
         #endregion
     }
 }
