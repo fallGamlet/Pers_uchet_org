@@ -236,28 +236,31 @@ namespace Pers_uchet_org
 
         public static string GetHTML(byte[] xmlBytes, byte[] xslBytes)
         {
-            try
-            {
-                XmlDocument mapXml = new XmlDocument();
-                mapXml.InnerXml = Encoding.GetEncoding(1251).GetString(xmlBytes);
-                XPathNavigator xpn = mapXml.CreateNavigator();
-                XslCompiledTransform myXslTrans = new XslCompiledTransform();
-                XmlReader xslReader = XmlReader.Create(new MemoryStream(xslBytes));
-                myXslTrans.Load(xslReader);
-                MemoryStream outStream = new MemoryStream();
-                XmlWriterSettings setting = new XmlWriterSettings();
-                setting.Encoding = Encoding.GetEncoding(1251);
-                setting.OmitXmlDeclaration = true;
-                XmlWriter writer = XmlWriter.Create(outStream, setting);
-                myXslTrans.Transform(xpn, writer);
-                String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
-                return htmlStr;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
+            XmlDocument mapXml = new XmlDocument();
+            string xslStr = Encoding.GetEncoding(1251).GetString(xslBytes); 
+            string xmlStr = Encoding.GetEncoding(1251).GetString(xmlBytes);
+            mapXml.InnerXml = xmlStr;
+            
+            XPathNavigator xpn = mapXml.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            XmlReader xslReader = XmlReader.Create(new MemoryStream(xslBytes));
+            myXslTrans.Load(xslReader);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
+
+        public static XmlDocument ReadXml(string filename)
+        {
+            XmlDocument resDoc = new XmlDocument();
+            resDoc.InnerXml = File.ReadAllText(filename, Encoding.GetEncoding(1251));
+            //
+            return resDoc;
         }
     }
 
@@ -1067,7 +1070,6 @@ namespace Pers_uchet_org
 
     public class MapXml
     {
-        private static Random rand = new Random((int)DateTime.Now.Ticks);
         // название
         public static string name = "map";
 
@@ -1087,22 +1089,6 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-        public static string GetImito(long value)
-        {
-            return value.ToString("X16");
-        }
-
-        public static string GetImito(DateTime datetime)
-        {
-            return GetImito(datetime.Ticks);
-        }
-
-        public static string GetImito()
-        {
-            long tick = DateTime.Now.Ticks * rand.Next();
-            return GetImito(tick);
-        }
-
         public static XmlDocument GetXml(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>>szv1Array)
         {
             int docCount, packetCount;
@@ -1125,7 +1111,7 @@ namespace Pers_uchet_org
             svod.AppendChild(svodPath);
 
             svodTitle.InnerText = "Сводная ведомость";
-            svodFilename.InnerText = GetImito();
+            svodFilename.InnerText = "svod";
             svodPath.InnerText = rootDirStr;
 
             for (int i = 0; i < packetCount; i++)
@@ -1146,8 +1132,8 @@ namespace Pers_uchet_org
                 opis.AppendChild(opisPath);
 
                 opisTitle.InnerText = "Опись документов";
-                opisFilename.InnerText = GetImito();
-                opisPath.InnerText = string.Format("4\\{0}\\", packetID);
+                opisFilename.InnerText = string.Format("opis{0:000}",i);//GetImito();
+                opisPath.InnerText = string.Format(@"4\{0}\\", packetID);
 
                 IEnumerable<XmlDocument> szv1Docs = szv1Array.ElementAt(i);
                 docCount = szv1Docs.Count();
@@ -1173,10 +1159,10 @@ namespace Pers_uchet_org
                                             ,szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagMname)[0].InnerText
                                             );
                     topicNodeTitle.InnerText = fio;
-                    topicNodeFilename.InnerText = GetImito(); ;
+                    topicNodeFilename.InnerText = string.Format("{0:000}{1:000}",i,j);
                     topicNodeRegnum.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagPersonRegnum)[0].InnerText;
                     topicNodeDoctype.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFormType)[0].InnerText;
-                    topicNodePath.InnerText = string.Format("4\\{0}\\", packetID);
+                    topicNodePath.InnerText = string.Format(@"4\{0}\\", packetID);
                 }
             }
             //
@@ -1195,17 +1181,7 @@ namespace Pers_uchet_org
 
         public static string GetHTML(XmlDocument mapXml, string xslFilename)
         {
-            XPathNavigator xpn = mapXml.CreateNavigator();
-            XslCompiledTransform myXslTrans = new XslCompiledTransform();
-            myXslTrans.Load(xslFilename);
-            MemoryStream outStream = new MemoryStream();
-            XmlWriterSettings setting = new XmlWriterSettings();
-            setting.Encoding = Encoding.GetEncoding(1251);
-            setting.OmitXmlDeclaration = true;
-            XmlWriter writer = XmlWriter.Create(outStream, setting);
-            myXslTrans.Transform(xpn, writer);
-            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
-            return htmlStr;
+            return XmlData.GetHTML(mapXml, xslFilename);
         }
 
         public static string GetHTML(XmlDocument mapXml)
@@ -1232,7 +1208,7 @@ namespace Pers_uchet_org
         public static string tagDirectorType = "Director_Type";
         public static string tagDirectorFIO = "Director_FIO";
         public static string tagBookkeeperFIO = "Bookkeeper_FIO";
-        //public static string tagPerformer = "Performer";
+        public static string tagPerformer = "Performer";
         public static string tagOperatorName = "Operator_Name";
         public static string tagDate = "Date_of_Construction";
         public static string tagVersion = "Version";
@@ -1247,12 +1223,35 @@ namespace Pers_uchet_org
         public string directorType;
         public string directorFIO;
         public string bookkeeperFIO;
-        //public string performer;
+        public string performer;
         public string operatorName;
         public DateTime date;
         public string version;
         public string programName;
         public string programVersion;
+        #endregion
+
+        #region Конструкторы
+        public OrgPropXml()
+        {
+            orgRegnum = null;
+            orgName= null;
+            repeyar= null;
+            directorType= null;
+            directorFIO= null;
+            bookkeeperFIO= null;
+            performer= null;
+            operatorName= null;
+            date = DateTime.MinValue;
+            version= null;
+            programName= null;
+            programVersion= null;
+        }
+
+        public OrgPropXml(XmlDocument propertyXml)
+        {
+            TakeValues(propertyXml);
+        }
         #endregion
 
         #region Методы
@@ -1266,7 +1265,7 @@ namespace Pers_uchet_org
             XmlElement elDirectorType = xmlRes.CreateElement(tagDirectorType);
             XmlElement elDirectorFIO = xmlRes.CreateElement(tagDirectorFIO);
             XmlElement elBookkeeperFIO = xmlRes.CreateElement(tagBookkeeperFIO);
-            //XmlElement elPerformer = xmlRes.CreateElement(tagPerformer);
+            XmlElement elPerformer = xmlRes.CreateElement(tagPerformer);
             XmlElement elOperatorName = xmlRes.CreateElement(tagOperatorName);
             XmlElement elDate = xmlRes.CreateElement(tagDate);
             XmlElement elVersion = xmlRes.CreateElement(tagVersion);
@@ -1279,12 +1278,12 @@ namespace Pers_uchet_org
             elDirectorType.InnerText = directorType;
             elDirectorFIO.InnerText = directorFIO;
             elBookkeeperFIO.InnerText = bookkeeperFIO;
-            //elPerformer.InnerText = performer;
+            elPerformer.InnerText = performer;
             elOperatorName.InnerText = operatorName;
             elDate.InnerText = date.ToString("dd.MM.yyyy H:mm:ss");
             elVersion.InnerText = version;
-            elProgVersion.InnerText = programName;
-            elProgName.InnerText = programVersion;
+            elProgName.InnerText = programName;
+            elProgVersion.InnerText = programVersion;
 
             xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
             xmlRes.AppendChild(properties);
@@ -1294,7 +1293,7 @@ namespace Pers_uchet_org
             properties.AppendChild(elDirectorType);
             properties.AppendChild(elDirectorFIO);
             properties.AppendChild(elBookkeeperFIO);
-            //properties.AppendChild(elPerformer);
+            properties.AppendChild(elPerformer);
             properties.AppendChild(elOperatorName);
             properties.AppendChild(elDate);
             properties.AppendChild(elVersion);
@@ -1302,6 +1301,46 @@ namespace Pers_uchet_org
             properties.AppendChild(elProgName);
             //
             return xmlRes;
+        }
+
+        public void TakeValues(XmlDocument propertyXml)
+        {
+             orgRegnum = GetValue(propertyXml, tagOrgRegnum);
+             orgName = GetValue(propertyXml, tagOrgName);
+             repeyar = GetValue(propertyXml, tagRepyear);
+             directorType = GetValue(propertyXml, tagDirectorType);
+             directorFIO = GetValue(propertyXml, tagDirectorFIO);
+             bookkeeperFIO = GetValue(propertyXml, tagBookkeeperFIO);
+             operatorName = GetValue(propertyXml, tagOperatorName);
+             date = DateTime.Parse(GetValue(propertyXml, tagDate));
+             version = GetValue(propertyXml, tagVersion);
+             programName = GetValue(propertyXml, tagProgramName);
+             programVersion = GetValue(propertyXml, tagProgramVersion);
+        }
+
+        public string GetHTML()
+        {
+            XmlDocument xml = this.GetXml();
+            string html = XmlData.GetHTML(xml, GetXslUrl());
+            //
+            return html;
+        }
+        #endregion
+        
+        #region Методы - статические
+        public static string GetValue(XmlDocument propertyXml, string tagname)
+        {
+            string res = null;
+            XmlNodeList nodes = propertyXml.GetElementsByTagName(tagname);
+            if (nodes.Count > 0)
+                res = nodes[0].InnerText;
+            //
+            return res;
+        }
+
+        public static string GetXslUrl()
+        {
+            return Properties.Settings.Default.xsl_orgproperties;
         }
         #endregion
     }

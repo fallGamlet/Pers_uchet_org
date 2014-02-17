@@ -405,9 +405,9 @@
             // 
             this.driveBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.driveBox.FormattingEnabled = true;
-            this.driveBox.Location = new System.Drawing.Point(166, 105);
+            this.driveBox.Location = new System.Drawing.Point(178, 105);
             this.driveBox.Name = "driveBox";
-            this.driveBox.Size = new System.Drawing.Size(231, 21);
+            this.driveBox.Size = new System.Drawing.Size(219, 21);
             this.driveBox.TabIndex = 6;
             this.driveBox.Click += new System.EventHandler(this.driveBox_Click);
             // 
@@ -506,9 +506,9 @@
             // 
             this.flashBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.flashBox.FormattingEnabled = true;
-            this.flashBox.Location = new System.Drawing.Point(160, 18);
+            this.flashBox.Location = new System.Drawing.Point(172, 18);
             this.flashBox.Name = "flashBox";
-            this.flashBox.Size = new System.Drawing.Size(231, 21);
+            this.flashBox.Size = new System.Drawing.Size(219, 21);
             this.flashBox.TabIndex = 7;
             this.flashBox.Click += new System.EventHandler(this.flashBox_Click);
             // 
@@ -615,6 +615,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ExchangeForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Электронный обмен с ЕГФСС";
             this.Load += new System.EventHandler(this.ExchangeForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExchangeForm_FormClosing);

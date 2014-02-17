@@ -81,6 +81,7 @@ namespace Pers_uchet_org
         {
             byte[] resArr = new byte[key.Length * 4];
             byte[] reverseKey = new byte[key.Length];
+            key.CopyTo(reverseKey, 0);
             Array.Reverse(reverseKey);
             Array.Copy(key, 0, resArr, 0, key.Length);
             Array.Copy(key, 0, resArr, key.Length, key.Length);
@@ -316,6 +317,11 @@ namespace Pers_uchet_org
             string key = BitConverter.ToString(buff).Replace("-", "");
             //
             return key;
+        }
+
+        public static string GetString(byte[] data)
+        {
+            return Encoding.GetEncoding(1251).GetString(data);
         }
 
         public static string BinToHex(byte[] bin)

@@ -353,6 +353,10 @@ namespace Pers_uchet_org
         {
             DisableControlsBeforeCreateFile();
 
+            string flashRoot = null;
+            string containerFilename = null;
+            string mdcFilename = null;
+
             try
             {
                 if (tabControl1.SelectedTab == tabPage2)
@@ -416,21 +420,37 @@ namespace Pers_uchet_org
                 orgProp.directorFIO = _organization.chieffioVal;
                 orgProp.bookkeeperFIO = _organization.bookerfioVal;
                 orgProp.operatorName = _operator.nameVal;
-                
+                orgProp.repeyar = ((int)this.yearBox.Value).ToString();
+                orgProp.performer = _operator.nameVal;
+                orgProp.programName = "Персонифицированный учет (для организаций)";
+                orgProp.version = "3";
+                orgProp.programVersion = "4.0";
+                orgProp.date = DateTime.Now;
+
+                Storage.ExportXml("D:\\root_xml\\", orgProp, szv3Xml, szv2Array, szv1Array);
+                Storage.ImportXml("D:\\root_xml\\", orgProp, out szv3Xml, out szv2Array, out szv1Array);
+
                 if (_container != null)
                     _container.Close();
 
-                _container = Storage.MakeContainer(orgProp.GetXml(), mapXml, szv3Xml, szv2Array, szv1Array,
-                                            _diskTable, _diskKey);
+                _container = Storage.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array,
+                                            _diskKey, _diskTable);
 
-                string flashRoot = flashBox.Text.Substring(0,1);
+                flashRoot = flashBox.Text.Substring(0,1);
                 DirectoryInfo dir = Directory.CreateDirectory(string.Format(
                                                             @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
                                                             flashRoot,
                                                             _organization.regnumVal,
                                                             _repYear));
-                _container.Save(dir.FullName + @"\container.pfs");
+                containerFilename = dir.FullName + @"\edatacon.pfs";
+                mdcFilename = dir.FullName + @"\mdc";
+                _container.Save(containerFilename);
                 _container.Close();
+
+                CFProperties.AddProperty(containerFilename, orgProp);
+
+                byte[] hash = Mathdll.GostHash(containerFilename, _diskTable);
+                File.WriteAllBytes(mdcFilename, hash);
 
                 TimeSpan createSpan;
                 createSpan = new TimeSpan(createEnd.Ticks - createStart.Ticks);
@@ -476,15 +496,28 @@ namespace Pers_uchet_org
 
         private void viewDataButton_Click(object sender, EventArgs e)
         {
-            if (_diskKey == null || _diskTable == null)
+            try
+            {
+                _diskKey = ReadKey.Read(driveBox.Text.Substring(0, 2), ReadKey.DeviceType.CD, ReadKey.DataType.Key);
+                _diskTable = ReadKey.Read(driveBox.Text.Substring(0, 2), ReadKey.DeviceType.CD, ReadKey.DataType.Table);
+            }
+            catch
+            {
+                MainForm.ShowWarningMessage("Не удалось считать ключевые данные с диска!\nВозможно Вы вставили неверный диск.", "Внимание");
                 return;
+            }
             string flashRoot = flashBox.Text.Substring(0, 1);
-            string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\container.pfs",
+            string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
                                             flashRoot, _organization.regnumVal, _repYear);
             if (!File.Exists(filename))
             {
                 MainForm.ShowInfoMessage("Сначала необходимо сформировать электронный файл для обмена с ЕГФСС", "Внимание");
                 return;
+            }
+
+            if (_container != null)
+            {
+                _container.Close();
             }
             _container = new CompoundFile(filename);
             CFStream mapStream = _container.RootStorage.GetStream("map");
@@ -492,13 +525,17 @@ namespace Pers_uchet_org
             CFStorage stylesDir = _container.RootStorage.GetStorage("styles");
             CFStream mapStyleStream = stylesDir.GetStream("map_style");
             byte[] mapStyleBytes = Storage.DecryptStream(mapStyleStream, _diskKey, _diskTable);
+            _container.Close();
+            
+            OrgPropXml props = CFProperties.ReadProperty(filename);
+            string propHtml = props.GetHTML();
 
             string htmlStr = MapXml.GetHTML(mapBytes, mapStyleBytes);
             WebBrowser reportWB = new WebBrowser();
+            htmlStr = htmlStr.Replace("<DIV class=\"insert_here\" />", propHtml);
             reportWB.DocumentText = htmlStr;
             MyPrinter.ShowWebPage(reportWB);
             reportWB.Navigating += new WebBrowserNavigatingEventHandler(reportWB_Navigating);
-            //_container.Close();
         }
 
         void reportWB_Navigating(object sender, WebBrowserNavigatingEventArgs e)
@@ -509,10 +546,19 @@ namespace Pers_uchet_org
                 e.Cancel = true;
                 if (_diskKey != null && _diskTable != null)
                 {
+                    if (_container == null || _container.RootStorage == null)
+                    {
+                        string flashRoot = flashBox.Text.Substring(0, 1);
+                        string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
+                                            flashRoot, _organization.regnumVal, _repYear);
+                        _container = new CompoundFile(filename);
+                    }
                     string html = Storage.GetHTML(_container, uri, _diskKey, _diskTable);
+                    _container.Close();
+                    _container = null;
                     if (html == null)
                         return;
-                    MyPrinter.ShowWebPage(html);
+                    MyPrinter.ShowWebPage(html, true);
                 }
             }
         }
