@@ -87,7 +87,7 @@ namespace Pers_uchet_org
             {
                 return;
             }
-            _orgAdapter.SelectCommand.CommandText = Org.GetSelectByPerson((long)curPerson[PersonShortView.id]);
+            _orgAdapter.SelectCommand.CommandText = Org.GetSelectByPersonText((long)curPerson[PersonShortView.id]);
             _orgTable.Rows.Clear();
             _orgAdapter.Fill(_orgTable);
         }

@@ -253,6 +253,7 @@ namespace Pers_uchet_org
 
         private void FillSalaryInfoTable()
         {
+            _salaryInfoTable = SalaryInfo.CreateTableWithRows();
             _salaryInfoTableTranspose = SalaryInfoTranspose.CreateTableWithRows();
             if (_currentDocId > 0)
             {

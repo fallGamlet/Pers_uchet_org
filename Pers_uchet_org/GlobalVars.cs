@@ -329,6 +329,45 @@ namespace Pers_uchet_org
                             id, regnum, name, chief_post, chief_fio, booker_fio, tablename, org_id);
         }
 
+        static public string GetSelectByPersonText(long person_id)
+        {
+            return string.Format("{0} WHERE {1} in ({2})",
+                                GetSelectCommandText(),
+                                id,
+                                PersonOrg.GetSelectOrgIDText(person_id));
+        }
+
+
+        static public string GetSelectOrgsIdWithDocsForPersonText(long person_id)
+        {
+            return string.Format("SELECT o.{0} as id, COUNT(d.{1}) as count_docs FROM {2} o INNER JOIN {3} l ON l.{4} = o.{0} INNER JOIN {5} d ON l.{6} = d.{7} WHERE d.{8} = {9} GROUP BY o.{0} HAVING count_docs > 0 ",
+                                                          Org.id, Docs.id, Org.tablename,
+                                                          Lists.tablename, Lists.orgID,
+                                                          Docs.tablename, Lists.id, Docs.listId,
+                                                          Docs.personID, person_id);
+        }
+
+        static public List<long> GetOrgsIdWithDocsForPerson(long person_id, string connection_str)
+        {
+            List<long> orgIds = new List<long>();
+            using (SQLiteConnection connection = new SQLiteConnection(connection_str))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = GetSelectOrgsIdWithDocsForPersonText(person_id);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        orgIds.Add((long)reader[Org.id]);
+                    }
+                }
+            }
+            return orgIds;
+        }
+
         static public string GetSelectByPerson(long person_id)
         {
             return string.Format("{0} WHERE {1} in ({2})",
@@ -379,7 +418,7 @@ namespace Pers_uchet_org
                                                 ({1}, {2}, {3}, [{4}], {5})
                                                 VALUES
                                                 ({6}, {7}, {8}, {9}, {10});
-                                                SELECT last_indert_rowid() ",
+                                                SELECT last_insert_rowid() ",
                                         tablename,
                                         regnum, name, chief_post, chief_fio, booker_fio,
                                         pRegnum, pName, pChief_post, pChief_fio, pBooker_fio);
@@ -399,7 +438,7 @@ namespace Pers_uchet_org
                                 UPDATE {0} SET
                                  {1} = {2}, {3} = {4}, {5} = {6}
                                 ,{7} = {8}, {9} = {10} 
-                                WHERE{11} = {12};",
+                                WHERE {11} = {12};",
                             tablename,
                             regnum, pRegnum, name, pName, chief_post, pChief_post,
                             chief_fio, pChief_fio, booker_fio, pBooker_fio,
@@ -449,6 +488,26 @@ namespace Pers_uchet_org
             return table;
         }
         #endregion
+
+        public static bool IsDuplicate(string reg_num_org, long org_id, string connection_str)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connection_str))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = GetSelectCountOrgByRegNumAndId(reg_num_org, org_id);
+                    long count = (long)command.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+
+        public static string GetSelectCountOrgByRegNumAndId(string reg_num_org, long org_id)
+        {
+            return string.Format("SELECT COUNT({0}) FROM {1} WHERE {2} = '{3}' AND {0} != {4}", Org.id, Org.tablename, Org.regnum, reg_num_org, org_id);
+        }
     }
 
     public class OperatorOrg
@@ -766,6 +825,27 @@ namespace Pers_uchet_org
                                     personID, tablename, orgID, org_id);
         }
 
+        static public string GetSelectCountPersonIdText(long org_id)
+        {
+            return string.Format("SELECT COUNT(DISTINCT {0}) FROM {1} WHERE {2} = {3} ",
+                                    personID, tablename, orgID, org_id);
+        }
+
+        static public long GetCountPersonId(long org_id, string connection_str)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connection_str))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = GetSelectCountPersonIdText(org_id);
+                    return (long)command.ExecuteScalar();
+                }
+            }
+            return -1;
+        }
+
         static public string GetSelectOrgIDText(long person_id)
         {
             return string.Format("SELECT DISTINCT {0} FROM {1} WHERE {2} = {3} ",
@@ -1081,10 +1161,10 @@ namespace Pers_uchet_org
                                 person_id);
         }
 
-        static public string GetSelectIDText(string socnumber)
+        static public string GetSelectIDText(long person_id, string soc_number)
         {
-            return string.Format(" SELECT {0} FROM {1} WHERE {2} = '{3}' ",
-                                id, tablename, socNumber, socnumber);
+            return string.Format(" SELECT {0} FROM {1} WHERE {2} = '{3}' AND {4} <> {5}",
+                                id, tablename, socNumber, soc_number, id, person_id);
         }
 
         static public string GetChangeStateText(long person_id, object stateVal)
@@ -1122,12 +1202,12 @@ namespace Pers_uchet_org
                                     tablename, id, instr);
         }
 
-        static public bool IsExist(string socnumber, string connectionStr)
+        static public bool IsExist(long person_id, string socnumber, string connectionStr)
         {
             if (String.IsNullOrEmpty(socnumber))
                 return false;
             SQLiteConnection connection = new SQLiteConnection(connectionStr);
-            SQLiteCommand command = new SQLiteCommand(GetSelectIDText(socnumber));
+            SQLiteCommand command = new SQLiteCommand(GetSelectIDText(person_id, socnumber));
             command.Connection = connection;
             connection.Open();
             object res = command.ExecuteScalar();
@@ -2383,6 +2463,102 @@ namespace Pers_uchet_org
         #endregion
     }
 
+    public class DocsView2
+    {
+        static public string tablename = "Docs_View_2";
+
+        #region Названия полей в представления БД
+        static public string id = "id";
+        static public string listId = "list_id";
+        static public string personID = "person_id";
+        static public string repYear = "rep_year";
+        static public string orgId = "org_id";
+        static public string regNum = "regnum";
+
+        #endregion
+
+        #region Методы - статические
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(id, typeof(long));
+            table.Columns.Add(listId, typeof(long));
+            table.Columns.Add(personID, typeof(long));
+            table.Columns.Add(repYear, typeof(long));
+            table.Columns.Add(orgId, typeof(long));
+            table.Columns.Add(regNum, typeof(string));
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0} ", tablename);
+        }
+
+        //static public string GetSelectTextByListId(long list_id)
+        //{
+        //    return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), listId, list_id);
+        //}
+
+        //static public string GetSelectTextByListId(IEnumerable<long> list_id)
+        //{
+        //    string instr = "( ";
+        //    foreach (long val in list_id)
+        //        instr += val + ",";
+        //    instr = instr.Remove(instr.Length - 1);
+        //    instr += " )";
+        //    return string.Format("{0} WHERE {1} = {2} ORDER BY {3}, {4} ", GetSelectText(), listId, instr, listId, docTypeId);
+        //}
+
+        static public string GetSelectTextByDocId(long doc_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ", id, doc_id);
+        }
+
+        static public string GetSelectTextByPersonId(long person_id)
+        {
+            return GetSelectText() + string.Format(" WHERE {0} = {1} ", personID, person_id);
+        }
+
+        static public DataTable GetDocs(long person_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByPersonId(person_id), connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
+        //static public DataTable GetDocs(IEnumerable<long> list_id, string connectionStr)
+        //{
+        //    DataTable table = CreateTable();
+        //    SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectTextByListId(list_id), connectionStr);
+        //    adapter.Fill(table);
+        //    return table;
+        //}
+        //static public string GetCountDocsInListText(long list_id)
+        //{
+        //    return string.Format("SELECT count(*) FROM {0} WHERE {1} = {2}", tablename, listId, list_id);
+        //}
+
+        //public static int GetCountDocsInList(long NewListId, string _connection)
+        //{
+        //    using (SQLiteConnection connection = new SQLiteConnection(_connection))
+        //    {
+        //        if (connection.State != ConnectionState.Open)
+        //            connection.Open();
+        //        using (SQLiteCommand command = connection.CreateCommand())
+        //        {
+        //            command.CommandText = GetCountDocsInListText(NewListId);
+        //            return Convert.ToInt32(command.ExecuteScalar());
+        //        }
+        //    }
+        //}
+
+
+
+        #endregion
+    }
+
     public class DocsShortView
     {
         // название таблицы
@@ -2742,7 +2918,7 @@ namespace Pers_uchet_org
             {
                 list_id_str.Append(val + ",");
             }
-            list_id_str[list_id_str .Length - 1] = ' ';
+            list_id_str[list_id_str.Length - 1] = ' ';
 
             return string.Format(@" SELECT count(distinct {0}) as [count] FROM {1} WHERE {2} in ({3}) ",
                                 id, tablename, listId, list_id_str);
@@ -2841,7 +3017,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         static public string GetSelectDocsIDText(long list_id)
         {
-            return string.Format("SELECT d.{0} FROM {1} d INNER JOIN {2} pi ON d.{3} = pi.{4} AND pi.{5} IS NOT NULL AND TRIM(pi.{5}) <> '' WHERE d.{6} = {7}", 
+            return string.Format("SELECT d.{0} FROM {1} d INNER JOIN {2} pi ON d.{3} = pi.{4} AND pi.{5} IS NOT NULL AND TRIM(pi.{5}) <> '' WHERE d.{6} = {7}",
                                 id, tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id, PersonInfo.socNumber, listId, list_id);
         }
 
@@ -3039,22 +3215,22 @@ namespace Pers_uchet_org
         static public DataTable CreateTable()
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(id, typeof(long));
-            table.Columns.Add(docId, typeof(long));
-            table.Columns.Add(salaryGroupsId, typeof(long));
-            table.Columns.Add(january, typeof(double));
-            table.Columns.Add(february, typeof(double));
-            table.Columns.Add(march, typeof(double));
-            table.Columns.Add(april, typeof(double));
-            table.Columns.Add(may, typeof(double));
-            table.Columns.Add(june, typeof(double));
-            table.Columns.Add(july, typeof(double));
-            table.Columns.Add(august, typeof(double));
-            table.Columns.Add(september, typeof(double));
-            table.Columns.Add(october, typeof(double));
-            table.Columns.Add(november, typeof(double));
-            table.Columns.Add(december, typeof(double));
-            table.Columns.Add(sum, typeof(double));
+            table.Columns.Add(id, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(docId, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(salaryGroupsId, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(january, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(february, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(march, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(april, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(may, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(june, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(july, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(august, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(september, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(october, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(november, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(december, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(sum, typeof(double)).DefaultValue = 0.0;
             return table;
         }
 
@@ -4904,7 +5080,7 @@ namespace Pers_uchet_org
         {
             return string.Format(" DELETE FROM {0} WHERE {1}={2} AND {3}={4} ", tablename, tableID, Tables.GetSelectIDText(table_name), rowID, row_id);
         }
-        
+
         internal static long ExecReplaceText(string table_name, FixType fix_type, long row_id, string oper_name, DateTime fix_date, SQLiteConnection connection, SQLiteTransaction transaction)
         {
             string commantText = String.Empty;
@@ -4919,7 +5095,15 @@ namespace Pers_uchet_org
 
     public class Backup
     {
-        public static bool isBackupCreate = true;
+        public static BackupCreate isBackupCreate = BackupCreate.None;
+
+        public enum BackupCreate
+        {
+            Create = 0,
+            None = 1,
+            DoNotCreate = 2
+        }
+
         public static string columnDateTimeName = "dateTime";
         public static string columnPathName = "path";
         public enum TypeBackup { Auto = 0, ManualBackup = 1, RestoreBackup = 2 }

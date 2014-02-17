@@ -28,15 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnketadataForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.countLabel = new System.Windows.Forms.Label();
             this.countTextLabel = new System.Windows.Forms.Label();
             this.personView = new System.Windows.Forms.DataGridView();
+            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.searchFioBox = new System.Windows.Forms.TextBox();
             this.searchSocnumBox = new System.Windows.Forms.TextBox();
@@ -86,10 +90,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.numColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dismissdateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -149,27 +149,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.personView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.personView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
             this.numColumn,
             this.fioColumn,
             this.dismissdateColumn});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.personView.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.personView.DefaultCellStyle = dataGridViewCellStyle3;
             this.personView.Location = new System.Drawing.Point(4, 56);
             this.personView.MultiSelect = false;
             this.personView.Name = "personView";
@@ -177,8 +177,8 @@
             this.personView.RowHeadersVisible = false;
             this.personView.RowHeadersWidth = 15;
             this.personView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.personView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.personView.Size = new System.Drawing.Size(385, 375);
             this.personView.TabIndex = 4;
@@ -186,6 +186,49 @@
             this.personView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellDoubleClick);
             this.personView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.personView_KeyDown);
             this.personView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.personView_KeyPress);
+            // 
+            // checkColumn
+            // 
+            this.checkColumn.DataPropertyName = "check";
+            this.checkColumn.FillWeight = 20F;
+            this.checkColumn.Frozen = true;
+            this.checkColumn.HeaderText = "*";
+            this.checkColumn.Name = "checkColumn";
+            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.checkColumn.Width = 20;
+            // 
+            // numColumn
+            // 
+            this.numColumn.DataPropertyName = "soc_number";
+            this.numColumn.HeaderText = "Страховой №";
+            this.numColumn.MaxInputLength = 25;
+            this.numColumn.MinimumWidth = 80;
+            this.numColumn.Name = "numColumn";
+            this.numColumn.ReadOnly = true;
+            this.numColumn.Width = 80;
+            // 
+            // fioColumn
+            // 
+            this.fioColumn.DataPropertyName = "fio";
+            this.fioColumn.HeaderText = "Фамилия И.О.";
+            this.fioColumn.MaxInputLength = 150;
+            this.fioColumn.MinimumWidth = 100;
+            this.fioColumn.Name = "fioColumn";
+            this.fioColumn.ReadOnly = true;
+            this.fioColumn.Width = 150;
+            // 
+            // dismissdateColumn
+            // 
+            this.dismissdateColumn.DataPropertyName = "dismiss_date";
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dismissdateColumn.HeaderText = "Дата увольнения";
+            this.dismissdateColumn.MaxInputLength = 25;
+            this.dismissdateColumn.MinimumWidth = 50;
+            this.dismissdateColumn.Name = "dismissdateColumn";
+            this.dismissdateColumn.ReadOnly = true;
+            this.dismissdateColumn.Width = 130;
             // 
             // label4
             // 
@@ -229,6 +272,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addStripButton,
             this.editStripButton,
@@ -708,49 +752,6 @@
             this.label6.Size = new System.Drawing.Size(131, 13);
             this.label6.TabIndex = 10;
             this.label6.Text = "Фамилия Имя Отчество";
-            // 
-            // checkColumn
-            // 
-            this.checkColumn.DataPropertyName = "check";
-            this.checkColumn.FillWeight = 20F;
-            this.checkColumn.Frozen = true;
-            this.checkColumn.HeaderText = "*";
-            this.checkColumn.Name = "checkColumn";
-            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.checkColumn.Width = 20;
-            // 
-            // numColumn
-            // 
-            this.numColumn.DataPropertyName = "soc_number";
-            this.numColumn.HeaderText = "Страховой №";
-            this.numColumn.MaxInputLength = 25;
-            this.numColumn.MinimumWidth = 80;
-            this.numColumn.Name = "numColumn";
-            this.numColumn.ReadOnly = true;
-            this.numColumn.Width = 80;
-            // 
-            // fioColumn
-            // 
-            this.fioColumn.DataPropertyName = "fio";
-            this.fioColumn.HeaderText = "Фамилия И.О.";
-            this.fioColumn.MaxInputLength = 150;
-            this.fioColumn.MinimumWidth = 100;
-            this.fioColumn.Name = "fioColumn";
-            this.fioColumn.ReadOnly = true;
-            this.fioColumn.Width = 150;
-            // 
-            // dismissdateColumn
-            // 
-            this.dismissdateColumn.DataPropertyName = "dismiss_date";
-            dataGridViewCellStyle6.Format = "d";
-            dataGridViewCellStyle6.NullValue = null;
-            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dismissdateColumn.HeaderText = "Дата увольнения";
-            this.dismissdateColumn.MaxInputLength = 25;
-            this.dismissdateColumn.MinimumWidth = 50;
-            this.dismissdateColumn.Name = "dismissdateColumn";
-            this.dismissdateColumn.ReadOnly = true;
-            this.dismissdateColumn.Width = 130;
             // 
             // AnketadataForm
             // 

@@ -284,7 +284,7 @@ namespace Pers_uchet_org
             }
 
             if (!res)
-                MessageBox.Show("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные");
             return res;
         }
 
@@ -562,7 +562,7 @@ namespace Pers_uchet_org
 
             this.socNumBox.Text = PersonInfo.CorrectSocnumberRusToEn(this.socNumBox.Text.Trim());
             string socNumber = this.socNumBox.Text.Trim('-', ' ');
-            if (PersonInfo.IsExist(socNumber, _connection))
+            if (PersonInfo.IsExist(_personID, socNumber, _connection))
             {
                 MainForm.ShowWarningMessage("Анкетные данные с таким номером уже присутствуют в базе данных!", "Внимание");
                 return;

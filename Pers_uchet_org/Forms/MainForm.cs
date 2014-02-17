@@ -48,19 +48,6 @@ namespace Pers_uchet_org
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //_orgTable = Org.CreateTable();
-            //_orgTable.Columns.Add(viewCol);
-            //_orgBS = new BindingSource();
-            //_orgBS.DataSource = _orgTable;
-            //this.orgBox.DataSource = _orgBS;
-            //this.orgBox.DisplayMember = viewCol;
-            //int isLogedin = 0;
-            //for (int i = 0; i < 3 && isLogedin == 0; i++)
-            //{
-            //    isLogedin = this.Login();
-            //}
-            //if (isLogedin != 2)
-            //    this.Close();
             if (File.Exists(Settings.Default.DataBasePath))
                 changeoperatorMenuItem_Click(sender, e);
             else
@@ -158,16 +145,17 @@ namespace Pers_uchet_org
             switch (dRes)
             {
                 case DialogResult.Cancel:
-                    Backup.isBackupCreate = false;
+                    Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
                     return 0;//Отмена входа
                 case DialogResult.OK:
                     _operator = enterForm.Operator;
+                    Backup.isBackupCreate = Backup.BackupCreate.None;
                     return 1; //Вход удачен
                 case DialogResult.Abort:
-                    Backup.isBackupCreate = false;
+                    Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
                     return 2; //n раз(а) ввели неправильный логин или пароль
                 default:
-                    Backup.isBackupCreate = false;
+                    Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
                     return -1;
             }
         }
@@ -189,28 +177,39 @@ namespace Pers_uchet_org
                     this.Close();
                     return;
             }
+            ReloadData();
+            MainForm.ShowInfoMessage(string.Format("Добро пожаловать, {0}!", _operator.nameVal), "Приветствие");
+        }
+
+        private void ReloadData()
+        {
+            int position = -1;
+            if (_orgBS != null)
+                position = _orgBS.Position;
 
             _orgTable = Org.CreateTable();
             _orgTable.Columns.Add(viewCol);
+
             _orgBS = new BindingSource();
             _orgBS.DataSource = _orgTable;
-            this.orgBox.DataSource = _orgBS;
-            this.orgBox.DisplayMember = viewCol;
 
             string selectText = _operator.candeleteVal == 0 ? Org.GetSelectCommandText() : Org.GetSelectTextByOperator(_operator.idVal);
-
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectText, _mainConnection);
-            _orgTable.Rows.Clear();
-
             adapter.Fill(_orgTable);
             foreach (DataRow rowItem in _orgTable.Rows)
             {
                 rowItem[viewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
             }
             _orgTable.AcceptChanges();
+
+            this.orgBox.DataSource = _orgBS;
+            this.orgBox.DisplayMember = viewCol;
+
+            _orgBS.Position = position;
+
             this.SetPrivilege();
+
             this.statusLabel.Text = _operator.nameVal;
-            MainForm.ShowInfoMessage(string.Format("Добро пожаловать {0}!", _operator.nameVal), ";)");
         }
         // выход из программы
         private void exitMenuItem_Click(object sender, EventArgs e)
@@ -343,20 +342,24 @@ namespace Pers_uchet_org
         private void operatoriMenuItem_Click(object sender, EventArgs e)
         {
             OperatorsForm tmpForm = new OperatorsForm(_mainConnection);
-            tmpForm.Show();
+            tmpForm.ShowDialog();
         }
         // открыть форму представляющую краткую общую информацию о программе
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox tmpForm = new AboutBox();
             tmpForm.Owner = this;
-            tmpForm.ShowDialog(this);
+            tmpForm.ShowDialog();
         }
         // открыть форму редактирования информации об организациях
         private void orgMenuItem_Click(object sender, EventArgs e)
         {
             OrgForm tmpForm = new OrgForm(_mainConnection);
-            tmpForm.Show();
+            if (tmpForm.ShowDialog() == DialogResult.OK)
+            {
+                _operator = Operator.GetOperator(_operator.idVal, _mainConnection);
+                ReloadData();
+            }
         }
         // при смене организации поменять состояние активности вкладок в соответствии привилегиями пользователя
         private void orgBox_SelectedIndexChanged(object sender, EventArgs e)

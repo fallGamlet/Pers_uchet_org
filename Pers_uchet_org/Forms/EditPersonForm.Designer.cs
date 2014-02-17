@@ -117,7 +117,7 @@
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 8;
-            this.closeButton.Text = "Отменить";
+            this.closeButton.Text = "Отмена";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
@@ -818,7 +818,7 @@
             this.MinimumSize = new System.Drawing.Size(615, 600);
             this.Name = "EditPersonForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ввод анкетных данных";
+            this.Text = "Добавление\\редактирование анкетных данных";
             this.Load += new System.EventHandler(this.EditPersonForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.bornplaceGroupBox.ResumeLayout(false);

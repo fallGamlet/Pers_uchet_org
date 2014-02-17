@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -37,12 +38,12 @@ namespace Pers_uchet_org
             culture.NumberFormat.NegativeSign = "-";
             culture.NumberFormat.NumberDecimalDigits = 2;
             culture.NumberFormat.NumberGroupSeparator = " ";
-            culture.NumberFormat.NumberGroupSizes = new int[] {3};
+            culture.NumberFormat.NumberGroupSizes = new int[] { 3 };
             culture.NumberFormat.NumberNegativePattern = 1;
             culture.NumberFormat.PercentDecimalDigits = 2;
             culture.NumberFormat.PercentDecimalSeparator = ",";
             culture.NumberFormat.PercentGroupSeparator = " ";
-            culture.NumberFormat.PercentGroupSizes = new int[] {3};
+            culture.NumberFormat.PercentGroupSizes = new int[] { 3 };
             culture.NumberFormat.PercentNegativePattern = 1;
             culture.NumberFormat.PercentPositivePattern = 1;
             culture.NumberFormat.PercentSymbol = "%";
@@ -83,9 +84,34 @@ namespace Pers_uchet_org
             try
             {
                 bool isCreateBackup = Settings.Default.IsBackupEnabled;
-                isCreateBackup = Backup.isBackupCreate;
+                switch (Backup.isBackupCreate)
+                {
+                    case Backup.BackupCreate.Create:
+                        isCreateBackup = true;
+                        break;
+                    case Backup.BackupCreate.None:
+                        break;
+                    case Backup.BackupCreate.DoNotCreate:
+                        isCreateBackup = false;
+                        break;
+                    default:
+                        break;
+                }
+
                 if (isCreateBackup)
                 {
+                    if (!Directory.Exists(Settings.Default.BackupPath))
+                    {
+                        MainForm.ShowErrorMessage("Папка для резервного копирования не найдена!", "Создание резервной копии");
+                        return;
+                    }
+
+                    if (!File.Exists(Settings.Default.DataBasePath))
+                    {
+                        MainForm.ShowErrorMessage("Файл базы данных не найден!", "Создание резервной копии");
+                        return;
+                    }
+
                     Backup.CreateBackup(Settings.Default.BackupPath, Settings.Default.DataBasePath, Backup.TypeBackup.Auto);
                     Backup.DeleteOldBackups(Settings.Default.BackupPath, (int)Settings.Default.BackupMaxCount, Backup.TypeBackup.Auto);
                 }

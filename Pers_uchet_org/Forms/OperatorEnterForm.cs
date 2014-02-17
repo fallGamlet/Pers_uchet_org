@@ -130,6 +130,16 @@ namespace Pers_uchet_org.Forms
         {
             this.DialogResult = DialogResult.Cancel;
         }
+        
+        private void showPassButton_MouseDown(object sender, MouseEventArgs e)
+        {
+            passwordBox.UseSystemPasswordChar = false;
+        }
+
+        private void showPassButton_MouseUp(object sender, MouseEventArgs e)
+        {
+            passwordBox.UseSystemPasswordChar = true;
+        }
         #endregion
     }
 }

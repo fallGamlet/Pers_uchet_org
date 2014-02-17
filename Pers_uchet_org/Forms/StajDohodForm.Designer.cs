@@ -459,7 +459,7 @@
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(601, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(570, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";

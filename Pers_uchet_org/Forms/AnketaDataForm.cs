@@ -149,21 +149,23 @@ namespace Pers_uchet_org
         {
             if (e.KeyChar == '\r')
             {
-                int pos;
-                string sval = this.searchSocnumBox.Text;
-                for (pos = 0; pos < _personBS.Count; pos++)
-                {
-                    DataRowView row = _personBS[pos] as DataRowView;
-                    if (row != null)
-                    {
-                        string sucnum = row[PersonView.socNumber] as string;
-                        if (sucnum != null && sucnum.Contains(sval))
-                        {
-                            _personBS.Position = pos;
-                            break;
-                        }
-                    }
-                }
+                searchFioBox.Text = "";
+                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.socNumber, this.searchSocnumBox.Text);
+                //int pos;
+                //string sval = this.searchSocnumBox.Text;
+                //for (pos = 0; pos < _personBS.Count; pos++)
+                //{
+                //    DataRowView row = _personBS[pos] as DataRowView;
+                //    if (row != null)
+                //    {
+                //        string sucnum = row[PersonView.socNumber] as string;
+                //        if (sucnum != null && sucnum.Contains(sval))
+                //        {
+                //            _personBS.Position = pos;
+                //            break;
+                //        }
+                //    }
+                //}
             }
         }
 
@@ -171,21 +173,23 @@ namespace Pers_uchet_org
         {
             if (e.KeyChar == '\r')
             {
-                int pos;
-                string sval = this.searchFioBox.Text;
-                for (pos = 0; pos < _personBS.Count; pos++)
-                {
-                    DataRowView row = _personBS[pos] as DataRowView;
-                    if (row != null)
-                    {
-                        string fio = row[PersonView.fio] as string;
-                        if (fio != null && fio.Contains(sval))
-                        {
-                            _personBS.Position = pos;
-                            break;
-                        }
-                    }
-                }
+                searchSocnumBox.Text = "";
+                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.fio, this.searchFioBox.Text);
+                //int pos;
+                //string sval = this.searchFioBox.Text;
+                //for (pos = 0; pos < _personBS.Count; pos++)
+                //{
+                //    DataRowView row = _personBS[pos] as DataRowView;
+                //    if (row != null)
+                //    {
+                //        string fio = row[PersonView.fio] as string;
+                //        if (fio != null && fio.Contains(sval))
+                //        {
+                //            _personBS.Position = pos;
+                //            break;
+                //        }
+                //    }
+                //}
             }
         }
 
@@ -227,16 +231,21 @@ namespace Pers_uchet_org
 
         void EditPersonForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (sender != null && sender is EditPersonForm)
+            if (sender != null)
             {
-                EditPersonForm tmpForm = sender as EditPersonForm;
-                if (tmpForm.DialogResult == DialogResult.OK)
+                if (sender is EditPersonForm)
                 {
-                    long personID = tmpForm.PersonID;
-                    _personTable.Rows.Clear();
-                    _personAdapter.Fill(_personTable);
-                    _personBS.Position = _personBS.Find(PersonInfo.id, personID);
+                    EditPersonForm tmpForm = sender as EditPersonForm;
+                    if (tmpForm.DialogResult == DialogResult.OK)
+                    {
+                        long personID = tmpForm.PersonID;
+                        _personTable.Rows.Clear();
+                        _personAdapter.Fill(_personTable);
+                        _personBS.Position = _personBS.Find(PersonInfo.id, personID);
+                    }
                 }
+
+
             }
         }
 
@@ -262,19 +271,43 @@ namespace Pers_uchet_org
             List<DataRowView> personList = this.GetSelectedRows();
             List<long> personIdList = new List<long>();
             StringBuilder personFios = new StringBuilder();
+            StringBuilder personFiosNotDelete = new StringBuilder();
+
+            bool breakDelete = false;
             foreach (DataRowView rowItem in personList)
             {
-                personIdList.Add((long)rowItem[PersonView.id]);
-                personFios.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(), rowItem[PersonView.socNumber].ToString());
+                long personId = (long)rowItem[PersonView.id];
+                DataTable tmp = DocsView2.GetDocs(personId, _connection);
+                if (tmp.Rows.Count < 1)
+                {
+                    personIdList.Add(personId);
+                    personFios.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(), rowItem[PersonView.socNumber].ToString());
+                }
+                else
+                {
+                    breakDelete = true;
+                    personFiosNotDelete.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(), rowItem[PersonView.socNumber].ToString());
+
+                    foreach (DataRow row in tmp.Rows)
+                    {
+                        personFiosNotDelete.AppendFormat("\t{0} год {1}, пакет {2}\n", row[DocsView2.regNum], row[DocsView2.repYear], row[DocsView2.listId]);
+                    }
+                }
+            }
+
+            if (breakDelete)
+            {
+                MainForm.ShowWarningFlexMessage("Удаление анкетных данных невозможно, так как имеются документы СЗВ-1!\n\n" + personFiosNotDelete, "Удаление анкет(ы)");
+                return;
             }
 
             if (personIdList.Count <= 0)
             {
-                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора анкеты");
+                MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора анкет(ы)");
                 return;
             }
 
-            if (MainForm.ShowQuestionFlexMessage("При удаление анкет так же будут удалены документы о стаже и доходе \"СЗВ-1\"!\nВы действительно хотите удалить выбранные анкеты?\n\n" + personFios, "Удаление анкеты") != DialogResult.Yes)
+            if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите удалить выбранные анкеты?\n\n" + personFios, "Удаление анкет(ы)") != DialogResult.Yes)
             {
                 return;
             }
@@ -392,8 +425,30 @@ namespace Pers_uchet_org
                 return;
             }
             AnketaPersonOrgForm tmpform = new AnketaPersonOrgForm(curPersonRow.Row, _operator, _org.idVal, _connection);
+            tmpform.FormClosed += new FormClosedEventHandler(AnketaPersonOrgForm_FormClosed);
             tmpform.Owner = this;
             tmpform.ShowDialog(this);
+        }
+
+        void AnketaPersonOrgForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (sender != null)
+            {
+                if (sender is AnketaPersonOrgForm)
+                {
+                    AnketaPersonOrgForm tmpForm = sender as AnketaPersonOrgForm;
+                    if (tmpForm.DialogResult == DialogResult.OK)
+                    {
+                        if (_personBS.Current != null)
+                        {
+                            long personID = (long)(_personBS.Current as DataRowView)[PersonView.id];
+                            _personTable.Rows.Clear();
+                            _personAdapter.Fill(_personTable);
+                            _personBS.Position = _personBS.Find(PersonInfo.id, personID);
+                        }
+                    }
+                }
+            }
         }
 
         private void personView_KeyPress(object sender, KeyPressEventArgs e)

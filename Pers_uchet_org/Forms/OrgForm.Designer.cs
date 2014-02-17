@@ -50,9 +50,9 @@
             this.editorgButton = new System.Windows.Forms.Button();
             this.addorgButton = new System.Windows.Forms.Button();
             this.orgView = new System.Windows.Forms.DataGridView();
-            this.closeButton = new System.Windows.Forms.Button();
             this.regnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.closeButton = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.depView)).BeginInit();
@@ -328,17 +328,6 @@
             this.orgView.Size = new System.Drawing.Size(237, 125);
             this.orgView.TabIndex = 0;
             // 
-            // closeButton
-            // 
-            this.closeButton.Location = new System.Drawing.Point(595, 381);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 9;
-            this.closeButton.Text = "Закрыть";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Visible = false;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
             // regnumColumn
             // 
             this.regnumColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -359,6 +348,16 @@
             this.nameColumn.Name = "nameColumn";
             this.nameColumn.ReadOnly = true;
             // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(595, 381);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(75, 23);
+            this.closeButton.TabIndex = 9;
+            this.closeButton.Text = "Закрыть";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Visible = false;
+            // 
             // OrgForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,7 +369,9 @@
             this.Controls.Add(this.groupBox1);
             this.MinimumSize = new System.Drawing.Size(500, 213);
             this.Name = "OrgForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Информация об организациях";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OrgForm_FormClosing);
             this.Load += new System.EventHandler(this.OrgForm_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

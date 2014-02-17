@@ -7,12 +7,12 @@ using System.Resources;
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("Персонифицированный учет")]
-[assembly: AssemblyDescription("Разработана управлением Информационных технологий отделом программирования и постановки задач.")]
+[assembly: AssemblyDescription("Разработана отделом информационных технологий, постановки задач и программирования.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ЕГФСС")]
 [assembly: AssemblyProduct("Персонифицированный учет для организаций")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © ЕГФСС 2013")]
+[assembly: AssemblyTrademark("123")]
 [assembly: AssemblyCulture("")]
 
 // Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
