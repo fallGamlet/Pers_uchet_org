@@ -255,6 +255,25 @@ namespace Pers_uchet_org
             return htmlStr;
         }
 
+        public static string GetHTML(byte[] xmlBytes, string xslFilename)
+        {
+            XmlDocument mapXml = new XmlDocument();
+            string xmlStr = Encoding.GetEncoding(1251).GetString(xmlBytes);
+            mapXml.InnerXml = xmlStr;
+
+            XPathNavigator xpn = mapXml.CreateNavigator();
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load(xslFilename);
+            MemoryStream outStream = new MemoryStream();
+            XmlWriterSettings setting = new XmlWriterSettings();
+            setting.Encoding = Encoding.GetEncoding(1251);
+            setting.OmitXmlDeclaration = true;
+            XmlWriter writer = XmlWriter.Create(outStream, setting);
+            myXslTrans.Transform(xpn, writer);
+            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            return htmlStr;
+        }
+
         public static XmlDocument ReadXml(string filename)
         {
             XmlDocument resDoc = new XmlDocument();
@@ -1187,6 +1206,11 @@ namespace Pers_uchet_org
         public static string GetHTML(XmlDocument mapXml)
         {
             return GetHTML(mapXml, GetXslUrl());
+        }
+
+        public static string GetHTML(byte[] mapXmlBytes)
+        {
+            return XmlData.GetHTML(mapXmlBytes, GetXslUrl());
         }
 
         public static string GetHTML(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>> szv1Array)

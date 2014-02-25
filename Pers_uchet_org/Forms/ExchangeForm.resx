@@ -126,11 +126,4 @@
   <metadata name="docCountColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Для создания электронных данных вставьте 
-КЛЮЧЕВОЙ ДИСК ВАШЕЙ ОРГАНИЗАЦИИ
-(полученный в Управлении персонифицированного учета 
-Единого фонда социального страхования ПМР),
-в дисковод и укажите букву диска</value>
-  </data>
 </root>

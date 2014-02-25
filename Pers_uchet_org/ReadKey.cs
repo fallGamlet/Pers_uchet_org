@@ -233,6 +233,10 @@ namespace Pers_uchet_org
         
         public static byte[] ReadCDImage(string imgFilePath, int shift)
         {
+            if (!File.Exists(imgFilePath))
+            {
+                throw new FileNotFoundException("Указанный файл не найден:" + imgFilePath);
+            }
             if (shift % 2048 > 0)
             {
                 throw new ArgumentException("Смещение не кратно 2048 байт. Чтение данных невозможно.");
