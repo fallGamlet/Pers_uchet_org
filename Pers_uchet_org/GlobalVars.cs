@@ -464,7 +464,30 @@ namespace Pers_uchet_org
             //
             return table;
         }
-        #endregion
+
+        public static bool IsCorrectRegNumber(string regNumber)
+        {
+            if (regNumber == String.Empty)
+                return false;
+
+            string regExprStr = @"[\p{Ll}ТБРГСДКУ]\d{6}";
+            Regex regEx = new Regex(regExprStr);
+            return regEx.IsMatch(regNumber);
+        }
+
+        public static string ChangeEnToRus(string regNumber)
+        {
+            string rus = "ТРСК";
+            string eng = "TPCK";
+            char[] chars = regNumber.ToUpper().ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                int pos = eng.IndexOf(chars[i]);
+                if (pos >= 0)
+                    chars[i] = rus[pos];
+            }
+            return new string(chars);
+        }
 
         public static bool IsDuplicate(string reg_num_org, long org_id, string connection_str)
         {
@@ -485,6 +508,7 @@ namespace Pers_uchet_org
         {
             return string.Format("SELECT COUNT({0}) FROM {1} WHERE {2} = '{3}' AND {0} != {4}", Org.id, Org.tablename, Org.regnum, reg_num_org, org_id);
         }
+        #endregion
     }
 
     public class OperatorOrg
@@ -5154,7 +5178,7 @@ namespace Pers_uchet_org
 
         public static void CreateBackup(string backupFolderPath, string databaseFilePath, TypeBackup type)
         {
-            string backupFileName = GetSearchPatternString(type);
+            string backupFileName = GenerateNameString(type);
 
             using (ZipFile zip = new ZipFile())
             {
@@ -5164,25 +5188,25 @@ namespace Pers_uchet_org
                 zip.AddDirectoryWillTraverseReparsePoints = false;
                 zip.Comment = "Fai`l rezervnoi` kopii bazy` danny`kh dlia programmy` \"Personifitcirovanny`i` uchet dlia organizatcii`\".";
                 zip.AddFile(databaseFilePath, "");
-                zip.Save(backupFolderPath + "\\" + backupFileName);
+                zip.Save(Path.Combine(backupFolderPath, backupFileName));
             }
 
             //Очистка от лишних архивов
         }
 
-        private static string GetSearchPatternString(TypeBackup type)
+        private static string GenerateNameString(TypeBackup type)
         {
             string backupFileName;
             switch (type)
             {
                 case TypeBackup.Auto:
-                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(H-mm-ss)") + ".zip";
+                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(HH-mm-ss)") + ".zip";
                     break;
                 case TypeBackup.ManualBackup:
-                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(H-mm-ss)") + "_manual.zip";
+                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(HH-mm-ss)") + "_manual.zip";
                     break;
                 case TypeBackup.RestoreBackup:
-                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(H-mm-ss)") + "_restore.zip";
+                    backupFileName = DateTime.Now.ToString("pu_bkp_yyyy-MM-dd_(HH-mm-ss)") + "_restore.zip";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -5200,7 +5224,7 @@ namespace Pers_uchet_org
             if (File.Exists(databaseFilePath))
                 CreateBackup(backupFolderPath, databaseFilePath, TypeBackup.RestoreBackup);
             string databaseFolderPath = databaseFilePath.Substring(0, databaseFilePath.LastIndexOf("/"));
-            using (ZipFile zip = ZipFile.Read(backupFolderPath + "\\" + backupFileName))
+            using (ZipFile zip = ZipFile.Read(Path.Combine(backupFolderPath, backupFileName)))
             {
                 foreach (ZipEntry e in zip)
                 {

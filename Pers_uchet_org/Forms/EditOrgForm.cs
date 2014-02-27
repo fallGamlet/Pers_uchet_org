@@ -71,8 +71,8 @@ namespace Pers_uchet_org
         {
             bool result = true;
             string err = "";
-            
-            if (!IsCorrectRegNumber(regNumOrgBox.Text))
+
+            if (!Org.IsCorrectRegNumber(regNumOrgBox.Text))
             {
                 err += "\nНекорректный регистрационный номер (пример: У000123).";
                 result &= false;
@@ -96,37 +96,15 @@ namespace Pers_uchet_org
             return result;
         }
 
-        public bool IsCorrectRegNumber(string regNumber)
-        {
-            if (regNumber == String.Empty)
-                return false;
-
-            string regExprStr = @"[\p{Ll}ТБРГСДКУ]\d{6}";
-            Regex regEx = new Regex(regExprStr);
-            return regEx.IsMatch(regNumber);
-        }
-
         private void TransformData()
         {
-            regNumOrgBox.Text = ChangeEnToRus(regNumOrgBox.Text);
+            regNumOrgBox.Text = Org.ChangeEnToRus(regNumOrgBox.Text);
             //bosspostorgBox.Text = FirstUpper(bosspostorgBox.Text);
             //bossfioorgBox.Text = FirstUpper(bossfioorgBox.Text);
             //buhfioorgBox.Text = FirstUpper(buhfioorgBox.Text);
         }
 
-        private string ChangeEnToRus(string regNumber)
-        {
-            string rus = "ТРСК";
-            string eng = "TPCK";
-            char[] chars = regNumber.ToUpper().ToCharArray();
-            for (int i = 0; i < chars.Length; i++)
-            {
-                int pos = eng.IndexOf(chars[i]);
-                if (pos >= 0)
-                    chars[i] = rus[pos];
-            }
-            return new string(chars);
-        }
+
 
         public String FirstUpper(String str) /*Один символ после пробела Заглавный*/
         {
