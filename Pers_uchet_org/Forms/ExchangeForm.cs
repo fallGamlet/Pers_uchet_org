@@ -681,16 +681,16 @@ namespace Pers_uchet_org
                 _container.Close();
             }
 
-            OrgPropXml orgProp = this.GetOrgProperties();
-            _container = Storage.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array,
-                                        _diskKey, _diskTable);
-
             string flashRoot = flashBox.Text.Substring(0, 1);
             DirectoryInfo dir = Directory.CreateDirectory(string.Format(
                                                         @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
                                                         flashRoot, _organization.regnumVal, _repYear));
             string containerFilename = dir.FullName + @"\edatacon.pfs";
             string mdcFilename = dir.FullName + @"\mdc";
+
+            OrgPropXml orgProp = this.GetOrgProperties();
+            _container = Storage.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array,
+                                        _diskKey, _diskTable);
             _container.Save(containerFilename);
             _container.Close();
 
@@ -761,7 +761,7 @@ namespace Pers_uchet_org
                     Storage.MakeXml(_repYear, _organization, markedLists, _connection,
                                     out mapXml, out szv3Xml, out szv2Array, out szv1Array);
                 }
-                else if (this.ExchangeTabControl.SelectedTab == this.tabPageDB)
+                else if (this.ExchangeTabControl.SelectedTab == this.tabPageXML)
                 {
                     OrgPropXml orgProperties = this.GetOrgProperties();
                     isCorrect = Storage.ImportXml(this.xmlPathTextBox.Text, orgProperties,
@@ -794,6 +794,11 @@ namespace Pers_uchet_org
             }
             finally
             {
+                if (_container != null)
+                {
+                    try { _container.Close(); }
+                    finally { }
+                }
                 EnableControlsAfterCreateFile();
             }
         }

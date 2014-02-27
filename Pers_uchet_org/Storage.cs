@@ -36,8 +36,10 @@ namespace Pers_uchet_org
         {
             byte[] synchroArr = GenerateSynchro();
             byte[] cryptData = Mathdll.GostGamma(data, diskKey, diskTable, synchroArr);
-            stream.SetData(cryptData);
-            stream.AppendData(synchroArr);
+            byte[] buffer = new byte[data.Length + synchroArr.Length];
+            Array.Copy(cryptData, 0, buffer, 0, cryptData.Length);
+            Array.Copy(synchroArr, 0, buffer, cryptData.Length, synchroArr.Length);
+            stream.SetData(buffer);
         }
 
         private static CFStream AddStream(CFStorage dir, XmlDocument dataXml, byte[] diskKey, byte[] diskTable)
@@ -57,8 +59,10 @@ namespace Pers_uchet_org
             byte[] imito = null;
             Mathdll.CryptData(diskKey, diskTable, synchroArr, ref data, out imito);
             CFStream stream = dir.AddStream(ReadKey.BinToHex(imito));
-            stream.SetData(data);
-            stream.AppendData(synchroArr);
+            byte[] buffer = new byte[data.Length + synchroArr.Length];
+            Array.Copy(data, 0, buffer, 0, data.Length);
+            Array.Copy(synchroArr, 0, buffer, data.Length, synchroArr.Length);
+            stream.SetData(buffer);
             return stream;
         }
 
@@ -111,7 +115,6 @@ namespace Pers_uchet_org
             
             CompoundFile container = new CompoundFile(CFSVersion.Ver_3, false, false);
             CFStorage dir4 = container.RootStorage.AddStorage(rootMap.GetAttribute(MapXml.paramID));
-            
             for (int i=0; i< szv2XmlArray.Count(); i++)
             {
                 XmlElement curList = lists[i] as XmlElement;
@@ -128,11 +131,16 @@ namespace Pers_uchet_org
 
                 for (int j = 0; j < szv1XmlArray.ElementAt(i).Count(); j++)
                 {
+                    /*if (i >= 10 && j >= 51)
+                    {
+                        Console.WriteLine("Packet {0}, Doc {1}", i, j);
+                    }*/
                     XmlDocument szv1Xml = szv1XmlArray.ElementAt(i).ElementAt(j);
                     XmlElement curDoc = docs[j] as XmlElement;
                     CFStream docStream = AddStream(curDir, szv1Xml, diskKey, diskTable);
                     curDoc[MapXml.tagFilename].InnerText = docStream.Name;
                 }
+                
             }
 
 
