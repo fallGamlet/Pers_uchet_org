@@ -196,17 +196,21 @@ namespace Pers_uchet_org.Properties {
                 return ((string)(this["DataBaseFileName"]));
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Static/xsl/orgpropertystyle.xsl")]
-        public string xsl_orgproperties {
-            get {
+        public string xsl_orgproperties
+        {
+            get
+            {
                 return ((string)(this["xsl_orgproperties"]));
             }
-            set {
+            set
+            {
                 this["xsl_orgproperties"] = value;
-                
+            }
+        }
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("egfss_edoc")]
