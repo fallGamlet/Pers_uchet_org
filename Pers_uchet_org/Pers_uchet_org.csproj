@@ -81,6 +81,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\InvokerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InvokerForm.Designer.cs">
+      <DependentUpon>InvokerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsLanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsLanForm.Designer.cs">
+      <DependentUpon>SettingsLanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HttpUtility.cs" />
     <Compile Include="Properties\Custom.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -389,6 +402,9 @@
     <EmbeddedResource Include="Forms\ExchangeForm.resx">
       <DependentUpon>ExchangeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InvokerForm.resx">
+      <DependentUpon>InvokerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -442,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsLanForm.resx">
+      <DependentUpon>SettingsLanForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsPrinterForm.resx">
       <DependentUpon>SettingsPrinterForm.cs</DependentUpon>

@@ -53,6 +53,26 @@ namespace Pers_uchet_org
                 backupPathTextBox.Enabled = isBackupEnableCheckBox.Checked;
 
                 databasePathTextBox.Text = Settings.Default.DataBasePath.Replace('/', '\\');
+
+
+                bool proxyUseAuto = Properties.Settings.Default.ProxyUseAuto;
+                bool useDefaultCredentials = Properties.Settings.Default.UseDefaultCredentials;
+
+                string proxyAddr = Properties.Settings.Default.ProxyAddr;
+                int proxyPort = Properties.Settings.Default.ProxyPort;
+                string proxyLogin = Properties.Settings.Default.ProxyLogin;
+                string proxyPass = Properties.Settings.Default.ProxyPass;
+
+                autoProxyRadioButton.Checked = proxyUseAuto;
+                manualProxyRadioButton.Checked = !proxyUseAuto;
+
+                serverProxyTextBox.Text = proxyAddr;
+                portProxyTextBox.Text = proxyPort.ToString();
+
+                customCredentialsCheckBox.Checked = useDefaultCredentials;
+                loginProxyTextBox.Text = proxyLogin;
+                passwordProxyTextBox.Text = proxyPass;
+                customCredentialsCheckBox_CheckedChanged(customCredentialsCheckBox, null);
             }
             catch (Exception e)
             {
@@ -87,6 +107,15 @@ namespace Pers_uchet_org
 
                 if (File.Exists(databasePathTextBox.Text.Trim()) || (MainForm.ShowQuestionMessage("Файл базы данных не найден!\r\nВы уверены что хотите сохранить в этот путь?", "Сохранение настроек") == DialogResult.Yes))
                     Settings.Default.DataBasePath = databasePathTextBox.Text.Trim().Replace('\\', '/');
+
+                Properties.Settings.Default.ProxyUseAuto = autoProxyRadioButton.Checked;
+                Properties.Settings.Default.UseDefaultCredentials = autoProxyRadioButton.Checked ? false : customCredentialsCheckBox.Checked;
+                Properties.Settings.Default.ProxyAddr = serverProxyTextBox.Text.Trim();
+                int port;
+                if (Int32.TryParse(portProxyTextBox.Text, out port))
+                    Properties.Settings.Default.ProxyPort = port;
+                Properties.Settings.Default.ProxyLogin = loginProxyTextBox.Text.Trim();
+                Properties.Settings.Default.ProxyPass = passwordProxyTextBox.Text;
 
                 Settings.Default.Save();
                 return true;
@@ -156,8 +185,7 @@ namespace Pers_uchet_org
             folderDialog.ShowNewFolderButton = false;
             if (folderDialog.ShowDialog() == DialogResult.OK)
             {
-                databasePathTextBox.Text = folderDialog.SelectedPath.TrimEnd('\\') + "\\" +
-                                           Properties.Settings.Default.DataBaseFileName;
+                databasePathTextBox.Text = Path.Combine(folderDialog.SelectedPath, Properties.Settings.Default.DataBaseFileName);
             }
         }
 
@@ -233,6 +261,48 @@ namespace Pers_uchet_org
             {
                 createBackupButton.Enabled = true;
             }
+        }
+
+        private void autoProxyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isEnabled = !(sender as RadioButton).Checked;
+
+            serverProxyLabel.Enabled = isEnabled;
+            serverProxyTextBox.Enabled = isEnabled;
+            portProxyTextBox.Enabled = isEnabled;
+            customCredentialsCheckBox.Enabled = isEnabled;
+        }
+
+        private void customCredentialsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isEnabled = (sender as CheckBox).Checked && (sender as CheckBox).Enabled;
+
+            loginProxyLabel.Enabled = isEnabled;
+            loginProxyTextBox.Enabled = isEnabled;
+            passwordProxyLabel.Enabled = isEnabled;
+            passwordProxyTextBox.Enabled = isEnabled;
+            showPassProxyButton.Enabled = isEnabled;
+        }
+
+        private void customCredentialsCheckBox_EnabledChanged(object sender, EventArgs e)
+        {
+            bool isEnabled = (sender as CheckBox).Checked && (sender as CheckBox).Enabled;
+
+            loginProxyLabel.Enabled = isEnabled;
+            loginProxyTextBox.Enabled = isEnabled;
+            passwordProxyLabel.Enabled = isEnabled;
+            passwordProxyTextBox.Enabled = isEnabled;
+            showPassProxyButton.Enabled = isEnabled;
+        }
+
+        private void showPassProxyButton_MouseDown(object sender, MouseEventArgs e)
+        {
+            passwordProxyTextBox.UseSystemPasswordChar = false;
+        }
+
+        private void showPassProxyButton_MouseUp(object sender, MouseEventArgs e)
+        {
+            passwordProxyTextBox.UseSystemPasswordChar = true;
         }
 
         #endregion

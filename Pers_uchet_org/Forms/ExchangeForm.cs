@@ -12,6 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using OpenMcdf;
 using System.Data.SQLite;
+using Pers_uchet_org.Forms;
 
 namespace Pers_uchet_org
 {
@@ -519,7 +520,9 @@ namespace Pers_uchet_org
 
         private void sendDataButton_Click(object sender, EventArgs e)
         {
-
+            string path = Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder);
+            InvokerForm invokerForm = new InvokerForm(_organization, _repYear, path);
+            invokerForm.ShowDialog();
         }
 
         private void checkAllButton_Click(object sender, EventArgs e)
