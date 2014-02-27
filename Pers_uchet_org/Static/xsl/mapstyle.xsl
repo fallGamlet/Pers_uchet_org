@@ -5,16 +5,16 @@
 	<HTML>
 	<HEAD>
 	<STYLE>
-		BODY { font-family:tahoma; font-size:70%; }
+		BODY { font-family:arial; font-size:12px;}
 		H1 { font-size:120%; font-style:italic; color:navy; }
 		UL { margin-left:5px; margin-bottom:5px; }
 		LI UL { display:none; margin-left:16px; }
 		LI { font-weight:bold; list-style-type:square; cursor:default; }
-		LI.clsHasKids { list-style-type:none; cursor:hand; color:maroon; }
-		A:link, A:visited, A:active { margin:auto 5px; font-weight:normal; color:blue; text-decoration:none; font-size:110%; }
-		A:hover { text-decoration:underline;}
-		BUTTON { font-family:tahoma; font-size:100%; }
-		TD { font-family:tahome; font-size:110%; }
+		LI.clsHasKids {font-size:12px; list-style-type:none; cursor:hand; color:maroon; }
+		A:link, A:visited, A:active { margin:auto 5px; font-weight:normal; color:blue; text-decoration:none;}
+		A:hover {text-decoration:underline;}
+		BUTTON {font-family:arial; font-size:12px; margin:5px;}
+		TD {font-family:arial;}
 	</STYLE>
 	<SCRIPT LANGUAGE="javascript"><xsl:comment><![CDATA[
 	function GetChildElem(eSrc,sTagName)
@@ -55,27 +55,30 @@
 	</SCRIPT>
 	</HEAD>
 	<BODY onLoad="ShowFirst()">
+		
+	<DIV class="insert_here" />
+	
 	<BUTTON ONCLICK="ShowAll('UL')" style="visibility:visible;">Показать все</BUTTON>
 	<BUTTON ONCLICK="HideAll('UL')" style="visibility:visible;">Свернуть все</BUTTON>
-	<UL>
+	<UL style="margin: auto auto auto 20px;">
 		<xsl:apply-templates select="TOPICS" />
 	</UL>
 	<DIV STYLE="BORDER: buttonhighlight 2px outset; FONT-SIZE: 8pt; Z-INDEX: 
 		4; FONT-FAMILY: Tahoma; POSITION: absolute; BACKGROUND-COLOR: buttonface; 
 		DISPLAY: none; WIDTH: 350px; CURSOR: default" ID="divProgressDialog" 
 		onselectstart="window.event.returnValue=false;">
-	<DIV ID="divCaption" STYLE="PADDING: 3px; FONT-WEIGHT: bolder; COLOR: captiontext; 
-		BORDER-BOTTOM: white 2px groove; BACKGROUND-COLOR: activecaption"></DIV>
-	<DIV ID="divTitle" STYLE="PADDING: 3px"></DIV>
-	<DIV ID="divProgressTitle" STYLE="TEXT-ALIGN: center; PADDING: 2px"></DIV>
+		<DIV ID="divCaption" STYLE="PADDING: 3px; FONT-WEIGHT: bolder; COLOR: captiontext; 
+			BORDER-BOTTOM: white 2px groove; BACKGROUND-COLOR: activecaption"></DIV>
+		<DIV ID="divTitle" STYLE="PADDING: 3px"></DIV>
+		<DIV ID="divProgressTitle" STYLE="TEXT-ALIGN: center; PADDING: 2px"></DIV>
 
-	<DIV STYLE="PADDING: 5px;">
-		<DIV ID="divProgressOuter" STYLE="BORDER: 1px solid threedshadow; WIDTH: 336px; HEIGHT: 15px">
-			<DIV ID="divProgressInner" STYLE="COLOR: white; TEXT-ALIGN: center; 
-				BACKGROUND-COLOR: infobackground; MARGIN: 0px; WIDTH: 0px; HEIGHT: 13px;">
+		<DIV STYLE="PADDING: 5px;">
+			<DIV ID="divProgressOuter" STYLE="BORDER: 1px solid threedshadow; WIDTH: 336px; HEIGHT: 15px">
+				<DIV ID="divProgressInner" STYLE="COLOR: white; TEXT-ALIGN: center; 
+					BACKGROUND-COLOR: infobackground; MARGIN: 0px; WIDTH: 0px; HEIGHT: 13px;">
+				</DIV>
 			</DIV>
 		</DIV>
-	</DIV>
 	</DIV>
 
 	<DIV ID="divModal" STYLE="BACKGROUND-COLOR: white; FILTER: alpha(opacity=75); LEFT: 0px; 

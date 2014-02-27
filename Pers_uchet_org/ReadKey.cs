@@ -81,6 +81,7 @@ namespace Pers_uchet_org
         {
             byte[] resArr = new byte[key.Length * 4];
             byte[] reverseKey = new byte[key.Length];
+            key.CopyTo(reverseKey, 0);
             Array.Reverse(reverseKey);
             Array.Copy(key, 0, resArr, 0, key.Length);
             Array.Copy(key, 0, resArr, key.Length, key.Length);
@@ -232,6 +233,10 @@ namespace Pers_uchet_org
         
         public static byte[] ReadCDImage(string imgFilePath, int shift)
         {
+            if (!File.Exists(imgFilePath))
+            {
+                throw new FileNotFoundException("Указанный файл не найден:" + imgFilePath);
+            }
             if (shift % 2048 > 0)
             {
                 throw new ArgumentException("Смещение не кратно 2048 байт. Чтение данных невозможно.");
@@ -316,6 +321,11 @@ namespace Pers_uchet_org
             string key = BitConverter.ToString(buff).Replace("-", "");
             //
             return key;
+        }
+
+        public static string GetString(byte[] data)
+        {
+            return Encoding.GetEncoding(1251).GetString(data);
         }
 
         public static string BinToHex(byte[] bin)

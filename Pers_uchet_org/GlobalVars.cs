@@ -32,29 +32,44 @@ namespace Pers_uchet_org
             wb.ShowPrintPreviewDialog();
         }
 
-        static public void ShowWebPage(WebBrowser wb)
+        static public void ShowWebPage(WebBrowser wb, bool maximased)
         {
             Form webForm = new Form { Width = 850, Height = 600 };
             webForm.Controls.Add(wb);
             wb.Dock = DockStyle.Fill;
             wb.Show();
+            webForm.StartPosition = FormStartPosition.CenterScreen;
+            if (maximased)
+            {
+                webForm.WindowState = FormWindowState.Maximized;
+            }
             webForm.Show();
         }
 
-        static public void ShowWebPage(WebBrowser wb, string url)
+        static public void ShowWebPage(WebBrowser wb)
+        {
+            ShowWebPage(wb, false);
+        }
+
+        static public void ShowWebPage(WebBrowser wb, string url, bool maximazed)
         {
             if (wb == null)
                 wb = new WebBrowser();
             wb.Navigate(url);
-            ShowWebPage(wb);
+            ShowWebPage(wb, maximazed);
         }
 
-        static public void ShowWebPage(WebBrowser wb, XmlData.ReportType type)
+        static public void ShowWebPage(WebBrowser wb, string url)
+        {
+            ShowWebPage(wb, url, false);
+        }
+
+        static public void ShowWebPage(WebBrowser wb, XmlData.ReportType type, bool maximazed)
         {
             string url = XmlData.GetReportUrl(type);
             if (url != null)
             {
-                ShowWebPage(wb, url);
+                ShowWebPage(wb, url, maximazed);
             }
             else
             {
@@ -62,12 +77,21 @@ namespace Pers_uchet_org
             }
         }
 
-        static public void ShowWebPage(string htmlStr)
+        static public void ShowWebPage(WebBrowser wb, XmlData.ReportType type)
         {
-            Form prevForm = new Form();
+            ShowWebPage(wb, type, false);
+        }
+
+        static public void ShowWebPage(string htmlStr, bool maximazed)
+        {
             WebBrowser wb = new WebBrowser();
             wb.DocumentText = htmlStr;
-            ShowWebPage(wb);
+            ShowWebPage(wb, maximazed);
+        }
+
+        static public void ShowWebPage(string htmlStr)
+        {
+            ShowWebPage(htmlStr, false);
         }
 
         static public void PrintWebPage(WebBrowser wb)
@@ -78,7 +102,6 @@ namespace Pers_uchet_org
 
         static public void PrintWebPage(string htmlStr)
         {
-            Form prevForm = new Form();
             WebBrowser wb = new WebBrowser();
             wb.DocumentText = htmlStr;
             PrintWebPage(wb);
@@ -579,7 +602,7 @@ namespace Pers_uchet_org
             comm.Parameters.Add(new SQLiteParameter(pOrgID, DbType.String, orgID));
             comm.Parameters.Add(new SQLiteParameter(pOperatorID, DbType.String, operatorID));
             comm.Parameters.Add(new SQLiteParameter(pCode, DbType.String, code));
-            comm.CommandText = string.Format(@"UPDATE {0} SET {1} = {2}, {3} = {4}, {5} = {6} WHERE {7} = {8};",
+            comm.CommandText = string.Format(@" UPDATE {0} SET {1} = {2}, {3} = {4}, {5} = {6} WHERE {7} = {8};",
                                                 tablename, orgID, pOrgID, operatorID, pOperatorID, code, pCode, id, pId);
             return comm;
         }
