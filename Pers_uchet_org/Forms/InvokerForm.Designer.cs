@@ -224,7 +224,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.logRichTextBox.Location = new System.Drawing.Point(12, 179);
             this.logRichTextBox.Name = "logRichTextBox";
-            this.logRichTextBox.ReadOnly = true;
             this.logRichTextBox.Size = new System.Drawing.Size(363, 151);
             this.logRichTextBox.TabIndex = 17;
             this.logRichTextBox.Text = "";

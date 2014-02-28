@@ -69,7 +69,7 @@ namespace Pers_uchet_org.Forms
             contentTypeMultipart = "multipart/form-data, boundary=";
             acceptEncoding = "gzip, deflate";
             acceptLanguage = "ru-RU";
-            timeout = 5000;
+            timeout = 10000;
             boundary = "--irrona";
         }
 
@@ -256,7 +256,7 @@ namespace Pers_uchet_org.Forms
                 }
 
                 offset += lengthToSend;
-                //logRichTextBox.Undo();
+                UndoLog();
                 ToLog(String.Format(">Отправлено {0:0.0%}...", (offset * 1.0) / lengh));
 
                 if (abortSending)
@@ -483,9 +483,21 @@ namespace Pers_uchet_org.Forms
             }
             else
             {
-                logRichTextBox.Text += str + "\n";
+                logRichTextBox.AppendText(str + "\n");
                 logRichTextBox.SelectionStart = logRichTextBox.Text.Length;
                 logRichTextBox.ScrollToCaret();
+            }
+        }
+
+        public void UndoLog()
+        {
+            if (logRichTextBox.InvokeRequired)
+            {
+                this.Invoke(new Action(() => UndoLog()));
+            }
+            else
+            {
+                logRichTextBox.Undo();
             }
         }
 
