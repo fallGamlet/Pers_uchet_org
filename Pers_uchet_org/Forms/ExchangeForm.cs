@@ -171,7 +171,7 @@ namespace Pers_uchet_org
             List<long> lists = new List<long>();
             foreach (DataRowView row in _listsBS)
             {
-                if((bool)row[CHECK])
+                if ((bool)row[CHECK])
                     lists.Add((long)row[ListsView2.id]);
             }
             return lists.ToArray();
@@ -201,7 +201,7 @@ namespace Pers_uchet_org
             bool res = true;
             errMessage = "";
             string path = this.xmlPathTextBox.Text;
-            if( !Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
                 errMessage += "\nНе найден указанный каталог.";
                 return false;
@@ -215,7 +215,7 @@ namespace Pers_uchet_org
             // то процесс импорта невозможен
             if (!Directory.Exists(rootDirStr))
             {
-                errMessage += string.Format("\nВ корневом каталоге не найдены необходимые директории: '{0}\\{1}'", 
+                errMessage += string.Format("\nВ корневом каталоге не найдены необходимые директории: '{0}\\{1}'",
                                             orgProperty.orgRegnum, orgProperty.repeyar);
                 return false;
             }
@@ -417,7 +417,7 @@ namespace Pers_uchet_org
 
             if (_checkedCountDocs > _mergiesCountDocs)
             {
-                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.", 
+                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.",
                                             _checkedCountDocs, _mergiesCountDocs);
                 result &= false;
             }
@@ -425,7 +425,7 @@ namespace Pers_uchet_org
             if (_checkedCountLists < _mergiesCountLists && result)
             {
                 errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) меньше, чем указано в сводной ведомости: {1}.",
-                                            _checkedCountLists,_mergiesCountLists);
+                                            _checkedCountLists, _mergiesCountLists);
                 result &= true;
             }
 
@@ -466,7 +466,7 @@ namespace Pers_uchet_org
                 }
             }
 
-            if (flashBox.SelectedItem == null)
+            if (flashRButton.Checked && flashBox.SelectedItem == null)
             {
                 errMessage += "\nНе найден флеш накопитель.\nВозможно Вы:\n\t- не указали накопитель (шаг 2).";
                 res &= false;
@@ -669,8 +669,8 @@ namespace Pers_uchet_org
             return true;
         }
 
-        private int MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml, 
-                                    IEnumerable<XmlDocument> szv2Array, 
+        private int MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml,
+                                    IEnumerable<XmlDocument> szv2Array,
                                     IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array)
         {
             if (_diskKey == null || _diskTable == null)
@@ -682,12 +682,21 @@ namespace Pers_uchet_org
                 _container.Close();
             }
 
-            string flashRoot = flashBox.Text.Substring(0, 1);
-            DirectoryInfo dir = Directory.CreateDirectory(string.Format(
-                                                        @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
-                                                        flashRoot, _organization.regnumVal, _repYear));
-            string containerFilename = dir.FullName + @"\edatacon.pfs";
-            string mdcFilename = dir.FullName + @"\mdc";
+            DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+            if (flashRButton.Checked)
+            {
+                string flashRoot = flashBox.Text.Substring(0, 1);
+                dir = Directory.CreateDirectory(string.Format(
+                                                            @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
+                                                            flashRoot, _organization.regnumVal, _repYear));
+            }
+            else if (internetRButton.Checked)
+            {
+                dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+            }
+
+            string containerFilename = Path.Combine(dir.FullName, "edatacon.pfs");
+            string mdcFilename = Path.Combine(dir.FullName, "mdc");
 
             OrgPropXml orgProp = this.GetOrgProperties();
             _container = Storage.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array,
@@ -730,7 +739,7 @@ namespace Pers_uchet_org
             if (flashBox.Items.Count > 0)
                 flashBox.SelectedItem = flashBox.Items[0];
         }
-                
+
         private void createDataFileButton_Click(object sender, EventArgs e)
         {
             DisableControlsBeforeCreateFile();
@@ -743,7 +752,7 @@ namespace Pers_uchet_org
                 }
 
                 DateTime createStart, createEnd;
-                
+
                 XmlDocument mapXml, szv3Xml;
                 IEnumerable<XmlDocument> szv2Array;
                 IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array;
@@ -838,9 +847,21 @@ namespace Pers_uchet_org
                 return;
             }
 
-            string flashRoot = flashBox.Text.Substring(0, 1);
-            string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
+            string filename = "";
+
+            //DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+            if (flashRButton.Checked)
+            {
+                string flashRoot = flashBox.Text.Substring(0, 1);
+                filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
                                             flashRoot, _organization.regnumVal, _repYear);
+            }
+            else if (internetRButton.Checked)
+            {
+                filename = Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder);
+                filename = Path.Combine(filename, "edatacon.pfs");
+            }
+
             try
             {
                 if (!this.ReadDisk(out errMessage))
@@ -862,7 +883,7 @@ namespace Pers_uchet_org
                 return;
             }
 
-            
+
             if (!File.Exists(filename))
             {
                 MainForm.ShowInfoMessage("Сначала необходимо сформировать электронный файл для обмена с ЕГФСС", "Внимание");
@@ -880,7 +901,7 @@ namespace Pers_uchet_org
             CFStream mapStyleStream = stylesDir.GetStream("map_style");
             byte[] mapStyleBytes = Storage.DecryptStream(mapStyleStream, _diskKey, _diskTable);
             _container.Close();
-            
+
             OrgPropXml props = CFProperties.ReadProperty(filename);
             string propHtml = props.GetHTML();
 
@@ -910,7 +931,7 @@ namespace Pers_uchet_org
 
         void reportWB_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {
-            string uri =  e.Url.ToString();
+            string uri = e.Url.ToString();
             if (uri != "about:blank")
             {
                 e.Cancel = true;
@@ -918,9 +939,19 @@ namespace Pers_uchet_org
                 {
                     if (_container == null || _container.RootStorage == null)
                     {
-                        string flashRoot = flashBox.Text.Substring(0, 1);
-                        string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
-                                            flashRoot, _organization.regnumVal, _repYear);
+                        string filename = "";
+                        if (flashRButton.Checked)
+                        {
+                            string flashRoot = flashBox.Text.Substring(0, 1);
+                            filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
+                                                        flashRoot, _organization.regnumVal, _repYear);
+                        }
+                        else if (internetRButton.Checked)
+                        {
+                            filename = Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder);
+                            filename = Path.Combine(filename, "edatacon.pfs");
+                        }
+
                         _container = new CompoundFile(filename);
                     }
                     string html = Storage.GetHTML(_container, uri, _diskKey, _diskTable);
