@@ -171,11 +171,11 @@
             this.showPassProxyButton.BackColor = System.Drawing.Color.Transparent;
             this.showPassProxyButton.FlatAppearance.BorderSize = 0;
             this.showPassProxyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassProxyButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
             this.showPassProxyButton.Location = new System.Drawing.Point(269, 131);
             this.showPassProxyButton.Name = "showPassProxyButton";
             this.showPassProxyButton.Size = new System.Drawing.Size(23, 23);
             this.showPassProxyButton.TabIndex = 11;
-            this.showPassProxyButton.Text = "V";
             this.showPassProxyButton.UseVisualStyleBackColor = false;
             this.showPassProxyButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseDown);
             this.showPassProxyButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseUp);

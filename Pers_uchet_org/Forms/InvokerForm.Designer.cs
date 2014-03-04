@@ -199,11 +199,11 @@
             this.showPassButton.BackColor = System.Drawing.Color.Transparent;
             this.showPassButton.FlatAppearance.BorderSize = 0;
             this.showPassButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
             this.showPassButton.Location = new System.Drawing.Point(352, 109);
             this.showPassButton.Name = "showPassButton";
             this.showPassButton.Size = new System.Drawing.Size(23, 23);
             this.showPassButton.TabIndex = 11;
-            this.showPassButton.Text = "V";
             this.showPassButton.UseVisualStyleBackColor = false;
             this.showPassButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseDown);
             this.showPassButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseUp);

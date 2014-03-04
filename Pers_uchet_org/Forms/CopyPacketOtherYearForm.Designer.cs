@@ -71,9 +71,9 @@
             // 
             this.copyPacketButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.copyPacketButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.copyPacketButton.Location = new System.Drawing.Point(46, 66);
+            this.copyPacketButton.Location = new System.Drawing.Point(73, 66);
             this.copyPacketButton.Name = "copyPacketButton";
-            this.copyPacketButton.Size = new System.Drawing.Size(99, 23);
+            this.copyPacketButton.Size = new System.Drawing.Size(75, 23);
             this.copyPacketButton.TabIndex = 2;
             this.copyPacketButton.Text = "Копировать";
             this.copyPacketButton.UseVisualStyleBackColor = true;
@@ -90,7 +90,7 @@
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // MovePacketOtherYearForm
+            // CopyPacketOtherYearForm
             // 
             this.AcceptButton = this.copyPacketButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -104,7 +104,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MovePacketOtherYearForm";
+            this.Name = "CopyPacketOtherYearForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Копирование пакета в другой год";
             this.Load += new System.EventHandler(this.CopyPacketOtherYearForm_Load);

@@ -59,7 +59,8 @@
     </Reference>
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Remote Debugger\x86\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OpenMcdf, Version=1.5.4.22637, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -529,6 +530,11 @@
     <Content Include="Libs\OpenMcdf.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\plus2-16.png" />
+    <None Include="Resources\edit-16.png" />
+    <None Include="Resources\delete-16.png" />
+    <None Include="Resources\visible-16.png" />
+    <None Include="Resources\print-16.png" />
     <Content Include="Static\template\lib\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -607,9 +613,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

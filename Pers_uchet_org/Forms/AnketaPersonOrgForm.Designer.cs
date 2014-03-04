@@ -126,9 +126,9 @@
             // acceptButton
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.Location = new System.Drawing.Point(170, 228);
+            this.acceptButton.Location = new System.Drawing.Point(191, 228);
             this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(96, 23);
+            this.acceptButton.Size = new System.Drawing.Size(75, 23);
             this.acceptButton.TabIndex = 2;
             this.acceptButton.Text = "Сохранить";
             this.acceptButton.UseVisualStyleBackColor = true;

@@ -107,9 +107,9 @@
             // 
             this.copyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.copyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.copyButton.Location = new System.Drawing.Point(156, 243);
+            this.copyButton.Location = new System.Drawing.Point(177, 243);
             this.copyButton.Name = "copyButton";
-            this.copyButton.Size = new System.Drawing.Size(96, 23);
+            this.copyButton.Size = new System.Drawing.Size(75, 23);
             this.copyButton.TabIndex = 5;
             this.copyButton.Text = "Копировать";
             this.copyButton.UseVisualStyleBackColor = true;

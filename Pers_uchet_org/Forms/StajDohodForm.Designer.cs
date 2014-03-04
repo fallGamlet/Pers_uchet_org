@@ -314,14 +314,14 @@
             this.listStripDropDownButton1});
             this.toolStripLists.Location = new System.Drawing.Point(6, 16);
             this.toolStripLists.Name = "toolStripLists";
-            this.toolStripLists.Size = new System.Drawing.Size(204, 25);
+            this.toolStripLists.Size = new System.Drawing.Size(188, 25);
             this.toolStripLists.TabIndex = 0;
             this.toolStripLists.TabStop = true;
             this.toolStripLists.Text = "toolStrip1";
             // 
             // addListStripButton
             // 
-            this.addListStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addListStripButton.Image")));
+            this.addListStripButton.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addListStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addListStripButton.Name = "addListStripButton";
             this.addListStripButton.Size = new System.Drawing.Size(79, 22);
@@ -330,7 +330,7 @@
             // 
             // delListStripButton
             // 
-            this.delListStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delListStripButton.Image")));
+            this.delListStripButton.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delListStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.delListStripButton.Name = "delListStripButton";
             this.delListStripButton.Size = new System.Drawing.Size(71, 22);
@@ -352,10 +352,9 @@
             this.moveToYearListStripButton,
             this.copyToOrgListStripButton,
             this.moveToOrgListStripButton});
-            this.listStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("listStripDropDownButton1.Image")));
             this.listStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.listStripDropDownButton1.Name = "listStripDropDownButton1";
-            this.listStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
+            this.listStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
             this.listStripDropDownButton1.Text = "...";
             // 
             // reestrListStripButton
@@ -459,14 +458,14 @@
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(570, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(554, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";
             // 
             // addDocStripButton
             // 
-            this.addDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addDocStripButton.Image")));
+            this.addDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addDocStripButton.Name = "addDocStripButton";
             this.addDocStripButton.Size = new System.Drawing.Size(79, 22);
@@ -475,7 +474,7 @@
             // 
             // editDocStripButton
             // 
-            this.editDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editDocStripButton.Image")));
+            this.editDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
             this.editDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.editDocStripButton.Name = "editDocStripButton";
             this.editDocStripButton.Size = new System.Drawing.Size(81, 22);
@@ -484,7 +483,7 @@
             // 
             // delDocStripButton
             // 
-            this.delDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delDocStripButton.Image")));
+            this.delDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.delDocStripButton.Name = "delDocStripButton";
             this.delDocStripButton.Size = new System.Drawing.Size(71, 22);
@@ -508,7 +507,7 @@
             // 
             // printDocStripButton
             // 
-            this.printDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printDocStripButton.Image")));
+            this.printDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.print_16;
             this.printDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printDocStripButton.Name = "printDocStripButton";
             this.printDocStripButton.Size = new System.Drawing.Size(176, 22);
@@ -526,10 +525,9 @@
             this.previewDocStripButton,
             this.copyToListDocStripButton,
             this.moveToListDocStripButton});
-            this.docStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("docStripDropDownButton1.Image")));
             this.docStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.docStripDropDownButton1.Name = "docStripDropDownButton1";
-            this.docStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
+            this.docStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
             this.docStripDropDownButton1.Text = "...";
             // 
             // previewDocStripButton
@@ -752,6 +750,7 @@
             // 
             // addListMenuItem
             // 
+            this.addListMenuItem.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addListMenuItem.Name = "addListMenuItem";
             this.addListMenuItem.Size = new System.Drawing.Size(275, 22);
             this.addListMenuItem.Text = "Добавить";
@@ -821,6 +820,7 @@
             // 
             // delListMenuItem
             // 
+            this.delListMenuItem.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delListMenuItem.Name = "delListMenuItem";
             this.delListMenuItem.Size = new System.Drawing.Size(275, 22);
             this.delListMenuItem.Text = "Удалить";
@@ -844,6 +844,7 @@
             // 
             // addDocMenuItem
             // 
+            this.addDocMenuItem.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addDocMenuItem.Name = "addDocMenuItem";
             this.addDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.addDocMenuItem.Text = "Добавить";
@@ -851,6 +852,7 @@
             // 
             // editDocMenuItem
             // 
+            this.editDocMenuItem.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
             this.editDocMenuItem.Name = "editDocMenuItem";
             this.editDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.editDocMenuItem.Text = "Изменить";
@@ -901,6 +903,7 @@
             // 
             // delDocMenuItem
             // 
+            this.delDocMenuItem.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delDocMenuItem.Name = "delDocMenuItem";
             this.delDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.delDocMenuItem.Text = "Удалить";

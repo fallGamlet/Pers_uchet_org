@@ -221,9 +221,9 @@
             // choiceButton
             // 
             this.choiceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.choiceButton.Location = new System.Drawing.Point(148, 327);
+            this.choiceButton.Location = new System.Drawing.Point(198, 327);
             this.choiceButton.Name = "choiceButton";
-            this.choiceButton.Size = new System.Drawing.Size(125, 23);
+            this.choiceButton.Size = new System.Drawing.Size(75, 23);
             this.choiceButton.TabIndex = 3;
             this.choiceButton.Text = "Выбрать";
             this.choiceButton.UseVisualStyleBackColor = true;

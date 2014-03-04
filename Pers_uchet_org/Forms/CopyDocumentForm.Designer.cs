@@ -67,9 +67,9 @@
             // 
             this.moveDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.moveDocButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.moveDocButton.Location = new System.Drawing.Point(75, 55);
+            this.moveDocButton.Location = new System.Drawing.Point(88, 55);
             this.moveDocButton.Name = "moveDocButton";
-            this.moveDocButton.Size = new System.Drawing.Size(88, 23);
+            this.moveDocButton.Size = new System.Drawing.Size(75, 23);
             this.moveDocButton.TabIndex = 2;
             this.moveDocButton.Text = "Копировать";
             this.moveDocButton.UseVisualStyleBackColor = true;

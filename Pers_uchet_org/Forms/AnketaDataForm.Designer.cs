@@ -292,7 +292,7 @@
             // 
             // addStripButton
             // 
-            this.addStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addStripButton.Image")));
+            this.addStripButton.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addStripButton.Name = "addStripButton";
             this.addStripButton.Size = new System.Drawing.Size(79, 22);
@@ -301,7 +301,7 @@
             // 
             // editStripButton
             // 
-            this.editStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editStripButton.Image")));
+            this.editStripButton.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
             this.editStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.editStripButton.Name = "editStripButton";
             this.editStripButton.Size = new System.Drawing.Size(81, 22);
@@ -310,7 +310,7 @@
             // 
             // delStripButton
             // 
-            this.delStripButton.Image = ((System.Drawing.Image)(resources.GetObject("delStripButton.Image")));
+            this.delStripButton.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.delStripButton.Name = "delStripButton";
             this.delStripButton.Size = new System.Drawing.Size(71, 22);
@@ -350,7 +350,7 @@
             this.printStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printAnketsToolStripMenuItem,
             this.printUnregisteredToolStripMenuItem});
-            this.printStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("printStripDropDownButton.Image")));
+            this.printStripDropDownButton.Image = global::Pers_uchet_org.Properties.Resources.print_16;
             this.printStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printStripDropDownButton.Name = "printStripDropDownButton";
             this.printStripDropDownButton.Size = new System.Drawing.Size(75, 22);
