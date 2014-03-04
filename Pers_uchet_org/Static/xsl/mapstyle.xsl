@@ -104,7 +104,7 @@
 	<xsl:for-each select="OPIS">
 		<A TARGET="_self">
 		<xsl:attribute name="HREF">
-			ops:<xsl:value-of select="PATH" /><xsl:value-of select="FILENAME" />
+			ops:<xsl:value-of select="PATH" />\<xsl:value-of select="FILENAME" />
 		</xsl:attribute>
 		<xsl:value-of select="TITLE" /></A>
 	</xsl:for-each>
@@ -117,7 +117,7 @@
 			<SPAN style="color:green; display:inline-block; width:100px;"><xsl:value-of select="REGNUM" /></SPAN>
 			<A TARGET="_self" style="display:inline-block; width:210px;">
 			<xsl:attribute name="HREF">
-				ind:<xsl:value-of select="PATH" /><xsl:value-of select="FILENAME" />
+				ind:<xsl:value-of select="PATH" />\<xsl:value-of select="FILENAME" />
 			</xsl:attribute>
 			<xsl:value-of select="TITLE" /></A>
 			<FONT style="color:black;"> (
