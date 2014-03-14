@@ -895,6 +895,10 @@ namespace Pers_uchet_org
                             _salaryInfoTable.Rows[SalaryInfo.FindRowIndex(_salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column10)][SalaryInfo.sum] = Convert.ToDouble(sum10Box.Text);
                             SalaryInfo.SetDocId(_salaryInfoTable, docId);
                             _adapter = SalaryInfo.CreateAdapter(_connection, transaction);
+                            if (_currentDocId > 0)
+                            {
+                                _adapter.InsertCommand = SalaryInfo.CreateReplaceCommand(_connection, transaction);
+                            }
                             _adapter.Update(_salaryInfoTable);
                         }
                         transaction.Commit();

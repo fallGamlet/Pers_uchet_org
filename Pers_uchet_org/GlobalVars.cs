@@ -3438,6 +3438,75 @@ namespace Pers_uchet_org
             return comm;
         }
 
+        static public SQLiteCommand CreateInsertCommand()
+        {
+            return CreateInsertCommand(null, null);
+        }
+
+        static public SQLiteCommand CreateInsertCommand(SQLiteConnection connection)
+        {
+            return CreateInsertCommand(connection, null);
+        }
+
+        static public SQLiteCommand CreateInsertCommand(SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            //comm.Parameters.Add(new SQLiteParameter(pId, DbType.UInt64, id));
+            comm.Parameters.Add(new SQLiteParameter(pDocId, DbType.UInt64, docId));
+            comm.Parameters.Add(new SQLiteParameter(pSalaryGroupsId, DbType.UInt64, salaryGroupsId));
+            comm.Parameters.Add(new SQLiteParameter(pJanuary, DbType.Double, january));
+            comm.Parameters.Add(new SQLiteParameter(pFebruary, DbType.Double, february));
+            comm.Parameters.Add(new SQLiteParameter(pMarch, DbType.Double, march));
+            comm.Parameters.Add(new SQLiteParameter(pApril, DbType.Double, april));
+            comm.Parameters.Add(new SQLiteParameter(pMay, DbType.Double, may));
+            comm.Parameters.Add(new SQLiteParameter(pJune, DbType.Double, june));
+            comm.Parameters.Add(new SQLiteParameter(pJuly, DbType.Double, july));
+            comm.Parameters.Add(new SQLiteParameter(pAugust, DbType.Double, august));
+            comm.Parameters.Add(new SQLiteParameter(pSeptember, DbType.Double, september));
+            comm.Parameters.Add(new SQLiteParameter(pOctober, DbType.Double, october));
+            comm.Parameters.Add(new SQLiteParameter(pNovember, DbType.Double, november));
+            comm.Parameters.Add(new SQLiteParameter(pDecember, DbType.Double, december));
+            comm.Parameters.Add(new SQLiteParameter(pSum, DbType.Double, sum));
+
+            comm.CommandText = string.Format(@"INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}) VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}); ",
+                                            tablename, 
+                                            //id,
+                                            docId,
+                                            salaryGroupsId,
+                                            january,
+                                            february,
+                                            march,
+                                            april,
+                                            may,
+                                            june,
+                                            july,
+                                            august,
+                                            september,
+                                            october,
+                                            november,
+                                            december,
+                                            sum,
+                                            //pId,
+                                            pDocId,
+                                            pSalaryGroupsId,
+                                            pJanuary,
+                                            pFebruary,
+                                            pMarch,
+                                            pApril,
+                                            pMay,
+                                            pJune,
+                                            pJuly,
+                                            pAugust,
+                                            pSeptember,
+                                            pOctober,
+                                            pNovember,
+                                            pDecember,
+                                            pSum);
+            comm.Connection = connection;
+            comm.Transaction = transaction;
+            return comm;
+        }
+
         static public SQLiteCommand CreateReplaceCommand()
         {
             return CreateReplaceCommand(null, null);
@@ -3531,7 +3600,7 @@ namespace Pers_uchet_org
         {
             SQLiteDataAdapter adapter = new SQLiteDataAdapter();
             adapter.SelectCommand = CreateSelectCommand(connection, transaction);
-            adapter.InsertCommand = CreateReplaceCommand(connection, transaction);
+            adapter.InsertCommand = CreateInsertCommand(connection, transaction);
             adapter.UpdateCommand = CreateReplaceCommand(connection, transaction);
             adapter.DeleteCommand = CreateDeleteCommand(connection, transaction);
             return adapter;
