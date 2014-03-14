@@ -21,5 +21,15 @@ namespace Pers_uchet_org
             get { return this.nameBox.Text; }
             set { this.nameBox.Text = value; }
         }
+
+        private void acceptButton_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(OperatorName))
+            {
+                MainForm.ShowInfoMessage("Имя оператора не может быть пустым!", "Ошибка добавления оператора");
+                return;
+            }
+            DialogResult = DialogResult.OK;
+        }
     }
 }
