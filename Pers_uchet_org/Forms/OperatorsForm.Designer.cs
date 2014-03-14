@@ -28,27 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.editButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.removeButton = new System.Windows.Forms.Button();
-            this.changepasswordButton = new System.Windows.Forms.Button();
+            this.changePasswordButton = new System.Windows.Forms.Button();
             this.operatorBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.orgView = new System.Windows.Forms.DataGridView();
-            this.org_checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.regnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orgnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orgCheckColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.regNumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orgNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accessGroupBox = new System.Windows.Forms.GroupBox();
-            this.importanketaCheckBox = new System.Windows.Forms.CheckBox();
-            this.paystajaccesslevelBox = new System.Windows.Forms.ComboBox();
-            this.exchangedataCheckBox = new System.Windows.Forms.CheckBox();
-            this.paystajprintCheckBox = new System.Windows.Forms.CheckBox();
-            this.paystajaccessCheckBox = new System.Windows.Forms.CheckBox();
-            this.anketaprintCheckBox = new System.Windows.Forms.CheckBox();
-            this.anketaaccesslevelBox = new System.Windows.Forms.ComboBox();
-            this.anketaaccessCheckBox = new System.Windows.Forms.CheckBox();
+            this.importAnketaCheckBox = new System.Windows.Forms.CheckBox();
+            this.payStajAccessLevelBox = new System.Windows.Forms.ComboBox();
+            this.exchangeDataCheckBox = new System.Windows.Forms.CheckBox();
+            this.payStajPrintCheckBox = new System.Windows.Forms.CheckBox();
+            this.payStajAccessCheckBox = new System.Windows.Forms.CheckBox();
+            this.anketaPrintCheckBox = new System.Windows.Forms.CheckBox();
+            this.anketaAccessLevelBox = new System.Windows.Forms.ComboBox();
+            this.anketaAccessCheckBox = new System.Windows.Forms.CheckBox();
             this.closeButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -64,7 +64,7 @@
             this.groupBox1.Controls.Add(this.editButton);
             this.groupBox1.Controls.Add(this.addButton);
             this.groupBox1.Controls.Add(this.removeButton);
-            this.groupBox1.Controls.Add(this.changepasswordButton);
+            this.groupBox1.Controls.Add(this.changePasswordButton);
             this.groupBox1.Controls.Add(this.operatorBox);
             this.groupBox1.Location = new System.Drawing.Point(9, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -104,15 +104,15 @@
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             // 
-            // changepasswordButton
+            // changePasswordButton
             // 
-            this.changepasswordButton.Location = new System.Drawing.Point(281, 46);
-            this.changepasswordButton.Name = "changepasswordButton";
-            this.changepasswordButton.Size = new System.Drawing.Size(143, 23);
-            this.changepasswordButton.TabIndex = 5;
-            this.changepasswordButton.Text = "Сменить пароль...";
-            this.changepasswordButton.UseVisualStyleBackColor = true;
-            this.changepasswordButton.Click += new System.EventHandler(this.changepasswordButton_Click);
+            this.changePasswordButton.Location = new System.Drawing.Point(281, 46);
+            this.changePasswordButton.Name = "changePasswordButton";
+            this.changePasswordButton.Size = new System.Drawing.Size(143, 23);
+            this.changePasswordButton.TabIndex = 5;
+            this.changePasswordButton.Text = "Сменить пароль...";
+            this.changePasswordButton.UseVisualStyleBackColor = true;
+            this.changePasswordButton.Click += new System.EventHandler(this.changepasswordButton_Click);
             // 
             // operatorBox
             // 
@@ -144,19 +144,19 @@
             this.orgView.AllowUserToResizeRows = false;
             this.orgView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.orgView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.orgView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.orgView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.orgView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.org_checkColumn,
-            this.regnumColumn,
-            this.orgnameColumn});
+            this.orgCheckColumn,
+            this.regNumColumn,
+            this.orgNameColumn});
             this.orgView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orgView.Location = new System.Drawing.Point(3, 16);
             this.orgView.MultiSelect = false;
@@ -171,44 +171,44 @@
             // 
             // org_checkColumn
             // 
-            this.org_checkColumn.DataPropertyName = "check";
-            this.org_checkColumn.HeaderText = "*";
-            this.org_checkColumn.MinimumWidth = 20;
-            this.org_checkColumn.Name = "org_checkColumn";
-            this.org_checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.org_checkColumn.Width = 20;
+            this.orgCheckColumn.DataPropertyName = "check";
+            this.orgCheckColumn.HeaderText = "*";
+            this.orgCheckColumn.MinimumWidth = 20;
+            this.orgCheckColumn.Name = "org_checkColumn";
+            this.orgCheckColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.orgCheckColumn.Width = 20;
             // 
             // regnumColumn
             // 
-            this.regnumColumn.DataPropertyName = "regnum";
-            this.regnumColumn.HeaderText = "Рег. №";
-            this.regnumColumn.MaxInputLength = 50;
-            this.regnumColumn.MinimumWidth = 50;
-            this.regnumColumn.Name = "regnumColumn";
-            this.regnumColumn.ReadOnly = true;
-            this.regnumColumn.Width = 70;
+            this.regNumColumn.DataPropertyName = "regnum";
+            this.regNumColumn.HeaderText = "Рег. №";
+            this.regNumColumn.MaxInputLength = 50;
+            this.regNumColumn.MinimumWidth = 50;
+            this.regNumColumn.Name = "regnumColumn";
+            this.regNumColumn.ReadOnly = true;
+            this.regNumColumn.Width = 70;
             // 
             // orgnameColumn
             // 
-            this.orgnameColumn.DataPropertyName = "name";
-            this.orgnameColumn.HeaderText = "Наименование организации";
-            this.orgnameColumn.MaxInputLength = 300;
-            this.orgnameColumn.MinimumWidth = 150;
-            this.orgnameColumn.Name = "orgnameColumn";
-            this.orgnameColumn.ReadOnly = true;
-            this.orgnameColumn.Width = 310;
+            this.orgNameColumn.DataPropertyName = "name";
+            this.orgNameColumn.HeaderText = "Наименование организации";
+            this.orgNameColumn.MaxInputLength = 300;
+            this.orgNameColumn.MinimumWidth = 150;
+            this.orgNameColumn.Name = "orgnameColumn";
+            this.orgNameColumn.ReadOnly = true;
+            this.orgNameColumn.Width = 310;
             // 
             // accessGroupBox
             // 
             this.accessGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.accessGroupBox.Controls.Add(this.importanketaCheckBox);
-            this.accessGroupBox.Controls.Add(this.paystajaccesslevelBox);
-            this.accessGroupBox.Controls.Add(this.exchangedataCheckBox);
-            this.accessGroupBox.Controls.Add(this.paystajprintCheckBox);
-            this.accessGroupBox.Controls.Add(this.paystajaccessCheckBox);
-            this.accessGroupBox.Controls.Add(this.anketaprintCheckBox);
-            this.accessGroupBox.Controls.Add(this.anketaaccesslevelBox);
-            this.accessGroupBox.Controls.Add(this.anketaaccessCheckBox);
+            this.accessGroupBox.Controls.Add(this.importAnketaCheckBox);
+            this.accessGroupBox.Controls.Add(this.payStajAccessLevelBox);
+            this.accessGroupBox.Controls.Add(this.exchangeDataCheckBox);
+            this.accessGroupBox.Controls.Add(this.payStajPrintCheckBox);
+            this.accessGroupBox.Controls.Add(this.payStajAccessCheckBox);
+            this.accessGroupBox.Controls.Add(this.anketaPrintCheckBox);
+            this.accessGroupBox.Controls.Add(this.anketaAccessLevelBox);
+            this.accessGroupBox.Controls.Add(this.anketaAccessCheckBox);
             this.accessGroupBox.Location = new System.Drawing.Point(9, 239);
             this.accessGroupBox.Margin = new System.Windows.Forms.Padding(0);
             this.accessGroupBox.Name = "accessGroupBox";
@@ -217,89 +217,89 @@
             this.accessGroupBox.TabStop = false;
             this.accessGroupBox.Text = "Права доступа";
             // 
-            // importanketaCheckBox
+            // importAnketaCheckBox
             // 
-            this.importanketaCheckBox.AutoSize = true;
-            this.importanketaCheckBox.Checked = true;
-            this.importanketaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.importanketaCheckBox.Location = new System.Drawing.Point(6, 158);
-            this.importanketaCheckBox.Name = "importanketaCheckBox";
-            this.importanketaCheckBox.Size = new System.Drawing.Size(198, 17);
-            this.importanketaCheckBox.TabIndex = 5;
-            this.importanketaCheckBox.Text = "Импорт анкет из др. организаций";
-            this.importanketaCheckBox.UseVisualStyleBackColor = true;
+            this.importAnketaCheckBox.AutoSize = true;
+            this.importAnketaCheckBox.Checked = true;
+            this.importAnketaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.importAnketaCheckBox.Location = new System.Drawing.Point(6, 158);
+            this.importAnketaCheckBox.Name = "importAnketaCheckBox";
+            this.importAnketaCheckBox.Size = new System.Drawing.Size(198, 17);
+            this.importAnketaCheckBox.TabIndex = 5;
+            this.importAnketaCheckBox.Text = "Импорт анкет из др. организаций";
+            this.importAnketaCheckBox.UseVisualStyleBackColor = true;
             // 
-            // paystajaccesslevelBox
+            // payStajAccessLevelBox
             // 
-            this.paystajaccesslevelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.paystajaccesslevelBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.paystajaccesslevelBox.FormattingEnabled = true;
-            this.paystajaccesslevelBox.Location = new System.Drawing.Point(294, 76);
-            this.paystajaccesslevelBox.Name = "paystajaccesslevelBox";
-            this.paystajaccesslevelBox.Size = new System.Drawing.Size(130, 21);
-            this.paystajaccesslevelBox.TabIndex = 7;
+            this.payStajAccessLevelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.payStajAccessLevelBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.payStajAccessLevelBox.FormattingEnabled = true;
+            this.payStajAccessLevelBox.Location = new System.Drawing.Point(294, 76);
+            this.payStajAccessLevelBox.Name = "payStajAccessLevelBox";
+            this.payStajAccessLevelBox.Size = new System.Drawing.Size(130, 21);
+            this.payStajAccessLevelBox.TabIndex = 7;
             // 
-            // exchangedataCheckBox
+            // exchangeDataCheckBox
             // 
-            this.exchangedataCheckBox.AutoSize = true;
-            this.exchangedataCheckBox.Location = new System.Drawing.Point(6, 135);
-            this.exchangedataCheckBox.Name = "exchangedataCheckBox";
-            this.exchangedataCheckBox.Size = new System.Drawing.Size(251, 17);
-            this.exchangedataCheckBox.TabIndex = 4;
-            this.exchangedataCheckBox.Text = "Обмен электронными данными с ГПФ ПМР";
-            this.exchangedataCheckBox.UseVisualStyleBackColor = true;
+            this.exchangeDataCheckBox.AutoSize = true;
+            this.exchangeDataCheckBox.Location = new System.Drawing.Point(6, 135);
+            this.exchangeDataCheckBox.Name = "exchangeDataCheckBox";
+            this.exchangeDataCheckBox.Size = new System.Drawing.Size(251, 17);
+            this.exchangeDataCheckBox.TabIndex = 4;
+            this.exchangeDataCheckBox.Text = "Обмен электронными данными с ГПФ ПМР";
+            this.exchangeDataCheckBox.UseVisualStyleBackColor = true;
             // 
-            // paystajprintCheckBox
+            // payStajPrintCheckBox
             // 
-            this.paystajprintCheckBox.AutoSize = true;
-            this.paystajprintCheckBox.Location = new System.Drawing.Point(6, 101);
-            this.paystajprintCheckBox.Name = "paystajprintCheckBox";
-            this.paystajprintCheckBox.Size = new System.Drawing.Size(259, 17);
-            this.paystajprintCheckBox.TabIndex = 3;
-            this.paystajprintCheckBox.Text = "Печать сведений о стаже и заработной плате";
-            this.paystajprintCheckBox.UseVisualStyleBackColor = true;
+            this.payStajPrintCheckBox.AutoSize = true;
+            this.payStajPrintCheckBox.Location = new System.Drawing.Point(6, 101);
+            this.payStajPrintCheckBox.Name = "payStajPrintCheckBox";
+            this.payStajPrintCheckBox.Size = new System.Drawing.Size(259, 17);
+            this.payStajPrintCheckBox.TabIndex = 3;
+            this.payStajPrintCheckBox.Text = "Печать сведений о стаже и заработной плате";
+            this.payStajPrintCheckBox.UseVisualStyleBackColor = true;
             // 
-            // paystajaccessCheckBox
+            // payStajAccessCheckBox
             // 
-            this.paystajaccessCheckBox.AutoSize = true;
-            this.paystajaccessCheckBox.Location = new System.Drawing.Point(6, 78);
-            this.paystajaccessCheckBox.Name = "paystajaccessCheckBox";
-            this.paystajaccessCheckBox.Size = new System.Drawing.Size(277, 17);
-            this.paystajaccessCheckBox.TabIndex = 2;
-            this.paystajaccessCheckBox.Text = "Доступ к сведениям о стаже и заработной плате";
-            this.paystajaccessCheckBox.UseVisualStyleBackColor = true;
-            this.paystajaccessCheckBox.CheckedChanged += new System.EventHandler(this.paystajaccessCheckBox_CheckedChanged);
+            this.payStajAccessCheckBox.AutoSize = true;
+            this.payStajAccessCheckBox.Location = new System.Drawing.Point(6, 78);
+            this.payStajAccessCheckBox.Name = "payStajAccessCheckBox";
+            this.payStajAccessCheckBox.Size = new System.Drawing.Size(277, 17);
+            this.payStajAccessCheckBox.TabIndex = 2;
+            this.payStajAccessCheckBox.Text = "Доступ к сведениям о стаже и заработной плате";
+            this.payStajAccessCheckBox.UseVisualStyleBackColor = true;
+            this.payStajAccessCheckBox.CheckedChanged += new System.EventHandler(this.paystajaccessCheckBox_CheckedChanged);
             // 
-            // anketaprintCheckBox
+            // anketaPrintCheckBox
             // 
-            this.anketaprintCheckBox.AutoSize = true;
-            this.anketaprintCheckBox.Location = new System.Drawing.Point(6, 44);
-            this.anketaprintCheckBox.Name = "anketaprintCheckBox";
-            this.anketaprintCheckBox.Size = new System.Drawing.Size(153, 17);
-            this.anketaprintCheckBox.TabIndex = 1;
-            this.anketaprintCheckBox.Text = "Печать анкетных данных";
-            this.anketaprintCheckBox.UseVisualStyleBackColor = true;
+            this.anketaPrintCheckBox.AutoSize = true;
+            this.anketaPrintCheckBox.Location = new System.Drawing.Point(6, 44);
+            this.anketaPrintCheckBox.Name = "anketaPrintCheckBox";
+            this.anketaPrintCheckBox.Size = new System.Drawing.Size(153, 17);
+            this.anketaPrintCheckBox.TabIndex = 1;
+            this.anketaPrintCheckBox.Text = "Печать анкетных данных";
+            this.anketaPrintCheckBox.UseVisualStyleBackColor = true;
             // 
-            // anketaaccesslevelBox
+            // anketaAccessLevelBox
             // 
-            this.anketaaccesslevelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.anketaaccesslevelBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.anketaaccesslevelBox.FormattingEnabled = true;
-            this.anketaaccesslevelBox.Location = new System.Drawing.Point(294, 19);
-            this.anketaaccesslevelBox.Name = "anketaaccesslevelBox";
-            this.anketaaccesslevelBox.Size = new System.Drawing.Size(130, 21);
-            this.anketaaccesslevelBox.TabIndex = 6;
+            this.anketaAccessLevelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anketaAccessLevelBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.anketaAccessLevelBox.FormattingEnabled = true;
+            this.anketaAccessLevelBox.Location = new System.Drawing.Point(294, 19);
+            this.anketaAccessLevelBox.Name = "anketaAccessLevelBox";
+            this.anketaAccessLevelBox.Size = new System.Drawing.Size(130, 21);
+            this.anketaAccessLevelBox.TabIndex = 6;
             // 
-            // anketaaccessCheckBox
+            // anketaAccessCheckBox
             // 
-            this.anketaaccessCheckBox.AutoSize = true;
-            this.anketaaccessCheckBox.Location = new System.Drawing.Point(6, 21);
-            this.anketaaccessCheckBox.Name = "anketaaccessCheckBox";
-            this.anketaaccessCheckBox.Size = new System.Drawing.Size(169, 17);
-            this.anketaaccessCheckBox.TabIndex = 0;
-            this.anketaaccessCheckBox.Text = "Доступ к анкетным данным";
-            this.anketaaccessCheckBox.UseVisualStyleBackColor = true;
-            this.anketaaccessCheckBox.CheckedChanged += new System.EventHandler(this.anketaaccessCheckBox_CheckedChanged);
+            this.anketaAccessCheckBox.AutoSize = true;
+            this.anketaAccessCheckBox.Location = new System.Drawing.Point(6, 21);
+            this.anketaAccessCheckBox.Name = "anketaAccessCheckBox";
+            this.anketaAccessCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.anketaAccessCheckBox.TabIndex = 0;
+            this.anketaAccessCheckBox.Text = "Доступ к анкетным данным";
+            this.anketaAccessCheckBox.UseVisualStyleBackColor = true;
+            this.anketaAccessCheckBox.CheckedChanged += new System.EventHandler(this.anketaaccessCheckBox_CheckedChanged);
             // 
             // closeButton
             // 
@@ -358,18 +358,18 @@
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button removeButton;
-        private System.Windows.Forms.Button changepasswordButton;
+        private System.Windows.Forms.Button changePasswordButton;
         private System.Windows.Forms.ComboBox operatorBox;
-        private System.Windows.Forms.ComboBox anketaaccesslevelBox;
-        private System.Windows.Forms.CheckBox anketaaccessCheckBox;
-        private System.Windows.Forms.ComboBox paystajaccesslevelBox;
-        private System.Windows.Forms.CheckBox exchangedataCheckBox;
-        private System.Windows.Forms.CheckBox paystajprintCheckBox;
-        private System.Windows.Forms.CheckBox paystajaccessCheckBox;
-        private System.Windows.Forms.CheckBox anketaprintCheckBox;
-        private System.Windows.Forms.CheckBox importanketaCheckBox;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn org_checkColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn regnumColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orgnameColumn;
+        private System.Windows.Forms.ComboBox anketaAccessLevelBox;
+        private System.Windows.Forms.CheckBox anketaAccessCheckBox;
+        private System.Windows.Forms.ComboBox payStajAccessLevelBox;
+        private System.Windows.Forms.CheckBox exchangeDataCheckBox;
+        private System.Windows.Forms.CheckBox payStajPrintCheckBox;
+        private System.Windows.Forms.CheckBox payStajAccessCheckBox;
+        private System.Windows.Forms.CheckBox anketaPrintCheckBox;
+        private System.Windows.Forms.CheckBox importAnketaCheckBox;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn orgCheckColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn regNumColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orgNameColumn;
     }
 }
