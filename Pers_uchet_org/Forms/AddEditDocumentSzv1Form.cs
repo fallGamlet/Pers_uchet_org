@@ -23,6 +23,8 @@ namespace Pers_uchet_org
         string _connectionStr;
         //id документа, если производится редактирование, и после сохранения принимает значение сохраненного документа
         long _currentDocId;
+        // Год, после которого столбцы ЕСН доступны только для чтения
+        int _maxYearEsnEnabled;
 
         public long CurrentDocId
         {
@@ -67,6 +69,7 @@ namespace Pers_uchet_org
             _isAgriculture = 0;
             _personId = 0;
             _currentClassPercentId = 0;
+            _maxYearEsnEnabled = 2013;
         }
 
         public AddEditDocumentSzv1Form(Org org, Operator _operator, long currentListId, int repYear, long personId, long flagDocType, string connectionStr)
@@ -344,7 +347,7 @@ namespace Pers_uchet_org
             else
                 _currentObligatory = ObligatoryPercent.GetValue(_repYear, _connectionStr);
             _isAgriculture = int.Parse(row[ClasspercentView.isAgriculture].ToString());
-            if (_isAgriculture == 1 || _repYear > 2012)
+            if (_isAgriculture == 1 || _repYear > _maxYearEsnEnabled)
             {
                 _currentPercent = 0;
                 dataViewProfit.Columns["Column3"].ReadOnly = true;
