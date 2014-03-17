@@ -449,12 +449,12 @@ namespace Pers_uchet_org
                 return;
             }
             // получить текущую запись о пересечении выбранного оператора и выбранной организации
-            //DataRowView operOrgRow = _operOrgBS.Current as DataRowView;
-            //// если запись не нулевая и соответствует другому оператору, то нужно сохранить изменения
-            //if (operOrgRow != null && (long)operOrgRow[OperatorOrg.operatorID] != (long)operRow[Operator.id])
-            //{
-            //    this.OperOrgRowCurrentEndEdit();
-            //}
+            DataRowView operOrgRow = _operOrgBS.Current as DataRowView;
+            // если запись не нулевая и соответствует другому оператору, то нужно сохранить изменения
+            if (operOrgRow != null && (long)operOrgRow[OperatorOrg.operatorID] != (long)operRow[Operator.id])
+            {
+                this.OperOrgRowCurrentEndEdit();
+            }
 
             // добавить записи пересечений операторов и организаций для указания привелегий.
             this.addRelationsIfNeed(operRow, _orgBS, _operOrgBS);
@@ -491,12 +491,7 @@ namespace Pers_uchet_org
         void _orgBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView operRow = _operatorBS.Current as DataRowView;
-            if (IsAdminCurrent(operRow))
-            {
-                //this.setPrivilegeCode(adminCode);
-                this.accessGroupBox.Enabled = false;
-                //return;
-            }
+           
             // получить ссылку на запись текущей выбранной организации
             DataRowView orgRow = _orgBS.Current as DataRowView;
             // если ссылка пуста, то завершить метод
@@ -508,9 +503,16 @@ namespace Pers_uchet_org
             // установить флаг активности в соответствии с флагом огранизации
             this.accessGroupBox.Enabled = (bool)(_orgBS.Current as DataRowView)[CHECK];
 
-            //this.OperOrgRowCurrentEndEdit();
+            this.OperOrgRowCurrentEndEdit();
 
             this.SetOperOrgPosition((long)orgRow[Org.id], (long)operRow[Operator.id]);
+
+            if (IsAdminCurrent(operRow))
+            {
+                //this.setPrivilegeCode(adminCode);
+                this.accessGroupBox.Enabled = false;
+                //return;
+            }
         }
 
         private void orgView_CellContentClick(object sender, DataGridViewCellEventArgs e)
