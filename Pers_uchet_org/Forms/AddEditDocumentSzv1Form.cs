@@ -519,26 +519,35 @@ namespace Pers_uchet_org
                 {
                     case 1:
                         row[SpecialPeriodView.partCondition] = specialPeriodForm.Code;
+                        row[SpecialPeriodView.partConditionClassificatorId] = 1; // просто значение большее 0, чтоб запись отобразилась в предварительном просмотре
                         row[SpecialPeriodView.partCode] = specialPeriodForm.CodeName;
                         row[SpecialPeriodView.stajBase] = 0;
-                        row[SpecialPeriodView.stajCode] = 0;
+                        row[SpecialPeriodView.stajBaseClassificatorId] = 0;
+                        row[SpecialPeriodView.stajCode] = "";
                         row[SpecialPeriodView.servYearBase] = 0;
-                        row[SpecialPeriodView.servCode] = 0;
+                        row[SpecialPeriodView.servYearBaseClassificatorId] = 0;
+                        row[SpecialPeriodView.servCode] = "";
                         break;
                     case 2:
                         row[SpecialPeriodView.partCondition] = 0;
-                        row[SpecialPeriodView.partCode] = 0;
+                        row[SpecialPeriodView.partConditionClassificatorId] = 0;
+                        row[SpecialPeriodView.partCode] = "";
                         row[SpecialPeriodView.stajBase] = specialPeriodForm.Code;
+                        row[SpecialPeriodView.stajBaseClassificatorId] = 1;
                         row[SpecialPeriodView.stajCode] = specialPeriodForm.CodeName;
                         row[SpecialPeriodView.servYearBase] = 0;
-                        row[SpecialPeriodView.servCode] = 0;
+                        row[SpecialPeriodView.servYearBaseClassificatorId] = 0;
+                        row[SpecialPeriodView.servCode] = "";
                         break;
                     case 3:
                         row[SpecialPeriodView.partCondition] = 0;
-                        row[SpecialPeriodView.partCode] = 0;
+                        row[SpecialPeriodView.partConditionClassificatorId] = 0;
+                        row[SpecialPeriodView.partCode] = "";
                         row[SpecialPeriodView.stajBase] = 0;
-                        row[SpecialPeriodView.stajCode] = 0;
+                        row[SpecialPeriodView.stajBaseClassificatorId] = 0;
+                        row[SpecialPeriodView.stajCode] = "";
                         row[SpecialPeriodView.servYearBase] = specialPeriodForm.Code;
+                        row[SpecialPeriodView.servYearBaseClassificatorId] = 1;
                         row[SpecialPeriodView.servCode] = specialPeriodForm.CodeName;
                         break;
                     default:
@@ -597,26 +606,35 @@ namespace Pers_uchet_org
             {
                 case 1:
                     row[SpecialPeriodView.partCondition] = specialPeriodForm.Code;
+                    row[SpecialPeriodView.partConditionClassificatorId] = 1; // просто значение большее 0, чтоб запись отобразилась в предварительном просмотре
                     row[SpecialPeriodView.partCode] = specialPeriodForm.CodeName;
                     row[SpecialPeriodView.stajBase] = 0;
-                    row[SpecialPeriodView.stajCode] = 0;
+                    row[SpecialPeriodView.stajBaseClassificatorId] = 0;
+                    row[SpecialPeriodView.stajCode] = "";
                     row[SpecialPeriodView.servYearBase] = 0;
-                    row[SpecialPeriodView.servCode] = 0;
+                    row[SpecialPeriodView.servYearBaseClassificatorId] = 0;
+                    row[SpecialPeriodView.servCode] = "";
                     break;
                 case 2:
                     row[SpecialPeriodView.partCondition] = 0;
-                    row[SpecialPeriodView.partCode] = 0;
+                    row[SpecialPeriodView.partConditionClassificatorId] = 0;
+                    row[SpecialPeriodView.partCode] = "";
                     row[SpecialPeriodView.stajBase] = specialPeriodForm.Code;
+                    row[SpecialPeriodView.stajBaseClassificatorId] = 1;
                     row[SpecialPeriodView.stajCode] = specialPeriodForm.CodeName;
                     row[SpecialPeriodView.servYearBase] = 0;
-                    row[SpecialPeriodView.servCode] = 0;
+                    row[SpecialPeriodView.servYearBaseClassificatorId] = 0;
+                    row[SpecialPeriodView.servCode] = "";
                     break;
                 case 3:
                     row[SpecialPeriodView.partCondition] = 0;
-                    row[SpecialPeriodView.partCode] = 0;
+                    row[SpecialPeriodView.partConditionClassificatorId] = 0;
+                    row[SpecialPeriodView.partCode] = "";
                     row[SpecialPeriodView.stajBase] = 0;
-                    row[SpecialPeriodView.stajCode] = 0;
+                    row[SpecialPeriodView.stajBaseClassificatorId] = 0;
+                    row[SpecialPeriodView.stajCode] = "";
                     row[SpecialPeriodView.servYearBase] = specialPeriodForm.Code;
+                    row[SpecialPeriodView.servYearBaseClassificatorId] = 1;
                     row[SpecialPeriodView.servCode] = specialPeriodForm.CodeName;
                     break;
                 default:

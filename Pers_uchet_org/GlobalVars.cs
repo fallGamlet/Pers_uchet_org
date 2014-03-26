@@ -2922,11 +2922,13 @@ namespace Pers_uchet_org
             return string.Format(@"SELECT d.{0}, count(distinct d.{1}) as [count] 
                                     FROM {2} d
                                     INNER JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
-                                    WHERE {6} = {7}
+                                    INNER JOIN {6} pi ON pi.{7} = d.{8} AND length(pi.{9}) > 0
+                                    WHERE {10} = {11}
                                     GROUP BY {0}",
                                 docTypeId, id,
                                 tablename,
                                 DocTypes.tablename, DocTypes.id, DocTypes.listTypeId,
+                                PersonInfo.tablename, PersonInfo.id,  personID, PersonInfo.socNumber,
                                 listId, list_id);
         }
 
@@ -3008,11 +3010,13 @@ namespace Pers_uchet_org
         {
             return string.Format(@"SELECT d.{0}, si.{1}, sum(si.{2}) as {2}
                                 FROM {3} d INNER JOIN {4} si ON si.{5} = d.{6} and si.{1} in (1,2,3,4,5)
-                                WHERE d.{7} = {8}
+                                INNER JOIN {7} pi ON pi.{8} = d.{9} AND length(pi.{10}) > 0
+                                WHERE d.{11} = {12}
                                 GROUP BY d.{0}, si.{1}
                                 ORDER BY d.{0}, si.{1}",
                                 docTypeId, SalaryInfo.salaryGroupsId, SalaryInfo.sum,
                                 tablename, SalaryInfo.tablename, SalaryInfo.docId, id,
+                                PersonInfo.tablename, PersonInfo.id, personID, PersonInfo.socNumber,
                                 listId, list_id);
         }
 
@@ -4239,10 +4243,13 @@ namespace Pers_uchet_org
         static public string id = "id";
         static public string docId = "doc_id";
         static public string partCondition = "part_condition";
+        static public string partConditionClassificatorId = "part_condition_classificator_id";
         static public string partCode = "part_code";
         static public string stajBase = "staj_base";
+        static public string stajBaseClassificatorId = "staj_base_classificator_id";
         static public string stajCode = "staj_code";
         static public string servYearBase = "serv_year_base";
+        static public string servYearBaseClassificatorId = "serv_year_base_classificator_id";
         static public string servCode = "serv_code";
         static public string beginDate = "begin_date";
         static public string endDate = "end_date";
@@ -4275,10 +4282,13 @@ namespace Pers_uchet_org
             table.Columns.Add(id, typeof(long));
             table.Columns.Add(docId, typeof(long));
             table.Columns.Add(partCondition, typeof(long));
+            table.Columns.Add(partConditionClassificatorId, typeof(long));
             table.Columns.Add(partCode, typeof(string));
             table.Columns.Add(stajBase, typeof(long));
+            table.Columns.Add(stajBaseClassificatorId, typeof(long));
             table.Columns.Add(stajCode, typeof(string));
             table.Columns.Add(servYearBase, typeof(long));
+            table.Columns.Add(servYearBaseClassificatorId, typeof(long));
             table.Columns.Add(servCode, typeof(string));
             table.Columns.Add(beginDate, typeof(DateTime));
             table.Columns.Add(endDate, typeof(DateTime));

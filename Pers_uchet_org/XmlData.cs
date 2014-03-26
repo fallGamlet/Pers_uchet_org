@@ -589,11 +589,11 @@ namespace Pers_uchet_org
                 XmlElement specProfession = xmlRes.CreateElement(tagSpecProfession);
                 specStart.InnerText = (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
                 specEnd.InnerText = (DateTime.Parse(row[SpecialPeriodView.endDate].ToString())).ToString("dd.MM.yyyy");
-                specPartConditionId.InnerText = row[SpecialPeriodView.partCondition].ToString();
+                specPartConditionId.InnerText = row[SpecialPeriodView.partConditionClassificatorId].ToString();
                 specPartConditionName.InnerText = row[SpecialPeriodView.partCode].ToString();
-                specBaseId.InnerText = row[SpecialPeriodView.stajBase].ToString();
+                specBaseId.InnerText = row[SpecialPeriodView.stajBaseClassificatorId].ToString();
                 specBaseName.InnerText = row[SpecialPeriodView.stajCode].ToString();
-                specServyearBaseId.InnerText = row[SpecialPeriodView.servYearBase].ToString();
+                specServyearBaseId.InnerText = row[SpecialPeriodView.servYearBaseClassificatorId].ToString();
                 specServyearBaseName.InnerText = row[SpecialPeriodView.servCode].ToString();
                 specMonths.InnerText = row[SpecialPeriodView.month].ToString();
                 specDays.InnerText = row[SpecialPeriodView.day].ToString();
