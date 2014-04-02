@@ -233,37 +233,60 @@ namespace Pers_uchet_org
             // если количество директорий (папок) с документами СЗВ-1 
             // отличается от количества файлов с описями (документы СЗВ-2)
             // процесс импорта следует прекратить
+            if (packetDirs.Count() < 1)
+            {
+                errMessage += string.Format("\nКоличество директорий (папок) ({0}) с документами СЗВ-1 не может быть меньше 1.",
+                                            packetDirs.Count());
+                res &= false;
+            }
+
+            if (opisFiles.Count() < 1)
+            {
+                errMessage += string.Format("\nКоличество описей СЗВ-2 ({0}) не может быть меньше 1.",
+                                            opisFiles.Count());
+                res &= false;
+            }
             if (packetDirs.Count() != opisFiles.Count())
             {
                 errMessage += string.Format("\nКоличество директорий (папок) ({0}) с документами СЗВ-1 отличается от количества файлов с описями (документы СЗВ-2) ({1}).",
                                             packetDirs.Count(), opisFiles.Count());
                 res &= false;
             }
+
             string[] dirNumArr = new string[packetDirs.Count()];
             string[] fileNumArr = new string[opisFiles.Count()];
             int i;
+            string tmpStr;
             for (i = 0; i < dirNumArr.Length; i++)
             {
-                string tmpStr = packetDirs[i].Name;
+                tmpStr = packetDirs[i].Name;
                 dirNumArr[i] = tmpStr.Substring(tmpStr.Length - 3, 3);
+            }
+            for (i = 0; i < fileNumArr.Length; i++)
+            {
                 tmpStr = opisFiles[i].Name;
                 fileNumArr[i] = tmpStr.Substring(tmpStr.Length - 7, 3);
             }
             int count = 0;
-            for (i = 0; i < dirNumArr.Length; i++)
+
+            if (dirNumArr.Length == fileNumArr.Length)
             {
-                if (dirNumArr.Contains(fileNumArr[i]))
+                for (i = 0; i < dirNumArr.Length; i++)
                 {
-                    count++;
+                    if (dirNumArr.Contains(fileNumArr[i]))
+                    {
+                        count++;
+                    }
+                }
+                // не всем файлам описей (СЗВ-2) найдены 
+                // соответствующие директории (папки) пакетов
+                if (count < dirNumArr.Length)
+                {
+                    errMessage += "\nНе всем файлам описей (СЗВ-2) найдены соответствующие директории (папки) пакетов";
+                    res &= false;
                 }
             }
-            // не всем файлам описей (СЗВ-2) найдены 
-            // соответствующие директории (папки) пакетов
-            if (count < dirNumArr.Length)
-            {
-                errMessage += "\nНе всем файлам описей (СЗВ-2) найдены соответствующие директории (папки) пакетов";
-                res &= false;
-            }
+
             count = 0;
             for (i = 0; i < dirNumArr.Length; i++)
             {
@@ -291,88 +314,88 @@ namespace Pers_uchet_org
             return res;
         }
 
-        private bool CheckTabPageDB()
-        {
-            bool result = true;
+        //private bool CheckTabPageDB()
+        //{
+        //    bool result = true;
 
-            if (_mergiesCountLists < 0)
-            {
-                MessageBox.Show("Сводная ведомость (СЗВ-3) не обнаружена!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_mergiesCountLists < 0)
+        //    {
+        //        MessageBox.Show("Сводная ведомость (СЗВ-3) не обнаружена!", "Предупреждение",
+        //            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
-            if (_mergiesCountLists < 1)
-            {
-                MessageBox.Show("Количество пакетов документов в сводной ведомости: " + _mergiesCountLists +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_mergiesCountLists < 1)
+        //    {
+        //        MessageBox.Show("Количество пакетов документов в сводной ведомости: " + _mergiesCountLists +
+        //            "\nФормирование электронных данных невозможно!", "Предупреждение",
+        //            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
-            if (_mergiesCountDocs < 1)
-            {
-                MessageBox.Show("Количество документов \"СЗВ-1\" в сводной ведомости: " + _mergiesCountDocs +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_mergiesCountDocs < 1)
+        //    {
+        //        MessageBox.Show("Количество документов \"СЗВ-1\" в сводной ведомости: " + _mergiesCountDocs +
+        //            "\nФормирование электронных данных невозможно!", "Предупреждение",
+        //            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
-            if (_checkedCountLists < 1)
-            {
-                MessageBox.Show("Количество выбранных пакетов документов: " + _checkedCountLists +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_checkedCountLists < 1)
+        //    {
+        //        MessageBox.Show("Количество выбранных пакетов документов: " + _checkedCountLists +
+        //            "\nФормирование электронных данных невозможно!", "Предупреждение",
+        //            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
-            if (_checkedCountDocs < 1)
-            {
-                MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_checkedCountDocs < 1)
+        //    {
+        //        MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+        //            "\nФормирование электронных данных невозможно!", "Предупреждение",
+        //            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
-            if (_checkedCountLists > _mergiesCountLists)
-            {
-                MessageBox.Show(
-                    "Количество выбранных пакетов документов: " + _checkedCountLists +
-                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountLists, "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_checkedCountLists > _mergiesCountLists)
+        //    {
+        //        MessageBox.Show(
+        //            "Количество выбранных пакетов документов: " + _checkedCountLists +
+        //            "\nбольше, чем указано в сводной ведомости: " + _mergiesCountLists, "Предупреждение", MessageBoxButtons.OK,
+        //            MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
-            if (_checkedCountDocs > _mergiesCountDocs)
-            {
-                MessageBox.Show(
-                    "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountDocs, "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return false;
-            }
+        //    if (_checkedCountDocs > _mergiesCountDocs)
+        //    {
+        //        MessageBox.Show(
+        //            "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+        //            "\nбольше, чем указано в сводной ведомости: " + _mergiesCountDocs, "Предупреждение", MessageBoxButtons.OK,
+        //            MessageBoxIcon.Exclamation);
+        //        return false;
+        //    }
 
 
-            if (_checkedCountLists < _mergiesCountLists)
-            {
-                result = (MessageBox.Show(
-                        "Количество выбранных пакетов документов: " + _checkedCountLists +
-                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountLists +
-                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
-            }
+        //    if (_checkedCountLists < _mergiesCountLists)
+        //    {
+        //        result = (MessageBox.Show(
+        //                "Количество выбранных пакетов документов: " + _checkedCountLists +
+        //                "\nменьше, чем указано в сводной ведомости: " + _mergiesCountLists +
+        //                ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
+        //                MessageBoxIcon.Exclamation) == DialogResult.Yes);
+        //    }
 
-            if (_checkedCountDocs < _mergiesCountDocs)
-            {
-                result = (MessageBox.Show(
-                        "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountDocs +
-                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
+        //    if (_checkedCountDocs < _mergiesCountDocs)
+        //    {
+        //        result = (MessageBox.Show(
+        //                "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
+        //                "\nменьше, чем указано в сводной ведомости: " + _mergiesCountDocs +
+        //                ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
+        //                MessageBoxIcon.Exclamation) == DialogResult.Yes);
 
-            }
-            return result;
-        }
+        //    }
+        //    return result;
+        //}
 
         private bool CheckTabPageDB(out string errMessage)
         {
@@ -383,17 +406,19 @@ namespace Pers_uchet_org
                 errMessage += "\nСводная ведомость (СЗВ-3) не обнаружена!";
                 result &= false;
             }
-
-            if (_mergiesCountLists < 1)
+            else
             {
-                errMessage += string.Format("\nКоличество пакетов документов в сводной ведомости: {0}", _mergiesCountLists);
-                result &= false;
-            }
+                if (_mergiesCountLists < 1)
+                {
+                    errMessage += string.Format("\nКоличество пакетов документов в сводной ведомости: {0}", _mergiesCountLists);
+                    result &= false;
+                }
 
-            if (_mergiesCountDocs < 1)
-            {
-                errMessage += string.Format("\nКоличество документов \"СЗВ-1\" в сводной ведомости: {0}", _mergiesCountDocs);
-                result &= false;
+                if (_mergiesCountDocs < 1)
+                {
+                    errMessage += string.Format("\nКоличество документов \"СЗВ-1\" в сводной ведомости: {0}", _mergiesCountDocs);
+                    result &= false;
+                }
             }
 
             if (_checkedCountLists < 1)
@@ -408,33 +433,36 @@ namespace Pers_uchet_org
                 result &= false;
             }
 
-            if (_checkedCountLists > _mergiesCountLists)
+            if (_mergiesCountLists > 0)
             {
-                errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) больше, чем указано в сводной ведомости: {1}.",
-                                            _checkedCountLists, _mergiesCountLists);
-                result &= false;
-            }
+                if (_checkedCountLists > _mergiesCountLists)
+                {
+                    errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) больше, чем указано в сводной ведомости: {1}.",
+                                                _checkedCountLists, _mergiesCountLists);
+                    result &= false;
+                }
 
-            if (_checkedCountDocs > _mergiesCountDocs)
-            {
-                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.",
-                                            _checkedCountDocs, _mergiesCountDocs);
-                result &= false;
-            }
+                if (_checkedCountDocs > _mergiesCountDocs)
+                {
+                    errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.",
+                                                _checkedCountDocs, _mergiesCountDocs);
+                    result &= false;
+                }
 
-            if (_checkedCountLists < _mergiesCountLists && result)
-            {
-                errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) меньше, чем указано в сводной ведомости: {1}.",
-                                            _checkedCountLists, _mergiesCountLists);
-                result &= true;
-            }
+                if (_checkedCountLists < _mergiesCountLists && result)
+                {
+                    errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) меньше, чем указано в сводной ведомости: {1}.",
+                                                _checkedCountLists, _mergiesCountLists);
+                    result &= true;
+                }
 
-            if (_checkedCountDocs < _mergiesCountDocs && result)
-            {
-                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) меньше, чем указано в сводной ведомости: {1}."
-                                            , _checkedCountDocs, _mergiesCountDocs);
-                result &= true;
+                if (_checkedCountDocs < _mergiesCountDocs && result)
+                {
+                    errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) меньше, чем указано в сводной ведомости: {1}."
+                                                , _checkedCountDocs, _mergiesCountDocs);
+                    result &= true;
 
+                }
             }
             if (errMessage.Length == 0)
             {
@@ -773,12 +801,18 @@ namespace Pers_uchet_org
                 }
                 else if (this.ExchangeTabControl.SelectedTab == this.tabPageXML)
                 {
-                    OrgPropXml orgProperties = this.GetOrgProperties();
-                    isCorrect = Storage.ImportXml(this.xmlPathTextBox.Text, orgProperties,
-                                        out szv3Xml, out szv2Array, out szv1Array);
+                    DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+                    using (StreamWriter writer = new StreamWriter(Path.Combine(dir.FullName, "Ошибки XML.txt"), false))
+                    {
+                        writer.AutoFlush = true;
+                        OrgPropXml orgProperties = this.GetOrgProperties();
+                        isCorrect = Storage.ImportXml(this.xmlPathTextBox.Text, orgProperties,
+                                            out szv3Xml, out szv2Array, out szv1Array, writer);
+                    }
                     if (!isCorrect)
                     {
                         MainForm.ShowErrorMessage("Импорт xml файлов прошел некорректно.\nФормирование электронного контейнера невозможно!");
+                        Process.Start(Path.Combine(dir.FullName, "Ошибки XML.txt"));
                         return;
                     }
                     mapXml = MapXml.GetXml(szv2Array, szv1Array);
