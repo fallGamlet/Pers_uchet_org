@@ -49,28 +49,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>MainLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Ionic.Zip.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Remote Debugger\x86\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OpenMcdf, Version=1.5.4.22637, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="OpenMcdf, Version=1.5.4.22637, Culture=neutral, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.85.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>Libs\System.Data.SQLite.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -246,29 +247,11 @@
     <Compile Include="Forms\OrgForm.Designer.cs">
       <DependentUpon>OrgForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PacketDopInfoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PacketDopInfoForm.Designer.cs">
-      <DependentUpon>PacketDopInfoForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\PrintDocBlanksForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PrintDocBlanksForm.Designer.cs">
       <DependentUpon>PrintDocBlanksForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\PrintStajForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PrintStajForm.Designer.cs">
-      <DependentUpon>PrintStajForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RemovePersonForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RemovePersonForm.Designer.cs">
-      <DependentUpon>RemovePersonForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReplaceDocTypeForm.cs">
       <SubType>Form</SubType>
@@ -288,12 +271,6 @@
     <Compile Include="Forms\SearchIndividualForm.Designer.cs">
       <DependentUpon>SearchIndividualForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SettingsEditDepForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SettingsEditDepForm.Designer.cs">
-      <DependentUpon>SettingsEditDepForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\EditOrgForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,12 +282,6 @@
     </Compile>
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\SettingsPrinterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SettingsPrinterForm.Designer.cs">
-      <DependentUpon>SettingsPrinterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\StajDohodForm.cs">
       <SubType>Form</SubType>
@@ -430,17 +401,8 @@
     <EmbeddedResource Include="Forms\OrgForm.resx">
       <DependentUpon>OrgForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PacketDopInfoForm.resx">
-      <DependentUpon>PacketDopInfoForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PrintDocBlanksForm.resx">
       <DependentUpon>PrintDocBlanksForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PrintStajForm.resx">
-      <DependentUpon>PrintStajForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RemovePersonForm.resx">
-      <DependentUpon>RemovePersonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReplaceDocTypeForm.resx">
       <DependentUpon>ReplaceDocTypeForm.cs</DependentUpon>
@@ -451,9 +413,6 @@
     <EmbeddedResource Include="Forms\SearchIndividualForm.resx">
       <DependentUpon>SearchIndividualForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SettingsEditDepForm.resx">
-      <DependentUpon>SettingsEditDepForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditOrgForm.resx">
       <DependentUpon>EditOrgForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -462,9 +421,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsLanForm.resx">
       <DependentUpon>SettingsLanForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SettingsPrinterForm.resx">
-      <DependentUpon>SettingsPrinterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StajDohodForm.resx">
       <DependentUpon>StajDohodForm.cs</DependentUpon>
@@ -530,23 +486,29 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Libs\Ionic.Zip.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Libs\mathdll.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Libs\OpenMcdf.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Libs\OpenMcdf.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Libs\Ionic.Zip.dll" />
+    <Content Include="Libs\mathdll.dll" />
+    <Content Include="Libs\OpenMcdf.dll" />
     <None Include="Resources\plus2-16.png" />
     <None Include="Resources\edit-16.png" />
     <None Include="Resources\delete-16.png" />
     <None Include="Resources\visible-16.png" />
     <None Include="Resources\print-16.png" />
+    <None Include="Resources\tree_structure-16.png" />
+    <None Include="Resources\available_updates-16.png" />
+    <None Include="Resources\copy-16.png" />
+    <None Include="Resources\cut-16.png" />
+    <None Include="Resources\math-16.png" />
+    <None Include="Resources\list-16.png" />
+    <None Include="Resources\2-16.png" />
+    <None Include="Resources\2-161.png" />
+    <None Include="Resources\cd-16.png" />
+    <None Include="Resources\geography-16.png" />
+    <None Include="Resources\wired_network-16.png" />
+    <None Include="Resources\help-16.png" />
+    <Content Include="Libs\System.Data.SQLite.dll" />
+    <Content Include="MainLogo.ico" />
+    <None Include="Resources\MainLogo.png" />
     <Content Include="Static\template\lib\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -634,6 +596,7 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>False</Private>
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -642,8 +605,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /y "$(ProjectDir)Libs\*.*" "$(ProjectDir)$(OutDir)Libs"
+move /y "$(ProjectDir)$(OutDir)*.dll" "$(ProjectDir)$(OutDir)Libs"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

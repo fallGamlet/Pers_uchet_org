@@ -28,8 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.showPassProxyButton = new System.Windows.Forms.Button();
+            this.passwordProxyTextBox = new System.Windows.Forms.TextBox();
+            this.loginProxyTextBox = new System.Windows.Forms.TextBox();
+            this.passwordProxyLabel = new System.Windows.Forms.Label();
+            this.loginProxyLabel = new System.Windows.Forms.Label();
+            this.customCredentialsCheckBox = new System.Windows.Forms.CheckBox();
+            this.portProxyTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.serverProxyTextBox = new System.Windows.Forms.TextBox();
+            this.serverProxyLabel = new System.Windows.Forms.Label();
+            this.manualProxyRadioButton = new System.Windows.Forms.RadioButton();
+            this.autoProxyRadioButton = new System.Windows.Forms.RadioButton();
             this.backupGroupBox = new System.Windows.Forms.GroupBox();
             this.createBackupButton = new System.Windows.Forms.Button();
             this.backupBrowseButton = new System.Windows.Forms.Button();
@@ -46,26 +60,13 @@
             this.databasePathTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.showPassProxyButton = new System.Windows.Forms.Button();
-            this.passwordProxyTextBox = new System.Windows.Forms.TextBox();
-            this.loginProxyTextBox = new System.Windows.Forms.TextBox();
-            this.passwordProxyLabel = new System.Windows.Forms.Label();
-            this.loginProxyLabel = new System.Windows.Forms.Label();
-            this.customCredentialsCheckBox = new System.Windows.Forms.CheckBox();
-            this.portProxyTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.serverProxyTextBox = new System.Windows.Forms.TextBox();
-            this.serverProxyLabel = new System.Windows.Forms.Label();
-            this.manualProxyRadioButton = new System.Windows.Forms.RadioButton();
-            this.autoProxyRadioButton = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.generalPage.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.backupGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupMaxCountBox)).BeginInit();
             this.otherPage.SuspendLayout();
             this.databaseGroupBox.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -94,6 +95,141 @@
             this.generalPage.TabIndex = 0;
             this.generalPage.Text = "Основные";
             this.generalPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.showPassProxyButton);
+            this.groupBox1.Controls.Add(this.passwordProxyTextBox);
+            this.groupBox1.Controls.Add(this.loginProxyTextBox);
+            this.groupBox1.Controls.Add(this.passwordProxyLabel);
+            this.groupBox1.Controls.Add(this.loginProxyLabel);
+            this.groupBox1.Controls.Add(this.customCredentialsCheckBox);
+            this.groupBox1.Controls.Add(this.portProxyTextBox);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.serverProxyTextBox);
+            this.groupBox1.Controls.Add(this.serverProxyLabel);
+            this.groupBox1.Controls.Add(this.manualProxyRadioButton);
+            this.groupBox1.Controls.Add(this.autoProxyRadioButton);
+            this.groupBox1.Location = new System.Drawing.Point(8, 159);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(340, 173);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Прокси-сервер";
+            // 
+            // showPassProxyButton
+            // 
+            this.showPassProxyButton.BackColor = System.Drawing.Color.Transparent;
+            this.showPassProxyButton.FlatAppearance.BorderSize = 0;
+            this.showPassProxyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassProxyButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
+            this.showPassProxyButton.Location = new System.Drawing.Point(304, 138);
+            this.showPassProxyButton.Name = "showPassProxyButton";
+            this.showPassProxyButton.Size = new System.Drawing.Size(23, 23);
+            this.showPassProxyButton.TabIndex = 23;
+            this.showPassProxyButton.UseVisualStyleBackColor = false;
+            this.showPassProxyButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassProxyButton_MouseDown);
+            this.showPassProxyButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassProxyButton_MouseUp);
+            // 
+            // passwordProxyTextBox
+            // 
+            this.passwordProxyTextBox.Location = new System.Drawing.Point(65, 140);
+            this.passwordProxyTextBox.Name = "passwordProxyTextBox";
+            this.passwordProxyTextBox.Size = new System.Drawing.Size(233, 20);
+            this.passwordProxyTextBox.TabIndex = 22;
+            this.passwordProxyTextBox.UseSystemPasswordChar = true;
+            // 
+            // loginProxyTextBox
+            // 
+            this.loginProxyTextBox.Location = new System.Drawing.Point(65, 114);
+            this.loginProxyTextBox.Name = "loginProxyTextBox";
+            this.loginProxyTextBox.Size = new System.Drawing.Size(262, 20);
+            this.loginProxyTextBox.TabIndex = 20;
+            // 
+            // passwordProxyLabel
+            // 
+            this.passwordProxyLabel.AutoSize = true;
+            this.passwordProxyLabel.Location = new System.Drawing.Point(11, 143);
+            this.passwordProxyLabel.Name = "passwordProxyLabel";
+            this.passwordProxyLabel.Size = new System.Drawing.Size(45, 13);
+            this.passwordProxyLabel.TabIndex = 21;
+            this.passwordProxyLabel.Text = "Пароль";
+            // 
+            // loginProxyLabel
+            // 
+            this.loginProxyLabel.AutoSize = true;
+            this.loginProxyLabel.Location = new System.Drawing.Point(18, 117);
+            this.loginProxyLabel.Name = "loginProxyLabel";
+            this.loginProxyLabel.Size = new System.Drawing.Size(38, 13);
+            this.loginProxyLabel.TabIndex = 19;
+            this.loginProxyLabel.Text = "Логин";
+            // 
+            // customCredentialsCheckBox
+            // 
+            this.customCredentialsCheckBox.AutoSize = true;
+            this.customCredentialsCheckBox.Location = new System.Drawing.Point(65, 91);
+            this.customCredentialsCheckBox.Name = "customCredentialsCheckBox";
+            this.customCredentialsCheckBox.Size = new System.Drawing.Size(181, 17);
+            this.customCredentialsCheckBox.TabIndex = 18;
+            this.customCredentialsCheckBox.Text = "Использовать учетную запись";
+            this.customCredentialsCheckBox.UseVisualStyleBackColor = true;
+            this.customCredentialsCheckBox.CheckedChanged += new System.EventHandler(this.customCredentialsCheckBox_CheckedChanged);
+            this.customCredentialsCheckBox.EnabledChanged += new System.EventHandler(this.customCredentialsCheckBox_EnabledChanged);
+            // 
+            // portProxyTextBox
+            // 
+            this.portProxyTextBox.Location = new System.Drawing.Point(279, 65);
+            this.portProxyTextBox.Name = "portProxyTextBox";
+            this.portProxyTextBox.Size = new System.Drawing.Size(48, 20);
+            this.portProxyTextBox.TabIndex = 17;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(267, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(10, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = ":";
+            // 
+            // serverProxyTextBox
+            // 
+            this.serverProxyTextBox.Location = new System.Drawing.Point(65, 65);
+            this.serverProxyTextBox.Name = "serverProxyTextBox";
+            this.serverProxyTextBox.Size = new System.Drawing.Size(199, 20);
+            this.serverProxyTextBox.TabIndex = 15;
+            // 
+            // serverProxyLabel
+            // 
+            this.serverProxyLabel.AutoSize = true;
+            this.serverProxyLabel.Location = new System.Drawing.Point(12, 68);
+            this.serverProxyLabel.Name = "serverProxyLabel";
+            this.serverProxyLabel.Size = new System.Drawing.Size(44, 13);
+            this.serverProxyLabel.TabIndex = 14;
+            this.serverProxyLabel.Text = "Сервер";
+            // 
+            // manualProxyRadioButton
+            // 
+            this.manualProxyRadioButton.AutoSize = true;
+            this.manualProxyRadioButton.Location = new System.Drawing.Point(65, 42);
+            this.manualProxyRadioButton.Name = "manualProxyRadioButton";
+            this.manualProxyRadioButton.Size = new System.Drawing.Size(67, 17);
+            this.manualProxyRadioButton.TabIndex = 13;
+            this.manualProxyRadioButton.TabStop = true;
+            this.manualProxyRadioButton.Text = "Вручную";
+            this.manualProxyRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // autoProxyRadioButton
+            // 
+            this.autoProxyRadioButton.AutoSize = true;
+            this.autoProxyRadioButton.Location = new System.Drawing.Point(65, 19);
+            this.autoProxyRadioButton.Name = "autoProxyRadioButton";
+            this.autoProxyRadioButton.Size = new System.Drawing.Size(166, 17);
+            this.autoProxyRadioButton.TabIndex = 12;
+            this.autoProxyRadioButton.TabStop = true;
+            this.autoProxyRadioButton.Text = "Определять автоматически";
+            this.autoProxyRadioButton.UseVisualStyleBackColor = true;
+            this.autoProxyRadioButton.CheckedChanged += new System.EventHandler(this.autoProxyRadioButton_CheckedChanged);
             // 
             // backupGroupBox
             // 
@@ -258,141 +394,6 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.showPassProxyButton);
-            this.groupBox1.Controls.Add(this.passwordProxyTextBox);
-            this.groupBox1.Controls.Add(this.loginProxyTextBox);
-            this.groupBox1.Controls.Add(this.passwordProxyLabel);
-            this.groupBox1.Controls.Add(this.loginProxyLabel);
-            this.groupBox1.Controls.Add(this.customCredentialsCheckBox);
-            this.groupBox1.Controls.Add(this.portProxyTextBox);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.serverProxyTextBox);
-            this.groupBox1.Controls.Add(this.serverProxyLabel);
-            this.groupBox1.Controls.Add(this.manualProxyRadioButton);
-            this.groupBox1.Controls.Add(this.autoProxyRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(8, 159);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(340, 173);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Прокси-сервер";
-            // 
-            // showPassProxyButton
-            // 
-            this.showPassProxyButton.BackColor = System.Drawing.Color.Transparent;
-            this.showPassProxyButton.FlatAppearance.BorderSize = 0;
-            this.showPassProxyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.showPassProxyButton.Location = new System.Drawing.Point(304, 138);
-            this.showPassProxyButton.Name = "showPassProxyButton";
-            this.showPassProxyButton.Size = new System.Drawing.Size(23, 23);
-            this.showPassProxyButton.TabIndex = 23;
-            this.showPassProxyButton.Text = "V";
-            this.showPassProxyButton.UseVisualStyleBackColor = false;
-            this.showPassProxyButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassProxyButton_MouseDown);
-            this.showPassProxyButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassProxyButton_MouseUp);
-            // 
-            // passwordProxyTextBox
-            // 
-            this.passwordProxyTextBox.Location = new System.Drawing.Point(65, 140);
-            this.passwordProxyTextBox.Name = "passwordProxyTextBox";
-            this.passwordProxyTextBox.Size = new System.Drawing.Size(233, 20);
-            this.passwordProxyTextBox.TabIndex = 22;
-            this.passwordProxyTextBox.UseSystemPasswordChar = true;
-            // 
-            // loginProxyTextBox
-            // 
-            this.loginProxyTextBox.Location = new System.Drawing.Point(65, 114);
-            this.loginProxyTextBox.Name = "loginProxyTextBox";
-            this.loginProxyTextBox.Size = new System.Drawing.Size(262, 20);
-            this.loginProxyTextBox.TabIndex = 20;
-            // 
-            // passwordProxyLabel
-            // 
-            this.passwordProxyLabel.AutoSize = true;
-            this.passwordProxyLabel.Location = new System.Drawing.Point(11, 143);
-            this.passwordProxyLabel.Name = "passwordProxyLabel";
-            this.passwordProxyLabel.Size = new System.Drawing.Size(45, 13);
-            this.passwordProxyLabel.TabIndex = 21;
-            this.passwordProxyLabel.Text = "Пароль";
-            // 
-            // loginProxyLabel
-            // 
-            this.loginProxyLabel.AutoSize = true;
-            this.loginProxyLabel.Location = new System.Drawing.Point(18, 117);
-            this.loginProxyLabel.Name = "loginProxyLabel";
-            this.loginProxyLabel.Size = new System.Drawing.Size(38, 13);
-            this.loginProxyLabel.TabIndex = 19;
-            this.loginProxyLabel.Text = "Логин";
-            // 
-            // customCredentialsCheckBox
-            // 
-            this.customCredentialsCheckBox.AutoSize = true;
-            this.customCredentialsCheckBox.Location = new System.Drawing.Point(65, 91);
-            this.customCredentialsCheckBox.Name = "customCredentialsCheckBox";
-            this.customCredentialsCheckBox.Size = new System.Drawing.Size(181, 17);
-            this.customCredentialsCheckBox.TabIndex = 18;
-            this.customCredentialsCheckBox.Text = "Использовать учетную запись";
-            this.customCredentialsCheckBox.UseVisualStyleBackColor = true;
-            this.customCredentialsCheckBox.CheckedChanged += new System.EventHandler(this.customCredentialsCheckBox_CheckedChanged);
-            this.customCredentialsCheckBox.EnabledChanged += new System.EventHandler(this.customCredentialsCheckBox_EnabledChanged);
-            // 
-            // portProxyTextBox
-            // 
-            this.portProxyTextBox.Location = new System.Drawing.Point(279, 65);
-            this.portProxyTextBox.Name = "portProxyTextBox";
-            this.portProxyTextBox.Size = new System.Drawing.Size(48, 20);
-            this.portProxyTextBox.TabIndex = 17;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(267, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(10, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = ":";
-            // 
-            // serverProxyTextBox
-            // 
-            this.serverProxyTextBox.Location = new System.Drawing.Point(65, 65);
-            this.serverProxyTextBox.Name = "serverProxyTextBox";
-            this.serverProxyTextBox.Size = new System.Drawing.Size(199, 20);
-            this.serverProxyTextBox.TabIndex = 15;
-            // 
-            // serverProxyLabel
-            // 
-            this.serverProxyLabel.AutoSize = true;
-            this.serverProxyLabel.Location = new System.Drawing.Point(12, 68);
-            this.serverProxyLabel.Name = "serverProxyLabel";
-            this.serverProxyLabel.Size = new System.Drawing.Size(44, 13);
-            this.serverProxyLabel.TabIndex = 14;
-            this.serverProxyLabel.Text = "Сервер";
-            // 
-            // manualProxyRadioButton
-            // 
-            this.manualProxyRadioButton.AutoSize = true;
-            this.manualProxyRadioButton.Location = new System.Drawing.Point(65, 42);
-            this.manualProxyRadioButton.Name = "manualProxyRadioButton";
-            this.manualProxyRadioButton.Size = new System.Drawing.Size(67, 17);
-            this.manualProxyRadioButton.TabIndex = 13;
-            this.manualProxyRadioButton.TabStop = true;
-            this.manualProxyRadioButton.Text = "Вручную";
-            this.manualProxyRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // autoProxyRadioButton
-            // 
-            this.autoProxyRadioButton.AutoSize = true;
-            this.autoProxyRadioButton.Location = new System.Drawing.Point(65, 19);
-            this.autoProxyRadioButton.Name = "autoProxyRadioButton";
-            this.autoProxyRadioButton.Size = new System.Drawing.Size(166, 17);
-            this.autoProxyRadioButton.TabIndex = 12;
-            this.autoProxyRadioButton.TabStop = true;
-            this.autoProxyRadioButton.Text = "Определять автоматически";
-            this.autoProxyRadioButton.UseVisualStyleBackColor = true;
-            this.autoProxyRadioButton.CheckedChanged += new System.EventHandler(this.autoProxyRadioButton_CheckedChanged);
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -401,6 +402,7 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -408,14 +410,14 @@
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.backupGroupBox.ResumeLayout(false);
             this.backupGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupMaxCountBox)).EndInit();
             this.otherPage.ResumeLayout(false);
             this.databaseGroupBox.ResumeLayout(false);
             this.databaseGroupBox.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }

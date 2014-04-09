@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperatorsForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.editButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
@@ -37,6 +38,9 @@
             this.operatorBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.orgView = new System.Windows.Forms.DataGridView();
+            this.orgCheckColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.regNumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orgNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accessGroupBox = new System.Windows.Forms.GroupBox();
             this.importAnketaCheckBox = new System.Windows.Forms.CheckBox();
             this.payStajAccessLevelBox = new System.Windows.Forms.ComboBox();
@@ -48,9 +52,6 @@
             this.anketaAccessCheckBox = new System.Windows.Forms.CheckBox();
             this.closeButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
-            this.orgCheckColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.regNumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orgNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).BeginInit();
@@ -168,6 +169,35 @@
             this.orgView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
             this.orgView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orgView_CellContentClick);
             this.orgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.orgView_KeyDown);
+            // 
+            // orgCheckColumn
+            // 
+            this.orgCheckColumn.DataPropertyName = "check";
+            this.orgCheckColumn.HeaderText = "*";
+            this.orgCheckColumn.MinimumWidth = 20;
+            this.orgCheckColumn.Name = "orgCheckColumn";
+            this.orgCheckColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.orgCheckColumn.Width = 20;
+            // 
+            // regNumColumn
+            // 
+            this.regNumColumn.DataPropertyName = "regnum";
+            this.regNumColumn.HeaderText = "Рег. №";
+            this.regNumColumn.MaxInputLength = 50;
+            this.regNumColumn.MinimumWidth = 50;
+            this.regNumColumn.Name = "regNumColumn";
+            this.regNumColumn.ReadOnly = true;
+            this.regNumColumn.Width = 70;
+            // 
+            // orgNameColumn
+            // 
+            this.orgNameColumn.DataPropertyName = "name";
+            this.orgNameColumn.HeaderText = "Наименование организации";
+            this.orgNameColumn.MaxInputLength = 300;
+            this.orgNameColumn.MinimumWidth = 150;
+            this.orgNameColumn.Name = "orgNameColumn";
+            this.orgNameColumn.ReadOnly = true;
+            this.orgNameColumn.Width = 310;
             // 
             // accessGroupBox
             // 
@@ -294,35 +324,6 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // orgCheckColumn
-            // 
-            this.orgCheckColumn.DataPropertyName = "check";
-            this.orgCheckColumn.HeaderText = "*";
-            this.orgCheckColumn.MinimumWidth = 20;
-            this.orgCheckColumn.Name = "orgCheckColumn";
-            this.orgCheckColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.orgCheckColumn.Width = 20;
-            // 
-            // regNumColumn
-            // 
-            this.regNumColumn.DataPropertyName = "regnum";
-            this.regNumColumn.HeaderText = "Рег. №";
-            this.regNumColumn.MaxInputLength = 50;
-            this.regNumColumn.MinimumWidth = 50;
-            this.regNumColumn.Name = "regNumColumn";
-            this.regNumColumn.ReadOnly = true;
-            this.regNumColumn.Width = 70;
-            // 
-            // orgNameColumn
-            // 
-            this.orgNameColumn.DataPropertyName = "name";
-            this.orgNameColumn.HeaderText = "Наименование организации";
-            this.orgNameColumn.MaxInputLength = 300;
-            this.orgNameColumn.MinimumWidth = 150;
-            this.orgNameColumn.Name = "orgNameColumn";
-            this.orgNameColumn.ReadOnly = true;
-            this.orgNameColumn.Width = 310;
-            // 
             // OperatorsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -333,6 +334,7 @@
             this.Controls.Add(this.accessGroupBox);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(464, 500);
             this.Name = "OperatorsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -37,6 +37,9 @@ namespace Pers_uchet_org
 
             //databasePathTextBox.ReadOnly = true;
             //databaseBrowseButton.Enabled = false;
+
+            ToolTip toolTip1 = new ToolTip();
+            toolTip1.SetToolTip(autoProxyRadioButton, "Используются настройки из обозревателя IE");
         }
 
         #region Методы - свои

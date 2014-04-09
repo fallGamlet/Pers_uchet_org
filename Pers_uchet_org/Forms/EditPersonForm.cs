@@ -257,31 +257,31 @@ namespace Pers_uchet_org
                 err += "\nНе указано основное гражданство.";
                 res &= false;
             }
-            if (regCityBox.Text.Trim().Length <= 0)
-            {
-                err += "\nНекорректное название города прописки";
-                res &= false;
-            }
-            if (this.adressrealCheckBox.Checked && factCityBox.Text.Trim().Length <= 0)
-            {
-                err += "\nНекорректное название города проживания.";
-                res &= false;
-            }
-            if (bornCityBox.Text.Trim().Length <= 0)
-            {
-                err += "\nНекорректное название города рождения.";
-                res &= false;
-            }
+            //if (regCityBox.Text.Trim().Length <= 0)
+            //{
+            //    err += "\nНекорректное название города прописки";
+            //    res &= false;
+            //}
+            //if (this.adressrealCheckBox.Checked && factCityBox.Text.Trim().Length <= 0)
+            //{
+            //    err += "\nНекорректное название города проживания.";
+            //    res &= false;
+            //}
+            //if (bornCityBox.Text.Trim().Length <= 0)
+            //{
+            //    err += "\nНекорректное название города рождения.";
+            //    res &= false;
+            //}
             if (this.doctypeBox.SelectedIndex < 0)
             {
                 err += "\nНе указан тип документа.";
                 res &= false;
             }
-            if (this.docnumBox.Text.Trim().Length <= 0)
-            {
-                err += "\nНекорректная серия документа.";
-                res &= false;
-            }
+            //if (this.docnumBox.Text.Trim().Length <= 0)
+            //{
+            //    err += "\nНекорректная серия документа.";
+            //    res &= false;
+            //}
 
             if (!res)
                 MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные");

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExchangeForm));
             this.ExchangeTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
@@ -388,18 +389,18 @@
             this.keyfileTextBox.Location = new System.Drawing.Point(72, 165);
             this.keyfileTextBox.Name = "keyfileTextBox";
             this.keyfileTextBox.ReadOnly = true;
-            this.keyfileTextBox.Size = new System.Drawing.Size(261, 20);
+            this.keyfileTextBox.Size = new System.Drawing.Size(282, 20);
             this.keyfileTextBox.TabIndex = 4;
             // 
             // keyfileButton
             // 
             this.keyfileButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.keyfileButton.Location = new System.Drawing.Point(339, 163);
+            this.keyfileButton.Location = new System.Drawing.Point(360, 163);
             this.keyfileButton.Name = "keyfileButton";
-            this.keyfileButton.Size = new System.Drawing.Size(64, 23);
+            this.keyfileButton.Size = new System.Drawing.Size(43, 23);
             this.keyfileButton.TabIndex = 5;
-            this.keyfileButton.Text = "Обзор...";
+            this.keyfileButton.Text = "...";
             this.keyfileButton.UseVisualStyleBackColor = true;
             this.keyfileButton.Click += new System.EventHandler(this.keyfileButton_Click);
             // 
@@ -563,10 +564,11 @@
             this.keyDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.keyDateLabel.Location = new System.Drawing.Point(55, 45);
             this.keyDateLabel.Name = "keyDateLabel";
-            this.keyDateLabel.Size = new System.Drawing.Size(207, 16);
+            this.keyDateLabel.Size = new System.Drawing.Size(233, 16);
             this.keyDateLabel.TabIndex = 5;
             this.keyDateLabel.Tag = "Ключ действителен с {0} до {1}";
-            this.keyDateLabel.Text = "Ключ действителен с {0} до {1}";
+            this.keyDateLabel.Text = "Ключ действителен с   .  .     до   .  .    ";
+            this.keyDateLabel.DoubleClick += new System.EventHandler(this.keyDateLabel_DoubleClick);
             // 
             // createDataFileButton
             // 
@@ -626,6 +628,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ExchangeTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ExchangeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -704,5 +707,6 @@
         private System.Windows.Forms.RadioButton cdRButton;
         private System.Windows.Forms.Button keyfileButton;
         private System.Windows.Forms.TextBox keyfileTextBox;
+        
     }
 }

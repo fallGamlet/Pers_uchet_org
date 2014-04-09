@@ -34,12 +34,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StajDohodForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StajDohodForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -359,6 +359,7 @@
             // 
             // reestrListStripButton
             // 
+            this.reestrListStripButton.Image = global::Pers_uchet_org.Properties.Resources._2_16;
             this.reestrListStripButton.Name = "reestrListStripButton";
             this.reestrListStripButton.Size = new System.Drawing.Size(275, 22);
             this.reestrListStripButton.Text = "Опись СЗВ-2";
@@ -366,6 +367,7 @@
             // 
             // calcListStripButton
             // 
+            this.calcListStripButton.Image = global::Pers_uchet_org.Properties.Resources.math_16;
             this.calcListStripButton.Name = "calcListStripButton";
             this.calcListStripButton.Size = new System.Drawing.Size(275, 22);
             this.calcListStripButton.Text = "Калькуляция по пакету";
@@ -373,6 +375,7 @@
             // 
             // printFioListStripButton
             // 
+            this.printFioListStripButton.Image = global::Pers_uchet_org.Properties.Resources.list_16;
             this.printFioListStripButton.Name = "printFioListStripButton";
             this.printFioListStripButton.Size = new System.Drawing.Size(275, 22);
             this.printFioListStripButton.Text = "Пофамильный список";
@@ -458,7 +461,7 @@
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(554, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(515, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";
@@ -497,7 +500,7 @@
             // 
             // changeTypeDocStripButton
             // 
-            this.changeTypeDocStripButton.Image = ((System.Drawing.Image)(resources.GetObject("changeTypeDocStripButton.Image")));
+            this.changeTypeDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.available_updates_16;
             this.changeTypeDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.changeTypeDocStripButton.Name = "changeTypeDocStripButton";
             this.changeTypeDocStripButton.Size = new System.Drawing.Size(103, 22);
@@ -510,8 +513,8 @@
             this.printDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.print_16;
             this.printDocStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printDocStripButton.Name = "printDocStripButton";
-            this.printDocStripButton.Size = new System.Drawing.Size(176, 22);
-            this.printDocStripButton.Text = "Печать форм СЗВ-1, СЗВ-2";
+            this.printDocStripButton.Size = new System.Drawing.Size(137, 22);
+            this.printDocStripButton.Text = "Печать форм СЗВ-1";
             this.printDocStripButton.Click += new System.EventHandler(this.printDocStripButton_Click);
             // 
             // toolStripSeparator9
@@ -532,6 +535,7 @@
             // 
             // previewDocStripButton
             // 
+            this.previewDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
             this.previewDocStripButton.Name = "previewDocStripButton";
             this.previewDocStripButton.Size = new System.Drawing.Size(233, 22);
             this.previewDocStripButton.Text = "Предварительный просмотр";
@@ -539,6 +543,7 @@
             // 
             // copyToListDocStripButton
             // 
+            this.copyToListDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.copy_16;
             this.copyToListDocStripButton.Name = "copyToListDocStripButton";
             this.copyToListDocStripButton.Size = new System.Drawing.Size(233, 22);
             this.copyToListDocStripButton.Text = "Копировать в другой пакет";
@@ -546,6 +551,7 @@
             // 
             // moveToListDocStripButton
             // 
+            this.moveToListDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.cut_16;
             this.moveToListDocStripButton.Name = "moveToListDocStripButton";
             this.moveToListDocStripButton.Size = new System.Drawing.Size(233, 22);
             this.moveToListDocStripButton.Text = "Переместить в другой пакет";
@@ -763,6 +769,7 @@
             // 
             // viewOpisMenuItem
             // 
+            this.viewOpisMenuItem.Image = global::Pers_uchet_org.Properties.Resources._2_16;
             this.viewOpisMenuItem.Name = "viewOpisMenuItem";
             this.viewOpisMenuItem.Size = new System.Drawing.Size(275, 22);
             this.viewOpisMenuItem.Text = "Просмотреть опись \"СЗВ-2\"";
@@ -770,12 +777,14 @@
             // 
             // calcMenuItem
             // 
+            this.calcMenuItem.Image = global::Pers_uchet_org.Properties.Resources.math_16;
             this.calcMenuItem.Name = "calcMenuItem";
             this.calcMenuItem.Size = new System.Drawing.Size(275, 22);
             this.calcMenuItem.Text = "Калькуляция по пакету";
             // 
             // printListMenuItem
             // 
+            this.printListMenuItem.Image = global::Pers_uchet_org.Properties.Resources.list_16;
             this.printListMenuItem.Name = "printListMenuItem";
             this.printListMenuItem.Size = new System.Drawing.Size(275, 22);
             this.printListMenuItem.Text = "Печать пофамильного списка";
@@ -865,6 +874,7 @@
             // 
             // changeTypeDocMenuItem
             // 
+            this.changeTypeDocMenuItem.Image = global::Pers_uchet_org.Properties.Resources.available_updates_16;
             this.changeTypeDocMenuItem.Name = "changeTypeDocMenuItem";
             this.changeTypeDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.changeTypeDocMenuItem.Text = "Изменить тип";
@@ -872,6 +882,7 @@
             // 
             // previewDocMenuItem
             // 
+            this.previewDocMenuItem.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
             this.previewDocMenuItem.Name = "previewDocMenuItem";
             this.previewDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.previewDocMenuItem.Text = "Предварительный просмотр";
@@ -884,6 +895,7 @@
             // 
             // copyToOtherListMenuItem
             // 
+            this.copyToOtherListMenuItem.Image = global::Pers_uchet_org.Properties.Resources.copy_16;
             this.copyToOtherListMenuItem.Name = "copyToOtherListMenuItem";
             this.copyToOtherListMenuItem.Size = new System.Drawing.Size(233, 22);
             this.copyToOtherListMenuItem.Text = "Копировать в другой пакет";
@@ -891,6 +903,7 @@
             // 
             // moveToOtherListMenuItem
             // 
+            this.moveToOtherListMenuItem.Image = global::Pers_uchet_org.Properties.Resources.cut_16;
             this.moveToOtherListMenuItem.Name = "moveToOtherListMenuItem";
             this.moveToOtherListMenuItem.Size = new System.Drawing.Size(233, 22);
             this.moveToOtherListMenuItem.Text = "Переместить в другой пакет";
@@ -918,6 +931,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 567);
             this.Name = "StajDohodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

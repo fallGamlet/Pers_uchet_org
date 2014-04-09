@@ -92,6 +92,14 @@ namespace Pers_uchet_org.Forms
 
             cancelButton.Enabled = false;
             ReadSettings();
+
+            ToolTip toolTip1 = new ToolTip();
+            toolTip1.SetToolTip(lanSettingsButton, "Настройки прокси-сервера");
+            toolTip1.SetToolTip(helpButton, "Справка");
+            toolTip1.SetToolTip(edataBrowseButton, "Обзор..");
+            toolTip1.SetToolTip(showPassButton, "Показать пароль");
+            toolTip1.SetToolTip(sendButton, "Отправить данные на хостинг");
+            toolTip1.SetToolTip(cancelButton, "Прервать отправку данных");
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)

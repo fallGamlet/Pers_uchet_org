@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrgForm));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.bookerfioorgBox = new System.Windows.Forms.TextBox();
             this.chiefpostorgBox = new System.Windows.Forms.TextBox();
@@ -46,9 +47,10 @@
             this.editdepButton = new System.Windows.Forms.Button();
             this.adddepButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.removeorgButton = new System.Windows.Forms.Button();
-            this.editorgButton = new System.Windows.Forms.Button();
-            this.addorgButton = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.addOrgStripButton = new System.Windows.Forms.ToolStripButton();
+            this.editOrgStripButton = new System.Windows.Forms.ToolStripButton();
+            this.delOrgStripButton = new System.Windows.Forms.ToolStripButton();
             this.orgView = new System.Windows.Forms.DataGridView();
             this.regnumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,6 +59,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.depView)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +81,7 @@
             this.groupBox3.Location = new System.Drawing.Point(262, 10);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(342, 179);
+            this.groupBox3.Size = new System.Drawing.Size(342, 182);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -260,50 +263,56 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox1.Controls.Add(this.removeorgButton);
-            this.groupBox1.Controls.Add(this.editorgButton);
-            this.groupBox1.Controls.Add(this.addorgButton);
+            this.groupBox1.Controls.Add(this.toolStrip1);
             this.groupBox1.Controls.Add(this.orgView);
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 179);
+            this.groupBox1.Size = new System.Drawing.Size(250, 182);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Список организаций";
             // 
-            // removeorgButton
+            // toolStrip1
             // 
-            this.removeorgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.removeorgButton.Location = new System.Drawing.Point(168, 150);
-            this.removeorgButton.Name = "removeorgButton";
-            this.removeorgButton.Size = new System.Drawing.Size(75, 23);
-            this.removeorgButton.TabIndex = 3;
-            this.removeorgButton.Text = "Удалить";
-            this.removeorgButton.UseVisualStyleBackColor = true;
-            this.removeorgButton.Click += new System.EventHandler(this.removeorgButton_Click);
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addOrgStripButton,
+            this.editOrgStripButton,
+            this.delOrgStripButton});
+            this.toolStrip1.Location = new System.Drawing.Point(6, 16);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(234, 25);
+            this.toolStrip1.TabIndex = 10;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // editorgButton
+            // addOrgStripButton
             // 
-            this.editorgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.editorgButton.Location = new System.Drawing.Point(87, 150);
-            this.editorgButton.Name = "editorgButton";
-            this.editorgButton.Size = new System.Drawing.Size(75, 23);
-            this.editorgButton.TabIndex = 2;
-            this.editorgButton.Text = "Изменить";
-            this.editorgButton.UseVisualStyleBackColor = true;
-            this.editorgButton.Click += new System.EventHandler(this.editorgButton_Click);
+            this.addOrgStripButton.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
+            this.addOrgStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addOrgStripButton.Name = "addOrgStripButton";
+            this.addOrgStripButton.Size = new System.Drawing.Size(79, 22);
+            this.addOrgStripButton.Text = "Добавить";
+            this.addOrgStripButton.Click += new System.EventHandler(this.addOrgStripButton_Click);
             // 
-            // addorgButton
+            // editOrgStripButton
             // 
-            this.addorgButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.addorgButton.Location = new System.Drawing.Point(6, 150);
-            this.addorgButton.Name = "addorgButton";
-            this.addorgButton.Size = new System.Drawing.Size(75, 23);
-            this.addorgButton.TabIndex = 1;
-            this.addorgButton.Text = "Добавить";
-            this.addorgButton.UseVisualStyleBackColor = true;
-            this.addorgButton.Click += new System.EventHandler(this.addorgButton_Click);
+            this.editOrgStripButton.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
+            this.editOrgStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editOrgStripButton.Name = "editOrgStripButton";
+            this.editOrgStripButton.Size = new System.Drawing.Size(81, 22);
+            this.editOrgStripButton.Text = "Изменить";
+            this.editOrgStripButton.Click += new System.EventHandler(this.editOrgStripButton_Click);
+            // 
+            // delOrgStripButton
+            // 
+            this.delOrgStripButton.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
+            this.delOrgStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.delOrgStripButton.Name = "delOrgStripButton";
+            this.delOrgStripButton.Size = new System.Drawing.Size(71, 22);
+            this.delOrgStripButton.Text = "Удалить";
+            this.delOrgStripButton.Click += new System.EventHandler(this.delOrgStripButton_Click);
             // 
             // orgView
             // 
@@ -320,12 +329,12 @@
             this.orgView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.regnumColumn,
             this.nameColumn});
-            this.orgView.Location = new System.Drawing.Point(6, 19);
+            this.orgView.Location = new System.Drawing.Point(6, 44);
             this.orgView.Name = "orgView";
             this.orgView.ReadOnly = true;
             this.orgView.RowHeadersVisible = false;
             this.orgView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orgView.Size = new System.Drawing.Size(237, 125);
+            this.orgView.Size = new System.Drawing.Size(237, 132);
             this.orgView.TabIndex = 0;
             // 
             // regnumColumn
@@ -362,11 +371,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 199);
+            this.ClientSize = new System.Drawing.Size(614, 202);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 213);
             this.Name = "OrgForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -378,6 +388,9 @@
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.depView)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orgView)).EndInit();
             this.ResumeLayout(false);
 
@@ -403,12 +416,13 @@
         private System.Windows.Forms.Button editdepButton;
         private System.Windows.Forms.Button adddepButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button removeorgButton;
-        private System.Windows.Forms.Button editorgButton;
-        private System.Windows.Forms.Button addorgButton;
         private System.Windows.Forms.DataGridView orgView;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn regnumColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton addOrgStripButton;
+        private System.Windows.Forms.ToolStripButton editOrgStripButton;
+        private System.Windows.Forms.ToolStripButton delOrgStripButton;
     }
 }

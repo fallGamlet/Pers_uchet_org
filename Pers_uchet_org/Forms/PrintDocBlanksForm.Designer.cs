@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintDocBlanksForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.regPage = new System.Windows.Forms.TabPage();
             this.countADV6Box = new System.Windows.Forms.NumericUpDown();
@@ -581,6 +582,7 @@
             this.Controls.Add(this.printButton);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(606, 337);
             this.Name = "PrintDocBlanksForm";

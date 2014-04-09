@@ -28,24 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvokerForm));
             this.regNumLabel = new System.Windows.Forms.Label();
             this.repYearLabel = new System.Windows.Forms.Label();
             this.pathLabel = new System.Windows.Forms.Label();
             this.reportTypeLabel = new System.Windows.Forms.Label();
             this.sendButton = new System.Windows.Forms.Button();
-            this.lanSettingsButton = new System.Windows.Forms.Button();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.reportTypeComboBox = new System.Windows.Forms.ComboBox();
             this.edataBrowseButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.regNumOrgBox = new System.Windows.Forms.MaskedTextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.showPassButton = new System.Windows.Forms.Button();
             this.logLabel = new System.Windows.Forms.Label();
             this.logRichTextBox = new System.Windows.Forms.RichTextBox();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.showPassButton = new System.Windows.Forms.Button();
+            this.helpButton = new System.Windows.Forms.Button();
+            this.lanSettingsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.yearBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,21 +90,11 @@
             // 
             this.sendButton.Location = new System.Drawing.Point(151, 137);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(132, 23);
+            this.sendButton.Size = new System.Drawing.Size(132, 25);
             this.sendButton.TabIndex = 14;
             this.sendButton.Text = "Отправить";
             this.sendButton.UseVisualStyleBackColor = true;
             this.sendButton.Click += new System.EventHandler(this.SendButton_Click);
-            // 
-            // lanSettingsButton
-            // 
-            this.lanSettingsButton.Location = new System.Drawing.Point(77, 137);
-            this.lanSettingsButton.Name = "lanSettingsButton";
-            this.lanSettingsButton.Size = new System.Drawing.Size(65, 23);
-            this.lanSettingsButton.TabIndex = 13;
-            this.lanSettingsButton.Text = "Сеть";
-            this.lanSettingsButton.UseVisualStyleBackColor = true;
-            this.lanSettingsButton.Click += new System.EventHandler(this.lanSettingsButton_Click);
             // 
             // yearBox
             // 
@@ -158,15 +149,6 @@
             this.edataBrowseButton.UseVisualStyleBackColor = true;
             this.edataBrowseButton.Click += new System.EventHandler(this.edataBrowseButton_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 137);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Справка";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // regNumOrgBox
             // 
             this.regNumOrgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -194,20 +176,6 @@
             this.passwordTextBox.TabIndex = 10;
             this.passwordTextBox.UseSystemPasswordChar = true;
             // 
-            // showPassButton
-            // 
-            this.showPassButton.BackColor = System.Drawing.Color.Transparent;
-            this.showPassButton.FlatAppearance.BorderSize = 0;
-            this.showPassButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.showPassButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
-            this.showPassButton.Location = new System.Drawing.Point(352, 109);
-            this.showPassButton.Name = "showPassButton";
-            this.showPassButton.Size = new System.Drawing.Size(23, 23);
-            this.showPassButton.TabIndex = 11;
-            this.showPassButton.UseVisualStyleBackColor = false;
-            this.showPassButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseDown);
-            this.showPassButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseUp);
-            // 
             // logLabel
             // 
             this.logLabel.AutoSize = true;
@@ -232,11 +200,44 @@
             // 
             this.cancelButton.Location = new System.Drawing.Point(289, 137);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(86, 23);
+            this.cancelButton.Size = new System.Drawing.Size(86, 25);
             this.cancelButton.TabIndex = 15;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // showPassButton
+            // 
+            this.showPassButton.BackColor = System.Drawing.Color.Transparent;
+            this.showPassButton.FlatAppearance.BorderSize = 0;
+            this.showPassButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
+            this.showPassButton.Location = new System.Drawing.Point(352, 109);
+            this.showPassButton.Name = "showPassButton";
+            this.showPassButton.Size = new System.Drawing.Size(23, 23);
+            this.showPassButton.TabIndex = 11;
+            this.showPassButton.UseVisualStyleBackColor = false;
+            this.showPassButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseDown);
+            this.showPassButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseUp);
+            // 
+            // helpButton
+            // 
+            this.helpButton.Image = global::Pers_uchet_org.Properties.Resources.help_16;
+            this.helpButton.Location = new System.Drawing.Point(12, 137);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(32, 25);
+            this.helpButton.TabIndex = 12;
+            this.helpButton.UseVisualStyleBackColor = true;
+            // 
+            // lanSettingsButton
+            // 
+            this.lanSettingsButton.Image = global::Pers_uchet_org.Properties.Resources.geography_16;
+            this.lanSettingsButton.Location = new System.Drawing.Point(50, 137);
+            this.lanSettingsButton.Name = "lanSettingsButton";
+            this.lanSettingsButton.Size = new System.Drawing.Size(32, 25);
+            this.lanSettingsButton.TabIndex = 13;
+            this.lanSettingsButton.UseVisualStyleBackColor = true;
+            this.lanSettingsButton.Click += new System.EventHandler(this.lanSettingsButton_Click);
             // 
             // InvokerForm
             // 
@@ -250,7 +251,7 @@
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.passwordLabel);
             this.Controls.Add(this.regNumOrgBox);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.helpButton);
             this.Controls.Add(this.edataBrowseButton);
             this.Controls.Add(this.reportTypeComboBox);
             this.Controls.Add(this.pathTextBox);
@@ -261,6 +262,7 @@
             this.Controls.Add(this.pathLabel);
             this.Controls.Add(this.repYearLabel);
             this.Controls.Add(this.regNumLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "InvokerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Отправка данных на хостинг фонда";
@@ -283,7 +285,7 @@
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.ComboBox reportTypeComboBox;
         private System.Windows.Forms.Button edataBrowseButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button helpButton;
         private System.Windows.Forms.MaskedTextBox regNumOrgBox;
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.TextBox passwordTextBox;

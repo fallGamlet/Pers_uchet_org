@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsLanForm));
             this.cancelButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.autoProxyRadioButton = new System.Windows.Forms.RadioButton();
@@ -199,6 +200,7 @@
             this.Controls.Add(this.autoProxyRadioButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SettingsLanForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

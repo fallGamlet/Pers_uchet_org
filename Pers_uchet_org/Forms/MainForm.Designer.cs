@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.changeoperatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,17 +45,19 @@
             this.klassificatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.typedocumentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nastroikiMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vosstanovleniebdMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.smenaparoliaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.poiskfizlicaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.elobmenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.smenaparoliaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vosstanovleniebdMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nastroikiMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.operatoriMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orgMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.historychangeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orgBox = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -94,20 +97,21 @@
             // changeoperatorMenuItem
             // 
             this.changeoperatorMenuItem.Name = "changeoperatorMenuItem";
-            this.changeoperatorMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.changeoperatorMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
+            this.changeoperatorMenuItem.Size = new System.Drawing.Size(219, 22);
             this.changeoperatorMenuItem.Text = "Сменить оператора";
             this.changeoperatorMenuItem.Click += new System.EventHandler(this.changeoperatorMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(216, 6);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Q)));
-            this.exitMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.exitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitMenuItem.Size = new System.Drawing.Size(219, 22);
             this.exitMenuItem.Text = "Выйти";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
@@ -140,7 +144,7 @@
             // stajidohodMenuItem
             // 
             this.stajidohodMenuItem.Name = "stajidohodMenuItem";
-            this.stajidohodMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Z)));
+            this.stajidohodMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
             this.stajidohodMenuItem.Size = new System.Drawing.Size(267, 22);
             this.stajidohodMenuItem.Text = "Стаж и доход";
             this.stajidohodMenuItem.Click += new System.EventHandler(this.stajidohodMenuItem_Click);
@@ -148,7 +152,7 @@
             // svodvedomostMenuItem
             // 
             this.svodvedomostMenuItem.Name = "svodvedomostMenuItem";
-            this.svodvedomostMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.svodvedomostMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             this.svodvedomostMenuItem.Size = new System.Drawing.Size(267, 22);
             this.svodvedomostMenuItem.Text = "Сводная ведомость";
             this.svodvedomostMenuItem.Click += new System.EventHandler(this.svodvedomostMenuItem_Click);
@@ -161,7 +165,7 @@
             // pechatblankMenuItem
             // 
             this.pechatblankMenuItem.Name = "pechatblankMenuItem";
-            this.pechatblankMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.B)));
+            this.pechatblankMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
             this.pechatblankMenuItem.Size = new System.Drawing.Size(267, 22);
             this.pechatblankMenuItem.Text = "Печать бланков документов";
             this.pechatblankMenuItem.Click += new System.EventHandler(this.pechatblankMenuItem_Click);
@@ -179,53 +183,30 @@
             // 
             this.klassificatorMenuItem.Name = "klassificatorMenuItem";
             this.klassificatorMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.K)));
-            this.klassificatorMenuItem.Size = new System.Drawing.Size(286, 22);
+            this.klassificatorMenuItem.Size = new System.Drawing.Size(285, 22);
             this.klassificatorMenuItem.Text = "Классификатор категорий";
             this.klassificatorMenuItem.Click += new System.EventHandler(this.klassificatorMenuItem_Click);
             // 
             // typedocumentMenuItem
             // 
             this.typedocumentMenuItem.Name = "typedocumentMenuItem";
-            this.typedocumentMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.U)));
-            this.typedocumentMenuItem.Size = new System.Drawing.Size(286, 22);
+            this.typedocumentMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
+            this.typedocumentMenuItem.Size = new System.Drawing.Size(285, 22);
             this.typedocumentMenuItem.Text = "Типы документов, уд. личность";
             this.typedocumentMenuItem.Click += new System.EventHandler(this.typedocumentMenuItem_Click);
             // 
             // сервисToolStripMenuItem
             // 
             this.сервисToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nastroikiMenuItem,
-            this.vosstanovleniebdMenuItem,
-            this.smenaparoliaMenuItem,
             this.poiskfizlicaMenuItem,
-            this.elobmenMenuItem});
+            this.elobmenMenuItem,
+            this.toolStripSeparator3,
+            this.smenaparoliaMenuItem,
+            this.vosstanovleniebdMenuItem,
+            this.nastroikiMenuItem});
             this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
             this.сервисToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.сервисToolStripMenuItem.Text = "Сервис";
-            // 
-            // nastroikiMenuItem
-            // 
-            this.nastroikiMenuItem.Name = "nastroikiMenuItem";
-            this.nastroikiMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
-            this.nastroikiMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.nastroikiMenuItem.Text = "Настройки";
-            this.nastroikiMenuItem.Click += new System.EventHandler(this.nastroikiMenuItem_Click);
-            // 
-            // vosstanovleniebdMenuItem
-            // 
-            this.vosstanovleniebdMenuItem.Name = "vosstanovleniebdMenuItem";
-            this.vosstanovleniebdMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.vosstanovleniebdMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.vosstanovleniebdMenuItem.Text = "Восстановление БД из резервной копии";
-            this.vosstanovleniebdMenuItem.Click += new System.EventHandler(this.vosstanovleniebdMenuItem_Click);
-            // 
-            // smenaparoliaMenuItem
-            // 
-            this.smenaparoliaMenuItem.Name = "smenaparoliaMenuItem";
-            this.smenaparoliaMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.W)));
-            this.smenaparoliaMenuItem.Size = new System.Drawing.Size(332, 22);
-            this.smenaparoliaMenuItem.Text = "Смена пароля";
-            this.smenaparoliaMenuItem.Click += new System.EventHandler(this.smenaparoliaMenuItem_Click);
             // 
             // poiskfizlicaMenuItem
             // 
@@ -238,10 +219,39 @@
             // elobmenMenuItem
             // 
             this.elobmenMenuItem.Name = "elobmenMenuItem";
-            this.elobmenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
+            this.elobmenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
             this.elobmenMenuItem.Size = new System.Drawing.Size(332, 22);
             this.elobmenMenuItem.Text = "Электронный обмен с фондом";
             this.elobmenMenuItem.Click += new System.EventHandler(this.elobmenMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(329, 6);
+            // 
+            // smenaparoliaMenuItem
+            // 
+            this.smenaparoliaMenuItem.Name = "smenaparoliaMenuItem";
+            this.smenaparoliaMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.W)));
+            this.smenaparoliaMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.smenaparoliaMenuItem.Text = "Смена пароля";
+            this.smenaparoliaMenuItem.Click += new System.EventHandler(this.smenaparoliaMenuItem_Click);
+            // 
+            // vosstanovleniebdMenuItem
+            // 
+            this.vosstanovleniebdMenuItem.Name = "vosstanovleniebdMenuItem";
+            this.vosstanovleniebdMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
+            this.vosstanovleniebdMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.vosstanovleniebdMenuItem.Text = "Восстановление БД из резервной копии";
+            this.vosstanovleniebdMenuItem.Click += new System.EventHandler(this.vosstanovleniebdMenuItem_Click);
+            // 
+            // nastroikiMenuItem
+            // 
+            this.nastroikiMenuItem.Name = "nastroikiMenuItem";
+            this.nastroikiMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
+            this.nastroikiMenuItem.Size = new System.Drawing.Size(332, 22);
+            this.nastroikiMenuItem.Text = "Настройки";
+            this.nastroikiMenuItem.Click += new System.EventHandler(this.nastroikiMenuItem_Click);
             // 
             // adminMenu
             // 
@@ -255,15 +265,15 @@
             // operatoriMenuItem
             // 
             this.operatoriMenuItem.Name = "operatoriMenuItem";
-            this.operatoriMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
-            this.operatoriMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.operatoriMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
+            this.operatoriMenuItem.Size = new System.Drawing.Size(176, 22);
             this.operatoriMenuItem.Text = "Операторы";
             this.operatoriMenuItem.Click += new System.EventHandler(this.operatoriMenuItem_Click);
             // 
             // orgMenuItem
             // 
             this.orgMenuItem.Name = "orgMenuItem";
-            this.orgMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.orgMenuItem.Size = new System.Drawing.Size(176, 22);
             this.orgMenuItem.Text = "Организации";
             this.orgMenuItem.Click += new System.EventHandler(this.orgMenuItem_Click);
             // 
@@ -272,6 +282,7 @@
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpMenuItem,
             this.historychangeMenuItem,
+            this.toolStripSeparator5,
             this.aboutMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
@@ -280,22 +291,27 @@
             // helpMenuItem
             // 
             this.helpMenuItem.Name = "helpMenuItem";
-            this.helpMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
-            this.helpMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.helpMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpMenuItem.Size = new System.Drawing.Size(224, 22);
             this.helpMenuItem.Text = "Помощь";
             // 
             // historychangeMenuItem
             // 
             this.historychangeMenuItem.Name = "historychangeMenuItem";
-            this.historychangeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.I)));
-            this.historychangeMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.historychangeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
+            this.historychangeMenuItem.Size = new System.Drawing.Size(224, 22);
             this.historychangeMenuItem.Text = "История изменений";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(221, 6);
             // 
             // aboutMenuItem
             // 
             this.aboutMenuItem.Name = "aboutMenuItem";
-            this.aboutMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
-            this.aboutMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.aboutMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
+            this.aboutMenuItem.Size = new System.Drawing.Size(224, 22);
             this.aboutMenuItem.Text = "О программе";
             this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
             // 
@@ -353,6 +369,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(560, 128);
             this.Name = "MainForm";
@@ -404,6 +421,8 @@
         private System.Windows.Forms.ToolStripMenuItem changeoperatorMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

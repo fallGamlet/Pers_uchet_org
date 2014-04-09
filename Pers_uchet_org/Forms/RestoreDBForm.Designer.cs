@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RestoreDBForm));
             this.label1 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.restoreButton = new System.Windows.Forms.Button();
@@ -114,6 +115,7 @@
             this.Controls.Add(this.restoreButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "RestoreDBForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

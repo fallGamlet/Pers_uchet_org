@@ -966,9 +966,9 @@ namespace Pers_uchet_org
 
         private void printDocStripButton_Click(object sender, EventArgs e)
         {
-            PrintStajForm printStajForm = new PrintStajForm();
-            if (printStajForm.ShowDialog() == DialogResult.OK)
-            { }
+            //PrintStajForm printStajForm = new PrintStajForm();
+            //if (printStajForm.ShowDialog() == DialogResult.OK)
+            //{ }
         }
 
         private void previewDocStripButton_Click(object sender, EventArgs e)

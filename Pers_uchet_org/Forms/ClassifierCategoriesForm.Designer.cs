@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClassifierCategoriesForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.classgroupView = new System.Windows.Forms.DataGridView();
             this.classgroup_id_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -378,6 +379,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(568, 498);
             this.Name = "ClassifierCategoriesForm";
             this.Text = "Классификатор категорий";

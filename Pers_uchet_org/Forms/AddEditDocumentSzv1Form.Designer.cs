@@ -51,6 +51,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEditDocumentSzv1Form));
             this.textBoxAnketaName = new System.Windows.Forms.TextBox();
             this.textBoxInsNum = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -205,13 +206,13 @@
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(705, 479);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // saveButton
             // 
@@ -690,13 +691,13 @@
             this.delGeneralPeriodMenuItem});
             this.cmsGeneralPeriod.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.cmsGeneralPeriod.Name = "cmsGeneralPeriod";
-            this.cmsGeneralPeriod.Size = new System.Drawing.Size(153, 92);
+            this.cmsGeneralPeriod.Size = new System.Drawing.Size(129, 70);
             // 
             // addGeneralPeriodMenuItem
             // 
             this.addGeneralPeriodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addGeneralPeriodMenuItem.Name = "addGeneralPeriodMenuItem";
-            this.addGeneralPeriodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addGeneralPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
             this.addGeneralPeriodMenuItem.Text = "Добавить";
             this.addGeneralPeriodMenuItem.Click += new System.EventHandler(this.addGeneralPeriodButton_Click);
             // 
@@ -704,7 +705,7 @@
             // 
             this.editGeneralPeriodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
             this.editGeneralPeriodMenuItem.Name = "editGeneralPeriodMenuItem";
-            this.editGeneralPeriodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editGeneralPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
             this.editGeneralPeriodMenuItem.Text = "Изменить";
             this.editGeneralPeriodMenuItem.Click += new System.EventHandler(this.editGeneralPeriodButton_Click);
             // 
@@ -712,7 +713,7 @@
             // 
             this.delGeneralPeriodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delGeneralPeriodMenuItem.Name = "delGeneralPeriodMenuItem";
-            this.delGeneralPeriodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.delGeneralPeriodMenuItem.Size = new System.Drawing.Size(128, 22);
             this.delGeneralPeriodMenuItem.Text = "Удалить";
             this.delGeneralPeriodMenuItem.Click += new System.EventHandler(this.delGeneralPeriodButton_Click);
             // 
@@ -1418,6 +1419,7 @@
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.textBoxInsNum);
             this.Controls.Add(this.textBoxAnketaName);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(808, 450);
             this.Name = "AddEditDocumentSzv1Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

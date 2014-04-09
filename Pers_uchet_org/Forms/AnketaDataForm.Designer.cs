@@ -58,8 +58,8 @@
             this.printUnregisteredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dismissedButton = new System.Windows.Forms.ToolStripButton();
             this.workButton = new System.Windows.Forms.ToolStripButton();
-            this.attachToOrgButton = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.attachToOrgButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.documentBox = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -324,19 +324,21 @@
             // 
             // dismissStripButton
             // 
+            this.dismissStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.dismissStripButton.Image = ((System.Drawing.Image)(resources.GetObject("dismissStripButton.Image")));
             this.dismissStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dismissStripButton.Name = "dismissStripButton";
-            this.dismissStripButton.Size = new System.Drawing.Size(72, 22);
+            this.dismissStripButton.Size = new System.Drawing.Size(56, 22);
             this.dismissStripButton.Text = "Уволить";
             this.dismissStripButton.Click += new System.EventHandler(this.dismissStripButton_Click);
             // 
             // restoreStripButton
             // 
+            this.restoreStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.restoreStripButton.Image = ((System.Drawing.Image)(resources.GetObject("restoreStripButton.Image")));
             this.restoreStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.restoreStripButton.Name = "restoreStripButton";
-            this.restoreStripButton.Size = new System.Drawing.Size(102, 22);
+            this.restoreStripButton.Size = new System.Drawing.Size(86, 22);
             this.restoreStripButton.Text = "Восстановить";
             this.restoreStripButton.Click += new System.EventHandler(this.restoreStripButton_Click);
             // 
@@ -373,34 +375,24 @@
             // dismissedButton
             // 
             this.dismissedButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.dismissedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.dismissedButton.Image = ((System.Drawing.Image)(resources.GetObject("dismissedButton.Image")));
             this.dismissedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dismissedButton.Name = "dismissedButton";
-            this.dismissedButton.Size = new System.Drawing.Size(89, 22);
+            this.dismissedButton.Size = new System.Drawing.Size(73, 22);
             this.dismissedButton.Text = "Уволенные";
             this.dismissedButton.Click += new System.EventHandler(this.stateButton_Click);
             // 
             // workButton
             // 
             this.workButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.workButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.workButton.Image = ((System.Drawing.Image)(resources.GetObject("workButton.Image")));
             this.workButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.workButton.Name = "workButton";
-            this.workButton.Size = new System.Drawing.Size(99, 22);
+            this.workButton.Size = new System.Drawing.Size(83, 22);
             this.workButton.Text = "Работающие";
             this.workButton.Click += new System.EventHandler(this.stateButton_Click);
-            // 
-            // attachToOrgButton
-            // 
-            this.attachToOrgButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.attachToOrgButton.Location = new System.Drawing.Point(4, 422);
-            this.attachToOrgButton.Margin = new System.Windows.Forms.Padding(0);
-            this.attachToOrgButton.Name = "attachToOrgButton";
-            this.attachToOrgButton.Size = new System.Drawing.Size(191, 23);
-            this.attachToOrgButton.TabIndex = 20;
-            this.attachToOrgButton.Text = "Закрепить за организацией";
-            this.attachToOrgButton.UseVisualStyleBackColor = true;
-            this.attachToOrgButton.Click += new System.EventHandler(this.attachToOrgButton_Click);
             // 
             // groupBox6
             // 
@@ -436,6 +428,18 @@
             this.groupBox6.Size = new System.Drawing.Size(329, 450);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
+            // 
+            // attachToOrgButton
+            // 
+            this.attachToOrgButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.attachToOrgButton.Location = new System.Drawing.Point(4, 422);
+            this.attachToOrgButton.Margin = new System.Windows.Forms.Padding(0);
+            this.attachToOrgButton.Name = "attachToOrgButton";
+            this.attachToOrgButton.Size = new System.Drawing.Size(191, 23);
+            this.attachToOrgButton.TabIndex = 20;
+            this.attachToOrgButton.Text = "Закрепить за организацией";
+            this.attachToOrgButton.UseVisualStyleBackColor = true;
+            this.attachToOrgButton.Click += new System.EventHandler(this.attachToOrgButton_Click);
             // 
             // groupBox1
             // 
@@ -765,6 +769,7 @@
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox2);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnketadataForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Анкетные данные";

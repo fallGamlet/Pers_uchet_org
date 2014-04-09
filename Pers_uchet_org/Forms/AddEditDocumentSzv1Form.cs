@@ -58,6 +58,9 @@ namespace Pers_uchet_org
         BindingSource _specPeriodBS;
         // адаптер для чтения данных из БД
         SQLiteDataAdapter _adapter;
+
+        //флаг изменения документа
+        bool isDocumentChanged;
         #endregion
 
         private AddEditDocumentSzv1Form()
@@ -230,6 +233,13 @@ namespace Pers_uchet_org
                 tabControlMain.TabPages.Remove(tabPage2);
                 tabControlMain.TabPages.Remove(tabPage3);
             }
+
+            mainRadioButton.CheckedChanged += new EventHandler(DocumentChanged);
+            _citizen1BS.CurrentChanged += new EventHandler(DocumentChanged);
+            _citizen2BS.CurrentChanged += new EventHandler(DocumentChanged);
+            _classpercentView100BS.CurrentChanged += new EventHandler(DocumentChanged);
+            _salaryInfoBS.ListChanged += new ListChangedEventHandler(DocumentChanged);
+            
         }
 
         private void FillPeriodTables()
@@ -396,6 +406,7 @@ namespace Pers_uchet_org
                 row[GeneralPeriod.beginDate] = generalPeriodForm.Begin.Date;
                 row[GeneralPeriod.endDate] = generalPeriodForm.End.Date;
                 _generalPeriodBS.EndEdit();
+                DocumentChanged(sender, new EventArgs());
             }
         }
 
@@ -410,6 +421,7 @@ namespace Pers_uchet_org
                 row[GeneralPeriod.beginDate] = generalPeriodForm.Begin;
                 row[GeneralPeriod.endDate] = generalPeriodForm.End;
                 _generalPeriodBS.EndEdit();
+                DocumentChanged(sender, new EventArgs());
             }
         }
 
@@ -454,7 +466,7 @@ namespace Pers_uchet_org
                 }
             }
             _generalPeriodBS.RemoveCurrent();
-
+            DocumentChanged(sender, new EventArgs());
         }
 
         private void addAdditionalPeriodButton_Click(object sender, EventArgs e)
@@ -474,6 +486,7 @@ namespace Pers_uchet_org
                 row[DopPeriodView.beginDate] = additionalPeriodForm.Begin.Date;
                 row[DopPeriodView.endDate] = additionalPeriodForm.End.Date;
                 _dopPeriodBS.EndEdit();
+                DocumentChanged(sender, new EventArgs());
             }
             additionalPeriodForm.Dispose();
         }
@@ -492,6 +505,7 @@ namespace Pers_uchet_org
                 row[DopPeriodView.beginDate] = additionalPeriodForm.Begin.Date;
                 row[DopPeriodView.endDate] = additionalPeriodForm.End.Date;
                 _dopPeriodBS.EndEdit();
+                DocumentChanged(sender, new EventArgs());
             }
         }
 
@@ -506,6 +520,7 @@ namespace Pers_uchet_org
             if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", begin.ToShortDateString(), end.ToShortDateString()), "Удаление периода дополнительного стажа") != System.Windows.Forms.DialogResult.Yes)
                 return;
             _dopPeriodBS.RemoveCurrent();
+            DocumentChanged(sender, new EventArgs());
         }
 
         private void addSpecialPeriodButton_Click(object sender, EventArgs e)
@@ -561,6 +576,7 @@ namespace Pers_uchet_org
                 row[SpecialPeriodView.minute] = specialPeriodForm.Minute;
                 row[SpecialPeriodView.profession] = specialPeriodForm.Profession;
                 _specPeriodBS.EndEdit();
+                DocumentChanged(sender, new EventArgs());
             }
             specialPeriodForm.Dispose();
         }
@@ -650,6 +666,7 @@ namespace Pers_uchet_org
             row[SpecialPeriodView.minute] = specialPeriodForm.Minute;
             row[SpecialPeriodView.profession] = specialPeriodForm.Profession;
             _specPeriodBS.EndEdit();
+            DocumentChanged(sender, new EventArgs());
         }
 
         private void delSpecialPeriodButton_Click(object sender, EventArgs e)
@@ -662,6 +679,7 @@ namespace Pers_uchet_org
             if (MainForm.ShowQuestionMessage(string.Format("Вы действительно хотите удалить период с {0} по {1}?", begin.ToShortDateString(), end.ToShortDateString()), "Удаление периода специального стажа") != System.Windows.Forms.DialogResult.Yes)
                 return;
             _specPeriodBS.RemoveCurrent();
+            DocumentChanged(sender, new EventArgs());
         }
 
         private void dataViewProfit_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -1288,5 +1306,21 @@ namespace Pers_uchet_org
             }
         }
 
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            if (isDocumentChanged)
+            {
+                if (MainForm.ShowQuestionMessage("Данные были изменены!\nВы действительно хотите выйти без сохранения?", "Сохранение изменений") == System.Windows.Forms.DialogResult.Yes)
+                    this.DialogResult = DialogResult.Cancel;
+            }
+            else
+                this.DialogResult = DialogResult.Cancel;
+        }
+
+
+        private void DocumentChanged(object sender, EventArgs e)
+        {
+            isDocumentChanged = true;
+        }
     }
 }

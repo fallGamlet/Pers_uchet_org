@@ -286,6 +286,9 @@ namespace Pers_uchet_org
         private void printButton_Click(object sender, EventArgs e)
         {
             DataRow mergeRow = _mergeRow ?? Mergies.CreateRow();
+            mergeRow[MergiesView.listCount] = (int)this.packetcountBox.Value;
+            mergeRow[MergiesView.docCount] = (int)this.documentcountBox.Value;
+
             XmlDocument xml = Szv3Xml.GetXml(mergeRow, _svodTable);
             MyPrinter.ShowWebPage(Szv3Xml.GetHtml(xml));
         }

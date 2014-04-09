@@ -867,7 +867,6 @@ namespace Pers_uchet_org
                     return (long)command.ExecuteScalar();
                 }
             }
-            return -1;
         }
 
         static public string GetSelectOrgIDText(long person_id)
