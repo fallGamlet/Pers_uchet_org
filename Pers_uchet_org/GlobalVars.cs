@@ -139,6 +139,29 @@ namespace Pers_uchet_org
         {
             return (this.candeleteVal == 0);
         }
+
+        public void SaveNewPassword(string connectionStr)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+                    using (SQLiteCommand command = CreateUpdateCommand())
+                    {
+                        command.Connection = connection;
+                        command.Transaction = transaction;
+                        command.Parameters[pName].Value = nameVal;
+                        command.Parameters[pPassword].Value = passwordVal;
+                        command.Parameters[pId].Value = idVal;
+
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+            }
+        }
         #endregion
 
         #region Методы статические
@@ -500,8 +523,8 @@ namespace Pers_uchet_org
 
         public static string ChangeEnToRus(string regNumber)
         {
-            string rus = "ТРСК";
-            string eng = "TPCK";
+            string rus = "ТРСКУ";
+            string eng = "TPCKY";
             char[] chars = regNumber.ToUpper().ToCharArray();
             for (int i = 0; i < chars.Length; i++)
             {
@@ -2927,7 +2950,7 @@ namespace Pers_uchet_org
                                 docTypeId, id,
                                 tablename,
                                 DocTypes.tablename, DocTypes.id, DocTypes.listTypeId,
-                                PersonInfo.tablename, PersonInfo.id,  personID, PersonInfo.socNumber,
+                                PersonInfo.tablename, PersonInfo.id, personID, PersonInfo.socNumber,
                                 listId, list_id);
         }
 
@@ -3472,8 +3495,8 @@ namespace Pers_uchet_org
             comm.Parameters.Add(new SQLiteParameter(pSum, DbType.Double, sum));
 
             comm.CommandText = string.Format(@"INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}) VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}); ",
-                                            tablename, 
-                                            //id,
+                                            tablename,
+                //id,
                                             docId,
                                             salaryGroupsId,
                                             january,
@@ -3489,7 +3512,7 @@ namespace Pers_uchet_org
                                             november,
                                             december,
                                             sum,
-                                            //pId,
+                //pId,
                                             pDocId,
                                             pSalaryGroupsId,
                                             pJanuary,
@@ -5343,5 +5366,65 @@ namespace Pers_uchet_org
                 fileInfo.ElementAt(i).Delete();
             }
         }
+    }
+
+    public class Options
+    {
+        // название таблицы в БД
+        static public string tablename = "Options";
+
+        #region Название полей таблицы в БД
+        static public string key = "key";
+        static public string value = "value";
+        #endregion
+
+        #region Имена ключей (возможно не все)
+        public static string isFirstLoginKeyName = "isFirstLogin";
+        public static string dbVersionKeyName = "dbVersion";
+        #endregion
+
+        #region Методы - статические
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(string key_name)
+        {
+            return string.Format("{0} WHERE {1}='{2}' ", GetSelectText(), key, key_name);
+        }
+
+        static public string GetSelectKeyValueText(string key_name)
+        {
+            return string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' ", value, tablename, key, key_name);
+        }
+
+        static public string GetReplaceText(string key_name, string key_value)
+        {
+            return string.Format(@" REPLACE INTO {0} ({1},{2}) VALUES ('{3}','{4}') ",
+                                    tablename, key, value, key_name, key_value);
+        }
+
+        static public string GetDeleteText(string key_name)
+        {
+            return string.Format(" DELETE FROM {0} WHERE {1}='{2}' ", tablename, key, key_name);
+        }
+
+        static public object GetKeyValue(string key_name, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetSelectKeyValueText(key_name), connection, transaction);
+            return command.ExecuteScalar();
+        }
+
+        static public int ChangeKeyValue(string key_name, string key_value, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetReplaceText(key_name, key_value), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
+        #endregion
     }
 }

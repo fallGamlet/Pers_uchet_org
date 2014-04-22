@@ -56,6 +56,12 @@ namespace Pers_uchet_org.Forms
         #region Методы - обработчики событий
         void _orgBS_CurrentChanged(object sender, EventArgs e)
         {
+            this.regnumorgBox.Text = "";
+            this.nameorgBox.Text = "";
+            this.chiefpostorgBox.Text = "";
+            this.chieffioorgBox.Text = "";
+            this.bookerfioorgBox.Text = "";
+
             DataRowView row = _orgBS.Current as DataRowView;
 
             if (row != null)
@@ -114,8 +120,8 @@ namespace Pers_uchet_org.Forms
 
                         int pos = _orgBS.Position;
                         int orgCount = _orgAdapter.Update(_orgTable);
-                        //_orgTable.Clear();
-                        //_orgAdapter.Fill(_orgTable);
+                        _orgTable.Clear();
+                        _orgAdapter.Fill(_orgTable);
                         _orgBS.Position = pos;
                         MainForm.ShowInfoMessage("Организация успешно добавлена!", "Добавление организации");
                         result = DialogResult.OK;
@@ -157,7 +163,8 @@ namespace Pers_uchet_org.Forms
 
                 int pos = _orgBS.Position;
                 int orgCount = _orgAdapter.Update(_orgTable);
-                //_orgAdapter.Fill(_orgTable);
+                _orgTable.Clear();
+                _orgAdapter.Fill(_orgTable);
                 _orgBS.Position = pos;
                 MainForm.ShowInfoMessage("Изменения успешно сохранены!", "Изменение организации");
                 result = DialogResult.OK;

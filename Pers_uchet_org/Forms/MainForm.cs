@@ -49,7 +49,15 @@ namespace Pers_uchet_org
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (File.Exists(Settings.Default.DataBasePath))
+            {
+                _mainConnection = string.Format("data source = {0};", Properties.Settings.Default.DataBasePath);
+
+                if (IsFirstLogin())
+                    MainForm.ShowInfoFlexMessage("Вы первый раз входите в программу.\n" +
+                        "По умолчанию пароль входа пустой.", "Первый вход в программу");
+
                 changeoperatorMenuItem_Click(sender, e);
+            }
             else
             {
                 if (MainForm.ShowQuestionMessage("Файл базы данных не найден!\nЖелаете попробовать восстановить базу из резервной копии?", "Ошибка") == DialogResult.Yes)
@@ -58,6 +66,8 @@ namespace Pers_uchet_org
                 }
             }
         }
+
+
         #endregion
 
         #region Методы - свои
@@ -137,7 +147,7 @@ namespace Pers_uchet_org
 
         private int Login()
         {
-            _mainConnection = string.Format("data source = {0};", Properties.Settings.Default.DataBasePath);
+
             OperatorEnterForm enterForm = new OperatorEnterForm(_mainConnection);
             enterForm.Owner = this;
             DialogResult dRes = enterForm.ShowDialog();
@@ -159,26 +169,11 @@ namespace Pers_uchet_org
                     return -1;
             }
         }
-        #endregion
 
-        #region Методы - обработчики событий
-        // сменить оператора
-        private void changeoperatorMenuItem_Click(object sender, EventArgs e)
+        private bool IsFirstLogin()
         {
-            switch (this.Login())
-            {
-                case 1:
-                    break;
-                case 0:
-                case 2:
-                    this.Close();
-                    return;
-                default:
-                    this.Close();
-                    return;
-            }
-            ReloadData();
-            MainForm.ShowInfoMessage(string.Format("Добро пожаловать, {0}!", _operator.nameVal), "Приветствие");
+            int isFirstLogin = Convert.ToInt32(Options.GetKeyValue(Options.isFirstLoginKeyName, new SQLiteConnection(_mainConnection), null));
+            return isFirstLogin == 1;
         }
 
         private void ReloadData()
@@ -211,6 +206,42 @@ namespace Pers_uchet_org
 
             this.statusLabel.Text = _operator.nameVal;
         }
+        #endregion
+
+        #region Методы - обработчики событий
+        // сменить оператора
+        private void changeoperatorMenuItem_Click(object sender, EventArgs e)
+        {
+            switch (this.Login())
+            {
+                case 1:
+                    break;
+                case 0:
+                case 2:
+                    this.Close();
+                    return;
+                default:
+                    this.Close();
+                    return;
+            }
+            ReloadData();
+
+            if (IsFirstLogin())
+            {
+                MainForm.ShowInfoFlexMessage("Рекомендуется для дальнейшего использования программы сменить пароль.\n" +
+                "Если Вы желаете оставить пароль по умолчанию, просто зактройте следующие окно.", "Первый вход в программу");
+
+                smenaparoliaMenuItem_Click(sender, e);
+
+                MainForm.ShowInfoFlexMessage("Откройте справку и ознакомьтесь с инструкцией и возможностями программы.\n" +
+                        "Там же Вы узнаете, как добавить Вашу организацию в программу.", "Первый вход в программу");
+
+                Options.ChangeKeyValue(Options.isFirstLoginKeyName, "0", new SQLiteConnection(_mainConnection), null);
+
+            }
+            //MainForm.ShowInfoMessage(string.Format("Добро пожаловать, {0}!", _operator.nameVal), "Приветствие");
+        }
+
         // выход из программы
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
@@ -310,7 +341,28 @@ namespace Pers_uchet_org
         private void smenaparoliaMenuItem_Click(object sender, EventArgs e)
         {
             ChangePasswordForm tmpForm = new ChangePasswordForm();
-            tmpForm.ShowDialog();
+            if (_operator == null)
+            {
+                MainForm.ShowInfoMessage("Сначала необходимо выбрать оператора", "Неопределен оператор");
+                return;
+            }
+
+            // если оператор является Администратором, передать текущий пароль диалоговой форме
+            if (_operator.IsAdmin())
+                tmpForm.PasswordOld = _operator.passwordVal;
+            else
+                // иначе можно менять пароль пользователя не зная текущего пароля этого пользователя
+                tmpForm.PasswordOld = "";
+            tmpForm.Owner = this;
+            // отобразить диалоговое окно для пользователя
+            DialogResult dRes = tmpForm.ShowDialog(this);
+            // если диалог закрыт с утвердительным ответом
+            if (dRes == DialogResult.OK)
+            {
+                // принять новый пароль
+                _operator.passwordVal = tmpForm.Password;
+                _operator.SaveNewPassword(_mainConnection);
+            }
         }
         // открыть форму для восстановления БД из резервной копии
         private void vosstanovleniebdMenuItem_Click(object sender, EventArgs e)

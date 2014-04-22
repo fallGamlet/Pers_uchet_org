@@ -77,7 +77,7 @@ namespace Pers_uchet_org.Forms
             if (e.KeyCode == Keys.Enter)
             {
                 passwordBox.Focus();
-                //TODO: Удалить в конечно варианте
+                //TODO: Удалить в конечном варианте
                 acceptButton_Click(sender, e);
             }
         }
