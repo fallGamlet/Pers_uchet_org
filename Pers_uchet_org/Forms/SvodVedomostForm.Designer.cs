@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvodVedomostForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,11 +48,18 @@
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.datecreateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateredactColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsSvod = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addSvodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editSvodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delSvodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printSvodMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yearBox)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.toolStripSumsSheet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mergeView)).BeginInit();
+            this.cmsSvod.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -125,31 +134,34 @@
             this.printStripButton});
             this.toolStripSumsSheet.Location = new System.Drawing.Point(6, 16);
             this.toolStripSumsSheet.Name = "toolStripSumsSheet";
-            this.toolStripSumsSheet.Size = new System.Drawing.Size(242, 25);
+            this.toolStripSumsSheet.Size = new System.Drawing.Size(306, 25);
             this.toolStripSumsSheet.TabIndex = 0;
             this.toolStripSumsSheet.Text = "toolStrip1";
             // 
             // addStripButton
             // 
+            this.addStripButton.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
             this.addStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addStripButton.Name = "addStripButton";
-            this.addStripButton.Size = new System.Drawing.Size(63, 22);
+            this.addStripButton.Size = new System.Drawing.Size(79, 22);
             this.addStripButton.Text = "Добавить";
             this.addStripButton.Click += new System.EventHandler(this.addStripButton_Click);
             // 
             // editStripButton
             // 
+            this.editStripButton.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
             this.editStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.editStripButton.Name = "editStripButton";
-            this.editStripButton.Size = new System.Drawing.Size(65, 22);
+            this.editStripButton.Size = new System.Drawing.Size(81, 22);
             this.editStripButton.Text = "Изменить";
             this.editStripButton.Click += new System.EventHandler(this.editStripButton_Click);
             // 
             // delStripButton
             // 
+            this.delStripButton.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
             this.delStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.delStripButton.Name = "delStripButton";
-            this.delStripButton.Size = new System.Drawing.Size(55, 22);
+            this.delStripButton.Size = new System.Drawing.Size(71, 22);
             this.delStripButton.Text = "Удалить";
             this.delStripButton.Click += new System.EventHandler(this.delStripButton_Click);
             // 
@@ -160,9 +172,10 @@
             // 
             // printStripButton
             // 
+            this.printStripButton.Image = global::Pers_uchet_org.Properties.Resources.print_16;
             this.printStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printStripButton.Name = "printStripButton";
-            this.printStripButton.Size = new System.Drawing.Size(50, 22);
+            this.printStripButton.Size = new System.Drawing.Size(66, 22);
             this.printStripButton.Text = "Печать";
             this.printStripButton.Click += new System.EventHandler(this.printStripButton_Click);
             // 
@@ -176,14 +189,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mergeView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.mergeView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mergeView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mergeView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.mergeView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mergeView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nppColumn,
@@ -201,6 +214,9 @@
             this.mergeView.Size = new System.Drawing.Size(555, 191);
             this.mergeView.TabIndex = 1;
             this.mergeView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mergeView_CellDoubleClick);
+            this.mergeView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mergeView_CellMouseDown);
+            this.mergeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mergeView_KeyDown);
+            this.mergeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mergeView_MouseClick);
             // 
             // nppColumn
             // 
@@ -260,6 +276,54 @@
             this.dateredactColumn.Name = "dateredactColumn";
             this.dateredactColumn.ReadOnly = true;
             // 
+            // cmsSvod
+            // 
+            this.cmsSvod.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addSvodMenuItem,
+            this.editSvodMenuItem,
+            this.delSvodMenuItem,
+            this.toolStripSeparator2,
+            this.printSvodMenuItem});
+            this.cmsSvod.Name = "cmsSvod";
+            this.cmsSvod.Size = new System.Drawing.Size(153, 120);
+            // 
+            // addSvodMenuItem
+            // 
+            this.addSvodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
+            this.addSvodMenuItem.Name = "addSvodMenuItem";
+            this.addSvodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addSvodMenuItem.Text = "Добавить";
+            this.addSvodMenuItem.Click += new System.EventHandler(this.addSvodMenuItem_Click);
+            // 
+            // editSvodMenuItem
+            // 
+            this.editSvodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
+            this.editSvodMenuItem.Name = "editSvodMenuItem";
+            this.editSvodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editSvodMenuItem.Text = "Изменить";
+            this.editSvodMenuItem.Click += new System.EventHandler(this.editSvodMenuItem_Click);
+            // 
+            // delSvodMenuItem
+            // 
+            this.delSvodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
+            this.delSvodMenuItem.Name = "delSvodMenuItem";
+            this.delSvodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.delSvodMenuItem.Text = "Удалить";
+            this.delSvodMenuItem.Click += new System.EventHandler(this.delSvodMenuItem_Click);
+            // 
+            // printSvodMenuItem
+            // 
+            this.printSvodMenuItem.Image = global::Pers_uchet_org.Properties.Resources.print_16;
+            this.printSvodMenuItem.Name = "printSvodMenuItem";
+            this.printSvodMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printSvodMenuItem.Text = "Печать";
+            this.printSvodMenuItem.Click += new System.EventHandler(this.printSvodMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(125, 6);
+            // 
             // SvodVedomostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +332,7 @@
             this.ClientSize = new System.Drawing.Size(587, 293);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(503, 284);
             this.Name = "SvodVedomostForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -281,6 +346,7 @@
             this.toolStripSumsSheet.ResumeLayout(false);
             this.toolStripSumsSheet.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mergeView)).EndInit();
+            this.cmsSvod.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -304,5 +370,11 @@
         private System.Windows.Forms.ToolStripButton delStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton printStripButton;
+        private System.Windows.Forms.ContextMenuStrip cmsSvod;
+        private System.Windows.Forms.ToolStripMenuItem addSvodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editSvodMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delSvodMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem printSvodMenuItem;
     }
 }

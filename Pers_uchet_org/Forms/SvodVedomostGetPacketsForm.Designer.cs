@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvodVedomostGetPacketsForm));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -39,11 +40,11 @@
             this.orgnameBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.packetView = new System.Windows.Forms.DataGridView();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
             this.checkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.packetNumColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.docCountColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.packetView)).BeginInit();
             this.SuspendLayout();
@@ -173,6 +174,29 @@
             this.packetView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.packetView_CellClick);
             this.packetView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.packetView_KeyDown);
             // 
+            // checkColumn
+            // 
+            this.checkColumn.HeaderText = "*";
+            this.checkColumn.Name = "checkColumn";
+            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.checkColumn.Width = 20;
+            // 
+            // packetNumColumn
+            // 
+            this.packetNumColumn.HeaderText = "№ пакета";
+            this.packetNumColumn.MaxInputLength = 50;
+            this.packetNumColumn.MinimumWidth = 50;
+            this.packetNumColumn.Name = "packetNumColumn";
+            this.packetNumColumn.ReadOnly = true;
+            this.packetNumColumn.Width = 200;
+            // 
+            // docCountColumn
+            // 
+            this.docCountColumn.HeaderText = "Количество документов";
+            this.docCountColumn.Name = "docCountColumn";
+            this.docCountColumn.ReadOnly = true;
+            this.docCountColumn.Width = 200;
+            // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -197,29 +221,6 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // checkColumn
-            // 
-            this.checkColumn.HeaderText = "*";
-            this.checkColumn.Name = "checkColumn";
-            this.checkColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.checkColumn.Width = 20;
-            // 
-            // packetNumColumn
-            // 
-            this.packetNumColumn.HeaderText = "№ пакета";
-            this.packetNumColumn.MaxInputLength = 50;
-            this.packetNumColumn.MinimumWidth = 50;
-            this.packetNumColumn.Name = "packetNumColumn";
-            this.packetNumColumn.ReadOnly = true;
-            this.packetNumColumn.Width = 200;
-            // 
-            // docCountColumn
-            // 
-            this.docCountColumn.HeaderText = "Количество документов";
-            this.docCountColumn.Name = "docCountColumn";
-            this.docCountColumn.ReadOnly = true;
-            this.docCountColumn.Width = 200;
-            // 
             // SvodVedomostGetPacketsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -229,6 +230,7 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.packetView);
             this.Controls.Add(this.groupBox3);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "SvodVedomostGetPacketsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

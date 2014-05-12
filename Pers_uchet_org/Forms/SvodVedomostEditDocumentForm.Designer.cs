@@ -28,17 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvodVedomostEditDocumentForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataView = new System.Windows.Forms.DataGridView();
+            this.monthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sum4Box = new System.Windows.Forms.TextBox();
             this.sum3Box = new System.Windows.Forms.TextBox();
             this.sum5Box = new System.Windows.Forms.TextBox();
@@ -57,17 +65,10 @@
             this.documentcountBox = new System.Windows.Forms.NumericUpDown();
             this.orgnameBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.yearBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.autofillButton = new System.Windows.Forms.Button();
-            this.monthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetcountBox)).BeginInit();
@@ -105,14 +106,14 @@
             this.dataView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.monthColumn,
@@ -122,16 +123,16 @@
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle27.Format = "C2";
-            dataGridViewCellStyle27.NullValue = "0.00";
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataView.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.Format = "C2";
+            dataGridViewCellStyle9.NullValue = "0.00";
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataView.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataView.Location = new System.Drawing.Point(6, 13);
             this.dataView.Margin = new System.Windows.Forms.Padding(0);
             this.dataView.MultiSelect = false;
@@ -140,6 +141,99 @@
             this.dataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataView.Size = new System.Drawing.Size(749, 339);
             this.dataView.TabIndex = 0;
+            // 
+            // monthColumn
+            // 
+            this.monthColumn.DataPropertyName = "month";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "N0";
+            this.monthColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.monthColumn.FillWeight = 37.28362F;
+            this.monthColumn.HeaderText = "Месяц";
+            this.monthColumn.MinimumWidth = 30;
+            this.monthColumn.Name = "monthColumn";
+            this.monthColumn.ReadOnly = true;
+            this.monthColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.monthColumn.Width = 40;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "1";
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0,00";
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column1.FillWeight = 121.3694F;
+            this.Column1.HeaderText = "Сумма дохода, на который начислены страховые взносы";
+            this.Column1.MinimumWidth = 100;
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 120;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "2";
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = "0,00";
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Column2.FillWeight = 117.4522F;
+            this.Column2.HeaderText = "Сумма выплат, учитываемых для назначения пенсии";
+            this.Column2.MinimumWidth = 100;
+            this.Column2.Name = "Column2";
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Width = 126;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "3";
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = "0,00";
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Column3.FillWeight = 114.1609F;
+            this.Column3.HeaderText = "Сумма страховых взносов, начисленных страхователем";
+            this.Column3.MinimumWidth = 100;
+            this.Column3.Name = "Column3";
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 123;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "4";
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = "0,00";
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Column4.FillWeight = 111.3955F;
+            this.Column4.HeaderText = "Сумма страховых взносов, уплаченных страхователем";
+            this.Column4.MinimumWidth = 100;
+            this.Column4.Name = "Column4";
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 119;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "5";
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = "0,00";
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle7;
+            this.Column5.FillWeight = 109.0719F;
+            this.Column5.HeaderText = "Сумма обязательных страховых взносов";
+            this.Column5.MinimumWidth = 100;
+            this.Column5.Name = "Column5";
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column5.Width = 117;
+            // 
+            // Column6
+            // 
+            this.Column6.DataPropertyName = "21";
+            dataGridViewCellStyle8.Format = "N0";
+            dataGridViewCellStyle8.NullValue = "0";
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Column6.FillWeight = 89.2664F;
+            this.Column6.HeaderText = "Средняя численность сотрудников - застрахованных лиц (справочно)";
+            this.Column6.MinimumWidth = 50;
+            this.Column6.Name = "Column6";
+            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column6.Width = 96;
             // 
             // sum4Box
             // 
@@ -279,9 +373,9 @@
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.printButton.Location = new System.Drawing.Point(12, 491);
             this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(199, 23);
+            this.printButton.Size = new System.Drawing.Size(168, 23);
             this.printButton.TabIndex = 3;
-            this.printButton.Text = "Печать проверочной ведомости";
+            this.printButton.Text = "Предварительный просмотр";
             this.printButton.UseVisualStyleBackColor = true;
             this.printButton.Click += new System.EventHandler(this.printButton_Click);
             // 
@@ -362,20 +456,6 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.regnumBox);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.orgnameBox);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(281, 0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(492, 99);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            // 
             // yearBox
             // 
             this.yearBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -396,109 +476,30 @@
             this.label14.TabIndex = 3;
             this.label14.Text = "Отчетный год";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.regnumBox);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.orgnameBox);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Location = new System.Drawing.Point(281, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(492, 99);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            // 
             // autofillButton
             // 
             this.autofillButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.autofillButton.Location = new System.Drawing.Point(217, 491);
+            this.autofillButton.Location = new System.Drawing.Point(186, 491);
             this.autofillButton.Name = "autofillButton";
             this.autofillButton.Size = new System.Drawing.Size(144, 23);
             this.autofillButton.TabIndex = 4;
             this.autofillButton.Text = "Заполнить из пакетов";
             this.autofillButton.UseVisualStyleBackColor = true;
             this.autofillButton.Click += new System.EventHandler(this.autofillButton_Click);
-            // 
-            // monthColumn
-            // 
-            this.monthColumn.DataPropertyName = "month";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Format = "N0";
-            this.monthColumn.DefaultCellStyle = dataGridViewCellStyle20;
-            this.monthColumn.FillWeight = 37.28362F;
-            this.monthColumn.HeaderText = "Месяц";
-            this.monthColumn.MinimumWidth = 30;
-            this.monthColumn.Name = "monthColumn";
-            this.monthColumn.ReadOnly = true;
-            this.monthColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.monthColumn.Width = 40;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "1";
-            dataGridViewCellStyle21.Format = "N2";
-            dataGridViewCellStyle21.NullValue = "0,00";
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle21;
-            this.Column1.FillWeight = 121.3694F;
-            this.Column1.HeaderText = "Сумма дохода, на который начислены страховые взносы";
-            this.Column1.MinimumWidth = 100;
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 120;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "2";
-            dataGridViewCellStyle22.Format = "N2";
-            dataGridViewCellStyle22.NullValue = "0,00";
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle22;
-            this.Column2.FillWeight = 117.4522F;
-            this.Column2.HeaderText = "Сумма выплат, учитываемых для назначения пенсии";
-            this.Column2.MinimumWidth = 100;
-            this.Column2.Name = "Column2";
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column2.Width = 126;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "3";
-            dataGridViewCellStyle23.Format = "N2";
-            dataGridViewCellStyle23.NullValue = "0,00";
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle23;
-            this.Column3.FillWeight = 114.1609F;
-            this.Column3.HeaderText = "Сумма страховых взносов, начисленных страхователем";
-            this.Column3.MinimumWidth = 100;
-            this.Column3.Name = "Column3";
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column3.Width = 123;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "4";
-            dataGridViewCellStyle24.Format = "N2";
-            dataGridViewCellStyle24.NullValue = "0,00";
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle24;
-            this.Column4.FillWeight = 111.3955F;
-            this.Column4.HeaderText = "Сумма страховых взносов, уплаченных страхователем";
-            this.Column4.MinimumWidth = 100;
-            this.Column4.Name = "Column4";
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column4.Width = 119;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "5";
-            dataGridViewCellStyle25.Format = "N2";
-            dataGridViewCellStyle25.NullValue = "0,00";
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle25;
-            this.Column5.FillWeight = 109.0719F;
-            this.Column5.HeaderText = "Сумма обязательных страховых взносов";
-            this.Column5.MinimumWidth = 100;
-            this.Column5.Name = "Column5";
-            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column5.Width = 117;
-            // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "21";
-            dataGridViewCellStyle26.Format = "N0";
-            dataGridViewCellStyle26.NullValue = "0";
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle26;
-            this.Column6.FillWeight = 89.2664F;
-            this.Column6.HeaderText = "Средняя численность сотрудников - застрахованных лиц (справочно)";
-            this.Column6.MinimumWidth = 50;
-            this.Column6.Name = "Column6";
-            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column6.Width = 96;
             // 
             // SvodVedomostEditDocumentForm
             // 
@@ -513,6 +514,7 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SvodVedomostEditDocumentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Добавление\\редактирование документа \"СЗВ-3\"";

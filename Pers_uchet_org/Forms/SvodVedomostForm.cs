@@ -35,6 +35,8 @@ namespace Pers_uchet_org
 
         private void SvodVedomostForm_Load(object sender, EventArgs e)
         {
+            this.Text += " - " + _org.regnumVal;
+
             this.yearBox.Value = MainForm.RepYear;
             this.RefillData(MainForm.RepYear);
             this.mergeView.Sorted += new EventHandler(mergeView_Sorted);
@@ -175,6 +177,118 @@ namespace Pers_uchet_org
         private void mergeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             editStripButton_Click(sender, e);
+        }
+
+        private void mergeView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                {
+                    DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
+                    //if (!r.Selected)
+                    //{
+                    r.DataGridView.ClearSelection();
+                    r.DataGridView.CurrentCell = r.Cells[0];
+                    r.Selected = true;
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void mergeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
+                {
+                    DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
+                    if (currentCell == null)
+                        return;
+                    ContextMenuStrip cms = cmsSvod;
+                    if (cms == null)
+                        return;
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Point p = new Point(r.Left, r.Top);
+                    cms.Show((sender as DataGridView), p);
+                }
+
+                if (e.KeyCode == Keys.Delete)
+                {
+                    delStripButton_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void mergeView_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    ContextMenuStrip menu = cmsSvod;
+                    if (menu == null)
+                        return;
+
+                    DataGridView dataView = sender as DataGridView;
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems.Add("editSvodMenuItem");
+                    menuItems.Add("delSvodMenuItem");
+                    menuItems.Add("printSvodMenuItem");
+
+                    int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
+                    bool isEnabled = !(currentMouseOverRow < 0);
+                    foreach (string t in menuItems)
+                    {
+                        items = menu.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = isEnabled;
+                    }
+
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                    foreach (string t in menuItems)
+                    {
+                        items = menu.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
+                    menu.Show(dataView, e.Location);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+        
+        private void addSvodMenuItem_Click(object sender, EventArgs e)
+        {
+            addStripButton_Click(sender, e);
+        }
+
+        private void editSvodMenuItem_Click(object sender, EventArgs e)
+        {
+            editStripButton_Click(sender, e);
+        }
+
+        private void delSvodMenuItem_Click(object sender, EventArgs e)
+        {
+            delStripButton_Click(sender, e);
+        }
+
+        private void printSvodMenuItem_Click(object sender, EventArgs e)
+        {
+            printStripButton_Click(sender, e);
         }
         #endregion
     }

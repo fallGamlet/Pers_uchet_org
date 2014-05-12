@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditOrgForm));
             this.cancelButton = new System.Windows.Forms.Button();
             this.buhfioorgBox = new System.Windows.Forms.TextBox();
             this.bosspostorgBox = new System.Windows.Forms.TextBox();
@@ -84,7 +85,6 @@
             // 
             this.nameorgBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameorgBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.nameorgBox.Location = new System.Drawing.Point(156, 38);
             this.nameorgBox.Name = "nameorgBox";
             this.nameorgBox.Size = new System.Drawing.Size(217, 20);
@@ -176,6 +176,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cancelButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditOrgForm";

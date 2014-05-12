@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="Windows-1251"?> 
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:annotation>
+		<xsd:documentation> 
+			Проверка бланка СЗВ-1
+		</xsd:documentation> 
+	</xsd:annotation> 
+
+	<xsd:element name="doc_info" type="DocInfoType"/> 
+
+	<xsd:complexType name="DocInfoType"> 
+		<xsd:sequence>
+			<xsd:element name="person" type="PersonType"/>
+			<xsd:element name="firm" type="FirmType"/>
+			<xsd:element ref="formtype"/>
+			<xsd:element ref="work_place"/>
+			<xsd:element ref="rep_year"/>
+			<xsd:element ref="firm_add"/>
+			<xsd:element ref="firm_pay"/>
+			<xsd:element name="payment" type="PaymentType"/>
+			<xsd:element name="gen_period" type="GenPerType"/>
+			<xsd:element name="spec_staj" type="SpecStajType" minOccurs="0"/>
+			<xsd:element name="dop_staj" type="DopStajType" minOccurs="0"/>
+		</xsd:sequence> 
+	</xsd:complexType>
+
+	<xsd:element name="formtype"> 
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:integer">
+				<xsd:minInclusive value="21"/>
+				<xsd:maxInclusive value="23"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="work_place"> 
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:positiveInteger">
+				<xsd:minInclusive value="1"/>
+				<xsd:maxInclusive value="2"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="rep_year"> 
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:gYear">
+				<xsd:minInclusive value="2004"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="firm_add" type="xsd:float"/> 
+	<xsd:element name="firm_pay" type="xsd:float"/> 
+
+	<xsd:complexType name="PersonType"> 
+		<xsd:sequence>
+			<xsd:element name="lname" type="xsd:string"/> 
+			<xsd:element name="fname" type="xsd:string"/> 
+			<xsd:element name="mname" type="xsd:string"/>
+			<xsd:element name="regnum"> 
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="0[2-9]-[\p{Ll}\p{Lu}ABCEHKMPTXАВСЕНКМРТХ]\d{1}[\p{Ll}\p{Lu}ABCEHKMPTXАВСЕНКМРТХ]\d{2}[\p{Ll}\p{Lu}ABCEHKMPTXАВСЕНКМРТХ]\d{2}\s*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="citizen" type="CitizenType"/> 
+			<xsd:element name="category_id" default="101">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="199"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="category_name" type="xsd:string"/>
+			<xsd:element name="privelege_id" default="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="4"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="privelege_name" type="xsd:string"/>
+		</xsd:sequence> 
+	</xsd:complexType>
+
+	<xsd:complexType name="CitizenType">
+		<xsd:sequence>
+			<xsd:element name="first" type="Citizen"/>
+			<xsd:element name="second" type="Citizen"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Citizen">
+		<xsd:sequence>
+			<xsd:element name="id" type="xsd:nonNegativeInteger" default="0"/> 
+			<xsd:element name="name" type="xsd:string"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FirmType">
+		<xsd:sequence>
+			<xsd:element name="regnum"> 
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="[\p{Ll}\p{Lu}ТБРСДГКУ]\d{6}\s*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PaymentType">
+		<xsd:sequence>
+			<xsd:element name="month" type="MonthType" minOccurs="12" maxOccurs="12"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="MonthType">
+		<xsd:sequence>
+			<xsd:element name="col_1" type="xsd:float" default="0"/> 
+			<xsd:element name="col_2" type="xsd:float" default="0"/> 
+			<xsd:element name="col_3" type="xsd:float" default="0"/> 
+			<xsd:element name="col_4" type="xsd:float" default="0"/> 
+			<xsd:element name="col_5" type="xsd:float" default="0"/> 
+			<xsd:element name="col_6" type="xsd:float" default="0"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GenPerType">
+		<xsd:sequence>
+			<xsd:element name="period" type="PeriodType" minOccurs="0" maxOccurs="unbounded"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PeriodType">
+		<xsd:sequence>
+			<xsd:element name="gen_start" type="DateType"/>
+			<xsd:element name="gen_end" type="DateType"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SpecStajType">
+		<xsd:sequence>
+			<xsd:element name="spec" type="SpecType" minOccurs="0" maxOccurs="unbounded"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SpecType">
+		<xsd:sequence>
+			<xsd:element name="start_date" type="DateType"/>
+			<xsd:element name="end_date" type="DateType"/> 
+			<xsd:element name="part_condition_id" default="201">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="299"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="part_condition_name" type="xsd:string"/> 
+			<xsd:element name="staj_base_id" default="301">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="399"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="staj_base_name" type="xsd:string"/> 
+			<xsd:element name="servyear_base_id" default="401">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="499"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="servyear_base_name" type="xsd:string"/> 
+			<xsd:element name="smonths" default="0"> 
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:maxInclusive value="12"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="sdays" default="0"> 
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:maxInclusive value="366"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="shours" type="xsd:nonNegativeInteger" default="0"/> 
+			<xsd:element name="sminutes" type="xsd:nonNegativeInteger" default="0"/> 
+			<xsd:element name="profession" type="xsd:string"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DopStajType">
+		<xsd:sequence>
+			<xsd:element name="record" type="RecordType" minOccurs="0" maxOccurs="unbounded"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="RecordType">
+		<xsd:sequence>
+			<xsd:element name="dop_code_id" default="501">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="599"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="dop_code_name" type="xsd:string"/> 
+			<xsd:element name="dop_start" type="DateType"/>
+			<xsd:element name="dop_end" type="DateType"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="DateType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\s*(0[1-9]|[12][0-9]|3[01])[. /.](0[1-9]|1[012])[. /.](|20)\d{2}\s*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema> 

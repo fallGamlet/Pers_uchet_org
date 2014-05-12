@@ -146,11 +146,11 @@
             // 
             this.showPassButton1.FlatAppearance.BorderSize = 0;
             this.showPassButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassButton1.Image = ((System.Drawing.Image)(resources.GetObject("showPassButton1.Image")));
             this.showPassButton1.Location = new System.Drawing.Point(333, 108);
             this.showPassButton1.Name = "showPassButton1";
             this.showPassButton1.Size = new System.Drawing.Size(23, 23);
             this.showPassButton1.TabIndex = 5;
-            this.showPassButton1.Text = "V";
             this.showPassButton1.UseVisualStyleBackColor = true;
             this.showPassButton1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton1_MouseDown);
             this.showPassButton1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton1_MouseUp);
@@ -159,11 +159,11 @@
             // 
             this.showPassButton2.FlatAppearance.BorderSize = 0;
             this.showPassButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassButton2.Image = ((System.Drawing.Image)(resources.GetObject("showPassButton2.Image")));
             this.showPassButton2.Location = new System.Drawing.Point(333, 134);
             this.showPassButton2.Name = "showPassButton2";
             this.showPassButton2.Size = new System.Drawing.Size(23, 23);
             this.showPassButton2.TabIndex = 7;
-            this.showPassButton2.Text = "V";
             this.showPassButton2.UseVisualStyleBackColor = true;
             this.showPassButton2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton2_MouseDown);
             this.showPassButton2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton2_MouseUp);
@@ -172,11 +172,11 @@
             // 
             this.showPassButton3.FlatAppearance.BorderSize = 0;
             this.showPassButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassButton3.Image = ((System.Drawing.Image)(resources.GetObject("showPassButton3.Image")));
             this.showPassButton3.Location = new System.Drawing.Point(333, 160);
             this.showPassButton3.Name = "showPassButton3";
             this.showPassButton3.Size = new System.Drawing.Size(23, 23);
             this.showPassButton3.TabIndex = 9;
-            this.showPassButton3.Text = "V";
             this.showPassButton3.UseVisualStyleBackColor = true;
             this.showPassButton3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton3_MouseDown);
             this.showPassButton3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton3_MouseUp);
@@ -201,6 +201,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.canselButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChangePasswordForm";

@@ -34,8 +34,8 @@ namespace Pers_uchet_org
         {
             this._repYear = repYear;
             this._dopPeriodBS = periodBS;
-            this.Begin = DateTime.Now.Date;
-            this.End = DateTime.Now.Date;
+            this.Begin =  new DateTime(_repYear, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
+            this.End = new DateTime(_repYear, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
             this.Code = 0;
             this.CodeName = "";
             isNew = true;

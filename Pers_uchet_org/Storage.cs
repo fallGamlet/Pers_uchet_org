@@ -9,6 +9,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.OLE.Interop;
 using STATSTG = Microsoft.VisualStudio.OLE.Interop.STATSTG;
+using System.Xml.Schema;
+using System.Xml.Linq;
 
 namespace Pers_uchet_org
 {
@@ -131,8 +133,8 @@ namespace Pers_uchet_org
         /// <param name="szv1XmlArray">Документы СЗВ1 - выходной параметр</param>
         /// <returns></returns>
         public static int MakeXml(int rep_year, Org org, IEnumerable<long> list_id, string connectionStr,
-                                    out XmlDocument mapXml, 
-                                    out XmlDocument szv3Xml, 
+                                    out XmlDocument mapXml,
+                                    out XmlDocument szv3Xml,
                                     out IEnumerable<XmlDocument> szv2XmlArray,
                                     out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
         {
@@ -173,8 +175,8 @@ namespace Pers_uchet_org
         /// <param name="diskKey">Ключ</param>
         /// <param name="diskTable">Таблица</param>
         /// <returns></returns>
-        public static CompoundFile MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml, 
-                                        IEnumerable<XmlDocument> szv2XmlArray, 
+        public static CompoundFile MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml,
+                                        IEnumerable<XmlDocument> szv2XmlArray,
                                         IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
                                         byte[] diskKey, byte[] diskTable)
         {
@@ -186,10 +188,10 @@ namespace Pers_uchet_org
             {
                 return null;
             }
-            
+
             CompoundFile container = new CompoundFile(CFSVersion.Ver_3, false, false);
             CFStorage dir4 = container.RootStorage.AddStorage(rootMap.GetAttribute(MapXml.paramID));
-            for (int i=0; i< szv2XmlArray.Count(); i++)
+            for (int i = 0; i < szv2XmlArray.Count(); i++)
             {
                 XmlElement curList = lists[i] as XmlElement;
                 XmlElement curOpis = curList[MapXml.tagOpis];
@@ -214,7 +216,7 @@ namespace Pers_uchet_org
                     CFStream docStream = AddStream(curDir, szv1Xml, diskKey, diskTable);
                     curDoc[MapXml.tagFilename].InnerText = docStream.Name;
                 }
-                
+
             }
 
 
@@ -246,30 +248,30 @@ namespace Pers_uchet_org
         /// <param name="szv2XmlArray">Массив файлов XML</param>
         /// <param name="szv1XmlArray">Массив файлов XML</param>
         /// <returns></returns>
-        public static bool ExportXml(string path, OrgPropXml orgProperty, XmlDocument szv3Xml, 
-                                        IEnumerable<XmlDocument> szv2XmlArray, 
+        public static bool ExportXml(string path, OrgPropXml orgProperty, XmlDocument szv3Xml,
+                                        IEnumerable<XmlDocument> szv2XmlArray,
                                         IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
         {
             if (szv2XmlArray.Count() != szv1XmlArray.Count())
                 return false;
-            string rootDirStr = string.Format(@"{0}\{1}\{2}",path,orgProperty.orgRegnum,orgProperty.repeyar);
+            string rootDirStr = string.Format(@"{0}\{1}\{2}", path, orgProperty.orgRegnum, orgProperty.repeyar);
             DirectoryInfo rootDir = Directory.CreateDirectory(rootDirStr);
             szv3Xml.PreserveWhitespace = true;
             szv3Xml.Save(rootDir.FullName + @"\сводная.xml");
-            
+
             for (int i = 0; i < szv2XmlArray.Count(); i++)
             {
                 IEnumerable<XmlDocument> szv1XmlNodeArr = szv1XmlArray.ElementAt(i);
                 XmlDocument szv2Xml = szv2XmlArray.ElementAt(i);
                 szv2Xml.PreserveWhitespace = true;
-                szv2Xml.Save(string.Format(@"{0}\z_опись_{1:000}.xml", rootDir.FullName, i+1));
-                DirectoryInfo packetDir = Directory.CreateDirectory(string.Format(@"{0}\Пакет_Z{1:000}", rootDir.FullName, i+1));
-                
+                szv2Xml.Save(string.Format(@"{0}\z_опись_{1:000}.xml", rootDir.FullName, i + 1));
+                DirectoryInfo packetDir = Directory.CreateDirectory(string.Format(@"{0}\Пакет_Z{1:000}", rootDir.FullName, i + 1));
+
                 for (int j = 0; j < szv1XmlNodeArr.Count(); j++)
                 {
                     XmlDocument szv1Xml = szv1XmlNodeArr.ElementAt(j);
                     szv1Xml.PreserveWhitespace = true;
-                    szv1Xml.Save(string.Format(@"{0}\z_документ_L{1:000}_D{2:000}.xml", packetDir.FullName, i+1, j+1));
+                    szv1Xml.Save(string.Format(@"{0}\z_документ_L{1:000}_D{2:000}.xml", packetDir.FullName, i + 1, j + 1));
                 }
             }
             return true;
@@ -284,28 +286,34 @@ namespace Pers_uchet_org
         /// <param name="szv2XmlArray">Выходной параметр</param>
         /// <param name="szv1XmlArray">Выходной параметр</param>
         /// <returns></returns>
-        public static bool ImportXml(string path, OrgPropXml orgProperty, 
+        public static bool ImportXml(string path, OrgPropXml orgProperty,
                                         out XmlDocument szv3Xml,
                                         out IEnumerable<XmlDocument> szv2XmlArray,
-                                        out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
+                                        out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
+                                        StreamWriter writer)
         {
             szv3Xml = null;
             szv2XmlArray = null;
             szv1XmlArray = null;
-            string rootDirStr = string.Format(@"{0}\{1}\{2}", path, orgProperty.orgRegnum, orgProperty.repeyar);
+            string rootDirStr = Path.Combine(path, orgProperty.orgRegnum);
+            rootDirStr = Path.Combine(rootDirStr, orgProperty.repeyar);
             // если в корневой директории (папке) нет подпапки с Рег номером организации, 
             // в которой в свою очередь нет папки с отчетным годом (RepYear),
             // то процесс импорта невозможен
-            if(!Directory.Exists(rootDirStr))
-            {
-                return false;
-            }
-            string szv3Filename = rootDirStr+@"\сводная.xml";
+            //if (!Directory.Exists(rootDirStr))
+            //{
+            //    writer.WriteLine("Не найдена папка \"{0}\"", rootDirStr);
+            //    writer.WriteLine("---");
+            //    return false;
+            //}
+            string szv3Filename = rootDirStr + @"\сводная.xml";
             // если нет файла Описи (СЗВ-3) импорт не может быть закончен
-            if(!File.Exists(szv3Filename))
-            {
-                return false;
-            }
+            //if (!File.Exists(szv3Filename))
+            //{
+            //    writer.WriteLine("Не найден файл \"{0}\"", szv3Filename);
+            //    writer.WriteLine("---");
+            //    return false;
+            //}
             DirectoryInfo rootDir = new DirectoryInfo(rootDirStr);
             DirectoryInfo[] packetDirs = rootDir.GetDirectories("Пакет_Z???");
             FileInfo[] opisFiles = rootDir.GetFiles("z_опись_???.xml");
@@ -313,10 +321,20 @@ namespace Pers_uchet_org
             // если количество директорий (папок) с документами СЗВ-1 
             // отличается от количества файлов с описями (документы СЗВ-2)
             // процесс импорта следует прекратить
-            if (packetDirs.Count() != opisFiles.Count())
-            {
-                return false;
-            }
+            //if (packetDirs.Count() != opisFiles.Count())
+            //{
+            //    writer.WriteLine("Количество директорий (папок) с документами СЗВ-1 {0} отличается от количества файлов с описями (документы СЗВ-2) {1} ", packetDirs.Count(), opisFiles.Count());
+            //    writer.WriteLine("---");
+            //    return false;
+            //}
+
+            //if (packetDirs.Count() < 1)
+            //{
+            //    writer.WriteLine("Количество директорий (папок) с документами СЗВ-1 {0} не может быть меньше 1", packetDirs.Count());
+            //    writer.WriteLine("---");
+            //    return false;
+            //}
+
             string[] dirNumArr = new string[packetDirs.Count()];
             string[] fileNumArr = new string[opisFiles.Count()];
             int i;
@@ -327,51 +345,94 @@ namespace Pers_uchet_org
                 tmpStr = opisFiles[i].Name;
                 fileNumArr[i] = tmpStr.Substring(tmpStr.Length - 7, 3);
             }
-            int count = 0;
-            for (i = 0; i < dirNumArr.Length; i++)
-            {
-                if (dirNumArr.Contains(fileNumArr[i]))
-                {
-                    count++;
-                }
-            }
-            // не всем файлам описей (СЗВ-2) найдены 
-            // соответствующие директории (папки) пакетов
-            if (count < dirNumArr.Length)
-            {
-                return false;
-            }
-            count = 0;
+            //int count = 0;
+            //for (i = 0; i < dirNumArr.Length; i++)
+            //{
+            //    if (dirNumArr.Contains(fileNumArr[i]))
+            //    {
+            //        count++;
+            //    }
+            //}
+            //// не всем файлам описей (СЗВ-2) найдены 
+            //// соответствующие директории (папки) пакетов
+            //if (count < dirNumArr.Length)
+            //{
+            //    writer.WriteLine("Не для всех файлов описей (СЗВ-2) найдены соответствующие директории (папки) пакетов");
+            //    writer.WriteLine("---");
+            //    return false;
+            //}
+            //count = 0;
             for (i = 0; i < dirNumArr.Length; i++)
             {
                 szv1FilesArr[i] = packetDirs[i].GetFiles(string.Format("z_документ_L{0}_D???.xml", dirNumArr[i]));
                 // если в директории (папке) есть файлы удовлетворяющие фильиру, 
                 // то увеличиваем счетчик
-                if (szv1FilesArr[i].Length > 0)
-                {
-                    count++;
-                }
+                //if (szv1FilesArr[i].Length > 0)
+                //{
+                //    count++;
+                //}
+                //else
+                //{
+                //    writer.WriteLine("В директории (папке)  \"{0}\" не найдены документы СЗВ-1", packetDirs[i].FullName);
+                //    writer.WriteLine("---");
+                //}
             }
             // если есть директории пакетов без файлов документов СЗВ-1,
             // то импорт невозможен
-            if (count < dirNumArr.Length)
-            {
-                return false;
-            }
-            
+            //if (count < dirNumArr.Length)
+            //{
+            //    return false;
+            //}
+
             // Все проверки окончены, теперь можно проводить непосредственно импорт
+            bool isValid = true;
             List<IEnumerable<XmlDocument>> szv1Lists = new List<IEnumerable<XmlDocument>>(opisFiles.Length);
             List<XmlDocument> szv2List = new List<XmlDocument>(opisFiles.Length);
             for (i = 0; i < opisFiles.Count(); i++)
             {
                 XmlDocument szv2Xml = XmlData.ReadXml(opisFiles[i].FullName);
                 szv2Xml.PreserveWhitespace = true;
+                isValid &= XmlData.ValidateXml(Properties.Settings.Default.xsd_szv2, opisFiles[i].FullName, writer);
                 szv2List.Add(szv2Xml);
+
                 List<XmlDocument> szv1Docs = new List<XmlDocument>(szv1FilesArr[i].Length);
                 for (int j = 0; j < szv1FilesArr[i].Length; j++)
                 {
+                    #region COM Validate XML
+                    //string xmlText = File.ReadAllText(szv1FilesArr[i][j].FullName);
+                    //try
+                    //{
+                    //    // create an XML6 parser
+                    //    MSXML2.DOMDocument60 msxml =
+                    //       new MSXML2.DOMDocument60();
+                    //    msxml.async = false;
+                    //    msxml.resolveExternals = false;
+
+
+                    //    MSXML2.XMLSchemaCache60Class msSchema =
+                    //       new MSXML2.XMLSchemaCache60Class();
+                    //    msSchema.add("", Properties.Settings.Default.xsd_szv1);
+
+                    //    msxml.schemas = msSchema;
+                    //    // load XML
+                    //    msxml.loadXML(xmlText);
+                    //    if (msxml.parseError.errorCode != 0)
+                    //    {
+                    //        // some kind of parsing error found..
+                    //        throw new Exception("parsing error:  " +
+                    //                 msxml.parseError.reason);
+                    //    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    // an exception happened.
+                    //    Console.WriteLine(e.Message);
+                    //}
+                    #endregion
+
                     XmlDocument szv1Xml = XmlData.ReadXml(szv1FilesArr[i][j].FullName);
                     szv1Xml.PreserveWhitespace = true;
+                    isValid &= XmlData.ValidateXml(Properties.Settings.Default.xsd_szv1, szv1FilesArr[i][j].FullName, writer);
                     szv1Docs.Add(szv1Xml);
                 }
                 szv1Lists.Add(szv1Docs.ToArray());
@@ -379,10 +440,12 @@ namespace Pers_uchet_org
             // заполнение выходных параметров
             szv3Xml = XmlData.ReadXml(szv3Filename);
             szv3Xml.PreserveWhitespace = true;
+            isValid &= XmlData.ValidateXml(Properties.Settings.Default.xsd_szv3, szv3Filename, writer);
+
             szv2XmlArray = szv2List;
             szv1XmlArray = szv1Lists.ToArray();
             //
-            return true;
+            return isValid;
         }
 
         /// <summary>
@@ -398,7 +461,7 @@ namespace Pers_uchet_org
             byte[] resData = stream.GetData(0, ref count);
             count = 8;
             byte[] synchro = stream.GetData(stream.Size - 8, ref count);
-            resData =  Mathdll.GostGamma(resData, diskKey, diskTable, synchro);
+            resData = Mathdll.GostGamma(resData, diskKey, diskTable, synchro);
             return resData;
         }
 
@@ -410,13 +473,13 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static CFStream GetFileStream(CompoundFile file, string streamPath)
         {
-            string[] path = streamPath.Split(new char[]{'\\'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] path = streamPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
             CFStorage curDir = file.RootStorage;
             for (int i = 0; i < path.Length - 1; i++)
             {
                 curDir = curDir.GetStorage(path[i]);
             }
-            return curDir.GetStream(path[path.Length-1]);
+            return curDir.GetStream(path[path.Length - 1]);
         }
 
         /// <summary>
@@ -430,7 +493,7 @@ namespace Pers_uchet_org
         public static string GetHTML(CompoundFile file, string fileUri, byte[] diskKey, byte[] diskTable)
         {
             string[] uri = fileUri.Split(':');
-            if(uri.Length != 2)
+            if (uri.Length != 2)
                 return null;
             string xslPath;
             switch (uri[0])
@@ -586,7 +649,7 @@ namespace Pers_uchet_org
 
         [DllImport("ole32.dll")]
         private extern static int PropVariantClear(ref PROPVARIANT pvar);
-        
+
         [ComImport]
         [Guid("00000138-0000-0000-C000-000000000046")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -677,7 +740,7 @@ namespace Pers_uchet_org
         private static PropertySpec CreateProperty(string name)
         {
             PropertySpec prop = new PropertySpec();
-            byte[] data = Encoding.Unicode.GetBytes(name+"\0");
+            byte[] data = Encoding.Unicode.GetBytes(name + "\0");
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
             Marshal.Copy(data, 0, ptrData, data.Length);
             prop.kind = PropertySpecKind.Lpwstr;
@@ -688,7 +751,7 @@ namespace Pers_uchet_org
         private static PropertyVariant CreatePropertyValue(string value)
         {
             PropertyVariant prop = new PropertyVariant();
-            byte[] data = Encoding.GetEncoding(1251).GetBytes(value+"\0");
+            byte[] data = Encoding.GetEncoding(1251).GetBytes(value + "\0");
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
             Marshal.Copy(data, 0, ptrData, data.Length);
             prop.vt = VARTYPE.VT_LPSTR;
@@ -836,13 +899,13 @@ namespace Pers_uchet_org
                         properties.bookkeeperFIO = GetString(propVariant[5].unionmember.pszVal);
                         properties.performer = GetString(propVariant[6].unionmember.pszVal);
                         properties.operatorName = GetString(propVariant[7].unionmember.pszVal);
-                        properties.date = DateTime.ParseExact(GetString(propVariant[8].unionmember.pszVal), 
-                                                                "dd.MM.yyyy H:mm:ss", 
+                        properties.date = DateTime.ParseExact(GetString(propVariant[8].unionmember.pszVal),
+                                                                "dd.MM.yyyy H:mm:ss",
                                                                 System.Globalization.CultureInfo.InvariantCulture);
                         properties.version = GetString(propVariant[9].unionmember.pszVal);
                         properties.programName = GetString(propVariant[10].unionmember.pszVal);
                         properties.programVersion = GetString(propVariant[11].unionmember.pszVal);
-                        
+
 
 
                         Marshal.FinalReleaseComObject(ps);

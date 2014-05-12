@@ -11,6 +11,7 @@ using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Xml.Xsl;
 using System.Windows.Forms;
+using System.Xml.Schema;
 
 namespace Pers_uchet_org
 {
@@ -237,10 +238,10 @@ namespace Pers_uchet_org
         public static string GetHTML(byte[] xmlBytes, byte[] xslBytes)
         {
             XmlDocument mapXml = new XmlDocument();
-            string xslStr = Encoding.GetEncoding(1251).GetString(xslBytes); 
+            string xslStr = Encoding.GetEncoding(1251).GetString(xslBytes);
             string xmlStr = Encoding.GetEncoding(1251).GetString(xmlBytes);
             mapXml.InnerXml = xmlStr;
-            
+
             XPathNavigator xpn = mapXml.CreateNavigator();
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
             XmlReader xslReader = XmlReader.Create(new MemoryStream(xslBytes));
@@ -280,6 +281,27 @@ namespace Pers_uchet_org
             resDoc.InnerXml = File.ReadAllText(filename, Encoding.GetEncoding(1251));
             //
             return resDoc;
+        }
+
+        public static Boolean ValidateXml(string xmlSchemaPath, string xmlDocumentPath, StreamWriter outputWriter)
+        {
+            bool isValid = true;
+            XmlDocument xmlDocument = XmlData.ReadXml(xmlDocumentPath);
+            xmlDocument.Schemas.Add(null, xmlSchemaPath);
+
+            outputWriter.WriteLine("Файл: " + Path.GetFileName(xmlDocumentPath));
+            xmlDocument.Validate(delegate(object sender, ValidationEventArgs args)
+            {
+                isValid = false;
+                outputWriter.WriteLine();
+                //writer.WriteLine("Строка: " + args.Exception.LineNumber + ", колонка: " + args.Exception.LinePosition);
+                outputWriter.WriteLine(args.Message);
+            });
+            outputWriter.WriteLine("__________________________________________________");
+            outputWriter.WriteLine();
+            outputWriter.Flush();
+
+            return isValid;
         }
     }
 
@@ -359,8 +381,8 @@ namespace Pers_uchet_org
             //
             return xmlArray;
         }
-        
-	/// <summary>
+
+        /// <summary>
         /// Получить XML объект формы СЗВ-1
         /// </summary>
         /// <param name="doc_id">Идентификатор документа</param>
@@ -589,11 +611,11 @@ namespace Pers_uchet_org
                 XmlElement specProfession = xmlRes.CreateElement(tagSpecProfession);
                 specStart.InnerText = (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
                 specEnd.InnerText = (DateTime.Parse(row[SpecialPeriodView.endDate].ToString())).ToString("dd.MM.yyyy");
-                specPartConditionId.InnerText = row[SpecialPeriodView.partCondition].ToString();
+                specPartConditionId.InnerText = row[SpecialPeriodView.partConditionClassificatorId].ToString();
                 specPartConditionName.InnerText = row[SpecialPeriodView.partCode].ToString();
-                specBaseId.InnerText = row[SpecialPeriodView.stajBase].ToString();
+                specBaseId.InnerText = row[SpecialPeriodView.stajBaseClassificatorId].ToString();
                 specBaseName.InnerText = row[SpecialPeriodView.stajCode].ToString();
-                specServyearBaseId.InnerText = row[SpecialPeriodView.servYearBase].ToString();
+                specServyearBaseId.InnerText = row[SpecialPeriodView.servYearBaseClassificatorId].ToString();
                 specServyearBaseName.InnerText = row[SpecialPeriodView.servCode].ToString();
                 specMonths.InnerText = row[SpecialPeriodView.month].ToString();
                 specDays.InnerText = row[SpecialPeriodView.day].ToString();
@@ -947,7 +969,7 @@ namespace Pers_uchet_org
             MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
             return GetXml(mergeRow, mergeInfoT);
         }
-        
+
         /// <summary>
         /// Получить XML объект формы СЗВ-3 для актуальной сводной ведомости организации указанного года
         /// </summary>
@@ -1108,12 +1130,12 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-        public static XmlDocument GetXml(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>>szv1Array)
+        public static XmlDocument GetXml(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>> szv1Array)
         {
             int docCount, packetCount;
             string rootDirStr = "4";
             packetCount = szv2Array.Count();
-            
+
             XmlDocument xmlRes = new XmlDocument();
             XmlElement root = xmlRes.CreateElement(tagTopics);
             root.SetAttribute(paramType, "Индивидуальные сведения");
@@ -1135,9 +1157,9 @@ namespace Pers_uchet_org
 
             for (int i = 0; i < packetCount; i++)
             {
-                string packetID = string.Format("{0:000}", i+1);
+                string packetID = string.Format("{0:000}", i + 1);
                 XmlElement topics = xmlRes.CreateElement(tagTopics);
-                topics.SetAttribute(paramType, string.Format("Пакет {0}",packetID));
+                topics.SetAttribute(paramType, string.Format("Пакет {0}", packetID));
                 topics.SetAttribute(paramID, packetID);
                 XmlElement opis = xmlRes.CreateElement(tagOpis);
                 XmlElement opisTitle = xmlRes.CreateElement(tagTitle);
@@ -1151,7 +1173,7 @@ namespace Pers_uchet_org
                 opis.AppendChild(opisPath);
 
                 opisTitle.InnerText = "Опись документов";
-                opisFilename.InnerText = string.Format("opis{0:000}",i);//GetImito();
+                opisFilename.InnerText = string.Format("opis{0:000}", i);//GetImito();
                 opisPath.InnerText = string.Format(@"4\{0}\", packetID);
 
                 IEnumerable<XmlDocument> szv1Docs = szv1Array.ElementAt(i);
@@ -1173,12 +1195,12 @@ namespace Pers_uchet_org
                     topicNode.AppendChild(topicNodeRegnum);
 
                     string fio = string.Format("{0} {1} {2}"
-                                            ,szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagLname)[0].InnerText
-                                            ,szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFname)[0].InnerText
-                                            ,szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagMname)[0].InnerText
+                                            , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagLname)[0].InnerText
+                                            , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFname)[0].InnerText
+                                            , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagMname)[0].InnerText
                                             );
                     topicNodeTitle.InnerText = fio;
-                    topicNodeFilename.InnerText = string.Format("{0:000}{1:000}",i,j);
+                    topicNodeFilename.InnerText = string.Format("{0:000}{1:000}", i, j);
                     topicNodeRegnum.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagPersonRegnum)[0].InnerText;
                     topicNodeDoctype.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFormType)[0].InnerText;
                     topicNodePath.InnerText = string.Format(@"4\{0}\", packetID);
@@ -1259,17 +1281,17 @@ namespace Pers_uchet_org
         public OrgPropXml()
         {
             orgRegnum = null;
-            orgName= null;
-            repeyar= null;
-            directorType= null;
-            directorFIO= null;
-            bookkeeperFIO= null;
-            performer= null;
-            operatorName= null;
+            orgName = null;
+            repeyar = null;
+            directorType = null;
+            directorFIO = null;
+            bookkeeperFIO = null;
+            performer = null;
+            operatorName = null;
             date = DateTime.MinValue;
-            version= null;
-            programName= null;
-            programVersion= null;
+            version = null;
+            programName = null;
+            programVersion = null;
         }
 
         public OrgPropXml(XmlDocument propertyXml)
@@ -1329,17 +1351,17 @@ namespace Pers_uchet_org
 
         public void TakeValues(XmlDocument propertyXml)
         {
-             orgRegnum = GetValue(propertyXml, tagOrgRegnum);
-             orgName = GetValue(propertyXml, tagOrgName);
-             repeyar = GetValue(propertyXml, tagRepyear);
-             directorType = GetValue(propertyXml, tagDirectorType);
-             directorFIO = GetValue(propertyXml, tagDirectorFIO);
-             bookkeeperFIO = GetValue(propertyXml, tagBookkeeperFIO);
-             operatorName = GetValue(propertyXml, tagOperatorName);
-             date = DateTime.Parse(GetValue(propertyXml, tagDate));
-             version = GetValue(propertyXml, tagVersion);
-             programName = GetValue(propertyXml, tagProgramName);
-             programVersion = GetValue(propertyXml, tagProgramVersion);
+            orgRegnum = GetValue(propertyXml, tagOrgRegnum);
+            orgName = GetValue(propertyXml, tagOrgName);
+            repeyar = GetValue(propertyXml, tagRepyear);
+            directorType = GetValue(propertyXml, tagDirectorType);
+            directorFIO = GetValue(propertyXml, tagDirectorFIO);
+            bookkeeperFIO = GetValue(propertyXml, tagBookkeeperFIO);
+            operatorName = GetValue(propertyXml, tagOperatorName);
+            date = DateTime.Parse(GetValue(propertyXml, tagDate));
+            version = GetValue(propertyXml, tagVersion);
+            programName = GetValue(propertyXml, tagProgramName);
+            programVersion = GetValue(propertyXml, tagProgramVersion);
         }
 
         public string GetHTML()
@@ -1350,7 +1372,7 @@ namespace Pers_uchet_org
             return html;
         }
         #endregion
-        
+
         #region Методы - статические
         public static string GetValue(XmlDocument propertyXml, string tagname)
         {

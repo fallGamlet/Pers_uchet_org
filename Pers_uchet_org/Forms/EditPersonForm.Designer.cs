@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditPersonForm));
             this.closeButton = new System.Windows.Forms.Button();
             this.citizen1Box = new System.Windows.Forms.ComboBox();
             this.birthdayBox = new System.Windows.Forms.DateTimePicker();
@@ -320,12 +321,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label7.Location = new System.Drawing.Point(6, 98);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(51, 13);
+            this.label7.Size = new System.Drawing.Size(37, 13);
             this.label7.TabIndex = 15;
-            this.label7.Text = "Город *";
+            this.label7.Text = "Город";
             // 
             // bornRegionBox
             // 
@@ -487,12 +487,11 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label26.Location = new System.Drawing.Point(6, 100);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(51, 13);
+            this.label26.Size = new System.Drawing.Size(37, 13);
             this.label26.TabIndex = 15;
-            this.label26.Text = "Город *";
+            this.label26.Text = "Город";
             // 
             // regRegionBox
             // 
@@ -641,12 +640,11 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label18.Location = new System.Drawing.Point(6, 100);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(51, 13);
+            this.label18.Size = new System.Drawing.Size(37, 13);
             this.label18.TabIndex = 15;
-            this.label18.Text = "Город *";
+            this.label18.Text = "Город";
             // 
             // factRegionBox
             // 
@@ -754,12 +752,11 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label27.Location = new System.Drawing.Point(6, 19);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(38, 13);
+            this.label27.Size = new System.Drawing.Size(26, 13);
             this.label27.TabIndex = 21;
-            this.label27.Text = "Тип *";
+            this.label27.Text = "Тип";
             // 
             // label28
             // 
@@ -780,12 +777,11 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label29.Location = new System.Drawing.Point(6, 71);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(55, 13);
+            this.label29.Size = new System.Drawing.Size(41, 13);
             this.label29.TabIndex = 17;
-            this.label29.Text = "Номер *";
+            this.label29.Text = "Номер";
             // 
             // docorgBox
             // 
@@ -815,6 +811,7 @@
             this.Controls.Add(this.bornplaceGroupBox);
             this.Controls.Add(this.closeButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(615, 600);
             this.Name = "EditPersonForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

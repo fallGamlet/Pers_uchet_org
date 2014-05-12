@@ -48,6 +48,8 @@ namespace Pers_uchet_org
         CompoundFile _container;
         byte[] _diskKey;
         byte[] _diskTable;
+
+        BackgroundWorker worker;
         #endregion
 
         #region Конструктор и инициализатор
@@ -67,7 +69,10 @@ namespace Pers_uchet_org
 
         private void ExchangeForm_Load(object sender, EventArgs e)
         {
+            this.Text += " - " + _organization.regnumVal;
+
             yearBox.Value = MainForm.RepYear;
+            _repYear = (int)yearBox.Value;
             ExchangeTabControl.SelectedTab = tabPageDB;
             ExchangeTabControl.TabPages.Remove(tabPage1);
 
@@ -90,12 +95,18 @@ namespace Pers_uchet_org
             this.packetsView.DataSource = _listsBS;
 
             ReloadLists();
+            GetCountsFromMergies();
 
             this.cdRButton.Checked = true;
             this.cdOrKeyfileRButton_CheckedChanged(this.cdRButton, e);
 
             driveBox_Click(sender, e);
             flashBox_Click(sender, e);
+
+            worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.WorkerSupportsCancellation = true;
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
         }
         #endregion
 
@@ -171,7 +182,7 @@ namespace Pers_uchet_org
             List<long> lists = new List<long>();
             foreach (DataRowView row in _listsBS)
             {
-                if((bool)row[CHECK])
+                if ((bool)row[CHECK])
                     lists.Add((long)row[ListsView2.id]);
             }
             return lists.ToArray();
@@ -201,7 +212,7 @@ namespace Pers_uchet_org
             bool res = true;
             errMessage = "";
             string path = this.xmlPathTextBox.Text;
-            if( !Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
                 errMessage += "\nНе найден указанный каталог.";
                 return false;
@@ -215,7 +226,7 @@ namespace Pers_uchet_org
             // то процесс импорта невозможен
             if (!Directory.Exists(rootDirStr))
             {
-                errMessage += string.Format("\nВ корневом каталоге не найдены необходимые директории: '{0}\\{1}'", 
+                errMessage += string.Format("\nВ корневом каталоге не найдены необходимые директории: '{0}\\{1}'",
                                             orgProperty.orgRegnum, orgProperty.repeyar);
                 return false;
             }
@@ -233,37 +244,60 @@ namespace Pers_uchet_org
             // если количество директорий (папок) с документами СЗВ-1 
             // отличается от количества файлов с описями (документы СЗВ-2)
             // процесс импорта следует прекратить
+            if (packetDirs.Count() < 1)
+            {
+                errMessage += string.Format("\nКоличество директорий (папок) ({0}) с документами СЗВ-1 не может быть меньше 1.",
+                                            packetDirs.Count());
+                res &= false;
+            }
+
+            if (opisFiles.Count() < 1)
+            {
+                errMessage += string.Format("\nКоличество описей СЗВ-2 ({0}) не может быть меньше 1.",
+                                            opisFiles.Count());
+                res &= false;
+            }
             if (packetDirs.Count() != opisFiles.Count())
             {
                 errMessage += string.Format("\nКоличество директорий (папок) ({0}) с документами СЗВ-1 отличается от количества файлов с описями (документы СЗВ-2) ({1}).",
                                             packetDirs.Count(), opisFiles.Count());
                 res &= false;
             }
+
             string[] dirNumArr = new string[packetDirs.Count()];
             string[] fileNumArr = new string[opisFiles.Count()];
             int i;
+            string tmpStr;
             for (i = 0; i < dirNumArr.Length; i++)
             {
-                string tmpStr = packetDirs[i].Name;
+                tmpStr = packetDirs[i].Name;
                 dirNumArr[i] = tmpStr.Substring(tmpStr.Length - 3, 3);
+            }
+            for (i = 0; i < fileNumArr.Length; i++)
+            {
                 tmpStr = opisFiles[i].Name;
                 fileNumArr[i] = tmpStr.Substring(tmpStr.Length - 7, 3);
             }
             int count = 0;
-            for (i = 0; i < dirNumArr.Length; i++)
+
+            if (dirNumArr.Length == fileNumArr.Length)
             {
-                if (dirNumArr.Contains(fileNumArr[i]))
+                for (i = 0; i < dirNumArr.Length; i++)
                 {
-                    count++;
+                    if (dirNumArr.Contains(fileNumArr[i]))
+                    {
+                        count++;
+                    }
+                }
+                // не всем файлам описей (СЗВ-2) найдены 
+                // соответствующие директории (папки) пакетов
+                if (count < dirNumArr.Length)
+                {
+                    errMessage += "\nНе всем файлам описей (СЗВ-2) найдены соответствующие директории (папки) пакетов";
+                    res &= false;
                 }
             }
-            // не всем файлам описей (СЗВ-2) найдены 
-            // соответствующие директории (папки) пакетов
-            if (count < dirNumArr.Length)
-            {
-                errMessage += "\nНе всем файлам описей (СЗВ-2) найдены соответствующие директории (папки) пакетов";
-                res &= false;
-            }
+
             count = 0;
             for (i = 0; i < dirNumArr.Length; i++)
             {
@@ -291,89 +325,6 @@ namespace Pers_uchet_org
             return res;
         }
 
-        private bool CheckTabPageDB()
-        {
-            bool result = true;
-
-            if (_mergiesCountLists < 0)
-            {
-                MessageBox.Show("Сводная ведомость (СЗВ-3) не обнаружена!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_mergiesCountLists < 1)
-            {
-                MessageBox.Show("Количество пакетов документов в сводной ведомости: " + _mergiesCountLists +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_mergiesCountDocs < 1)
-            {
-                MessageBox.Show("Количество документов \"СЗВ-1\" в сводной ведомости: " + _mergiesCountDocs +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountLists < 1)
-            {
-                MessageBox.Show("Количество выбранных пакетов документов: " + _checkedCountLists +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountDocs < 1)
-            {
-                MessageBox.Show("Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                    "\nФормирование электронных данных невозможно!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountLists > _mergiesCountLists)
-            {
-                MessageBox.Show(
-                    "Количество выбранных пакетов документов: " + _checkedCountLists +
-                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountLists, "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-            if (_checkedCountDocs > _mergiesCountDocs)
-            {
-                MessageBox.Show(
-                    "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                    "\nбольше, чем указано в сводной ведомости: " + _mergiesCountDocs, "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return false;
-            }
-
-
-            if (_checkedCountLists < _mergiesCountLists)
-            {
-                result = (MessageBox.Show(
-                        "Количество выбранных пакетов документов: " + _checkedCountLists +
-                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountLists +
-                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
-            }
-
-            if (_checkedCountDocs < _mergiesCountDocs)
-            {
-                result = (MessageBox.Show(
-                        "Количество выбранных документов \"СЗВ-1\": " + _checkedCountDocs +
-                        "\nменьше, чем указано в сводной ведомости: " + _mergiesCountDocs +
-                        ".\n\nПродолжить формирование электронных данных?", "Предупреждение", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes);
-
-            }
-            return result;
-        }
-
         private bool CheckTabPageDB(out string errMessage)
         {
             bool result = true;
@@ -383,17 +334,19 @@ namespace Pers_uchet_org
                 errMessage += "\nСводная ведомость (СЗВ-3) не обнаружена!";
                 result &= false;
             }
-
-            if (_mergiesCountLists < 1)
+            else
             {
-                errMessage += string.Format("\nКоличество пакетов документов в сводной ведомости: {0}", _mergiesCountLists);
-                result &= false;
-            }
+                if (_mergiesCountLists < 1)
+                {
+                    errMessage += string.Format("\nКоличество пакетов документов в сводной ведомости: {0}", _mergiesCountLists);
+                    result &= false;
+                }
 
-            if (_mergiesCountDocs < 1)
-            {
-                errMessage += string.Format("\nКоличество документов \"СЗВ-1\" в сводной ведомости: {0}", _mergiesCountDocs);
-                result &= false;
+                if (_mergiesCountDocs < 1)
+                {
+                    errMessage += string.Format("\nКоличество документов \"СЗВ-1\" в сводной ведомости: {0}", _mergiesCountDocs);
+                    result &= false;
+                }
             }
 
             if (_checkedCountLists < 1)
@@ -408,33 +361,36 @@ namespace Pers_uchet_org
                 result &= false;
             }
 
-            if (_checkedCountLists > _mergiesCountLists)
+            if (_mergiesCountLists > 0)
             {
-                errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) больше, чем указано в сводной ведомости: {1}.",
-                                            _checkedCountLists, _mergiesCountLists);
-                result &= false;
-            }
+                if (_checkedCountLists > _mergiesCountLists)
+                {
+                    errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) больше, чем указано в сводной ведомости: {1}.",
+                                                _checkedCountLists, _mergiesCountLists);
+                    result &= false;
+                }
 
-            if (_checkedCountDocs > _mergiesCountDocs)
-            {
-                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.", 
-                                            _checkedCountDocs, _mergiesCountDocs);
-                result &= false;
-            }
+                if (_checkedCountDocs > _mergiesCountDocs)
+                {
+                    errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.",
+                                                _checkedCountDocs, _mergiesCountDocs);
+                    result &= false;
+                }
 
-            if (_checkedCountLists < _mergiesCountLists && result)
-            {
-                errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) меньше, чем указано в сводной ведомости: {1}.",
-                                            _checkedCountLists,_mergiesCountLists);
-                result &= true;
-            }
+                if (_checkedCountLists < _mergiesCountLists && result)
+                {
+                    errMessage += string.Format("\nКоличество выбранных пакетов документов ({0}) меньше, чем указано в сводной ведомости: {1}.",
+                                                _checkedCountLists, _mergiesCountLists);
+                    result &= true;
+                }
 
-            if (_checkedCountDocs < _mergiesCountDocs && result)
-            {
-                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) меньше, чем указано в сводной ведомости: {1}."
-                                            , _checkedCountDocs, _mergiesCountDocs);
-                result &= true;
+                if (_checkedCountDocs < _mergiesCountDocs && result)
+                {
+                    errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\" ({0}) меньше, чем указано в сводной ведомости: {1}."
+                                                , _checkedCountDocs, _mergiesCountDocs);
+                    result &= true;
 
+                }
             }
             if (errMessage.Length == 0)
             {
@@ -466,7 +422,7 @@ namespace Pers_uchet_org
                 }
             }
 
-            if (flashBox.SelectedItem == null)
+            if (flashRButton.Checked && flashBox.SelectedItem == null)
             {
                 errMessage += "\nНе найден флеш накопитель.\nВозможно Вы:\n\t- не указали накопитель (шаг 2).";
                 res &= false;
@@ -669,8 +625,8 @@ namespace Pers_uchet_org
             return true;
         }
 
-        private int MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml, 
-                                    IEnumerable<XmlDocument> szv2Array, 
+        private int MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml,
+                                    IEnumerable<XmlDocument> szv2Array,
                                     IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array)
         {
             if (_diskKey == null || _diskTable == null)
@@ -682,12 +638,21 @@ namespace Pers_uchet_org
                 _container.Close();
             }
 
-            string flashRoot = flashBox.Text.Substring(0, 1);
-            DirectoryInfo dir = Directory.CreateDirectory(string.Format(
-                                                        @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
-                                                        flashRoot, _organization.regnumVal, _repYear));
-            string containerFilename = dir.FullName + @"\edatacon.pfs";
-            string mdcFilename = dir.FullName + @"\mdc";
+            DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+            if (flashRButton.Checked)
+            {
+                string flashRoot = GetFlashRoot();
+                dir = Directory.CreateDirectory(string.Format(
+                                                            @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
+                                                            flashRoot, _organization.regnumVal, _repYear));
+            }
+            else if (internetRButton.Checked)
+            {
+                dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+            }
+
+            string containerFilename = Path.Combine(dir.FullName, "edatacon.pfs");
+            string mdcFilename = Path.Combine(dir.FullName, "mdc");
 
             OrgPropXml orgProp = this.GetOrgProperties();
             _container = Storage.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array,
@@ -700,6 +665,18 @@ namespace Pers_uchet_org
             byte[] hash = Mathdll.GostHash(containerFilename, _diskTable);
             File.WriteAllBytes(mdcFilename, hash);
             return 0;
+        }
+
+        public string GetFlashRoot()
+        {
+            if (flashBox.InvokeRequired)
+            {
+                return (string)flashBox.Invoke(new Func<String>(() => GetFlashRoot()));
+            }
+            else
+            {
+                return flashBox.Text.Substring(0, 1);
+            }
         }
         #endregion
 
@@ -730,60 +707,81 @@ namespace Pers_uchet_org
             if (flashBox.Items.Count > 0)
                 flashBox.SelectedItem = flashBox.Items[0];
         }
-                
+
+
+        public XmlDocument mapXml, szv3Xml;
+        public IEnumerable<XmlDocument> szv2Array;
+        public IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array;
+
         private void createDataFileButton_Click(object sender, EventArgs e)
         {
             DisableControlsBeforeCreateFile();
             try
             {
+                #region Панель отображения прогресса
+                Panel panelProgress = new Panel();
+                Label labelProgress = new Label();
+                ProgressBar progressBar1 = new ProgressBar();
+                panelProgress.SuspendLayout();
+
+                // 
+                // panelProgress
+                // 
+                panelProgress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                panelProgress.Controls.Add(labelProgress);
+                panelProgress.Controls.Add(progressBar1);
+                panelProgress.Location = new System.Drawing.Point(170, 170);
+                panelProgress.Name = "panelProgress";
+                panelProgress.Size = new System.Drawing.Size(409, 157);
+                // 
+                // progressBar1
+                // 
+                progressBar1.Location = new System.Drawing.Point(31, 74);
+                progressBar1.Name = "progressBar1";
+                progressBar1.Size = new System.Drawing.Size(339, 23);
+                progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+                progressBar1.TabIndex = 0;
+                // 
+                // labelProgress
+                // 
+                labelProgress.AutoSize = true;
+                labelProgress.Location = new System.Drawing.Point(111, 38);
+                labelProgress.Name = "labelProgress";
+                labelProgress.Size = new System.Drawing.Size(174, 13);
+                labelProgress.TabIndex = 1;
+                labelProgress.Text = "Ожидайте завершения операции";
+
+                this.Controls.Add(panelProgress);
+                panelProgress.ResumeLayout(false);
+                panelProgress.PerformLayout();
+                panelProgress.BringToFront();
+                #endregion
+
                 bool isCorrect = this.ValidateData();
                 if (!isCorrect)
                 {
                     return;
                 }
 
-                DateTime createStart, createEnd;
-                
-                XmlDocument mapXml, szv3Xml;
-                IEnumerable<XmlDocument> szv2Array;
-                IEnumerable<IEnumerable<System.Xml.XmlDocument>> szv1Array;
-
                 mapXml = null;
                 szv3Xml = null;
                 szv2Array = null;
                 szv1Array = null;
 
-                createStart = DateTime.Now;
 
                 if (this.ExchangeTabControl.SelectedTab == this.tabPageDB)
                 {
-                    long[] markedLists = MarkedLists();
-
-                    Storage.MakeXml(_repYear, _organization, markedLists, _connection,
-                                    out mapXml, out szv3Xml, out szv2Array, out szv1Array);
+                    worker.RunWorkerAsync(1);
                 }
                 else if (this.ExchangeTabControl.SelectedTab == this.tabPageXML)
                 {
-                    OrgPropXml orgProperties = this.GetOrgProperties();
-                    isCorrect = Storage.ImportXml(this.xmlPathTextBox.Text, orgProperties,
-                                        out szv3Xml, out szv2Array, out szv1Array);
-                    if (!isCorrect)
-                    {
-                        MainForm.ShowErrorMessage("Импорт xml файлов прошел некорректно.\nФормирование электронного контейнера невозможно!");
-                        return;
-                    }
-                    mapXml = MapXml.GetXml(szv2Array, szv1Array);
+                    worker.RunWorkerAsync(2);
                 }
 
-                if (mapXml != null && szv3Xml != null && szv2Array != null && szv1Array != null)
+                while (worker.IsBusy)
                 {
-                    this.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array);
-                    createEnd = DateTime.Now;
-                    TimeSpan createSpan;
-                    createSpan = new TimeSpan(createEnd.Ticks - createStart.Ticks);
-                    MainForm.ShowInfoMessage(string.Format("Файл с электронными данными успешно сформирован и готов к предоставлению в Фонд.\nДлительность операции: {0:0.00} секунд(ы)", createSpan.TotalSeconds), "Формирование завершено");
+                    Application.DoEvents();
                 }
-
             }
             catch (DriveNotFoundException drvExc)
             {
@@ -800,8 +798,62 @@ namespace Pers_uchet_org
                     try { _container.Close(); }
                     finally { }
                 }
+                this.Controls.RemoveByKey("panelProgress");
                 EnableControlsAfterCreateFile();
             }
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            mapXml = null;
+            szv3Xml = null;
+            szv2Array = null;
+            szv1Array = null;
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            if (Convert.ToInt32(e.Argument) == 1)
+            {
+                long[] markedLists = MarkedLists();
+
+                Storage.MakeXml(_repYear, _organization, markedLists, _connection,
+                                out mapXml, out szv3Xml, out szv2Array, out szv1Array);
+            }
+            else if (Convert.ToInt32(e.Argument) == 2)
+            {
+                bool isCorrect;
+                DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
+                using (StreamWriter writer = new StreamWriter(Path.Combine(dir.FullName, "Ошибки XML.txt"), false))
+                {
+                    writer.AutoFlush = true;
+                    OrgPropXml orgProperties = this.GetOrgProperties();
+                    isCorrect = Storage.ImportXml(this.xmlPathTextBox.Text, orgProperties,
+                                        out szv3Xml, out szv2Array, out szv1Array, writer);
+                }
+                if (!isCorrect)
+                {
+                    MainForm.ShowErrorMessage("Импорт xml файлов прошел некорректно.\nФормирование электронного контейнера невозможно!");
+                    Process.Start(Path.Combine(dir.FullName, "Ошибки XML.txt"));
+                    return;
+                }
+                mapXml = MapXml.GetXml(szv2Array, szv1Array);
+            }
+
+            if (mapXml != null && szv3Xml != null && szv2Array != null && szv1Array != null)
+            {
+                this.MakeContainer(mapXml, szv3Xml, szv2Array, szv1Array);
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                    ts.Hours, ts.Minutes, ts.Seconds,
+                    ts.Milliseconds / 10);
+                MainForm.ShowInfoMessage(string.Format("Файл с электронными данными успешно сформирован и готов к предоставлению в Фонд.\nДлительность операции: {0} ", elapsedTime), "Формирование завершено");
+            }
+        }
+
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
         }
 
         private void flashRButton_CheckedChanged(object sender, EventArgs e)
@@ -838,9 +890,20 @@ namespace Pers_uchet_org
                 return;
             }
 
-            string flashRoot = flashBox.Text.Substring(0, 1);
-            string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
+            string filename = "";
+
+            if (flashRButton.Checked)
+            {
+                string flashRoot = flashBox.Text.Substring(0, 1);
+                filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
                                             flashRoot, _organization.regnumVal, _repYear);
+            }
+            else if (internetRButton.Checked)
+            {
+                filename = Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder);
+                filename = Path.Combine(filename, "edatacon.pfs");
+            }
+
             try
             {
                 if (!this.ReadDisk(out errMessage))
@@ -862,7 +925,7 @@ namespace Pers_uchet_org
                 return;
             }
 
-            
+
             if (!File.Exists(filename))
             {
                 MainForm.ShowInfoMessage("Сначала необходимо сформировать электронный файл для обмена с ЕГФСС", "Внимание");
@@ -882,7 +945,7 @@ namespace Pers_uchet_org
             byte[] mapStyleBytes = Storage.DecryptStream(mapStyleStream, _diskKey, _diskTable);
             //string styleStr = Encoding.GetEncoding(1251).GetString(mapStyleBytes);
             _container.Close();
-            
+
             OrgPropXml props = CFProperties.ReadProperty(filename);
             string propHtml = props.GetHTML();
 
@@ -912,7 +975,7 @@ namespace Pers_uchet_org
 
         void reportWB_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {
-            string uri =  e.Url.ToString();
+            string uri = e.Url.ToString();
             if (uri != "about:blank")
             {
                 e.Cancel = true;
@@ -920,9 +983,19 @@ namespace Pers_uchet_org
                 {
                     if (_container == null || _container.RootStorage == null)
                     {
-                        string flashRoot = flashBox.Text.Substring(0, 1);
-                        string filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
-                                            flashRoot, _organization.regnumVal, _repYear);
+                        string filename = "";
+                        if (flashRButton.Checked)
+                        {
+                            string flashRoot = flashBox.Text.Substring(0, 1);
+                            filename = string.Format(@"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}\edatacon.pfs",
+                                                        flashRoot, _organization.regnumVal, _repYear);
+                        }
+                        else if (internetRButton.Checked)
+                        {
+                            filename = Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder);
+                            filename = Path.Combine(filename, "edatacon.pfs");
+                        }
+
                         _container = new CompoundFile(filename);
                     }
                     string html = Storage.GetHTML(_container, uri, _diskKey, _diskTable);
@@ -974,6 +1047,8 @@ namespace Pers_uchet_org
         private void keyfileButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter = "Образ ключа (*.iso)|*.iso|Все файлы (*.*)|*.*";
+            openDialog.FilterIndex = 0;
             DialogResult dRes = openDialog.ShowDialog(this);
             if (dRes == DialogResult.OK)
             {
@@ -1065,6 +1140,12 @@ namespace Pers_uchet_org
         {
             if (_container != null)
                 _container.Close();
+        }
+       
+        private void keyDateLabel_DoubleClick(object sender, EventArgs e)
+        {
+            string result;
+            this.ReadDisk(out result);
         }
         #endregion
     }

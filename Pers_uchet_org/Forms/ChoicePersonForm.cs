@@ -120,6 +120,12 @@ namespace Pers_uchet_org
 
                         //radioButton1.Checked = true;
                     }
+
+                ToolTip toolTip1 = new ToolTip();
+                toolTip1.SetToolTip(radioButton1,"Создается для застрахованного лица, на которое данные еще не передавались в фонд");
+                toolTip1.SetToolTip(radioButton2, "Создается для застрахованного лица, если данные уже сданы в фонд и требуют корректировки");
+                toolTip1.SetToolTip(radioButton3, "Создается для застрахованного лица, если данные уже сданы в фонд и их необходимо отменить (удалить)");
+                toolTip1.SetToolTip(radioButton4, "Документы этого типа должны находиться в отдельном пакете и сдаются в бумажном виде");
             }
             catch (Exception ex)
             {

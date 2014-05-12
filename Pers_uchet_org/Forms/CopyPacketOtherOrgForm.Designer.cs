@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CopyPacketOtherOrgForm));
             this.label2 = new System.Windows.Forms.Label();
             this.orgsComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -107,9 +108,9 @@
             // 
             this.copyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.copyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.copyButton.Location = new System.Drawing.Point(156, 243);
+            this.copyButton.Location = new System.Drawing.Point(177, 243);
             this.copyButton.Name = "copyButton";
-            this.copyButton.Size = new System.Drawing.Size(96, 23);
+            this.copyButton.Size = new System.Drawing.Size(75, 23);
             this.copyButton.TabIndex = 5;
             this.copyButton.Text = "Копировать";
             this.copyButton.UseVisualStyleBackColor = true;
@@ -140,6 +141,7 @@
             this.Controls.Add(this.label2);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CopyPacketOtherOrgForm";

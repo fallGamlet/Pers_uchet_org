@@ -100,5 +100,16 @@ namespace Pers_uchet_org
             }
         }
         #endregion
+
+        private void logoPictureBox_Click(object sender, EventArgs e)
+        {
+            logoPictureBox.Left = 0;
+            logoPictureBox.Top = 0;
+        }
+
+        private void logoPictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            logoPictureBox.Top += 66;
+        }
     }
 }

@@ -56,6 +56,12 @@ namespace Pers_uchet_org.Forms
         #region Методы - обработчики событий
         void _orgBS_CurrentChanged(object sender, EventArgs e)
         {
+            this.regnumorgBox.Text = "";
+            this.nameorgBox.Text = "";
+            this.chiefpostorgBox.Text = "";
+            this.chieffioorgBox.Text = "";
+            this.bookerfioorgBox.Text = "";
+
             DataRowView row = _orgBS.Current as DataRowView;
 
             if (row != null)
@@ -68,7 +74,31 @@ namespace Pers_uchet_org.Forms
             }
         }
 
-        private void addorgButton_Click(object sender, EventArgs e)
+        //private void saveButton_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        _orgAdapter.Update(_orgTable);
+        //        MessageBox.Show(this, "Данные были успешно сохранены", "Сохранение прошло успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    catch (Exception err)
+        //    {
+        //        MessageBox.Show(this, "Были обнаружены ошибки при попытке сохранить данные в базу данных. Сообщение: " + err, "Сохранение не было осуществено", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //}
+
+        //private void closeButton_Click(object sender, EventArgs e)
+        //{
+        //    this.Close();
+        //}
+        private void OrgForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.DialogResult = result;
+        }
+
+        #endregion
+
+        private void addOrgStripButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -90,8 +120,8 @@ namespace Pers_uchet_org.Forms
 
                         int pos = _orgBS.Position;
                         int orgCount = _orgAdapter.Update(_orgTable);
-                        //_orgTable.Clear();
-                        //_orgAdapter.Fill(_orgTable);
+                        _orgTable.Clear();
+                        _orgAdapter.Fill(_orgTable);
                         _orgBS.Position = pos;
                         MainForm.ShowInfoMessage("Организация успешно добавлена!", "Добавление организации");
                         result = DialogResult.OK;
@@ -104,7 +134,7 @@ namespace Pers_uchet_org.Forms
             }
         }
 
-        private void editorgButton_Click(object sender, EventArgs e)
+        private void editOrgStripButton_Click(object sender, EventArgs e)
         {
             DataRowView curOrg = (DataRowView)_orgBS.Current;
             if (curOrg == null)
@@ -133,14 +163,15 @@ namespace Pers_uchet_org.Forms
 
                 int pos = _orgBS.Position;
                 int orgCount = _orgAdapter.Update(_orgTable);
-                //_orgAdapter.Fill(_orgTable);
+                _orgTable.Clear();
+                _orgAdapter.Fill(_orgTable);
                 _orgBS.Position = pos;
                 MainForm.ShowInfoMessage("Изменения успешно сохранены!", "Изменение организации");
                 result = DialogResult.OK;
             }
         }
 
-        private void removeorgButton_Click(object sender, EventArgs e)
+        private void delOrgStripButton_Click(object sender, EventArgs e)
         {
             DataRowView curOrg = (DataRowView)_orgBS.Current;
             if (curOrg == null)
@@ -166,29 +197,5 @@ namespace Pers_uchet_org.Forms
                 result = DialogResult.OK;
             }
         }
-
-        //private void saveButton_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        _orgAdapter.Update(_orgTable);
-        //        MessageBox.Show(this, "Данные были успешно сохранены", "Сохранение прошло успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //    catch (Exception err)
-        //    {
-        //        MessageBox.Show(this, "Были обнаружены ошибки при попытке сохранить данные в базу данных. Сообщение: " + err, "Сохранение не было осуществено", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //    }
-        //}
-
-        //private void closeButton_Click(object sender, EventArgs e)
-        //{
-        //    this.Close();
-        //}
-        private void OrgForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.DialogResult = result;
-        }
-
-        #endregion
     }
 }

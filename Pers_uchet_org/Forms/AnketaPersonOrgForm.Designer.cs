@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnketaPersonOrgForm));
             this.personDataLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.orgView = new System.Windows.Forms.DataGridView();
@@ -126,9 +127,9 @@
             // acceptButton
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.Location = new System.Drawing.Point(170, 228);
+            this.acceptButton.Location = new System.Drawing.Point(191, 228);
             this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(96, 23);
+            this.acceptButton.Size = new System.Drawing.Size(75, 23);
             this.acceptButton.TabIndex = 2;
             this.acceptButton.Text = "Сохранить";
             this.acceptButton.UseVisualStyleBackColor = true;
@@ -154,6 +155,7 @@
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.personDataLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnketaPersonOrgForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Закрепление работника за организацией";

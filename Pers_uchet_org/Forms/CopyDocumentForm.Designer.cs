@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CopyDocumentForm));
             this.label1 = new System.Windows.Forms.Label();
             this.listsComboBox = new System.Windows.Forms.ComboBox();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -67,9 +68,9 @@
             // 
             this.moveDocButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.moveDocButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.moveDocButton.Location = new System.Drawing.Point(75, 55);
+            this.moveDocButton.Location = new System.Drawing.Point(88, 55);
             this.moveDocButton.Name = "moveDocButton";
-            this.moveDocButton.Size = new System.Drawing.Size(88, 23);
+            this.moveDocButton.Size = new System.Drawing.Size(75, 23);
             this.moveDocButton.TabIndex = 2;
             this.moveDocButton.Text = "Копировать";
             this.moveDocButton.UseVisualStyleBackColor = true;
@@ -86,6 +87,7 @@
             this.Controls.Add(this.listsComboBox);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CopyDocumentForm";

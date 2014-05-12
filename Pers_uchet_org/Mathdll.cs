@@ -8,13 +8,13 @@ namespace Pers_uchet_org
 {
     class Mathdll
     {
-        [DllImport(@"mathdll.dll")]
+        [DllImport(@"Libs\mathdll.dll")]
         static private extern int gost_gamma(int hData, int hKey, int hTable, int hSynchro, int dlen);
 
-        [DllImport(@"mathdll.dll")]
+        [DllImport(@"Libs\mathdll.dll")]
         static private extern int gost_fhash(string fileName, int table, int resHash);
 
-        [DllImport(@"mathdll.dll")]
+        [DllImport(@"Libs\mathdll.dll")]
         static private extern int gost_imito(int hData, int hKey, int hTable, int hSynchro, int dlen);
 
         #region Обертки для gost_gamma

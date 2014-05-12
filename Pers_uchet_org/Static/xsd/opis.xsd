@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="Windows-1251"?> 
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:annotation>
+		<xsd:documentation> 
+			Проверка описи
+		</xsd:documentation> 
+	</xsd:annotation> 
+
+	<xsd:element name="inddocs" type="IndDocType"/> 
+
+	<xsd:complexType name="IndDocType"> 
+		<xsd:sequence>
+			<xsd:element name="inddoc" type="DocType" minOccurs="4" maxOccurs="4"/>
+		</xsd:sequence> 
+	</xsd:complexType>
+
+	<xsd:complexType name="DocType"> 
+		<xsd:sequence>
+			<xsd:element ref="type_id"/>
+			<xsd:element ref="count"/>
+			<xsd:element name="summary_info" type="SummaryType"/>
+		</xsd:sequence> 
+	</xsd:complexType>
+
+	<xsd:element name="type_id"> 
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:integer">
+				<xsd:minInclusive value="21"/>
+				<xsd:maxInclusive value="24"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+
+	<xsd:element name="count"> 
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:integer">
+				<xsd:minInclusive value="0"/>
+				<xsd:maxInclusive value="200"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+
+	<xsd:complexType name="SummaryType">
+		<xsd:sequence>
+			<xsd:element name="col_1" type="xsd:float" default="0"/> 
+			<xsd:element name="col_2" type="xsd:float" default="0"/> 
+			<xsd:element name="col_3" type="xsd:float" default="0"/> 
+			<xsd:element name="col_4" type="xsd:float" default="0"/> 
+			<xsd:element name="col_5" type="xsd:float" default="0"/> 
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema> 

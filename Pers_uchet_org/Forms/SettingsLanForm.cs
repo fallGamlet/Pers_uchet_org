@@ -61,6 +61,9 @@ namespace Pers_uchet_org.Forms
         private void SettingsLanForm_Load(object sender, EventArgs e)
         {
             ReadSettings();
+
+            ToolTip toolTip1 = new ToolTip();
+            toolTip1.SetToolTip(autoProxyRadioButton, "Используются настройки из обозревателя IE");
         }
 
         private void ReadSettings()

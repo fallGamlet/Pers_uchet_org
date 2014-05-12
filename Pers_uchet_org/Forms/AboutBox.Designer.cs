@@ -29,14 +29,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
             this.labelCompanyName = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
+            this.panelLogo = new System.Windows.Forms.Panel();
+            this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel.SuspendLayout();
+            this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,13 +47,13 @@
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67F));
-            this.tableLayoutPanel.Controls.Add(this.logoPictureBox, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.labelVersion, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.labelCompanyName, 1, 3);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 4);
             this.tableLayoutPanel.Controls.Add(this.okButton, 1, 5);
+            this.tableLayoutPanel.Controls.Add(this.panelLogo, 0, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -64,18 +66,6 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(417, 265);
             this.tableLayoutPanel.TabIndex = 0;
-            // 
-            // logoPictureBox
-            // 
-            this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
-            this.logoPictureBox.Location = new System.Drawing.Point(3, 3);
-            this.logoPictureBox.Name = "logoPictureBox";
-            this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 6);
-            this.logoPictureBox.Size = new System.Drawing.Size(131, 259);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.logoPictureBox.TabIndex = 12;
-            this.logoPictureBox.TabStop = false;
             // 
             // labelProductName
             // 
@@ -149,6 +139,28 @@
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&ОК";
             // 
+            // panelLogo
+            // 
+            this.panelLogo.Controls.Add(this.logoPictureBox);
+            this.panelLogo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogo.Location = new System.Drawing.Point(3, 3);
+            this.panelLogo.Name = "panelLogo";
+            this.tableLayoutPanel.SetRowSpan(this.panelLogo, 6);
+            this.panelLogo.Size = new System.Drawing.Size(131, 259);
+            this.panelLogo.TabIndex = 25;
+            // 
+            // logoPictureBox
+            // 
+            this.logoPictureBox.Image = global::Pers_uchet_org.Properties.Resources.MainLogo;
+            this.logoPictureBox.Location = new System.Drawing.Point(0, 66);
+            this.logoPictureBox.Name = "logoPictureBox";
+            this.logoPictureBox.Size = new System.Drawing.Size(131, 125);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoPictureBox.TabIndex = 13;
+            this.logoPictureBox.TabStop = false;
+            this.logoPictureBox.Click += new System.EventHandler(this.logoPictureBox_Click);
+            this.logoPictureBox.DoubleClick += new System.EventHandler(this.logoPictureBox_DoubleClick);
+            // 
             // AboutBox
             // 
             this.AcceptButton = this.okButton;
@@ -157,6 +169,7 @@
             this.ClientSize = new System.Drawing.Size(435, 283);
             this.Controls.Add(this.tableLayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutBox";
@@ -167,6 +180,7 @@
             this.Text = "AboutBox";
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
+            this.panelLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -175,12 +189,13 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label labelProductName;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.Label labelCompanyName;
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Panel panelLogo;
+        private System.Windows.Forms.PictureBox logoPictureBox;
     }
 }

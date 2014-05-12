@@ -139,6 +139,29 @@ namespace Pers_uchet_org
         {
             return (this.candeleteVal == 0);
         }
+
+        public void SaveNewPassword(string connectionStr)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionStr))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+                    using (SQLiteCommand command = CreateUpdateCommand())
+                    {
+                        command.Connection = connection;
+                        command.Transaction = transaction;
+                        command.Parameters[pName].Value = nameVal;
+                        command.Parameters[pPassword].Value = passwordVal;
+                        command.Parameters[pId].Value = idVal;
+
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+            }
+        }
         #endregion
 
         #region Методы статические
@@ -500,8 +523,8 @@ namespace Pers_uchet_org
 
         public static string ChangeEnToRus(string regNumber)
         {
-            string rus = "ТРСК";
-            string eng = "TPCK";
+            string rus = "ТРСКУ";
+            string eng = "TPCKY";
             char[] chars = regNumber.ToUpper().ToCharArray();
             for (int i = 0; i < chars.Length; i++)
             {
@@ -867,7 +890,6 @@ namespace Pers_uchet_org
                     return (long)command.ExecuteScalar();
                 }
             }
-            return -1;
         }
 
         static public string GetSelectOrgIDText(long person_id)
@@ -2922,11 +2944,13 @@ namespace Pers_uchet_org
             return string.Format(@"SELECT d.{0}, count(distinct d.{1}) as [count] 
                                     FROM {2} d
                                     INNER JOIN {3} dt ON d.{0} = dt.{4} and dt.{5} = 2
-                                    WHERE {6} = {7}
+                                    INNER JOIN {6} pi ON pi.{7} = d.{8} AND length(pi.{9}) > 0
+                                    WHERE {10} = {11}
                                     GROUP BY {0}",
                                 docTypeId, id,
                                 tablename,
                                 DocTypes.tablename, DocTypes.id, DocTypes.listTypeId,
+                                PersonInfo.tablename, PersonInfo.id, personID, PersonInfo.socNumber,
                                 listId, list_id);
         }
 
@@ -3008,11 +3032,13 @@ namespace Pers_uchet_org
         {
             return string.Format(@"SELECT d.{0}, si.{1}, sum(si.{2}) as {2}
                                 FROM {3} d INNER JOIN {4} si ON si.{5} = d.{6} and si.{1} in (1,2,3,4,5)
-                                WHERE d.{7} = {8}
+                                INNER JOIN {7} pi ON pi.{8} = d.{9} AND length(pi.{10}) > 0
+                                WHERE d.{11} = {12}
                                 GROUP BY d.{0}, si.{1}
                                 ORDER BY d.{0}, si.{1}",
                                 docTypeId, SalaryInfo.salaryGroupsId, SalaryInfo.sum,
                                 tablename, SalaryInfo.tablename, SalaryInfo.docId, id,
+                                PersonInfo.tablename, PersonInfo.id, personID, PersonInfo.socNumber,
                                 listId, list_id);
         }
 
@@ -3438,6 +3464,75 @@ namespace Pers_uchet_org
             return comm;
         }
 
+        static public SQLiteCommand CreateInsertCommand()
+        {
+            return CreateInsertCommand(null, null);
+        }
+
+        static public SQLiteCommand CreateInsertCommand(SQLiteConnection connection)
+        {
+            return CreateInsertCommand(connection, null);
+        }
+
+        static public SQLiteCommand CreateInsertCommand(SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            SQLiteCommand comm = new SQLiteCommand();
+            //comm.Parameters.Add(new SQLiteParameter(pId, DbType.UInt64, id));
+            comm.Parameters.Add(new SQLiteParameter(pDocId, DbType.UInt64, docId));
+            comm.Parameters.Add(new SQLiteParameter(pSalaryGroupsId, DbType.UInt64, salaryGroupsId));
+            comm.Parameters.Add(new SQLiteParameter(pJanuary, DbType.Double, january));
+            comm.Parameters.Add(new SQLiteParameter(pFebruary, DbType.Double, february));
+            comm.Parameters.Add(new SQLiteParameter(pMarch, DbType.Double, march));
+            comm.Parameters.Add(new SQLiteParameter(pApril, DbType.Double, april));
+            comm.Parameters.Add(new SQLiteParameter(pMay, DbType.Double, may));
+            comm.Parameters.Add(new SQLiteParameter(pJune, DbType.Double, june));
+            comm.Parameters.Add(new SQLiteParameter(pJuly, DbType.Double, july));
+            comm.Parameters.Add(new SQLiteParameter(pAugust, DbType.Double, august));
+            comm.Parameters.Add(new SQLiteParameter(pSeptember, DbType.Double, september));
+            comm.Parameters.Add(new SQLiteParameter(pOctober, DbType.Double, october));
+            comm.Parameters.Add(new SQLiteParameter(pNovember, DbType.Double, november));
+            comm.Parameters.Add(new SQLiteParameter(pDecember, DbType.Double, december));
+            comm.Parameters.Add(new SQLiteParameter(pSum, DbType.Double, sum));
+
+            comm.CommandText = string.Format(@"INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}) VALUES ({16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}); ",
+                                            tablename,
+                //id,
+                                            docId,
+                                            salaryGroupsId,
+                                            january,
+                                            february,
+                                            march,
+                                            april,
+                                            may,
+                                            june,
+                                            july,
+                                            august,
+                                            september,
+                                            october,
+                                            november,
+                                            december,
+                                            sum,
+                //pId,
+                                            pDocId,
+                                            pSalaryGroupsId,
+                                            pJanuary,
+                                            pFebruary,
+                                            pMarch,
+                                            pApril,
+                                            pMay,
+                                            pJune,
+                                            pJuly,
+                                            pAugust,
+                                            pSeptember,
+                                            pOctober,
+                                            pNovember,
+                                            pDecember,
+                                            pSum);
+            comm.Connection = connection;
+            comm.Transaction = transaction;
+            return comm;
+        }
+
         static public SQLiteCommand CreateReplaceCommand()
         {
             return CreateReplaceCommand(null, null);
@@ -3531,7 +3626,7 @@ namespace Pers_uchet_org
         {
             SQLiteDataAdapter adapter = new SQLiteDataAdapter();
             adapter.SelectCommand = CreateSelectCommand(connection, transaction);
-            adapter.InsertCommand = CreateReplaceCommand(connection, transaction);
+            adapter.InsertCommand = CreateInsertCommand(connection, transaction);
             adapter.UpdateCommand = CreateReplaceCommand(connection, transaction);
             adapter.DeleteCommand = CreateDeleteCommand(connection, transaction);
             return adapter;
@@ -4170,10 +4265,13 @@ namespace Pers_uchet_org
         static public string id = "id";
         static public string docId = "doc_id";
         static public string partCondition = "part_condition";
+        static public string partConditionClassificatorId = "part_condition_classificator_id";
         static public string partCode = "part_code";
         static public string stajBase = "staj_base";
+        static public string stajBaseClassificatorId = "staj_base_classificator_id";
         static public string stajCode = "staj_code";
         static public string servYearBase = "serv_year_base";
+        static public string servYearBaseClassificatorId = "serv_year_base_classificator_id";
         static public string servCode = "serv_code";
         static public string beginDate = "begin_date";
         static public string endDate = "end_date";
@@ -4206,10 +4304,13 @@ namespace Pers_uchet_org
             table.Columns.Add(id, typeof(long));
             table.Columns.Add(docId, typeof(long));
             table.Columns.Add(partCondition, typeof(long));
+            table.Columns.Add(partConditionClassificatorId, typeof(long));
             table.Columns.Add(partCode, typeof(string));
             table.Columns.Add(stajBase, typeof(long));
+            table.Columns.Add(stajBaseClassificatorId, typeof(long));
             table.Columns.Add(stajCode, typeof(string));
             table.Columns.Add(servYearBase, typeof(long));
+            table.Columns.Add(servYearBaseClassificatorId, typeof(long));
             table.Columns.Add(servCode, typeof(string));
             table.Columns.Add(beginDate, typeof(DateTime));
             table.Columns.Add(endDate, typeof(DateTime));
@@ -5265,5 +5366,65 @@ namespace Pers_uchet_org
                 fileInfo.ElementAt(i).Delete();
             }
         }
+    }
+
+    public class Options
+    {
+        // название таблицы в БД
+        static public string tablename = "Options";
+
+        #region Название полей таблицы в БД
+        static public string key = "key";
+        static public string value = "value";
+        #endregion
+
+        #region Имена ключей (возможно не все)
+        public static string isFirstLoginKeyName = "isFirstLogin";
+        public static string dbVersionKeyName = "dbVersion";
+        #endregion
+
+        #region Методы - статические
+        static public string GetSelectText()
+        {
+            return string.Format(" SELECT * FROM {0} ", tablename);
+        }
+
+        static public string GetSelectText(string key_name)
+        {
+            return string.Format("{0} WHERE {1}='{2}' ", GetSelectText(), key, key_name);
+        }
+
+        static public string GetSelectKeyValueText(string key_name)
+        {
+            return string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' ", value, tablename, key, key_name);
+        }
+
+        static public string GetReplaceText(string key_name, string key_value)
+        {
+            return string.Format(@" REPLACE INTO {0} ({1},{2}) VALUES ('{3}','{4}') ",
+                                    tablename, key, value, key_name, key_value);
+        }
+
+        static public string GetDeleteText(string key_name)
+        {
+            return string.Format(" DELETE FROM {0} WHERE {1}='{2}' ", tablename, key, key_name);
+        }
+
+        static public object GetKeyValue(string key_name, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetSelectKeyValueText(key_name), connection, transaction);
+            return command.ExecuteScalar();
+        }
+
+        static public int ChangeKeyValue(string key_name, string key_value, SQLiteConnection connection, SQLiteTransaction transaction)
+        {
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            SQLiteCommand command = new SQLiteCommand(GetReplaceText(key_name, key_value), connection, transaction);
+            return command.ExecuteNonQuery();
+        }
+        #endregion
     }
 }

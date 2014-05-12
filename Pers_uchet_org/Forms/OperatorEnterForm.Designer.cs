@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperatorEnterForm));
             this.acceptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,12 +36,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.loginComboBox = new System.Windows.Forms.ComboBox();
             this.showPassButton = new System.Windows.Forms.Button();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // acceptButton
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.Location = new System.Drawing.Point(115, 68);
+            this.acceptButton.Location = new System.Drawing.Point(115, 67);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(80, 23);
             this.acceptButton.TabIndex = 5;
@@ -51,7 +53,7 @@
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.Location = new System.Drawing.Point(201, 68);
+            this.cancelButton.Location = new System.Drawing.Point(201, 67);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(80, 23);
             this.cancelButton.TabIndex = 6;
@@ -108,20 +110,34 @@
             this.showPassButton.BackColor = System.Drawing.Color.Transparent;
             this.showPassButton.FlatAppearance.BorderSize = 0;
             this.showPassButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showPassButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
             this.showPassButton.Location = new System.Drawing.Point(258, 36);
             this.showPassButton.Name = "showPassButton";
             this.showPassButton.Size = new System.Drawing.Size(23, 23);
             this.showPassButton.TabIndex = 4;
-            this.showPassButton.Text = "V";
             this.showPassButton.UseVisualStyleBackColor = false;
+            this.showPassButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.showPassButton_KeyDown);
+            this.showPassButton.KeyUp += new System.Windows.Forms.KeyEventHandler(this.showPassButton_KeyUp);
+            this.showPassButton.Leave += new System.EventHandler(this.showPassButton_Leave);
             this.showPassButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseDown);
             this.showPassButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassButton_MouseUp);
+            // 
+            // labelVersion
+            // 
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.ForeColor = System.Drawing.Color.DimGray;
+            this.labelVersion.Location = new System.Drawing.Point(12, 80);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(47, 13);
+            this.labelVersion.TabIndex = 7;
+            this.labelVersion.Text = "Версия ";
             // 
             // OperatorEnterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 103);
+            this.ClientSize = new System.Drawing.Size(293, 102);
+            this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.showPassButton);
             this.Controls.Add(this.loginComboBox);
             this.Controls.Add(this.label1);
@@ -129,6 +145,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.acceptButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(400, 141);
             this.MinimizeBox = false;
@@ -151,5 +168,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox loginComboBox;
         private System.Windows.Forms.Button showPassButton;
+        private System.Windows.Forms.Label labelVersion;
     }
 }
