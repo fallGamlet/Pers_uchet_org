@@ -69,6 +69,8 @@ namespace Pers_uchet_org
 
         private void ExchangeForm_Load(object sender, EventArgs e)
         {
+            this.Text += " - " + _organization.regnumVal;
+
             yearBox.Value = MainForm.RepYear;
             _repYear = (int)yearBox.Value;
             ExchangeTabControl.SelectedTab = tabPageDB;
@@ -639,7 +641,7 @@ namespace Pers_uchet_org
             DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Properties.Settings.Default.TempFolder));
             if (flashRButton.Checked)
             {
-                string flashRoot = flashBox.Text.Substring(0, 1);
+                string flashRoot = GetFlashRoot();
                 dir = Directory.CreateDirectory(string.Format(
                                                             @"{0}:\\Государственный пенсионный фонд ПМР\{1}.{2}",
                                                             flashRoot, _organization.regnumVal, _repYear));
@@ -663,6 +665,18 @@ namespace Pers_uchet_org
             byte[] hash = Mathdll.GostHash(containerFilename, _diskTable);
             File.WriteAllBytes(mdcFilename, hash);
             return 0;
+        }
+
+        public string GetFlashRoot()
+        {
+            if (flashBox.InvokeRequired)
+            {
+                return (string)flashBox.Invoke(new Func<String>(() => GetFlashRoot()));
+            }
+            else
+            {
+                return flashBox.Text.Substring(0, 1);
+            }
         }
         #endregion
 

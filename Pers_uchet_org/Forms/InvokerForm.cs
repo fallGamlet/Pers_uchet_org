@@ -100,6 +100,7 @@ namespace Pers_uchet_org.Forms
             toolTip1.SetToolTip(showPassButton, "Показать пароль");
             toolTip1.SetToolTip(sendButton, "Отправить данные на хостинг");
             toolTip1.SetToolTip(cancelButton, "Прервать отправку данных");
+            toolTip1.SetToolTip(passwordTextBox, "Пароль указан на дополнительном соглашении");
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -524,6 +525,11 @@ namespace Pers_uchet_org.Forms
             {
                 ReadSettings();
             }
+        }
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this, "Help.chm", HelpNavigator.Topic, "ExchangeInternet.htm");
         }
     }
 }

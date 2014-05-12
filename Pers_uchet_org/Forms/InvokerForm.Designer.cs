@@ -228,6 +228,7 @@
             this.helpButton.Size = new System.Drawing.Size(32, 25);
             this.helpButton.TabIndex = 12;
             this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
             // lanSettingsButton
             // 

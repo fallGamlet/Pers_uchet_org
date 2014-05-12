@@ -586,7 +586,7 @@
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(606, 337);
             this.Name = "PrintDocBlanksForm";
-            this.Text = "Пекчать бланков документов";
+            this.Text = "Печать бланков документов";
             this.tabControl1.ResumeLayout(false);
             this.regPage.ResumeLayout(false);
             this.regPage.PerformLayout();

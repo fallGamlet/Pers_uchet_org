@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Reflection;
 
 namespace Pers_uchet_org.Forms
 {
@@ -48,6 +49,8 @@ namespace Pers_uchet_org.Forms
             {
                 this.loginComboBox.AutoCompleteCustomSource.Add(dr[Operator.name].ToString());
             }
+
+            labelVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         #endregion
 
@@ -130,13 +133,28 @@ namespace Pers_uchet_org.Forms
         {
             this.DialogResult = DialogResult.Cancel;
         }
-        
+
         private void showPassButton_MouseDown(object sender, MouseEventArgs e)
         {
             passwordBox.UseSystemPasswordChar = false;
         }
 
         private void showPassButton_MouseUp(object sender, MouseEventArgs e)
+        {
+            passwordBox.UseSystemPasswordChar = true;
+        }
+       
+        private void showPassButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            passwordBox.UseSystemPasswordChar = false;
+        }
+
+        private void showPassButton_KeyUp(object sender, KeyEventArgs e)
+        {
+            passwordBox.UseSystemPasswordChar = true;
+        }
+       
+        private void showPassButton_Leave(object sender, EventArgs e)
         {
             passwordBox.UseSystemPasswordChar = true;
         }

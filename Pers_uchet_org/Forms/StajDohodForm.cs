@@ -67,6 +67,8 @@ namespace Pers_uchet_org
         {
             try
             {
+                this.Text += " - " + _organization.regnumVal;
+
                 _currentListId = 0;
                 _repYear = MainForm.RepYear;
                 yearBox.Value = _repYear;

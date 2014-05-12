@@ -56,7 +56,7 @@
             this.orgMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.historychangeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.historyChangeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orgBox = new System.Windows.Forms.ComboBox();
@@ -281,7 +281,7 @@
             // 
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpMenuItem,
-            this.historychangeMenuItem,
+            this.historyChangeMenuItem,
             this.toolStripSeparator5,
             this.aboutMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
@@ -294,13 +294,15 @@
             this.helpMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.helpMenuItem.Size = new System.Drawing.Size(224, 22);
             this.helpMenuItem.Text = "Помощь";
+            this.helpMenuItem.Click += new System.EventHandler(this.helpMenuItem_Click);
             // 
-            // historychangeMenuItem
+            // historyChangeMenuItem
             // 
-            this.historychangeMenuItem.Name = "historychangeMenuItem";
-            this.historychangeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
-            this.historychangeMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.historychangeMenuItem.Text = "История изменений";
+            this.historyChangeMenuItem.Name = "historyChangeMenuItem";
+            this.historyChangeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
+            this.historyChangeMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.historyChangeMenuItem.Text = "История изменений";
+            this.historyChangeMenuItem.Click += new System.EventHandler(this.historyChangeMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -374,7 +376,7 @@
             this.MinimumSize = new System.Drawing.Size(560, 128);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "ЕГФСС ПМР --- Персонифицированный учет";
+            this.Text = "ЕГФСС ПМР - Персонифицированный учет";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -411,7 +413,7 @@
         private System.Windows.Forms.ToolStripMenuItem operatoriMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem historychangeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem historyChangeMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.ComboBox orgBox;
         private System.Windows.Forms.StatusStrip statusStrip1;

@@ -347,12 +347,7 @@ namespace Pers_uchet_org
                 return;
             }
 
-            // если оператор является Администратором, передать текущий пароль диалоговой форме
-            if (_operator.IsAdmin())
-                tmpForm.PasswordOld = _operator.passwordVal;
-            else
-                // иначе можно менять пароль пользователя не зная текущего пароля этого пользователя
-                tmpForm.PasswordOld = "";
+            tmpForm.PasswordOld = _operator.passwordVal;
             tmpForm.Owner = this;
             // отобразить диалоговое окно для пользователя
             DialogResult dRes = tmpForm.ShowDialog(this);
@@ -418,6 +413,17 @@ namespace Pers_uchet_org
         {
             this.SetPrivilege();
         }
+
+        private void helpMenuItem_Click(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this, "Help.chm", HelpNavigator.Topic, "FirstRun.htm");
+        }
+       
+        private void historyChangeMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("History.txt");
+        }
         #endregion
+
     }
 }

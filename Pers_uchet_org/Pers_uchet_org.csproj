@@ -457,6 +457,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Help.chm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Custom.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Custom.Designer.cs</LastGenOutput>
@@ -486,6 +489,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="History.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Libs\Ionic.Zip.dll" />
     <Content Include="Libs\mathdll.dll" />
     <Content Include="Libs\OpenMcdf.dll" />
