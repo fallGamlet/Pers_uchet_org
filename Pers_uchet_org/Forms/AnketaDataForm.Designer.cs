@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnketadataForm));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.countLabel = new System.Windows.Forms.Label();
@@ -90,11 +91,23 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.cmsPerson = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.dismissPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restorePersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printAnketsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printUnregisteredMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.cmsPerson.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -149,27 +162,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.personView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle33;
             this.personView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
             this.numColumn,
             this.fioColumn,
             this.dismissdateColumn});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.personView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.personView.DefaultCellStyle = dataGridViewCellStyle35;
             this.personView.Location = new System.Drawing.Point(4, 56);
             this.personView.MultiSelect = false;
             this.personView.Name = "personView";
@@ -177,15 +190,17 @@
             this.personView.RowHeadersVisible = false;
             this.personView.RowHeadersWidth = 15;
             this.personView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle36.BackColor = System.Drawing.Color.White;
+            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle36;
             this.personView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.personView.Size = new System.Drawing.Size(385, 375);
             this.personView.TabIndex = 4;
             this.personView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellClick);
             this.personView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellDoubleClick);
+            this.personView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.personView_CellMouseDown);
             this.personView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.personView_KeyDown);
             this.personView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.personView_KeyPress);
+            this.personView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.personView_MouseClick);
             // 
             // checkColumn
             // 
@@ -220,9 +235,9 @@
             // dismissdateColumn
             // 
             this.dismissdateColumn.DataPropertyName = "dismiss_date";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle34.Format = "d";
+            dataGridViewCellStyle34.NullValue = null;
+            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle34;
             this.dismissdateColumn.HeaderText = "Дата увольнения";
             this.dismissdateColumn.MaxInputLength = 25;
             this.dismissdateColumn.MinimumWidth = 50;
@@ -760,6 +775,92 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Фамилия Имя Отчество";
             // 
+            // cmsPerson
+            // 
+            this.cmsPerson.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPersonMenuItem,
+            this.editPersonMenuItem,
+            this.delPersonMenuItem,
+            this.toolStripSeparator4,
+            this.dismissPersonMenuItem,
+            this.restorePersonMenuItem,
+            this.toolStripSeparator3,
+            this.printMenuItem});
+            this.cmsPerson.Name = "cmsPerson";
+            this.cmsPerson.Size = new System.Drawing.Size(150, 148);
+            // 
+            // addPersonMenuItem
+            // 
+            this.addPersonMenuItem.Image = global::Pers_uchet_org.Properties.Resources.plus2_16;
+            this.addPersonMenuItem.Name = "addPersonMenuItem";
+            this.addPersonMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addPersonMenuItem.Text = "Добавить";
+            this.addPersonMenuItem.Click += new System.EventHandler(this.addPersonMenuItem_Click);
+            // 
+            // editPersonMenuItem
+            // 
+            this.editPersonMenuItem.Image = global::Pers_uchet_org.Properties.Resources.edit_16;
+            this.editPersonMenuItem.Name = "editPersonMenuItem";
+            this.editPersonMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editPersonMenuItem.Text = "Изменить";
+            this.editPersonMenuItem.Click += new System.EventHandler(this.editPersonMenuItem_Click);
+            // 
+            // delPersonMenuItem
+            // 
+            this.delPersonMenuItem.Image = global::Pers_uchet_org.Properties.Resources.delete_16;
+            this.delPersonMenuItem.Name = "delPersonMenuItem";
+            this.delPersonMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.delPersonMenuItem.Text = "Удалить";
+            this.delPersonMenuItem.Click += new System.EventHandler(this.delPersonMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(146, 6);
+            // 
+            // dismissPersonMenuItem
+            // 
+            this.dismissPersonMenuItem.Name = "dismissPersonMenuItem";
+            this.dismissPersonMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dismissPersonMenuItem.Text = "Уволить";
+            this.dismissPersonMenuItem.Click += new System.EventHandler(this.dismissPersonMenuItem_Click);
+            // 
+            // restorePersonMenuItem
+            // 
+            this.restorePersonMenuItem.Name = "restorePersonMenuItem";
+            this.restorePersonMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.restorePersonMenuItem.Text = "Восстановить";
+            this.restorePersonMenuItem.Click += new System.EventHandler(this.restorePersonMenuItem_Click);
+            // 
+            // printMenuItem
+            // 
+            this.printMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printAnketsMenuItem,
+            this.printUnregisteredMenuItem});
+            this.printMenuItem.Image = global::Pers_uchet_org.Properties.Resources.print_16;
+            this.printMenuItem.Name = "printMenuItem";
+            this.printMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printMenuItem.Text = "Печать";
+            // 
+            // printAnketsMenuItem
+            // 
+            this.printAnketsMenuItem.Name = "printAnketsMenuItem";
+            this.printAnketsMenuItem.Size = new System.Drawing.Size(279, 22);
+            this.printAnketsMenuItem.Text = "Выбранных";
+            this.printAnketsMenuItem.Click += new System.EventHandler(this.printAnketsMenuItem_Click);
+            // 
+            // printUnregisteredMenuItem
+            // 
+            this.printUnregisteredMenuItem.Name = "printUnregisteredMenuItem";
+            this.printUnregisteredMenuItem.Size = new System.Drawing.Size(279, 22);
+            this.printUnregisteredMenuItem.Text = "Списка анкет без страховых номеров";
+            this.printUnregisteredMenuItem.Click += new System.EventHandler(this.printUnregisteredMenuItem_Click);
+            // 
             // AnketadataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -783,6 +884,7 @@
             this.groupBox6.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.cmsPerson.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -846,5 +948,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn numColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fioColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dismissdateColumn;
+        private System.Windows.Forms.ContextMenuStrip cmsPerson;
+        private System.Windows.Forms.ToolStripMenuItem addPersonMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editPersonMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delPersonMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem dismissPersonMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restorePersonMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem printMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printAnketsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printUnregisteredMenuItem;
     }
 }

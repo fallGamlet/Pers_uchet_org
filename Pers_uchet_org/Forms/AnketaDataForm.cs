@@ -43,6 +43,7 @@ namespace Pers_uchet_org
 
         private void AnketadataForm_Load(object sender, EventArgs e)
         {
+            this.Text += " - " + _org.regnumVal;
             // иництализация таблицы персон (записи с анкетными данными)
             _personTable = PersonView.CreatetTable();
             // добавление виртуального столбца для возможности отмечать записи
@@ -218,8 +219,6 @@ namespace Pers_uchet_org
                 addStripButton.Enabled = true;
             }
         }
-
-        #endregion
 
         private void addStripButton_Click(object sender, EventArgs e)
         {
@@ -460,6 +459,19 @@ namespace Pers_uchet_org
         {
             try
             {
+                if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
+                {
+                    DataGridViewCell currentCell = (sender as DataGridView).CurrentCell;
+                    if (currentCell == null)
+                        return;
+                    ContextMenuStrip cms = cmsPerson;
+                    if (cms == null)
+                        return;
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Point p = new Point(r.Left, r.Top);
+                    cms.Show((sender as DataGridView), p);
+                }
+
                 if (e.KeyCode == Keys.Delete)
                 {
                     delStripButton_Click(sender, e);
@@ -485,5 +497,113 @@ namespace Pers_uchet_org
                 MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
             }
         }
+
+        private void personView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                {
+                    DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
+                    //if (!r.Selected)
+                    //{
+                    r.DataGridView.ClearSelection();
+                    r.DataGridView.CurrentCell = r.Cells[0];
+                    r.Selected = true;
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void personView_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    ContextMenuStrip menu = cmsPerson;
+                    if (menu == null)
+                        return;
+
+                    DataGridView dataView = sender as DataGridView;
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems.Add("editPersonMenuItem");
+                    menuItems.Add("delpersonMenuItem");
+                    menuItems.Add("dismissPersonMenuItem");
+                    menuItems.Add("restorePersonMenuItem");
+                    menuItems.Add("printAnketsMenuItem");
+                    menuItems.Add("printUnregisteredMenuItem");
+
+                    int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
+                    bool isEnabled = !(currentMouseOverRow < 0);
+                    foreach (string t in menuItems)
+                    {
+                        items = menu.Items.Find(t, true);
+                        if (items.Any())
+                            items[0].Enabled = isEnabled;
+                    }
+
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                    if(this.restoreStripButton.Enabled)
+                        menuItems.Add("dismissPersonMenuItem");
+                    else
+                        menuItems.Add("restorePersonMenuItem");
+                    foreach (string t in menuItems)
+                    {
+                        items = menu.Items.Find(t, true);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
+                    menu.Show(dataView, e.Location);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void addPersonMenuItem_Click(object sender, EventArgs e)
+        {
+            addStripButton_Click(sender, e);
+        }
+
+        private void editPersonMenuItem_Click(object sender, EventArgs e)
+        {
+            editStripButton_Click(sender, e);
+        }
+
+        private void delPersonMenuItem_Click(object sender, EventArgs e)
+        {
+            delStripButton_Click(sender, e);
+        }
+
+        private void dismissPersonMenuItem_Click(object sender, EventArgs e)
+        {
+            dismissStripButton_Click(sender, e);
+        }
+
+        private void restorePersonMenuItem_Click(object sender, EventArgs e)
+        {
+            restoreStripButton_Click(sender, e);
+        }
+
+        private void printAnketsMenuItem_Click(object sender, EventArgs e)
+        {
+            printAnketsToolStripMenuItem_Click(sender, e);
+        }
+
+        private void printUnregisteredMenuItem_Click(object sender, EventArgs e)
+        {
+            printUnregisteredToolStripMenuItem_Click(sender, e);
+        }
+
+        #endregion
     }
 }
