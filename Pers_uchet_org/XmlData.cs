@@ -1152,7 +1152,7 @@ namespace Pers_uchet_org
 
                 opisTitle.InnerText = "Опись документов";
                 opisFilename.InnerText = string.Format("opis{0:000}",i);//GetImito();
-                opisPath.InnerText = string.Format(@"4\{0}\\", packetID);
+                opisPath.InnerText = string.Format(@"4\{0}\", packetID);
 
                 IEnumerable<XmlDocument> szv1Docs = szv1Array.ElementAt(i);
                 docCount = szv1Docs.Count();
@@ -1181,7 +1181,7 @@ namespace Pers_uchet_org
                     topicNodeFilename.InnerText = string.Format("{0:000}{1:000}",i,j);
                     topicNodeRegnum.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagPersonRegnum)[0].InnerText;
                     topicNodeDoctype.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFormType)[0].InnerText;
-                    topicNodePath.InnerText = string.Format(@"4\{0}\\", packetID);
+                    topicNodePath.InnerText = string.Format(@"4\{0}\", packetID);
                 }
             }
             //
