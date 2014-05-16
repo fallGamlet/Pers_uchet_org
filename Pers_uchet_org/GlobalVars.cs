@@ -32,6 +32,40 @@ namespace Pers_uchet_org
             wb.ShowPrintPreviewDialog();
         }
 
+        static public void ShowPrintPreviewWebPage(WebBrowser wb, string url)
+        {
+            if (wb == null)
+                wb = new WebBrowser();
+            wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(wb_DocumentCompleted);
+            wb.Navigate(url);
+            //ShowPrintPreviewWebPage(wb);
+        }
+
+        static public void ShowPrintPreviewWebPage(WebBrowser wb, XmlData.ReportType type)
+        {
+            string url = XmlData.GetReportUrl(type);
+            if (url != null)
+            {
+                ShowPrintPreviewWebPage(wb, url);
+            }
+            else
+            {
+                MainForm.ShowWarningMessage("Не удалось найти файл отчета!", "Внимание");
+            }
+        }
+
+        static void wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                MainForm.ShowInfoMessage("Нет ссылки на объект браузера (GlobalWars.cs -> wb_DocumentCompleted)", "Внимание");
+                return;
+            }
+            MyPrinter.SetPrintSettings();
+            wb.ShowPrintPreviewDialog();
+        }
+
         static public void ShowWebPage(WebBrowser wb, bool maximased)
         {
             Form webForm = new Form { Width = 850, Height = 600 };

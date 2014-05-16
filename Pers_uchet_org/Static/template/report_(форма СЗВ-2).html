@@ -43,13 +43,13 @@
 		#data {	text-align: left; padding:0; position: relative; margin:0;}
 		#footer {position:absolute; margin:1em 0 0; padding:0; text-align:left; border-top:dashed 1px #555; bottom:0; left:0; width:7.77in;}
 		
-		td, th { border-top: solid 1px #777; border-left:solid 1px #777; min-width:1em; width:1em;}
-		#alphabet {width:100%; font-size:medium; position:relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
-		#alphabet td {min-width:0px; padding:0; margin:0; }
+		#alphabet {width:100%; font-size:medium; position:relative; border-collapse:collapse; border:solid 1px #555;}
+		#alphabet td {min-width:0px; padding:0; margin:0; border: solid 1px #555; min-width:1em; width:1em; }
 		
-		.doctable, .evolument {width:100%; margin:1em auto; font-size:small; position:relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
-		.doctable td, .evolument td {padding:2px 1em; text-align:center;}
-		.doctable th, .evolument th {text-align:center; font-weight:normal;}
+		
+		.doctable, .evolument {width:100%; margin:2em auto; font-size:small; position:relative; border-collapse:collapse; border:solid 1px #555;}
+		.doctable th, .evolument th {text-align:center; font-weight:normal; border:1px solid #555;}
+		.doctable td, .evolument td {padding:2px 1em; text-align:center; border:1px solid #555;}
 		
 		ul { padding:0px; margin:0px; }
 		li { margin:1px auto; list-style-type:none; vertical-align:middle; }
@@ -162,34 +162,35 @@
 				</ul>
 			</div>
 			
-			<table class="doctable" cellspacing=0  cellpadding=1>
+			<table class="doctable">
 				<col style="width:14em;">
 				<col style="width:5em;">
 				<thead>
 					<tr>
-						<th>Тип формы документа "Индивидуальные сведения" (Форма СЗВ-1)</th><th>Количество документов данного наименования в пакете</th>
+						<th>Тип формы документа "Индивидуальные сведения" (Форма СЗВ-1)</th>
+						<th>Количество документов данного наименования в пакете</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>исходная форма</td><td></td>
+						<td>исходная форма</td> <td></td>
 					</tr>
 					<tr>
-						<td>корректирующая форма</td><td></td>
+						<td>корректирующая форма</td> <td></td>
 					</tr>
 					<tr>
-						<td>отменяющая форма</td><td></td>
+						<td>отменяющая форма</td> <td></td>
 					</tr>
 					<tr>
-						<td>назначение пенсии</td><td></td>
+						<td>назначение пенсии</td> <td></td>
 					</tr>
 					<tr>
-						<td>итого документов всех наименований</td><td></td>
+						<td>итого документов всех наименований</td> <td></td>
 					</tr>
 				</tbody>
 			</table>
 			
-			<table class="evolument" cellspacing=0  cellpadding=1>
+			<table class="evolument">
 				<caption style="font-size:large; font-weight:bold;">Сведения о доходе за отчетный год<br/> (итого по пакету)</caption>
 				<col style="width:20%;">
 				<col style="width:15%;">

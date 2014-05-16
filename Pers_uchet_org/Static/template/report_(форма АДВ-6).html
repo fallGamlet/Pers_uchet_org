@@ -19,7 +19,7 @@
 			};
 		};
 		var setFName = function(fnameStr) {
-			setArrayValues('#f_name li', fnameStr);
+			setArrayValues("#f_name li", fnameStr);
 		};
 		var setLName = function(lnameStr) {
 			setArrayValues("#l_name li", lnameStr);
@@ -110,11 +110,11 @@
 		#evolument {}
 		#footer {position:absolute; margin:1em 0 0; padding:0 1.5em; text-align:left; border-top:dashed 1px #555; bottom:0; left:0; width:7.77in;}
 		
-		td { border-top: solid 1px #777; border-left:solid 1px #777; min-width: 2em; width:2em;}
-		#alphabet {width:100%; font-size: medium; position: relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
-		table#alphabet td {	min-width: 0px;	 width:2em; font-weight: bold;	padding: 0;	margin: 0; }
+		td { border: solid 1px #555; min-width: 2em; min-width:2em;}
+		#alphabet {width:100%; font-size: medium; position: relative; border-collapse:collapse; border:solid 1px #555;}
+		#alphabet td {	min-width: 0px;	 width:2em; font-weight: bold;	padding: 0;	margin: 0; }
 		
-		#doctable {width:100%; margin:5px auto; font-size:medium; position:relative; border-right:solid 1px #555; border-bottom:solid 1px #555;}
+		#doctable {width:100%; margin:5px auto; font-size:medium; position:relative; border-collapse:collapse; border:solid 1px #555;}
 		#doctable td {padding:2px 0 2px 5px;}
 		#doctable td.caption {text-align:center;}
 		
@@ -231,7 +231,7 @@
 			
 			<table id="doctable" cellspacing=0  cellpadding=1>
 				<col style="width:14em;">
-				<col>
+				<col style="width:5em;">
 				<tr>
 					<td class="caption">Наименование входящего документа</td><td class="caption">Количество документов данного наименования в пакете</td>
 				</tr>
