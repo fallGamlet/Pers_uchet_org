@@ -22,6 +22,8 @@ namespace Pers_uchet_org
 
         const string viewStateText = "Просмотреть";
         const string editStateText = "Изменить";
+        // веб браезер для формирования отчета СЗВ-3
+        WebBrowser _wb;
         #endregion
 
         #region Конструктор и Инициализатор
@@ -171,7 +173,50 @@ namespace Pers_uchet_org
 
             SvodVedomostPrintForm tmpform = new SvodVedomostPrintForm();
             tmpform.Owner = this;
-            tmpform.ShowDialog();
+            DialogResult dRes = tmpform.ShowDialog();
+            if (dRes == DialogResult.OK)
+            {
+                if (_wb == null)
+                {
+                    _wb = new WebBrowser();
+                    _wb.Visible = false;
+                    _wb.Parent = this;
+                    _wb.ScriptErrorsSuppressed = true;
+                    _wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wb_DocumentCompleted);
+                }
+                _wb.Tag = new object[] {
+                                    (long)curRow[Mergies.id],
+                                    tmpform.Performer,
+                                    tmpform.PrintDate
+                                    };
+                string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv3);
+                _wb.Navigate(file);
+            }
+        }
+
+        void _wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if(wb == null)
+            {
+                return;
+            }
+            object[] tags = wb.Tag as object[];
+            long merge_id = (long)tags[0];
+            string performer = tags[1] as string;
+            DateTime printDate = (DateTime)tags[2];
+            System.Xml.XmlDocument xml = Szv3Xml.GetXml(merge_id, _connection);
+            HtmlDocument htmlDoc = wb.Document;
+            string repYear = this.yearBox.Value.ToString();
+            htmlDoc.InvokeScript("setRegnum", new object[] { _org.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
+            htmlDoc.InvokeScript("setYear", new object[] { repYear });
+            htmlDoc.InvokeScript("setSzv3Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { printDate.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setPerformer", new object[] { performer });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void mergeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

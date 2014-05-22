@@ -18,21 +18,103 @@
 					liArray[i].innerText  = "";
 			};
 		};
-		
-		var setDocDate = function(dateStr) {
-			var darr = dateStr.split(".");
-			setArrayValues("#doc_day li", darr[0]);
-			setArrayValues("#doc_month li", months[parseInt(darr[1])-1]);
-			setArrayValues("#doc_year li", darr[2]);
+		var setOrgRegnum = function(valStr) {
+			setArrayValues("#org_regnum li", valStr);
+		};
+		var setOrgName = function(valStr) {
+			$("#org_name").text(valStr);
+		};
+		var setRepyear = function(valStr) {
+			setArrayValues("#rep_year li", valStr);
 		};
 		var setDocOrg = function(valStr) {
 			$("#doc_org").text(valStr);
+		};
+		var setDoctable = function(arr) {
+			var rows = $(".doctable>tbody>tr");
+			for(var i=0; i<rows.length && i<arr.length; i++) {
+				$(rows[i].children())[1].innerText = arr[i];
+			}
+		};
+		var setEvolument = function(arr) {
+			var tr = $(".evolument>tbody>tr");
+			var sums = []
+			for(var i=0; i < tr.length && i < arr.length; i++) {
+				var cells = $(tr[i].children);
+				for(var j=0; j < arr[i].length && j+1 < cells.length; j++) {
+					cells[j+1].innerText = arr[i][j];
+				}
+			}
 		};
 		var setPrintDate = function(dateStr) {
 			var darr = dateStr.split(".");
 			$("#print_day").text(darr[0]);
 			$("#print_month").text(months[parseInt(darr[1])-1]);
 			$("#print_year").text(darr[2]);
+		};
+		var setChiefPost = function(valStr) {
+			$("#chief_post").text(valStr);
+		};
+		var setSzv2Xml = function(szv2XmlStr) {
+			/*
+			* 21 - Исходная форма
+			* 22 - Корректирующая форма
+			* 23 - Корректирующая форма
+			* 24 - Назначение пенсии
+			*/
+			var i, j, 
+				rows, cols,
+				arr  = {};
+				allCount = 0,
+				xml = $($.parseXML(szv2XmlStr)),
+				docs = xml.find("inddoc");
+			
+			for(i=0; i<docs.length; i++) {
+				var d = $(docs[i]),
+					type = d.find("type_id").text(),
+					count = d.find("count").text(),
+					summary = d.find("summary_info");
+				
+				count = count == "" ? 0: parseInt(count);
+				allCount += count;
+				arr[parseInt(type)] = {
+						'count': count,
+						'summary': [
+								summary.find("col_1").text(),
+								summary.find("col_2").text(),
+								summary.find("col_3").text(),
+								summary.find("col_4").text(),
+								summary.find("col_5").text()
+							]
+					};
+			}
+			
+			rows = $(".doctable>tbody>tr");
+			$(rows[0].children())[1].innerText = arr[21].count;
+			$(rows[1].children())[1].innerText = arr[22].count;
+			$(rows[2].children())[1].innerText = arr[23].count;
+			$(rows[3].children())[1].innerText = arr[24].count;
+			$(rows[4].children())[1].innerText = allCount;
+			
+			rows = $(".evolument>tbody>tr");
+			// 21 - Исходная форма
+			$(rows[0].children())[1].innerText = arr[21].summary[0];
+			$(rows[0].children())[2].innerText = arr[21].summary[1];
+			$(rows[0].children())[3].innerText = arr[21].summary[2];
+			$(rows[0].children())[4].innerText = arr[21].summary[3];
+			$(rows[0].children())[5].innerText = arr[21].summary[4];
+			// 22 - Корректирующая форма
+			$(rows[1].children())[1].innerText = arr[22].summary[0];
+			$(rows[1].children())[2].innerText = arr[22].summary[1];
+			$(rows[1].children())[3].innerText = arr[22].summary[2];
+			$(rows[1].children())[4].innerText = arr[22].summary[3];
+			$(rows[1].children())[5].innerText = arr[22].summary[4];
+			// 23 - Корректирующая форма
+			$(rows[2].children())[1].innerText = arr[23].summary[0];
+			$(rows[2].children())[2].innerText = arr[23].summary[1];
+			$(rows[2].children())[3].innerText = arr[23].summary[2];
+			$(rows[2].children())[4].innerText = arr[23].summary[3];
+			$(rows[2].children())[5].innerText = arr[23].summary[4];
 		};
 	</script>
 	<style type="text/css">
@@ -47,7 +129,7 @@
 		#alphabet td {min-width:0px; padding:0; margin:0; border: solid 1px #555; min-width:1em; width:1em; }
 		
 		
-		.doctable, .evolument {width:100%; margin:2em auto; font-size:small; position:relative; border-collapse:collapse; border:solid 1px #555;}
+		.doctable, .evolument {width:100%; margin:2em auto 1em; font-size:small; position:relative; border-collapse:collapse; border:solid 1px #555;}
 		.doctable th, .evolument th {text-align:center; font-weight:normal; border:1px solid #555;}
 		.doctable td, .evolument td {padding:2px 1em; text-align:center; border:1px solid #555;}
 		
@@ -241,7 +323,7 @@
 			
 			<div id="data7" style="padding-bottom:1em; text-align:center;">
 				<div class="field_wrapper">
-					<div class="field_underline" style="min-width: 17em;"></div>
+					<div class="field_underline" id="chief_post" style="min-width: 17em;"></div>
 					<br/><span style="font-size:small;">Наименование должности руководителя</span>
 				</div>
 				<div class="field_wrapper">

@@ -37,6 +37,9 @@
 			$("#print_month").text(months[parseInt(darr[1])-1]);
 			$("#print_year").text(darr[2]);
 		};
+		var setOrgName = function(valStr) {
+			$("#org_name").text(valStr);
+		};
 	</script>
 	<style type="text/css">
 		body { background: #def; text-align: center; padding:0in;}
@@ -51,7 +54,7 @@
 		td, th {border:1px solid #999; min-width:1.5em; text-align:center;}
 		th {font-weight:normal;}
 		th p {padding:0px; margin:-3px auto;}
-		tr.kvartal > td, tr.kvartal > th, th.kvartal {border-bottom:1px solid #000;}
+		tr.cvartal > td, tr.cvartal > th, th.cvartal {border-bottom:1px solid #000;}
 		.mytable {width:100%; margin:auto; border-collapse:collapse; font-size:small;}
 		
 		
@@ -206,60 +209,69 @@
 			<table id="payment" class="evolument">
 			<thead>
 				<tr>
-					<th rowspan=2 class="kvartal" style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
-					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
-					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма выплат, учитываемых для назначения пенсий</th>
-					<th colspan=2 style="width:10em;  padding:0.8em 5px;">Сумма обязательного страхового взноса</th>
-					<th rowspan=2 class="kvartal" style="width:6em;">Всего фактически отработанных дней</th>
+					<th rowspan=3 class="cvartal" style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
+					<th rowspan=2 colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
+					<th rowspan=2 colspan=2 style="width:10em; padding:0.8em 5px;">Сумма выплат, учитываемых для назначения пенсий</th>
+					<th colspan=4>Сумма единого социального налога</th>
+					<th rowspan=2 colspan=2 style="width:10em;  padding:0.8em 5px;">Сумма обязательного страхового взноса</th>
+					<th rowspan=3 class="cvartal" style="width:6em;">Всего фактически отработанных дней</th>
 				</tr>
-				<tr class="kvartal">
-					<th style="width:7em;">Руб.</th>
-					<th style="width:3em;">Коп.</th>
-					<th style="width:7em;">Руб.</th>
-					<th style="width:3em;">Коп.</th>
-					<th style="width:7em;">Руб.</th>
-					<th style="width:3em;">Коп.</th>
+				<tr>
+					<th colspan=2>начисленных страхователем</th>
+					<th colspan=2>уплаченных страхователем</th>
+				</tr>
+				<tr class="cvartal">
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
-				<tr class="kvartal">
-					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr class="cvartal">
+					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr class="kvartal">
-					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="cvartal">
+					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr class="kvartal">
-					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="cvartal">
+					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr class="kvartal">
-					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr class="cvartal">
+					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 			</tbody>
 			</table>		
@@ -316,7 +328,7 @@
 		<div id="footer">		
 			<div style="padding-bottom:1em; text-align:center;">
 				<div class="field_wrapper">
-					<div class="field_underline" style="min-width: 17em;"></div> <br/>
+					<div class="field_underline" id="chief_post" style="min-width: 17em;"></div> <br/>
 					<span style="font-size:small; text-align:left;">Наименование должности руководителя</span>
 				</div>
 				<div class="field_wrapper">

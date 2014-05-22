@@ -5,7 +5,96 @@
     <title>Форма СЗВ-3</title>
 	<script type="text/javascript" src="./lib/jquery.min.js"></script>
 	<script type="text/javascript">
-		
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setArrayValues = function(selectorStr, valStr) {
+			var valStr = valStr.toUpperCase();
+	 		var strLen = valStr.length;
+			var liArray = $(selectorStr);
+			var liLen = liArray.length;
+			for(var i=0; i<liLen; i++) {
+				if(i < strLen)
+					liArray[i].innerText  = valStr.charAt(i);
+				else
+					liArray[i].innerText  = "";
+			};
+		};
+		var setRegnum = function(fnameStr) {
+			setArrayValues('#regnum li', fnameStr);
+		};
+		var setYear = function(fnameStr) {
+			setArrayValues('#year li', fnameStr);
+		};
+		var setOrgName = function(valStr) {
+			$("#org_sname").text(valStr);
+		};
+		var setPacketCount = function(valStr) {
+			$("#packet_count").text(valStr);
+		};
+		var setDocCount = function(valStr) {
+			$("#doc_count").text(valStr);
+		};
+		var setPrintDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			$("#print_day").text(darr[0]);
+			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_year").text(darr[2]);
+		};
+		var setPerformer = function(valStr) {
+			$("#performer").text(valStr);
+		};
+		var setChiefPost = function(valStr) {
+			$("#chief_post").text(valStr);
+		};
+		var setEvolument = function(arr) {
+			var tr = $(".evolument>tbody>tr");
+			var sums = []
+			for(var i=0; i < tr.length && i < arr.length; i++) {
+				var j, cells = $(tr[i]).children();
+				for(j=0; j < arr[i].length-1 && j*2+1 < cells.length-1; j++) {
+					var rub = Math.floor(arr[i][j]),
+						kop = Math.floor(arr[i][j] %1 *100);
+					if(rub == 0) rub = '';
+					if(kop == 0) kop = '';
+					cells[j*2+1].innerText = rub;
+					cells[j*2+2].innerText = kop;
+				}
+				var val = Math.floor(arr[i][j]);
+				if(val == 0) val = '';
+				cells[j*2+1].innerText = val;
+			}
+		};
+		var setSzv3Xml = function(szv3XmlStr) {
+			var i, j, 
+				cols,
+				vals,
+				sums = [],
+				evol,
+				xml = $($.parseXML(szv3XmlStr));
+			
+			setPacketCount( xml.find("packs_count").text() );
+			setDocCount( xml.find("docs_count").text() );
+			evol = xml.find("month");
+			var arr = [];
+			for(i=0; i<evol.length; i++) {
+				cols = $(evol[i]).children();
+				vals = [];
+				for(j=0; j< cols.length; j++) {
+					var v = $(cols[j]).text();
+					vals.push(v);
+				}
+				arr.push(vals);
+			}
+			var colCount = arr[0].length,
+				rowCount = arr.length;
+			for(j=0; j < colCount; j++) { sums[j] = 0; }
+			for(j=0; j < colCount; j++) {
+				for(i=0; i < rowCount; i++) {
+					sums[j] += parseFloat(arr[i][j]);
+				}
+			}
+			arr.push(sums);
+			setEvolument(arr);
+		}
 	</script>
 	<style type="text/css">
 		body { background: #def; text-align: center; padding:0in;}
@@ -134,22 +223,18 @@
 			<table class="evolument">
 			<thead>
 				<tr>
-					<th rowspan=3 class="cvartal"><p>М</p><p>е</p>с<p>я</p>ц</th>
+					<th rowspan=3 class="cvartal" style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
 					<th rowspan=2 colspan=2 >Сумма дохода, на который начислены страховые взносы</th>
 					<th rowspan=2 colspan=2 >Сумма выплат, учитываемых для назначения пенсий</th>
 					<th colspan=4>Сумма единого социального налога</th>
-					<th colspan=4>Сумма обязательных страховых взносов</th>
+					<th rowspan=2 colspan=2>Сумма обязательных страховых взносов</th>
 					<th rowspan=3  class="cvartal" style="width:4em;">Средняя численность работников (застрахованных лиц)</th>
 				</tr>
 				<tr>
 					<th colspan=2>начисленных страхователем</th>
 					<th colspan=2>уплаченных страхователем</th>
-					<th colspan=2>начисленных страхователем</th>
-					<th colspan=2>уплаченных страхователем</th>
 				</tr>
 				<tr class="cvartal">
-					<th class="rub">Руб.</th>
-					<th class="kop">Коп.</th>
 					<th class="rub">Руб.</th>
 					<th class="kop">Коп.</th>
 					<th class="rub">Руб.</th>
@@ -164,43 +249,43 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr class="cvartal">
-					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr class="cvartal">
-					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr class="cvartal">
-					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr class="cvartal">
-					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 			</tbody>
 			</table>
@@ -214,9 +299,16 @@
 				<div id="print_year" class="field_underline" style="min-width: 5em;"></div> г.
 			</div>
 			
+			<div style="position:relative; margin:-1em auto 2em; height:2em;">
+				<div class="field_wrapper" style="position:absolute; top:1em; right:2em;">
+					<div class="field_underline" id="performer" style="min-width: 13em;"></div> <br/>
+					<span style="font-size:small; text-align:left;">исполнитель</span>
+				</div>
+			</div>
+			
 			<div style="padding-bottom:1em; text-align:center;">
 				<div class="field_wrapper">
-					<div class="field_underline" style="min-width: 17em;"></div> <br/>
+					<div class="field_underline" id="chief_post" style="min-width: 17em;"></div> <br/>
 					<span style="font-size:small; text-align:left;">Наименование должности руководителя</span>
 				</div>
 				<div class="field_wrapper">
