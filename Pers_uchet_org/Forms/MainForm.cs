@@ -11,6 +11,7 @@ using System.Data.SQLite;
 using Pers_uchet_org.Forms;
 using JR.Utils.GUI.Forms;
 using Pers_uchet_org.Properties;
+using System.Net;
 
 namespace Pers_uchet_org
 {
@@ -35,6 +36,9 @@ namespace Pers_uchet_org
 
         // переменная содержит текущий используемый год
         public static int RepYear;
+
+        WebProxy proxy;
+        NetworkCredential netCredential;
         #endregion
 
         #region Конструктор и инициализатор
@@ -240,6 +244,7 @@ namespace Pers_uchet_org
 
             }
             //MainForm.ShowInfoMessage(string.Format("Добро пожаловать, {0}!", _operator.nameVal), "Приветствие");
+            checkUpdatesMenuItem_Click(null, null);
         }
 
         // выход из программы
@@ -418,12 +423,123 @@ namespace Pers_uchet_org
         {
             Help.ShowHelp(this, "Help.chm", HelpNavigator.Topic, "FirstRun.htm");
         }
-       
+
         private void historyChangeMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("History.txt");
         }
-        #endregion
 
+        private void checkUpdatesMenuItem_Click(object sender, EventArgs e)
+        {
+            ReadProxySettings();
+
+            string hostAddr = "http://ef-pmr.org/uploads/soft";
+
+            WebClient webClient = new WebClient();
+            webClient.Proxy = proxy;
+            webClient.Credentials = netCredential;
+            webClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            if (sender != null)
+                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
+            else
+                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClientAuto_DownloadStringCompleted);
+            webClient.DownloadStringAsync(new Uri(hostAddr + "/Pers_uchet_org_update.xml"), 1);
+        }
+
+        void webClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MainForm.ShowInfoMessage("Не удалось проверить наличие обновлений!", "Обновление");
+                return;
+            }
+            try
+            {
+                System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+                xmlDocument.InnerXml = e.Result;
+
+                Version v1 = new Version(xmlDocument.GetElementsByTagName("version")[0].InnerText);
+                Version v2 = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                switch (v1.CompareTo(v2))
+                {
+                    case -1:
+                    case 0:
+                        MainForm.ShowInfoMessage("Установленная версия является самой последней", "Обновление");
+                        break;
+                    case 1:
+                        if (MainForm.ShowQuestionFlexMessage(string.Format("Доступна новая версия {0} от {2}.\nВаша версия {1}.\nПерейти на сайт для скачивания новой версии?", v1.ToString(), v2.ToString(), xmlDocument.GetElementsByTagName("date")[0].InnerText), "Обновление") == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start("http://ef-pmr.org/persuchet/soft/");
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MainForm.ShowInfoMessage("Не удалось проверить наличие обновлений!\n\n" + ex.Message, "Обновление");
+            }
+        }
+
+        void webClientAuto_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                return;
+            }
+            try
+            {
+                System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+                xmlDocument.InnerXml = e.Result;
+
+                Version v1 = new Version(xmlDocument.GetElementsByTagName("version")[0].InnerText);
+                Version v2 = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                switch (v1.CompareTo(v2))
+                {
+                    case -1:
+                    case 0:
+                        break;
+                    case 1:
+                        if (MainForm.ShowQuestionFlexMessage(string.Format("Доступна новая версия {0} от {2}.\nВаша версия {1}.\nПерейти на сайт для скачивания новой версии?", v1.ToString(), v2.ToString(), xmlDocument.GetElementsByTagName("date")[0].InnerText), "Обновление") == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start("http://ef-pmr.org/persuchet/soft/");
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                //MainForm.ShowInfoMessage("Не удалось проверить наличие обновлений!\n\n" + ex.Message, "Обновление");
+            }
+        }
+
+        private void ReadProxySettings()
+        {
+            string proxyAddr = Properties.Settings.Default.ProxyAddr;
+            int proxyPort = Properties.Settings.Default.ProxyPort;
+            string proxyLogin = Properties.Settings.Default.ProxyLogin;
+            string proxyPass = Properties.Settings.Default.ProxyPass;
+            bool proxyUseAuto = Properties.Settings.Default.ProxyUseAuto;
+            bool bypassProxyOnLocal = Properties.Settings.Default.BypassProxyOnLocal;
+            bool useDefaultCredentials = Properties.Settings.Default.UseDefaultCredentials;
+
+            if (proxyUseAuto)
+            {
+                this.proxy = WebProxy.GetDefaultProxy();
+                if (this.proxy != null)
+                {
+                    this.proxy.BypassProxyOnLocal = bypassProxyOnLocal;
+                    this.proxy.UseDefaultCredentials = useDefaultCredentials;
+                }
+            }
+            else
+            {
+                this.proxy = new WebProxy(proxyAddr, proxyPort);
+                this.proxy.BypassProxyOnLocal = bypassProxyOnLocal;
+                this.proxy.UseDefaultCredentials = useDefaultCredentials;
+            }
+
+            netCredential = useDefaultCredentials ? new NetworkCredential(proxyLogin, proxyPass) : null;
+        }
+        #endregion
     }
 }
