@@ -19,6 +19,8 @@ namespace Pers_uchet_org
         string _connection;
         Org _org;
         Operator _operator;
+        // привилегия
+        string _privilege;
 
         const string viewStateText = "Просмотреть";
         const string editStateText = "Изменить";
@@ -37,11 +39,19 @@ namespace Pers_uchet_org
         {
             this.Text += " - " + _org.regnumVal;
 
+            // получить код привилегии (уровня доступа) Оператора к Организации
+            if (_operator.IsAdmin())
+                _privilege = OperatorOrg.GetPrivilegeForAdmin();
+            else
+                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
+
             this.yearBox.Value = MainForm.RepYear;
             this.RefillData(MainForm.RepYear);
             this.mergeView.Sorted += new EventHandler(mergeView_Sorted);
             _mergeBS.CurrentChanged += new EventHandler(_mergeBS_CurrentChanged);
             _mergeBS.MoveLast();
+
+            this.SetPrivilege(_privilege);
         }
         #endregion
 
@@ -65,6 +75,8 @@ namespace Pers_uchet_org
             _mergeBS.DataSource = _mergeTable;
 
             this.MarkActualRow();
+
+            this.SetPrivilege(_privilege);
         }
 
         private void MarkActualRow()
@@ -73,6 +85,23 @@ namespace Pers_uchet_org
             if (icur != -1)
             {
                 this.mergeView.Rows[icur].DefaultCellStyle.BackColor = Color.LightGreen;
+            }
+        }
+
+        private void SetPrivilege(string privilegeCode)
+        {
+            bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(privilegeCode) == 1;
+            if (readOnly)
+            {
+                addStripButton.Enabled = !readOnly;
+                editStripButton.Enabled = !readOnly;
+                delStripButton.Enabled = !readOnly;
+
+                mergeView.CellDoubleClick -= mergeView_CellDoubleClick;
+
+                addStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                editStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                delStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
             }
         }
         #endregion
@@ -112,6 +141,8 @@ namespace Pers_uchet_org
             {
                 this.editStripButton.Text = viewStateText;
             }
+
+            this.SetPrivilege(_privilege);
         }
 
         private void addStripButton_Click(object sender, EventArgs e)
@@ -214,12 +245,64 @@ namespace Pers_uchet_org
                         return;
                     Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
+
+                    DataGridView dataView = sender as DataGridView;
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems.Add("editSvodMenuItem");
+                    menuItems.Add("delSvodMenuItem");
+                    menuItems.Add("printSvodMenuItem");
+
+                    int currentMouseOverRow = dataView.CurrentCell.RowIndex;
+                    bool isEnabled = !(currentMouseOverRow < 0);
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = isEnabled;
+                    }
+
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addSvodMenuItem");
+                        menuItems.Add("editSvodMenuItem");
+                        menuItems.Add("delSvodMenuItem");
+                    }
+
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
                     cms.Show((sender as DataGridView), p);
                 }
 
                 if (e.KeyCode == Keys.Delete)
                 {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     delStripButton_Click(sender, e);
+                }
+
+                if (e.KeyCode == Keys.Enter)
+                {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
+                    editSvodMenuItem_Click(sender, e);
                 }
             }
             catch (Exception ex)
@@ -255,6 +338,16 @@ namespace Pers_uchet_org
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addSvodMenuItem");
+                        menuItems.Add("editSvodMenuItem");
+                        menuItems.Add("delSvodMenuItem");
+                    }
+
                     foreach (string t in menuItems)
                     {
                         items = menu.Items.Find(t, false);

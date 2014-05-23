@@ -44,6 +44,13 @@ namespace Pers_uchet_org
         private void AnketadataForm_Load(object sender, EventArgs e)
         {
             this.Text += " - " + _org.regnumVal;
+
+            // получить код привилегии (уровня доступа) Оператора к Организации
+            if (_operator.IsAdmin())
+                _privilege = OperatorOrg.GetPrivilegeForAdmin();
+            else
+                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
+
             // иництализация таблицы персон (записи с анкетными данными)
             _personTable = PersonView.CreatetTable();
             // добавление виртуального столбца для возможности отмечать записи
@@ -64,17 +71,12 @@ namespace Pers_uchet_org
             // запосление таблицы данными с БД
             _personAdapter.Fill(_personTable);
 
-            // получить код привилегии (уровня доступа) Оператора к Организации
-            if (_operator.IsAdmin())
-                _privilege = OperatorOrg.GetPrivilegeForAdmin();
-            else
-                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
-            // отобразить привилегию на форме для пользователя
-            this.SetPrivilege(_privilege);
-
             this.workButton.Enabled = false;
             // отобразить работающих персон
             stateButton_Click(this.workButton, null);
+
+            // отобразить привилегию на форме для пользователя
+            this.SetPrivilege(_privilege);
         }
         #endregion
 
@@ -94,16 +96,35 @@ namespace Pers_uchet_org
         private void SetPrivilege(string privilegeCode)
         {
             int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(privilegeCode);
-            bool canWrite = (anketaAccess == 2);
-            this.addStripButton.Enabled = canWrite;
-            this.editStripButton.Enabled = canWrite;
-            this.delStripButton.Enabled = canWrite;
-            this.dismissStripButton.Enabled = canWrite;
-            this.restoreStripButton.Enabled = canWrite;
-            this.attachToOrgButton.Enabled = canWrite;
+            bool readOnly = (anketaAccess == 1);
+            if (readOnly)
+            {
+                this.addStripButton.Enabled = !readOnly;
+                this.editStripButton.Enabled = !readOnly;
+                this.delStripButton.Enabled = !readOnly;
+                this.dismissStripButton.Enabled = !readOnly;
+                this.restoreStripButton.Enabled = !readOnly;
+                this.attachToOrgButton.Enabled = !readOnly;
+
+                addStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                editStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                delStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                dismissStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                restoreStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+
+                ToolTip toolTip1 = new ToolTip();
+                toolTip1.SetToolTip(attachToOrgButton, "У вас недостаточно прав. Обратитесь к администратору");
+
+                personView.CellDoubleClick -= personView_CellDoubleClick;
+
+            }
 
             int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(privilegeCode);
             this.printStripDropDownButton.Enabled = (anketaPrint > 0);
+            if (anketaPrint == 0)
+            {
+                printStripDropDownButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+            }
         }
         #endregion
 
@@ -139,6 +160,9 @@ namespace Pers_uchet_org
             object stateObj = row[PersonView.state];
             this.dismissStripButton.Enabled = (stateObj is DBNull) || (int)stateObj == 1;
             this.restoreStripButton.Enabled = !this.dismissStripButton.Enabled;
+
+            // отобразить привилегию на форме для пользователя
+            this.SetPrivilege(_privilege);
         }
 
         void _personBS_ListChanged(object sender, ListChangedEventArgs e)
@@ -218,6 +242,9 @@ namespace Pers_uchet_org
                 dismissedButton.Enabled = true;
                 addStripButton.Enabled = true;
             }
+
+            // отобразить привилегию на форме для пользователя
+            this.SetPrivilege(_privilege);
         }
 
         private void addStripButton_Click(object sender, EventArgs e)
@@ -469,16 +496,65 @@ namespace Pers_uchet_org
                         return;
                     Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
+
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                    if (this.restoreStripButton.Enabled)
+                        menuItems.Add("dismissPersonMenuItem");
+                    else
+                        menuItems.Add("restorePersonMenuItem");
+
+                    // Проверка прав и отключение пунктов
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        menuItems.Add("addPersonMenuItem");
+                        menuItems.Add("editPersonMenuItem");
+                        menuItems.Add("delpersonMenuItem");
+                        menuItems.Add("dismissPersonMenuItem");
+                        menuItems.Add("restorePersonMenuItem");
+                        
+                    }
+                    int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(_privilege);
+                    if (anketaPrint == 0)
+                    {
+                        menuItems.Add("printAnketsMenuItem");
+                        menuItems.Add("printUnregisteredMenuItem");
+                    }
+
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, true);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
                     cms.Show((sender as DataGridView), p);
                 }
 
                 if (e.KeyCode == Keys.Delete)
                 {
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.","Внимание");
+                        return;
+                    }
                     delStripButton_Click(sender, e);
                 }
 
                 if (e.KeyCode == Keys.Enter)
                 {
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     editStripButton_Click(sender, e);
                 }
 
@@ -549,10 +625,30 @@ namespace Pers_uchet_org
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
-                    if(this.restoreStripButton.Enabled)
+                    if (this.restoreStripButton.Enabled)
                         menuItems.Add("dismissPersonMenuItem");
                     else
                         menuItems.Add("restorePersonMenuItem");
+
+                    // Проверка прав и отключение пунктов
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        menuItems.Add("addPersonMenuItem");
+                        menuItems.Add("editPersonMenuItem");
+                        menuItems.Add("delpersonMenuItem");
+                        menuItems.Add("dismissPersonMenuItem");
+                        menuItems.Add("restorePersonMenuItem");
+
+                    }
+                    int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(_privilege);
+                    if (anketaPrint == 0)
+                    {
+                        menuItems.Add("printAnketsMenuItem");
+                        menuItems.Add("printUnregisteredMenuItem");
+                    }
+
                     foreach (string t in menuItems)
                     {
                         items = menu.Items.Find(t, true);

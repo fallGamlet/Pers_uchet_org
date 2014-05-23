@@ -213,10 +213,12 @@ namespace Pers_uchet_org
             int a0, a2;
 
             b0 = this.anketaAccessCheckBox.Checked;
-            b1 = this.anketaPrintCheckBox.Checked;
+            //b1 = this.anketaPrintCheckBox.Checked;
+            b1 = true;
             a0 = _anketaAccessBS.Position + 1;
             b2 = this.payStajAccessCheckBox.Checked;
-            b3 = this.payStajPrintCheckBox.Checked;
+            //b3 = this.payStajPrintCheckBox.Checked;
+            b3 = true;
             a2 = _paystajAccessBS.Position + 1;
             b4 = this.exchangeDataCheckBox.Checked;
             b5 = this.importAnketaCheckBox.Checked;
@@ -683,6 +685,7 @@ namespace Pers_uchet_org
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            this.OperOrgRowCurrentEndEdit();
             // создание адаптера для записей операторов
             SQLiteDataAdapter adapter = Operator.CreateAdapter(_connectionStr);
             SQLiteCommand command;

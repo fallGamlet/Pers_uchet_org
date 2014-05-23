@@ -229,6 +229,7 @@
             this.importAnketaCheckBox.TabIndex = 5;
             this.importAnketaCheckBox.Text = "Импорт анкет из др. организаций";
             this.importAnketaCheckBox.UseVisualStyleBackColor = true;
+            this.importAnketaCheckBox.Visible = false;
             // 
             // payStajAccessLevelBox
             // 
@@ -253,12 +254,15 @@
             // payStajPrintCheckBox
             // 
             this.payStajPrintCheckBox.AutoSize = true;
+            this.payStajPrintCheckBox.Checked = true;
+            this.payStajPrintCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.payStajPrintCheckBox.Location = new System.Drawing.Point(6, 101);
             this.payStajPrintCheckBox.Name = "payStajPrintCheckBox";
             this.payStajPrintCheckBox.Size = new System.Drawing.Size(259, 17);
             this.payStajPrintCheckBox.TabIndex = 3;
             this.payStajPrintCheckBox.Text = "Печать сведений о стаже и заработной плате";
             this.payStajPrintCheckBox.UseVisualStyleBackColor = true;
+            this.payStajPrintCheckBox.Visible = false;
             // 
             // payStajAccessCheckBox
             // 
@@ -274,12 +278,15 @@
             // anketaPrintCheckBox
             // 
             this.anketaPrintCheckBox.AutoSize = true;
+            this.anketaPrintCheckBox.Checked = true;
+            this.anketaPrintCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.anketaPrintCheckBox.Location = new System.Drawing.Point(6, 44);
             this.anketaPrintCheckBox.Name = "anketaPrintCheckBox";
             this.anketaPrintCheckBox.Size = new System.Drawing.Size(153, 17);
             this.anketaPrintCheckBox.TabIndex = 1;
             this.anketaPrintCheckBox.Text = "Печать анкетных данных";
             this.anketaPrintCheckBox.UseVisualStyleBackColor = true;
+            this.anketaPrintCheckBox.Visible = false;
             // 
             // anketaAccessLevelBox
             // 

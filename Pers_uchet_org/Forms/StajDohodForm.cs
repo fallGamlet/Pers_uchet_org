@@ -69,6 +69,12 @@ namespace Pers_uchet_org
             {
                 this.Text += " - " + _organization.regnumVal;
 
+                // получить код привилегии (уровня доступа) Оператора к Организации
+                if (_operator.IsAdmin())
+                    _privilege = OperatorOrg.GetPrivilegeForAdmin();
+                else
+                    _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _organization.idVal, _connection);
+
                 _currentListId = 0;
                 _repYear = MainForm.RepYear;
                 yearBox.Value = _repYear;
@@ -123,18 +129,47 @@ namespace Pers_uchet_org
 
                 this.docView.DataSource = _docsBS;
 
-                // получить код привилегии (уровня доступа) Оператора к Организации
-                if (_operator.IsAdmin())
-                    _privilege = OperatorOrg.GetPrivilegeForAdmin();
-                else
-                    _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _organization.idVal, _connection);
-
-                //TODO: отобразить привилегию на форме для пользователя
-                //this.SetPrivilege(_privilege);
+                this.SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
                 MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
+            }
+        }
+
+        private void SetPrivilege(string privilegeCode)
+        {
+            bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(privilegeCode) == 1;
+            if (readOnly)
+            {
+                addListStripButton.Enabled = !readOnly;
+                delListStripButton.Enabled = !readOnly;
+                copyToYearListStripButton.Enabled = !readOnly;
+                copyToOrgListStripButton.Enabled = !readOnly;
+                moveToYearListStripButton.Enabled = !readOnly;
+                moveToOrgListStripButton.Enabled = !readOnly;
+
+                addDocStripButton.Enabled = !readOnly;
+                editDocStripButton.Enabled = !readOnly;
+                delDocStripButton.Enabled = !readOnly;
+                copyToListDocStripButton.Enabled = !readOnly;
+                moveToListDocStripButton.Enabled = !readOnly;
+                changeTypeDocStripButton.Enabled = !readOnly;
+
+                docView.CellDoubleClick -= documentView_CellDoubleClick;
+
+                addListStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                delListStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                copyToYearListStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                copyToOrgListStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                moveToYearListStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                moveToOrgListStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                addDocStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                editDocStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                delDocStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                copyToListDocStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                moveToListDocStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                changeTypeDocStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
             }
         }
 
@@ -163,6 +198,8 @@ namespace Pers_uchet_org
 
                 if (!isEnabled && _docsTable != null)
                     _docsTable.Clear();
+
+                this.SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -196,6 +233,8 @@ namespace Pers_uchet_org
                     _docsBS.RaiseListChangedEvents = true;
                     _docsBS.ResetBindings(false);
                 }
+
+                this.SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -217,6 +256,7 @@ namespace Pers_uchet_org
                 changeTypeDocStripButton.Enabled = isEnabled;
                 previewDocStripButton.Enabled = isEnabled;
 
+                this.SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -292,11 +332,60 @@ namespace Pers_uchet_org
                         return;
                     Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
+
+                    DataGridView dataView = sender as DataGridView;
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems.Add("viewOpisMenuItem");
+                    menuItems.Add("calcMenuItem");
+                    menuItems.Add("printListMenuItem");
+                    menuItems.Add("copyToOtherYearMenuItem");
+                    menuItems.Add("moveToOtherYearMenuItem");
+                    menuItems.Add("copyToOtherOrgMenuItem");
+                    menuItems.Add("moveToOtherOrgMenuItem");
+                    menuItems.Add("delListMenuItem");
+
+                    int currentMouseOverRow = dataView.CurrentCell.RowIndex;
+                    bool isEnabled = !(currentMouseOverRow < 0);
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = isEnabled;
+                    }
+
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addListMenuItem");
+                        menuItems.Add("copyToOtherYearMenuItem");
+                        menuItems.Add("moveToOtherYearMenuItem");
+                        menuItems.Add("copyToOtherOrgMenuItem");
+                        menuItems.Add("moveToOtherOrgMenuItem");
+                        menuItems.Add("delListMenuItem");
+                    }
+
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
                     cms.Show((sender as DataGridView), p);
                 }
 
                 if (e.KeyCode == Keys.Delete)
                 {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     delListStripButton_Click(sender, e);
                 }
             }
@@ -327,7 +416,6 @@ namespace Pers_uchet_org
                     menuItems.Add("copyToOtherOrgMenuItem");
                     menuItems.Add("moveToOtherOrgMenuItem");
                     menuItems.Add("delListMenuItem");
-                    menuItems.Add("copyToOtherOrgMenuItem");
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -339,6 +427,19 @@ namespace Pers_uchet_org
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addListMenuItem");
+                        menuItems.Add("copyToOtherYearMenuItem");
+                        menuItems.Add("moveToOtherYearMenuItem");
+                        menuItems.Add("copyToOtherOrgMenuItem");
+                        menuItems.Add("moveToOtherOrgMenuItem");
+                        menuItems.Add("delListMenuItem");
+                    }
+
                     foreach (string t in menuItems)
                     {
                         items = menu.Items.Find(t, false);
@@ -390,17 +491,71 @@ namespace Pers_uchet_org
                         return;
                     Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
+
+                    DataGridView dataView = sender as DataGridView;
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems.Add("editDocMenuItem");
+                    menuItems.Add("changeTypeDocMenuItem");
+                    menuItems.Add("previewDocMenuItem");
+                    menuItems.Add("copyToOtherListMenuItem");
+                    menuItems.Add("moveToOtherListMenuItem");
+                    menuItems.Add("delDocMenuItem");
+
+                    int currentMouseOverRow = dataView.CurrentCell.RowIndex;
+                    bool isEnabled = !(currentMouseOverRow < 0);
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = isEnabled;
+                    }
+
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                    //menuItems.Add("copyToOtherListMenuItem");
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addDocMenuItem");
+                        menuItems.Add("editDocMenuItem");
+                        menuItems.Add("delDocMenuItem");
+                        menuItems.Add("changeTypeDocMenuItem");
+                        menuItems.Add("copyToOtherListMenuItem");
+                        menuItems.Add("moveToOtherListMenuItem");
+                    }
+
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
                     cms.Show((sender as DataGridView), p);
 
                 }
 
                 if (e.KeyCode == Keys.Delete)
                 {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     delDocStripButton_Click(sender, e);
                 }
 
                 if (e.KeyCode == Keys.Enter)
                 {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     editDocStripButton_Click(sender, e);
                 }
 
@@ -451,6 +606,19 @@ namespace Pers_uchet_org
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
                     //menuItems.Add("copyToOtherListMenuItem");
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addDocMenuItem");
+                        menuItems.Add("editDocMenuItem");
+                        menuItems.Add("delDocMenuItem");
+                        menuItems.Add("changeTypeDocMenuItem");
+                        menuItems.Add("copyToOtherListMenuItem");
+                        menuItems.Add("moveToOtherListMenuItem");
+                    }
+
                     foreach (string t in menuItems)
                     {
                         items = menu.Items.Find(t, false);
@@ -1163,6 +1331,8 @@ namespace Pers_uchet_org
             //включение события ListChangedEventHandler 
             _listsBS.RaiseListChangedEvents = true;
             _listsBS.ResetBindings(false);
+
+            this.SetPrivilege(_privilege);
         }
 
         private void CopyDocsByDocId(IEnumerable<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
