@@ -1298,12 +1298,40 @@ namespace Pers_uchet_org
                 docRow[DocsViewForXml.docTypeId] = _flagDocType.ToString();
                 docRow[DocsViewForXml.isGeneral] = additionalRadioButton.Checked ? IndDocs.Job.Second : IndDocs.Job.General;
 
-                MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docRow, _org, _salaryInfoTable, _salaryInfoTableTranspose, _generalPeriodTable, _specPeriodTable, _dopPeriodTable));
+                //MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docRow, _org, _salaryInfoTable, _salaryInfoTableTranspose, _generalPeriodTable, _specPeriodTable, _dopPeriodTable));
+                XmlDocument xml = Szv1Xml.GetXml(docRow, _org, _salaryInfoTable, _salaryInfoTableTranspose, _generalPeriodTable, _specPeriodTable, _dopPeriodTable);
+                WebBrowser wbSzv1 = new WebBrowser();
+                wbSzv1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(wbSzv1_DocumentCompleted);
+                wbSzv1.ScriptErrorsSuppressed = true;
+                wbSzv1.Tag = xml;
+                string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv1);
+                wbSzv1.Navigate(file);
+
             }
             catch (Exception exception)
             {
                 MainForm.ShowErrorFlexMessage(exception.Message, "Ошибка открытия предварительного просмотра");
             }
+        }
+
+        void wbSzv1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setSzv1Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            MyPrinter.ShowWebPage(wb);
+            //MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

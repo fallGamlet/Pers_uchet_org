@@ -381,12 +381,30 @@ namespace Pers_uchet_org
             foreach (DataRowView rowItem in selectedRowList)
                 rowList.Add(rowItem.Row);
 
-            PersonView.Print(rowList);
+            PersonView.Print(rowList, this);
         }
 
         private void printUnregisteredToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            List<DataRowView> selectedRowList = new List<DataRowView>();
+            foreach(DataRowView row in _personBS) {
+                string socnum = row[PersonView.socNumber] as string;
+                if (socnum == null || socnum.Length <= 0)
+                {
+                    selectedRowList.Add(row);
+                }
+            }
 
+            if (selectedRowList.Count <= 0)
+            {
+                MainForm.ShowInfoMessage("У всех работников заполнены страховые свидетельства!", "Внимание");
+                return;
+            }
+            List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
+            foreach (DataRowView rowItem in selectedRowList)
+                rowList.Add(rowItem.Row);
+
+            PersonView.Print(rowList, this);
         }
 
         private void personView_CellClick(object sender, DataGridViewCellEventArgs e)

@@ -19,7 +19,7 @@ namespace Pers_uchet_org
         // активный оператор
         Operator _operator;
         // активная организация
-        Org _organization;
+        Org _org;
         // привилегия
         string _privilege;
         // таблица пакетов
@@ -60,7 +60,7 @@ namespace Pers_uchet_org
         {
             InitializeComponent();
             _operator = oper;
-            _organization = organization;
+            _org = organization;
             _connection = connection;
         }
 
@@ -68,7 +68,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                this.Text += " - " + _organization.regnumVal;
+                this.Text += " - " + _org.regnumVal;
 
                 _currentListId = 0;
                 _repYear = MainForm.RepYear;
@@ -93,7 +93,7 @@ namespace Pers_uchet_org
                 _listsBS.DataSource = _listsTable;
 
                 // инициализация Адаптера для считывания пакетов из БД
-                string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
+                string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
                 _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
                 // заполнение таблицы данными с БД
                 _listsAdapter.Fill(_listsTable);
@@ -128,7 +128,7 @@ namespace Pers_uchet_org
                 if (_operator.IsAdmin())
                     _privilege = OperatorOrg.GetPrivilegeForAdmin();
                 else
-                    _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _organization.idVal, _connection);
+                    _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
 
                 //TODO: отобразить привилегию на форме для пользователя
                 //this.SetPrivilege(_privilege);
@@ -554,7 +554,7 @@ namespace Pers_uchet_org
                         using (SQLiteCommand command = connection.CreateCommand())
                         {
                             command.Transaction = transaction;
-                            command.CommandText = Lists.GetInsertText(1, _organization.idVal, _repYear);
+                            command.CommandText = Lists.GetInsertText(1, _org.idVal, _repYear);
                             long listId = (long)command.ExecuteScalar();
                             if (listId < 1)
                             {
@@ -646,12 +646,12 @@ namespace Pers_uchet_org
             System.Xml.XmlDocument xml = Szv2Xml.GetXml(merge_id, _connection);
             HtmlDocument htmlDoc = wb.Document;
             string repYear = this.yearBox.Value.ToString();
-            htmlDoc.InvokeScript("setOrgRegnum", new object[] { _organization.regnumVal });
-            htmlDoc.InvokeScript("setOrgName", new object[] { _organization.nameVal });
+            htmlDoc.InvokeScript("setOrgRegnum", new object[] { _org.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
             htmlDoc.InvokeScript("setRepyear", new object[] { _repYear.ToString() });
             htmlDoc.InvokeScript("setSzv2Xml", new object[] { xml.InnerXml });
             htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
             //MyPrinter.ShowWebPage(wb);
             MyPrinter.ShowPrintPreviewWebPage(wb);
         }
@@ -734,13 +734,13 @@ namespace Pers_uchet_org
             HtmlDocument htmlDoc = wb.Document;
             string repYear = this.yearBox.Value.ToString();
             htmlDoc.InvokeScript("setPacketNum", new object[] { packet_id.ToString() });
-            htmlDoc.InvokeScript("setRegnum", new object[] { _organization.regnumVal });
-            htmlDoc.InvokeScript("setOrgName", new object[] { _organization.nameVal });
+            htmlDoc.InvokeScript("setRegnum", new object[] { _org.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
             htmlDoc.InvokeScript("setYear", new object[] { _repYear.ToString() });
             htmlDoc.InvokeScript("setDocCount", new object[] { docCount.ToString() });
             htmlDoc.InvokeScript("setEvolument", new object[] { arrStr.ToString() });
             htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
             //MyPrinter.ShowWebPage(wb);
             MyPrinter.ShowPrintPreviewWebPage(wb);
         }
@@ -919,10 +919,10 @@ namespace Pers_uchet_org
                         "Добавление документа(ов)");
                     return;
                 }
-                ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _currentListId, _connection);
+                ChoicePersonForm choicePersonForm = new ChoicePersonForm(_org, _repYear, _currentListId, _connection);
                 if (choicePersonForm.ShowDialog() == DialogResult.OK)
                 {
-                    AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
+                    AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
                     if (szv1Form.ShowDialog() == DialogResult.OK)
                     {
                         _listsBS_CurrentChanged(_listsBS, new EventArgs());
@@ -945,7 +945,7 @@ namespace Pers_uchet_org
                 long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
                 PersonId = (long)(_docsBS.Current as DataRowView)[DocsView.personID];
                 FlagDoc = (int)(_docsBS.Current as DataRowView)[DocsView.docTypeId];
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_org, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
                 if (szv1Form.ShowDialog() == DialogResult.OK)
                 {
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
@@ -1091,6 +1091,12 @@ namespace Pers_uchet_org
 
         private void printDocStripButton_Click(object sender, EventArgs e)
         {
+            List<long> docs = GetSelectedDocIds();
+            if(docs == null || docs.Count == 0)
+            {
+                MainForm.ShowWarningMessage("Необходимо сначала выбрать записи!", "Внимание");
+                return;
+            }
             if (_wbSZV1Print == null)
             {
                 _wbSZV1Print = new WebBrowser();
@@ -1098,7 +1104,7 @@ namespace Pers_uchet_org
                 _wbSZV1Print.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbSZV1Print_DocumentCompleted);
                 _wbSZV1Print.ScriptErrorsSuppressed = true;
             }
-            _wbSZV1Print.Tag = GetSelectedDocIds();
+            _wbSZV1Print.Tag = docs;
             string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv1);
             _wbSZV1Print.Navigate(file);
         }
@@ -1118,11 +1124,11 @@ namespace Pers_uchet_org
             int i;
             for (i = 0; i < docs.Count; i++)
             {
-                szv1Xml = Szv1Xml.GetXml(docs[i], _organization, _connection);
+                szv1Xml = Szv1Xml.GetXml(docs[i], _org, _connection);
                 xmlStrLArr = szv1Xml.InnerXml;
                 htmlDoc.InvokeScript("setSzv1Xml", new object[] { xmlStrLArr });
                 htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-                htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+                htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
                 string str = htmlDoc.Body.InnerHtml;
                 htmlStr.Append(str);
             }
@@ -1138,7 +1144,7 @@ namespace Pers_uchet_org
                 if (_docsBS.Current == null)
                     return;
                 long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
-                XmlDocument szv1Xml = Szv1Xml.GetXml(docId, _organization, _connection);
+                XmlDocument szv1Xml = Szv1Xml.GetXml(docId, _org, _connection);
                 WebBrowser wbSZV1 = new WebBrowser();
                 wbSZV1 = new WebBrowser();
                 wbSZV1.ScriptErrorsSuppressed = true;
@@ -1168,7 +1174,7 @@ namespace Pers_uchet_org
             HtmlDocument htmlDoc = wb.Document;
             htmlDoc.InvokeScript("setSzv1Xml", new object[] { xml.InnerXml });
             htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
             MyPrinter.ShowWebPage(wb);
             //MyPrinter.ShowPrintPreviewWebPage(wb);
         }
@@ -1194,7 +1200,7 @@ namespace Pers_uchet_org
 
                 string listFio = GetFioForSelectedDocIds(docIdList);
 
-                CopyDocumentForm copyDocForm = new CopyDocumentForm(_organization, _repYear, _connection);
+                CopyDocumentForm copyDocForm = new CopyDocumentForm(_org, _repYear, _connection);
                 if (copyDocForm.ShowDialog() == DialogResult.OK)
                 {
                     int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
@@ -1254,7 +1260,7 @@ namespace Pers_uchet_org
                 //    return;
                 //docId = (long)row[Docs.id];
 
-                MoveDocumentForm moveDocForm = new MoveDocumentForm(_organization, _repYear, _connection);
+                MoveDocumentForm moveDocForm = new MoveDocumentForm(_org, _repYear, _connection);
                 if (moveDocForm.ShowDialog() == DialogResult.OK)
                 {
                     int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
@@ -1339,7 +1345,7 @@ namespace Pers_uchet_org
             _listsBS.RaiseListChangedEvents = false;
 
             _listsTable.Clear();
-            string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
+            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
             _listsAdapter.Fill(_listsTable);
 

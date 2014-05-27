@@ -1440,14 +1440,25 @@ namespace Pers_uchet_org
             return GetSelectText() + string.Format(" WHERE {0} = {1} AND ({2} = 1 or ( {2} = 0 AND ({3} IS NUll OR strftime('%Y',{3}) >= {4}))) ", orgID, org_id, state, dismissDate, rep_year);
         }
 
+        static public void Print(IEnumerable<DataRow> printRows, Form parent)
+        {
+            string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
+            WebBrowser wb = new WebBrowser();
+            wb.Parent = parent;
+            wb.Tag = printRows;
+            wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
+            wb.ScriptErrorsSuppressed = true;
+            wb.Navigate(file);
+        }
+
         static public void Print(IEnumerable<DataRow> printRows)
         {
             string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
-            WebBrowser webBrowser = new WebBrowser();
-            webBrowser.Tag = printRows;
-            webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
-            webBrowser.ScriptErrorsSuppressed = true;
-            webBrowser.Navigate(file);
+            WebBrowser wb = new WebBrowser();
+            wb.Tag = printRows;
+            wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
+            wb.ScriptErrorsSuppressed = true;
+            wb.Navigate(file);
         }
 
         static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
