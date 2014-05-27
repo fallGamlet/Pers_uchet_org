@@ -1474,7 +1474,7 @@ namespace Pers_uchet_org
                 htmlDoc.Body.InnerHtml = sb.ToString();
             }
 
-            MyPrinter.SetPrintSettings();
+            //MyPrinter.SetPrintSettings();
             wb.ShowPrintPreviewDialog();
         }
         #endregion

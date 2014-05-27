@@ -92,5 +92,8 @@
     <Setting Name="xsd_szv3" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Static/xsd/svod.xsd</Value>
     </Setting>
+    <Setting Name="report_calculate" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Static/template/report_(калькуляция).html</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

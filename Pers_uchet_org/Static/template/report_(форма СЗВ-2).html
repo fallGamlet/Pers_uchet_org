@@ -68,7 +68,6 @@
 				allCount = 0,
 				xml = $($.parseXML(szv2XmlStr)),
 				docs = xml.find("inddoc");
-			
 			for(i=0; i<docs.length; i++) {
 				var d = $(docs[i]),
 					type = d.find("type_id").text(),
@@ -88,33 +87,31 @@
 							]
 					};
 			}
-			
 			rows = $(".doctable>tbody>tr");
-			$(rows[0].children())[1].innerText = arr[21].count;
-			$(rows[1].children())[1].innerText = arr[22].count;
-			$(rows[2].children())[1].innerText = arr[23].count;
-			$(rows[3].children())[1].innerText = arr[24].count;
-			$(rows[4].children())[1].innerText = allCount;
-			
+			$(rows[0]).children()[1].innerText = arr[21].count;
+			$(rows[1]).children()[1].innerText = arr[22].count;
+			$(rows[2]).children()[1].innerText = arr[23].count;
+			$(rows[3]).children()[1].innerText = arr[24].count;
+			$(rows[4]).children()[1].innerText = allCount;
 			rows = $(".evolument>tbody>tr");
 			// 21 - Исходная форма
-			$(rows[0].children())[1].innerText = arr[21].summary[0];
-			$(rows[0].children())[2].innerText = arr[21].summary[1];
-			$(rows[0].children())[3].innerText = arr[21].summary[2];
-			$(rows[0].children())[4].innerText = arr[21].summary[3];
-			$(rows[0].children())[5].innerText = arr[21].summary[4];
+			$(rows[0]).children()[1].innerText = arr[21].summary[0];
+			$(rows[0]).children()[2].innerText = arr[21].summary[1];
+			$(rows[0]).children()[3].innerText = arr[21].summary[2];
+			$(rows[0]).children()[4].innerText = arr[21].summary[3];
+			$(rows[0]).children()[5].innerText = arr[21].summary[4];
 			// 22 - Корректирующая форма
-			$(rows[1].children())[1].innerText = arr[22].summary[0];
-			$(rows[1].children())[2].innerText = arr[22].summary[1];
-			$(rows[1].children())[3].innerText = arr[22].summary[2];
-			$(rows[1].children())[4].innerText = arr[22].summary[3];
-			$(rows[1].children())[5].innerText = arr[22].summary[4];
+			$(rows[1]).children()[1].innerText = arr[22].summary[0];
+			$(rows[1]).children()[2].innerText = arr[22].summary[1];
+			$(rows[1]).children()[3].innerText = arr[22].summary[2];
+			$(rows[1]).children()[4].innerText = arr[22].summary[3];
+			$(rows[1]).children()[5].innerText = arr[22].summary[4];
 			// 23 - Корректирующая форма
-			$(rows[2].children())[1].innerText = arr[23].summary[0];
-			$(rows[2].children())[2].innerText = arr[23].summary[1];
-			$(rows[2].children())[3].innerText = arr[23].summary[2];
-			$(rows[2].children())[4].innerText = arr[23].summary[3];
-			$(rows[2].children())[5].innerText = arr[23].summary[4];
+			$(rows[2]).children()[1].innerText = arr[23].summary[0];
+			$(rows[2]).children()[2].innerText = arr[23].summary[1];
+			$(rows[2]).children()[3].innerText = arr[23].summary[2];
+			$(rows[2]).children()[4].innerText = arr[23].summary[3];
+			$(rows[2]).children()[5].innerText = arr[23].summary[4];
 		};
 	</script>
 	<style type="text/css">

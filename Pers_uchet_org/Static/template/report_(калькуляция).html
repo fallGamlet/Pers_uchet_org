@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Калькуляция по пакету</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setArrayValues = function(selectorStr, valStr) {
+			var valStr = valStr.toUpperCase();
+	 		var strLen = valStr.length;
+			var liArray = $(selectorStr);
+			var liLen = liArray.length;
+			for(var i=0; i<liLen; i++) {
+				if(i < strLen)
+					liArray[i].innerText  = valStr.charAt(i);
+				else
+					liArray[i].innerText  = "";
+			};
+		};
+		var setPacketNum = function(valStr) {
+			$("#packet_num").text(valStr);
+		}
+		var setRegnum = function(fnameStr) {
+			setArrayValues('#regnum li', fnameStr);
+		};
+		var setYear = function(fnameStr) {
+			setArrayValues('#year li', fnameStr);
+		};
+		var setOrgName = function(valStr) {
+			$("#org_sname").text(valStr);
+		};
+		var setPacketCount = function(valStr) {
+			$("#packet_count").text(valStr);
+		};
+		var setDocCount = function(valStr) {
+			$("#doc_count").text(valStr);
+		};
+		var setPrintDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			$("#print_day").text(darr[0]);
+			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_year").text(darr[2]);
+		};
+		var setPerformer = function(valStr) {
+			$("#performer").text(valStr);
+		};
+		var setChiefPost = function(valStr) {
+			$("#chief_post").text(valStr);
+		};
+		var setEvolument = function(arr) {
+			if(typeof(arr) == 'string') {
+				ar = arr.split("*");
+				arr = [];  
+				for(var i=0; i<ar.length; i++) { 
+					var vals = ar[i].split("_"); 
+					arr[i] = [];  
+					for(var j=0; j<vals.length; j++) { 
+						//~ alert(vals[j]);
+						arr[i][j] = parseFloat(vals[j]);
+						//~ alert(arr[i][j]);
+					} 
+				}
+			}
+			
+			var tr = $(".evolument>tbody>tr");
+			var sums = []
+			for(var i=0; i < tr.length && i < arr.length; i++) {
+				var j, cells = $(tr[i]).children();
+				for(j=0; j < arr[i].length && j*2+1 < cells.length; j++) {
+					var rub = Math.floor(arr[i][j]),
+						kop = Math.floor(arr[i][j] %1 *100);
+					if(rub == 0) {
+						rub = '';
+						if(kop == 0) kop = '';
+					} else {
+						if(kop == 0) kop = '00';
+						else { 
+							if(kop < 10) kop = '0'+kop;
+						}
+					}
+					cells[j*2+1].innerText = rub;
+					cells[j*2+2].innerText = kop;
+				}
+				//~ var val = Math.floor(arr[i][j]);
+				//~ if(val == 0) val = '';
+				//~ cells[j*2+1].innerText = val;
+			}
+		};
+	</script>
+	<style type="text/css">
+		body { background: #def; text-align: center; padding:0in;}
+		div {margin:0; padding:0;}
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin:0.7em auto; position:relative; }
+		#top { margin:0 auto; padding:3em 0 2em; font-size:14pt; font-weight:bold; }
+		#data {text-align: left; padding:0; position:relative; margin:0;}
+		#footer {position:relative; margin:0; padding:0; text-align:left; border:none;}
+		
+		.evolument {width:100%; margin:1em 0; padding:0; border-collapse:collapse; font-size:small;}
+		td, th {border:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
+		th {font-weight:normal;}
+		th p {padding:0px; margin:-3px auto;}
+		tr.cvartal > td, tr.cvartal > th, th.cvartal {border-bottom:solid 1px #000;}		
+		.rub {width:7em;}
+		.kop {width:2em;}
+		.rubval {text-align:right; padding-right:5px;}
+		.kopval {text-align:left; padding-left:5px;}
+		
+		ul { padding: 0px; margin:0px;}
+		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
+		
+		.container { border:solid 1px #999;	margin:5px 0; padding:5px 0; position: relative; }
+		.container ul li span, .myspan {
+			min-width: 1em;
+			width: 4em;
+			display: inline-block;
+			position: relative;
+			vertical-align: bottom;
+			zoom: 1;
+			*display: inline;
+		}
+		.data_title { position:absolute; top:0px; left:2px;	}
+		
+		ul.numlist { display: inline-block;	margin:0; padding:0; position:relative; zoom:1; *display: inline;}
+		ul.numlist li { display:inline-block; border:solid 1px #555; margin:1px; height:1.4em; width:1.4em; text-align:center; font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		
+		.absolute_box { position:absolute; right:0; top:0; width:1.6in; margin:0; border:solid 1px #000; }
+		.checkbox { display:inline-block; border:solid 1px #555; margin:1px; height:1em; width:1em; text-align:center; font-weight:bold;
+			zoom: 1;
+			*display: inline; 
+			vertical-align:bottom;
+		}
+				
+		.field_underline {	
+			display: inline-block;	
+			margin: 0 0.2em; 
+			padding:0;
+			border-bottom: solid 1px #555; 
+			position: relative;	
+			vertical-align: bottom;
+			text-align: center;
+			min-width: 1em;
+			height: 1em;
+			font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center;
+			zoom: 1;
+			*display: inline;
+		}
+	</style>
+	<style media="print">
+	.main_container {
+		margin-bottom:999em;
+		width:8.27in; 
+		height:11.69in;
+	}
+	</style>
+</head>
+<body>
+	<div class="main_container">
+		<div id="top">
+			Калькуляция по пакету № 
+			<div id="packet_num" class="field_underline" style="width:3em;"></div>
+		</div>
+		
+		<div id="data">
+			<div class="container" style="border:none;">
+				Реквизиты страхователя, передающего документы:
+				<ul style="padding-left:3em; margin:0.5em 0;">
+					<li>
+						<span class="myspan" style="width:15em;">Регистрацтонный номер в Фонде</span>
+						<ul id="regnum" class="numlist"> <li></li><li></li><li></li><li></li><li></li><li></li><li></li> </ul>
+					</li>
+					<li>
+						<span class="myspan" style="width:13em;">Наименование страхователя</span>
+						<div class="field_wrapper">
+							<div id="org_sname" class="field_underline" style="width:30em;"></div>
+							<br/><span style="font-size:small;">(краткое)</span>
+						</div>
+					</li>
+				</ul>
+				<ul style="margin:2em 0;">
+					<li>
+						<span class="myspan" style="width:8em;">Отчетный период</span> 
+						<ul id="year" class="numlist"> <li></li><li></li><li></li><li></li> </ul> <span class="myspan">год</span>
+					</li>
+					<li>
+						<span class="myspan" style="width: 19em;">Количество исходных документов СЗВ-1:  </span> <div id="doc_count" class="field_underline" style="width:5em;"></div>
+					</li>
+				</ul>
+			</div>
+			<center>Сведения о доходе за отчетный период</center>
+			<table class="evolument">
+			<thead>
+				<tr>
+					<th rowspan=3 class="cvartal" style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
+					<th rowspan=2 colspan=2 >Сумма дохода, на который начислены страховые взносы</th>
+					<th rowspan=2 colspan=2 >Сумма выплат, учитываемых для назначения пенсий</th>
+					<th colspan=4>Сумма единого социального налога</th>
+					<th rowspan=2 colspan=2>Сумма обязательных страховых взносов</th>
+					<!--th rowspan=3  class="cvartal" style="width:4em;">Средняя численность работников (застрахованных лиц)</th-->
+				</tr>
+				<tr>
+					<th colspan=2>начисленных страхователем</th>
+					<th colspan=2>уплаченных страхователем</th>
+				</tr>
+				<tr class="cvartal">
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>2</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr class="cvartal">
+					<td>3</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>4</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>5</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr class="cvartal">
+					<td>6</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>7</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>8</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr class="cvartal">
+					<td>9</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>10</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>11</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr class="cvartal">
+					<td>12</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+				<tr>
+					<td>&Sigma;</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		
+		<div id="footer">
+			<div id="print_date" style="position:relative; margin:0 1em; height:3em;">
+				<span style="margin-right:1em;">Дата заполнения</span>
+				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
+				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 
+				<div id="print_year" class="field_underline" style="min-width: 5em;"></div> г.
+			</div>
+			
+			<div style="position:relative; margin:-1em auto 2em; height:2em;">
+				<div class="field_wrapper" style="position:absolute; top:1em; right:2em;">
+					<div class="field_underline" id="performer" style="min-width: 13em;"></div> <br/>
+					<span style="font-size:small; text-align:left;">исполнитель</span>
+				</div>
+			</div>
+			
+			<div style="padding-bottom:1em; text-align:center;">
+				<div class="field_wrapper">
+					<div class="field_underline" id="chief_post" style="min-width: 17em;"></div> <br/>
+					<span style="font-size:small; text-align:left;">Наименование должности руководителя</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+			
+			<div style="padding-bottom:1em; text-align:center;">
+				<span style="width:18em; display:inline-block; zoom:1; *display:inline;">Бухгалтер</span>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+		</div>	
+	</div>
+</body>
+</html>

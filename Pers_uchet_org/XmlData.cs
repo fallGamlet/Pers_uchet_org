@@ -17,7 +17,7 @@ namespace Pers_uchet_org
 {
     public class XmlData
     {
-        public enum ReportType { Adv1 = 0, Adv2, Adv3, Adv4, Adv5, Adv6, Szv1, Szv2, Szv3/*, Rdv1, Rdv21, Rdv22, Rdv3*/ }
+        public enum ReportType { Adv1 = 0, Adv2, Adv3, Adv4, Adv5, Adv6, Szv1, Szv2, Szv3, Calculate/*, Rdv1, Rdv21, Rdv22, Rdv3*/ }
 
         public static string GetReportUrl(ReportType type)
         {
@@ -50,6 +50,9 @@ namespace Pers_uchet_org
                     break;
                 case XmlData.ReportType.Szv3:
                     url = Properties.Settings.Default.report_szv3;
+                    break;
+                case XmlData.ReportType.Calculate:
+                    url = Properties.Settings.Default.report_calculate;
                     break;
                 default:
                     url = "/";

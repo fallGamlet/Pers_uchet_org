@@ -327,7 +327,7 @@ namespace Pers_uchet_org
                     adapter.Fill(salaryInfoTable);
                     SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTranspose, salaryInfoTable);
                     this.packetcountBox.Value = markedPacked.Length;
-                    this.documentcountBox.Value = Docs.Count(markedPacked, _connection);// (long)salaryInfoTable.Rows[0][SalaryInfo.docId];
+                    this.documentcountBox.Value = Docs.Count(markedPacked, _connection);
                 }
                 else
                 {

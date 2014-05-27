@@ -51,7 +51,8 @@ namespace Pers_uchet_org
         public static long NewListId = 0;
         // переменная содержит id добавляемого человека
         public static long PersonId;
-
+        // браузеры для формирования отчетов для печати
+        WebBrowser _wbSZV2, _wbCalculating, _wbSZV1Print;
         #endregion
 
         #region Конструктор и инициализатор
@@ -609,7 +610,24 @@ namespace Pers_uchet_org
         {
             try
             {
-                MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _connection));
+                DataRowView curPacketRow = _listsBS.Current as DataRowView;
+                if (curPacketRow == null)
+                {
+                    MainForm.ShowInfoMessage("Необходимо сначала выделить пакет!", "Внимание");
+                }
+                if (_wbSZV2 == null)
+                {
+                    _wbSZV2 = new WebBrowser();
+                    _wbSZV2.Visible = false;
+                    _wbSZV2.Parent = this;
+                    _wbSZV2.ScriptErrorsSuppressed = true;
+                    _wbSZV2.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbSZV2_DocumentCompleted);
+
+                }
+                _wbSZV2.Tag = curPacketRow[ListsView.id];
+                string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv2);
+                _wbSZV2.Navigate(file);
+                //MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _connection));
             }
             catch (Exception exception)
             {
@@ -617,9 +635,114 @@ namespace Pers_uchet_org
             }
         }
 
+        void _wbSZV2_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            long merge_id = (long)wb.Tag;
+            System.Xml.XmlDocument xml = Szv2Xml.GetXml(merge_id, _connection);
+            HtmlDocument htmlDoc = wb.Document;
+            string repYear = this.yearBox.Value.ToString();
+            htmlDoc.InvokeScript("setOrgRegnum", new object[] { _organization.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _organization.nameVal });
+            htmlDoc.InvokeScript("setRepyear", new object[] { _repYear.ToString() });
+            htmlDoc.InvokeScript("setSzv2Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
+        }
+
         private void calcListStripButton_Click(object sender, EventArgs e)
         {
+            DataRowView curPacketRow = _listsBS.Current as DataRowView;
+            if (curPacketRow == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо сначала выделить пакет!", "Внимание");
+            }
+            if (_wbCalculating == null)
+            {
+                _wbCalculating = new WebBrowser();
+                _wbCalculating.Visible = false;
+                _wbCalculating.Parent = this;
+                _wbCalculating.ScriptErrorsSuppressed = true;
+                _wbCalculating.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbCalculating_DocumentCompleted);
 
+            }
+            _wbCalculating.Tag = curPacketRow;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_calculate);
+            _wbCalculating.Navigate(file);
+        }
+
+        void _wbCalculating_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            DataRowView curPacketRow = wb.Tag as DataRowView;
+            long packet_id = (long)curPacketRow[Lists.id];
+            long[] markedPacked = { packet_id };
+            long docCount = Docs.Count(markedPacked, _connection);
+            /////////////////////////////////////////////////            
+            long[] doctypes = { 21, 22, 24 };
+            double[,] evolument = new double[13,5];
+            DataTable salaryInfoTranspose = SalaryInfoTranspose.CreateTableWithRows();
+            if (markedPacked.Length > 0)
+            {
+                DataTable salaryInfoTable = SalaryInfo.CreateTable();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(markedPacked, doctypes), _connection);
+                adapter.Fill(salaryInfoTable);
+                SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTranspose, salaryInfoTable);
+            }
+            /////////////////////////////////////////////////
+            int row, col;
+            double sum;
+            for (row = 0; row < 12; row++)
+            {
+                for (col = 0; col < 5; col++)
+                {
+                    object val = salaryInfoTranspose.Rows[row][col+1];
+                    evolument[row,col] = (double)val;
+                }
+            }
+            for (col = 0; col < 5; col++)
+            {
+                sum = 0.0;
+                for (row = 0; row < 12; row++)
+                    sum += evolument[row,col];
+                evolument[12,col] = sum;
+            }
+            StringBuilder arrStr = new StringBuilder();
+            for (row = 0; row < 13; row++)
+            {
+                for (col = 0; col < 5; col++)
+                {
+                    arrStr.Append( evolument[row,col].ToString() );
+                    if (col != 4)
+                        arrStr.Append("_");
+                }
+                if(row != 12) 
+                    arrStr.Append("*");
+            }
+            arrStr.Replace(',', '.');
+            /////////////////////////////////////////////////
+            HtmlDocument htmlDoc = wb.Document;
+            string repYear = this.yearBox.Value.ToString();
+            htmlDoc.InvokeScript("setPacketNum", new object[] { packet_id.ToString() });
+            htmlDoc.InvokeScript("setRegnum", new object[] { _organization.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _organization.nameVal });
+            htmlDoc.InvokeScript("setYear", new object[] { _repYear.ToString() });
+            htmlDoc.InvokeScript("setDocCount", new object[] { docCount.ToString() });
+            htmlDoc.InvokeScript("setEvolument", new object[] { arrStr.ToString() });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void printFioListStripButton_Click(object sender, EventArgs e)
@@ -968,9 +1091,44 @@ namespace Pers_uchet_org
 
         private void printDocStripButton_Click(object sender, EventArgs e)
         {
-            //PrintStajForm printStajForm = new PrintStajForm();
-            //if (printStajForm.ShowDialog() == DialogResult.OK)
-            //{ }
+            if (_wbSZV1Print == null)
+            {
+                _wbSZV1Print = new WebBrowser();
+                _wbSZV1Print.Parent = this;
+                _wbSZV1Print.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbSZV1Print_DocumentCompleted);
+                _wbSZV1Print.ScriptErrorsSuppressed = true;
+            }
+            _wbSZV1Print.Tag = GetSelectedDocIds();
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv1);
+            _wbSZV1Print.Navigate(file);
+        }
+
+        void _wbSZV1Print_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            XmlDocument szv1Xml;
+            StringBuilder htmlStr = new StringBuilder();
+            List<long> docs = wb.Tag as List<long>;
+            string xmlStrLArr;
+            int i;
+            for (i = 0; i < docs.Count; i++)
+            {
+                szv1Xml = Szv1Xml.GetXml(docs[i], _organization, _connection);
+                xmlStrLArr = szv1Xml.InnerXml;
+                htmlDoc.InvokeScript("setSzv1Xml", new object[] { xmlStrLArr });
+                htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+                htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+                string str = htmlDoc.Body.InnerHtml;
+                htmlStr.Append(str);
+            }
+            htmlDoc.Body.InnerHtml = htmlStr.ToString();
+
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void previewDocStripButton_Click(object sender, EventArgs e)
@@ -980,12 +1138,39 @@ namespace Pers_uchet_org
                 if (_docsBS.Current == null)
                     return;
                 long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
-                MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docId, _organization, _connection));
+                XmlDocument szv1Xml = Szv1Xml.GetXml(docId, _organization, _connection);
+                WebBrowser wbSZV1 = new WebBrowser();
+                wbSZV1 = new WebBrowser();
+                wbSZV1.ScriptErrorsSuppressed = true;
+                wbSZV1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(wbSZV1_DocumentCompleted);
+                wbSZV1.Tag = szv1Xml;
+                string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv1);
+                wbSZV1.Navigate(file);
             }
             catch (Exception exception)
             {
                 MainForm.ShowErrorFlexMessage(exception.Message, "Ошибка открытия предварительного просмотра");
             }
+        }
+
+        void wbSZV1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setSzv1Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
+            MyPrinter.ShowWebPage(wb);
+            //MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void copyToListDocStripButton_Click(object sender, EventArgs e)
@@ -1122,8 +1307,6 @@ namespace Pers_uchet_org
                 MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка перемещения документа");
             }
         }
-
-
         #endregion
 
         #region Методы - свои
