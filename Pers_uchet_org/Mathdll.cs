@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
 namespace Pers_uchet_org
 {
-    class Mathdll
+    internal class Mathdll
     {
         [DllImport(@"Libs\mathdll.dll")]
-        static private extern int gost_gamma(int hData, int hKey, int hTable, int hSynchro, int dlen);
+        private static extern int gost_gamma(int hData, int hKey, int hTable, int hSynchro, int dlen);
 
         [DllImport(@"Libs\mathdll.dll")]
-        static private extern int gost_fhash(string fileName, int table, int resHash);
+        private static extern int gost_fhash(string fileName, int table, int resHash);
 
         [DllImport(@"Libs\mathdll.dll")]
-        static private extern int gost_imito(int hData, int hKey, int hTable, int hSynchro, int dlen);
+        private static extern int gost_imito(int hData, int hKey, int hTable, int hSynchro, int dlen);
 
         #region Обертки для gost_gamma
+
         /// <summary>
         /// Производить шифрование/дешифрование данных, возвращает зашифрованные/расшифрованные данные и выходной параметр imito (хеш результирующих данных)
         /// </summary>
@@ -27,7 +26,7 @@ namespace Pers_uchet_org
         /// <param name="synchro">Синхро посылка</param>
         /// <param name="imito">Выходной параметр - хэш зашифрованных/расшифрованных данных</param>
         /// <returns>Возврает зашифрованный/расшифрованный массив байт</returns>
-        static public byte[] CryptData(byte[] data, byte[] key, byte[] table, byte[] synchro, out byte[] imito)
+        public static byte[] CryptData(byte[] data, byte[] key, byte[] table, byte[] synchro, out byte[] imito)
         {
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
             IntPtr ptrKey = Marshal.AllocHGlobal(key.Length);
@@ -42,9 +41,10 @@ namespace Pers_uchet_org
             imito = new byte[synchro.Length];
             byte[] cryptData = new byte[data.Length];
 
-            int res = gost_gamma(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(), data.Length);
+            int res = gost_gamma(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(),
+                data.Length);
             Marshal.Copy(ptrData, cryptData, 0, cryptData.Length);
-            
+
             res = gost_imito(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(), data.Length);
             Marshal.Copy(ptrSynchro, imito, 0, imito.Length);
 
@@ -54,10 +54,9 @@ namespace Pers_uchet_org
             Marshal.FreeHGlobal(ptrSynchro);
 
             return cryptData;
-
         }
 
-        static public int CryptData(byte[] key, byte[] table, byte[] synchro, ref byte[] data, out byte[] imito)
+        public static int CryptData(byte[] key, byte[] table, byte[] synchro, ref byte[] data, out byte[] imito)
         {
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
             IntPtr ptrKey = Marshal.AllocHGlobal(key.Length);
@@ -72,9 +71,10 @@ namespace Pers_uchet_org
             byte[] cdata = new byte[data.Length];
             Array.Copy(data, cdata, data.Length);
 
-            int res = gost_gamma(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(), data.Length);
+            int res = gost_gamma(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(),
+                data.Length);
             Marshal.Copy(ptrData, data, 0, data.Length);
-            
+
             imito = new byte[synchro.Length];
             res |= gost_imito(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(), data.Length);
             Marshal.Copy(ptrSynchro, imito, 0, imito.Length);
@@ -95,7 +95,7 @@ namespace Pers_uchet_org
         /// <param name="table">Таблица</param>
         /// <param name="synchro">Синхро посылка</param>
         /// <returns>Возврает зашифрованный/расшифрованный массив байт</returns>
-        static public byte[] GostGamma(byte[] data, byte[] key, byte[] table, byte[] synchro)
+        public static byte[] GostGamma(byte[] data, byte[] key, byte[] table, byte[] synchro)
         {
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
             IntPtr ptrKey = Marshal.AllocHGlobal(key.Length);
@@ -108,7 +108,8 @@ namespace Pers_uchet_org
             Marshal.Copy(synchro, 0, ptrSynchro, synchro.Length);
 
             byte[] cryptData = new byte[data.Length];
-            int res = gost_gamma(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(), data.Length);
+            int res = gost_gamma(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(),
+                data.Length);
             Marshal.Copy(ptrData, cryptData, 0, cryptData.Length);
 
             Marshal.FreeHGlobal(ptrData);
@@ -117,7 +118,6 @@ namespace Pers_uchet_org
             Marshal.FreeHGlobal(ptrSynchro);
 
             return cryptData;
-            
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Pers_uchet_org
         /// <param name="synchro">Синхро посылка</param>
         /// <param name="encoding"></param>
         /// <returns>Возврает зашифрованную/расшифрованную строку</returns>
-        static public string GostGamma(string data, byte[] key, byte[] table, byte[] synchro, Encoding encoding)
+        public static string GostGamma(string data, byte[] key, byte[] table, byte[] synchro, Encoding encoding)
         {
             byte[] bData = encoding.GetBytes(data);
             byte[] resbData = GostGamma(bData, key, table, synchro);
@@ -144,7 +144,7 @@ namespace Pers_uchet_org
         /// <param name="table">Таблица</param>
         /// <param name="synchro">Синхро посылка</param>
         /// <returns>Возврает зашифрованную/расшифрованную строку</returns>
-        static public string GostGamma(string data, byte[] key, byte[] table, byte[] synchro)
+        public static string GostGamma(string data, byte[] key, byte[] table, byte[] synchro)
         {
             return GostGamma(data, key, table, synchro, Encoding.GetEncoding(1251));
         }
@@ -158,13 +158,13 @@ namespace Pers_uchet_org
         /// <param name="synchro">Синхро посылка</param>
         /// <param name="encoding"></param>
         /// <returns>Возврает зашифрованную/расшифрованную строку</returns>
-        static public string GostGamma(string data, string key, string table, string synchro, Encoding encoding)
+        public static string GostGamma(string data, string key, string table, string synchro, Encoding encoding)
         {
             int i;
             char[] buf = { '0', '0' };
             byte[] bKey, bTable, bSynchro;
 
-            bKey = new byte[key.Length/2];
+            bKey = new byte[key.Length / 2];
             for (i = 0; i < key.Length; i += 2)
             {
                 buf[0] = key[i];
@@ -202,14 +202,16 @@ namespace Pers_uchet_org
         /// <param name="table">Таблица</param>
         /// <param name="synchro">Синхро посылка</param>
         /// <returns>Возврает зашифрованную/расшифрованную строку</returns>
-        static public string GostGamma(string data, string key, string table, string synchro)
+        public static string GostGamma(string data, string key, string table, string synchro)
         {
             return GostGamma(data, key, table, synchro, Encoding.GetEncoding(1251));
         }
+
         #endregion
 
         #region Обертки для gost_hash
-        static public byte[] GostHash(string filename, byte[] table)
+
+        public static byte[] GostHash(string filename, byte[] table)
         {
             byte[] hash = new byte[32];
             byte[] bFilename = Encoding.ASCII.GetBytes(filename);
@@ -234,10 +236,12 @@ namespace Pers_uchet_org
             }
             return null;
         }
+
         #endregion
 
         #region Обертка для gost_imito
-        static public byte[] GostImito(byte[] data, byte[] key, byte[] table, byte[] synchro)
+
+        public static byte[] GostImito(byte[] data, byte[] key, byte[] table, byte[] synchro)
         {
             IntPtr ptrData = Marshal.AllocHGlobal(data.Length);
             IntPtr ptrKey = Marshal.AllocHGlobal(key.Length);
@@ -249,8 +253,9 @@ namespace Pers_uchet_org
             Marshal.Copy(table, 0, ptrTable, table.Length);
             Marshal.Copy(synchro, 0, ptrSynchro, synchro.Length);
 
-            int res = gost_imito(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(), data.Length);
-            
+            int res = gost_imito(ptrData.ToInt32(), ptrKey.ToInt32(), ptrTable.ToInt32(), ptrSynchro.ToInt32(),
+                data.Length);
+
             byte[] resImito = new byte[synchro.Length];
             Marshal.Copy(ptrSynchro, resImito, 0, resImito.Length);
 
@@ -260,8 +265,8 @@ namespace Pers_uchet_org
             Marshal.FreeHGlobal(ptrSynchro);
 
             return resImito;
-
         }
+
         #endregion
     }
 }

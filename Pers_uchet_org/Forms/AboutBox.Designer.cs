@@ -1,4 +1,4 @@
-﻿namespace Pers_uchet_org
+﻿namespace Pers_uchet_org.Forms
 {
     partial class AboutBox
     {
@@ -152,13 +152,12 @@
             // logoPictureBox
             // 
             this.logoPictureBox.Image = global::Pers_uchet_org.Properties.Resources.MainLogo;
-            this.logoPictureBox.Location = new System.Drawing.Point(0, 66);
+            this.logoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.logoPictureBox.Name = "logoPictureBox";
             this.logoPictureBox.Size = new System.Drawing.Size(131, 125);
             this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logoPictureBox.TabIndex = 13;
             this.logoPictureBox.TabStop = false;
-            this.logoPictureBox.Click += new System.EventHandler(this.logoPictureBox_Click);
             this.logoPictureBox.DoubleClick += new System.EventHandler(this.logoPictureBox_DoubleClick);
             // 
             // AboutBox

@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class ChangePasswordForm : Form
     {
         #region Поля
-        string _oldpassword;
+
+        private string _oldpassword;
+
         #endregion
 
         #region Конструктор
+
         public ChangePasswordForm()
         {
             InitializeComponent();
             _oldpassword = "";
         }
+
         #endregion
 
         #region Свойства
+
         public string Password
         {
             get { return this.passwordBox.Text.Trim(); }
@@ -35,10 +35,7 @@ namespace Pers_uchet_org
             get { return _oldpassword; }
             set
             {
-                if (value != null)
-                    _oldpassword = value;
-                else
-                    _oldpassword = "";
+                _oldpassword = value ?? "";
                 if (_oldpassword.Length <= 0)
                 {
                     this.oldpasswordLabel.Enabled = false;
@@ -56,7 +53,6 @@ namespace Pers_uchet_org
                     this.oldPasswordBox.Visible = true;
                     this.showPassButton1.Enabled = true;
                     this.showPassButton1.Visible = true;
-
                 }
             }
         }
@@ -66,9 +62,11 @@ namespace Pers_uchet_org
             get { return this.confPasswordBox.Text; }
             set { this.confPasswordBox.Text = value; }
         }
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void ChangePasswordForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.DialogResult == DialogResult.OK)
@@ -80,7 +78,7 @@ namespace Pers_uchet_org
 
                 if (Password != PasswordConf)
                 {
-                    res &= false;
+                    res = false;
                     err += "\nНовый пароль и его подтверждение не совпадают!";
                 }
 
@@ -132,7 +130,7 @@ namespace Pers_uchet_org
             if (e.KeyCode == Keys.Enter)
                 passwordBox.Focus();
         }
-       
+
         private void passwordBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -144,6 +142,7 @@ namespace Pers_uchet_org
             if (e.KeyCode == Keys.Enter)
                 okButton.Focus();
         }
+
         #endregion
     }
 }

@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Pers_uchet_org.Properties;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class RestoreDBForm : Form
     {
         #region Поля
 
-        private DataTable backupTable;
+        private DataTable _backupTable;
 
         #endregion
 
@@ -44,10 +39,10 @@ namespace Pers_uchet_org
             else
             {
                 //copyListBox.Items.Clear();
-                backupTable = Backup.CreateTable();
-                Backup.FillTable(backupTable, directoryInfo, Backup.SearchPatternType.All);
+                _backupTable = Backup.CreateTable();
+                Backup.FillTable(_backupTable, directoryInfo, Backup.SearchPatternType.All);
 
-                copyListBox.DataSource = backupTable;
+                copyListBox.DataSource = _backupTable;
                 copyListBox.ValueMember = Backup.columnPathName;
                 copyListBox.DisplayMember = Backup.columnDateTimeName;
             }
@@ -59,7 +54,6 @@ namespace Pers_uchet_org
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void restoreButton_Click(object sender, EventArgs e)
@@ -121,8 +115,5 @@ namespace Pers_uchet_org
         }
 
         #endregion
-
-
-
     }
 }

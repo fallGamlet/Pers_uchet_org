@@ -1,24 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     partial class AboutBox : Form
     {
+        private Timer timerLogo;
+
         public AboutBox()
         {
             InitializeComponent();
-            this.Text = String.Format("О {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            Text = String.Format("О {0}", AssemblyTitle);
+            labelProductName.Text = AssemblyProduct;
+            labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
+            labelCopyright.Text = AssemblyCopyright;
+            labelCompanyName.Text = AssemblyCompany;
+            textBoxDescription.Text = AssemblyDescription;
+            timerLogo = new Timer { Interval = 1 };
+            timerLogo.Tick += TimerLogoOnTick;
         }
 
         #region Методы доступа к атрибутам сборки
@@ -27,7 +28,8 @@ namespace Pers_uchet_org
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                object[] attributes =
+                    Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
@@ -36,23 +38,21 @@ namespace Pers_uchet_org
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
 
         public string AssemblyVersion
         {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
+            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
         }
 
         public string AssemblyDescription
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                object[] attributes =
+                    Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -65,7 +65,8 @@ namespace Pers_uchet_org
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                object[] attributes =
+                    Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -78,7 +79,8 @@ namespace Pers_uchet_org
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                object[] attributes =
+                    Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -91,7 +93,8 @@ namespace Pers_uchet_org
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                object[] attributes =
+                    Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -99,17 +102,32 @@ namespace Pers_uchet_org
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
+
         #endregion
 
         private void logoPictureBox_Click(object sender, EventArgs e)
         {
+            timerLogo.Stop();
             logoPictureBox.Left = 0;
             logoPictureBox.Top = 0;
+            logoPictureBox.Click -= logoPictureBox_Click;
         }
 
         private void logoPictureBox_DoubleClick(object sender, EventArgs e)
         {
-            logoPictureBox.Top += 66;
+            timerLogo.Start();
+            logoPictureBox.Click += logoPictureBox_Click;
+            logoPictureBox.Click -= logoPictureBox_DoubleClick;
+        }
+
+        private void TimerLogoOnTick(object sender, EventArgs eventArgs)
+        {
+            logoPictureBox.Top += 1;
+            if (panelLogo.Height - logoPictureBox.Height < logoPictureBox.Top)
+            {
+                var timer = sender as Timer;
+                if (timer != null) timer.Stop();
+            }
         }
     }
 }

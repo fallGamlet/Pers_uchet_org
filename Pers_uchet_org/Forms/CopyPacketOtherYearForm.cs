@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class CopyPacketOtherYearForm : Form
     {
-        private long listId;
+        private long _listId;
 
         public CopyPacketOtherYearForm()
         {
             InitializeComponent();
         }
 
-        public CopyPacketOtherYearForm(long list_id)
+        public CopyPacketOtherYearForm(long listId)
         {
             InitializeComponent();
-            this.listId = list_id;
+            this._listId = listId;
         }
 
         private void CopyPacketOtherYearForm_Load(object sender, EventArgs e)
         {
             yearNumericUpDown.Value = MainForm.RepYear;
-            labelMain.Text = labelMain.Text + listId.ToString();
+            labelMain.Text = labelMain.Text + _listId;
         }
 
         private void copyPacketButton_Click(object sender, EventArgs e)

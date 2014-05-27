@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.Cache;
+using System.Reflection;
 using System.Windows.Forms;
-using System.Data.SQLite;
-using Pers_uchet_org.Forms;
+using System.Xml;
 using JR.Utils.GUI.Forms;
 using Pers_uchet_org.Properties;
-using System.Net;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class MainForm : Form
     {
         #region Поля
-        const string viewCol = "view_col";
+
+        private const string ViewCol = "view_col";
 
         // строка соединения
         private string _mainConnection;
@@ -37,90 +37,97 @@ namespace Pers_uchet_org
         // переменная содержит текущий используемый год
         public static int RepYear;
 
-        WebProxy proxy;
-        NetworkCredential netCredential;
+        private WebProxy _proxy;
+        private NetworkCredential _netCredential;
+
         #endregion
 
         #region Конструктор и инициализатор
+
         public MainForm()
         {
             InitializeComponent();
 
-            this.Location = new Point(0, 0);
-            MainForm.RepYear = DateTime.Now.Year;
+            Location = new Point(0, 0);
+            RepYear = DateTime.Now.Year;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (File.Exists(Settings.Default.DataBasePath))
             {
-                _mainConnection = string.Format("data source = {0};", Properties.Settings.Default.DataBasePath);
+                _mainConnection = string.Format("data source = {0};", Settings.Default.DataBasePath);
 
                 if (IsFirstLogin())
-                    MainForm.ShowInfoFlexMessage("Вы первый раз входите в программу.\n" +
-                        "По умолчанию пароль входа пустой.", "Первый вход в программу");
+                    ShowInfoFlexMessage("Вы первый раз входите в программу.\n" +
+                                        "По умолчанию пароль входа пустой.", "Первый вход в программу");
 
                 changeoperatorMenuItem_Click(sender, e);
             }
             else
             {
-                if (MainForm.ShowQuestionMessage("Файл базы данных не найден!\nЖелаете попробовать восстановить базу из резервной копии?", "Ошибка") == DialogResult.Yes)
+                if (
+                    ShowQuestionMessage(
+                        "Файл базы данных не найден!\nЖелаете попробовать восстановить базу из резервной копии?",
+                        "Ошибка") == DialogResult.Yes)
                 {
                     vosstanovleniebdMenuItem_Click(sender, e);
                 }
             }
         }
 
-
         #endregion
 
         #region Методы - свои
-        static public void ShowInfoMessage(string message, string caption)
+
+        public static void ShowInfoMessage(string message, string caption)
         {
             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        static public void ShowWarningMessage(string message, string caption)
+        public static void ShowWarningMessage(string message, string caption)
         {
             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        static public void ShowErrorMessage(string message, string caption)
+        public static void ShowErrorMessage(string message, string caption)
         {
             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        static public void ShowErrorMessage(string err)
+        public static void ShowErrorMessage(string err)
         {
             ShowErrorMessage("Возникла непредвиденная ошибка в работе программы.\n" + err, "Ошибка в работе программы");
         }
 
-        static public DialogResult ShowQuestionMessage(string message, string caption)
+        public static DialogResult ShowQuestionMessage(string message, string caption)
         {
-            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            return MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
         }
 
-        static public void ShowInfoFlexMessage(string message, string caption)
+        public static void ShowInfoFlexMessage(string message, string caption)
         {
             FlexibleMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        static public void ShowWarningFlexMessage(string message, string caption)
+        public static void ShowWarningFlexMessage(string message, string caption)
         {
             FlexibleMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        static public void ShowErrorFlexMessage(string message, string caption)
+        public static void ShowErrorFlexMessage(string message, string caption)
         {
             FlexibleMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        static public void ShowErrorFlexMessage(string err)
+        public static void ShowErrorFlexMessage(string err)
         {
-            ShowErrorFlexMessage("Возникла непредвиденная ошибка в работе программы.\n" + err, "Ошибка в работе программы");
+            ShowErrorFlexMessage("Возникла непредвиденная ошибка в работе программы.\n" + err,
+                "Ошибка в работе программы");
         }
 
-        static public DialogResult ShowQuestionFlexMessage(string message, string caption)
+        public static DialogResult ShowQuestionFlexMessage(string message, string caption)
         {
             return FlexibleMessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
@@ -129,29 +136,28 @@ namespace Pers_uchet_org
         {
             DataRowView orgRow = _orgBS.Current as DataRowView;
             bool isAdmin = (_operator.candeleteVal == 0);
-            this.adminMenu.Enabled = isAdmin;
+            adminMenu.Enabled = isAdmin;
             if (orgRow == null)
             {
-                this.anketadataMenuItem.Enabled = false;
-                this.stajidohodMenuItem.Enabled = false;
-                this.svodvedomostMenuItem.Enabled = false;
-                this.poiskfizlicaMenuItem.Enabled = false;
-                this.elobmenMenuItem.Enabled = false;
+                anketadataMenuItem.Enabled = false;
+                stajidohodMenuItem.Enabled = false;
+                svodvedomostMenuItem.Enabled = false;
+                poiskfizlicaMenuItem.Enabled = false;
+                elobmenMenuItem.Enabled = false;
             }
             else
             {
                 string code = OperatorOrg.GetPrivilege(_operator.idVal, (long)orgRow[Org.id], _mainConnection);
-                this.anketadataMenuItem.Enabled = isAdmin || int.Parse(code[0].ToString()) > 0;
-                this.stajidohodMenuItem.Enabled = isAdmin || int.Parse(code[2].ToString()) > 0;
-                this.svodvedomostMenuItem.Enabled = isAdmin || int.Parse(code[2].ToString()) > 0;
-                this.poiskfizlicaMenuItem.Enabled = isAdmin || int.Parse(code[0].ToString()) > 0;
-                this.elobmenMenuItem.Enabled = isAdmin || int.Parse(code[4].ToString()) > 0;
+                anketadataMenuItem.Enabled = isAdmin || int.Parse(code[0].ToString()) > 0;
+                stajidohodMenuItem.Enabled = isAdmin || int.Parse(code[2].ToString()) > 0;
+                svodvedomostMenuItem.Enabled = isAdmin || int.Parse(code[2].ToString()) > 0;
+                poiskfizlicaMenuItem.Enabled = isAdmin || int.Parse(code[0].ToString()) > 0;
+                elobmenMenuItem.Enabled = isAdmin || int.Parse(code[4].ToString()) > 0;
             }
         }
 
         private int Login()
         {
-
             OperatorEnterForm enterForm = new OperatorEnterForm(_mainConnection);
             enterForm.Owner = this;
             DialogResult dRes = enterForm.ShowDialog();
@@ -160,7 +166,7 @@ namespace Pers_uchet_org
             {
                 case DialogResult.Cancel:
                     Backup.isBackupCreate = Backup.BackupCreate.DoNotCreate;
-                    return 0;//Отмена входа
+                    return 0; //Отмена входа
                 case DialogResult.OK:
                     _operator = enterForm.Operator;
                     Backup.isBackupCreate = Backup.BackupCreate.None;
@@ -176,7 +182,9 @@ namespace Pers_uchet_org
 
         private bool IsFirstLogin()
         {
-            int isFirstLogin = Convert.ToInt32(Options.GetKeyValue(Options.isFirstLoginKeyName, new SQLiteConnection(_mainConnection), null));
+            int isFirstLogin =
+                Convert.ToInt32(Options.GetKeyValue(Options.isFirstLoginKeyName, new SQLiteConnection(_mainConnection),
+                    null));
             return isFirstLogin == 1;
         }
 
@@ -187,61 +195,66 @@ namespace Pers_uchet_org
                 position = _orgBS.Position;
 
             _orgTable = Org.CreateTable();
-            _orgTable.Columns.Add(viewCol);
+            _orgTable.Columns.Add(ViewCol);
 
             _orgBS = new BindingSource();
             _orgBS.DataSource = _orgTable;
 
-            string selectText = _operator.candeleteVal == 0 ? Org.GetSelectCommandText() : Org.GetSelectTextByOperator(_operator.idVal);
+            string selectText = _operator.candeleteVal == 0
+                ? Org.GetSelectCommandText()
+                : Org.GetSelectTextByOperator(_operator.idVal);
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectText, _mainConnection);
             adapter.Fill(_orgTable);
             foreach (DataRow rowItem in _orgTable.Rows)
             {
-                rowItem[viewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
+                rowItem[ViewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
             }
             _orgTable.AcceptChanges();
 
-            this.orgBox.DataSource = _orgBS;
-            this.orgBox.DisplayMember = viewCol;
+            orgBox.DataSource = _orgBS;
+            orgBox.DisplayMember = ViewCol;
 
             _orgBS.Position = position;
 
-            this.SetPrivilege();
+            SetPrivilege();
 
-            this.statusLabel.Text = _operator.nameVal;
+            statusLabel.Text = _operator.nameVal;
         }
+
         #endregion
 
         #region Методы - обработчики событий
+
         // сменить оператора
         private void changeoperatorMenuItem_Click(object sender, EventArgs e)
         {
-            switch (this.Login())
+            switch (Login())
             {
                 case 1:
                     break;
                 case 0:
                 case 2:
-                    this.Close();
+                    Close();
                     return;
                 default:
-                    this.Close();
+                    Close();
                     return;
             }
             ReloadData();
 
             if (IsFirstLogin())
             {
-                MainForm.ShowInfoFlexMessage("Рекомендуется для дальнейшего использования программы сменить пароль.\n" +
-                "Если Вы желаете оставить пароль по умолчанию, просто зактройте следующие окно.", "Первый вход в программу");
+                ShowInfoFlexMessage("Рекомендуется для дальнейшего использования программы сменить пароль.\n" +
+                                    "Если Вы желаете оставить пароль по умолчанию, просто зактройте следующие окно.",
+                    "Первый вход в программу");
 
                 smenaparoliaMenuItem_Click(sender, e);
 
-                MainForm.ShowInfoFlexMessage("Откройте справку и ознакомьтесь с инструкцией и возможностями программы.\n" +
-                        "Там же Вы узнаете, как добавить Вашу организацию в программу.", "Первый вход в программу");
+                ShowInfoFlexMessage("Откройте справку и ознакомьтесь с инструкцией и возможностями программы.\n" +
+                                    "Там же Вы узнаете, как добавить Вашу организацию в программу.",
+                    "Первый вход в программу");
 
                 Options.ChangeKeyValue(Options.isFirstLoginKeyName, "0", new SQLiteConnection(_mainConnection), null);
-
             }
             //MainForm.ShowInfoMessage(string.Format("Добро пожаловать, {0}!", _operator.nameVal), "Приветствие");
             checkUpdatesMenuItem_Click(null, null);
@@ -250,15 +263,16 @@ namespace Pers_uchet_org
         // выход из программы
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
+
         // открытие формы для работы с Анкетными данными сотрудников
         private void anketadataMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView orgRow = _orgBS.Current as DataRowView;
             if (orgRow == null)
             {
-                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
                 return;
             }
             Org org = new Org();
@@ -272,13 +286,14 @@ namespace Pers_uchet_org
             AnketadataForm tmpForm = new AnketadataForm(_operator, org, _mainConnection);
             tmpForm.Show();
         }
+
         // открытие формы для работы со стажем и доходом сотрудников
         private void stajidohodMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView orgRow = _orgBS.Current as DataRowView;
             if (orgRow == null)
             {
-                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
                 return;
             }
             Org org = new Org();
@@ -291,13 +306,14 @@ namespace Pers_uchet_org
             StajDohodForm tmpForm = new StajDohodForm(_operator, org, _mainConnection);
             tmpForm.Show();
         }
+
         // открытие формы для работы со сводными ведомостями
         private void svodvedomostMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView orgRow = _orgBS.Current as DataRowView;
             if (orgRow == null)
             {
-                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
                 return;
             }
             Org org = new Org();
@@ -311,18 +327,22 @@ namespace Pers_uchet_org
             SvodVedomostForm tmpForm = new SvodVedomostForm(org, _operator, _mainConnection);
             tmpForm.Show();
         }
+
         // открыть форму для печати бланков
         private void pechatblankMenuItem_Click(object sender, EventArgs e)
         {
             PrintDocBlanksForm tmpForm = new PrintDocBlanksForm();
             tmpForm.Show();
         }
+
         // открыть форму для просмотра справочника по классификациям льгот
         private void klassificatorMenuItem_Click(object sender, EventArgs e)
         {
-            ClassifierCategoriesForm tmpForm = new ClassifierCategoriesForm(ClasspercentTable, ClassificatorTable, ClassgroupTable, _mainConnection);
+            ClassifierCategoriesForm tmpForm = new ClassifierCategoriesForm(ClasspercentTable, ClassificatorTable,
+                ClassgroupTable, _mainConnection);
             tmpForm.Show();
         }
+
         // открыть форму для просмотра справочника типов документов
         private void typedocumentMenuItem_Click(object sender, EventArgs e)
         {
@@ -330,25 +350,28 @@ namespace Pers_uchet_org
             tmpForm.Show();
             tmpForm.DoctypeTable = IDocTypeTable;
         }
+
         // открыть форму для работы с настройками программы
         private void nastroikiMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm tmpForm = new SettingsForm(_mainConnection);
             tmpForm.Show();
         }
+
         // открыть форму для поиска сотрудников из общего списка вне зависимости от привязки к организациям
         private void poiskfizlicaMenuItem_Click(object sender, EventArgs e)
         {
             SearchIndividualForm tmpForm = new SearchIndividualForm(_mainConnection);
             tmpForm.Show();
         }
+
         // открыть форму для смены пароля текущего оператора
         private void smenaparoliaMenuItem_Click(object sender, EventArgs e)
         {
             ChangePasswordForm tmpForm = new ChangePasswordForm();
             if (_operator == null)
             {
-                MainForm.ShowInfoMessage("Сначала необходимо выбрать оператора", "Неопределен оператор");
+                ShowInfoMessage("Сначала необходимо выбрать оператора", "Неопределен оператор");
                 return;
             }
 
@@ -364,19 +387,21 @@ namespace Pers_uchet_org
                 _operator.SaveNewPassword(_mainConnection);
             }
         }
+
         // открыть форму для восстановления БД из резервной копии
         private void vosstanovleniebdMenuItem_Click(object sender, EventArgs e)
         {
             RestoreDBForm tmpForm = new RestoreDBForm();
             tmpForm.ShowDialog();
         }
+
         // открыть форму для электронного обмена данными с ЕГФСС
         private void elobmenMenuItem_Click(object sender, EventArgs e)
         {
             DataRowView orgRow = _orgBS.Current as DataRowView;
             if (orgRow == null)
             {
-                MainForm.ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
+                ShowWarningMessage("Необходимо выбрать организацию!", "Не выбрана организация");
                 return;
             }
             Org org = new Org();
@@ -390,12 +415,14 @@ namespace Pers_uchet_org
             ExchangeForm tmpForm = new ExchangeForm(_operator, org, _mainConnection);
             tmpForm.ShowDialog();
         }
+
         // открыть форму для редактирования информации об операторах и их уровни доступа
         private void operatoriMenuItem_Click(object sender, EventArgs e)
         {
             OperatorsForm tmpForm = new OperatorsForm(_mainConnection);
             tmpForm.ShowDialog();
         }
+
         // открыть форму представляющую краткую общую информацию о программе
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
@@ -403,6 +430,7 @@ namespace Pers_uchet_org
             tmpForm.Owner = this;
             tmpForm.ShowDialog();
         }
+
         // открыть форму редактирования информации об организациях
         private void orgMenuItem_Click(object sender, EventArgs e)
         {
@@ -413,10 +441,11 @@ namespace Pers_uchet_org
                 ReloadData();
             }
         }
+
         // при смене организации поменять состояние активности вкладок в соответствии привилегиями пользователя
         private void orgBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SetPrivilege();
+            SetPrivilege();
         }
 
         private void helpMenuItem_Click(object sender, EventArgs e)
@@ -426,7 +455,7 @@ namespace Pers_uchet_org
 
         private void historyChangeMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("History.txt");
+            Process.Start("History.txt");
         }
 
         private void checkUpdatesMenuItem_Click(object sender, EventArgs e)
@@ -436,51 +465,58 @@ namespace Pers_uchet_org
             string hostAddr = "http://ef-pmr.org/uploads/soft";
 
             WebClient webClient = new WebClient();
-            webClient.Proxy = proxy;
-            webClient.Credentials = netCredential;
-            webClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            webClient.Proxy = _proxy;
+            webClient.Credentials = _netCredential;
+            webClient.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
             if (sender != null)
-                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
+                webClient.DownloadStringCompleted +=
+                    new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
             else
-                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClientAuto_DownloadStringCompleted);
+                webClient.DownloadStringCompleted +=
+                    new DownloadStringCompletedEventHandler(webClientAuto_DownloadStringCompleted);
             webClient.DownloadStringAsync(new Uri(hostAddr + "/Pers_uchet_org_update.xml"), 1);
         }
 
-        void webClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        private void webClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error != null)
             {
-                MainForm.ShowInfoMessage("Не удалось проверить наличие обновлений!", "Обновление");
+                ShowInfoMessage("Не удалось проверить наличие обновлений!", "Обновление");
                 return;
             }
             try
             {
-                System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+                XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.InnerXml = e.Result;
 
                 Version v1 = new Version(xmlDocument.GetElementsByTagName("version")[0].InnerText);
-                Version v2 = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                Version v2 = Assembly.GetExecutingAssembly().GetName().Version;
                 switch (v1.CompareTo(v2))
                 {
                     case -1:
                     case 0:
-                        MainForm.ShowInfoMessage("Установленная версия является самой последней", "Обновление");
+                        ShowInfoMessage("Установленная версия является самой последней", "Обновление");
                         break;
                     case 1:
-                        if (MainForm.ShowQuestionFlexMessage(string.Format("Доступна новая версия {0} от {2}.\nВаша версия {1}.\nПерейти на сайт для скачивания новой версии?", v1.ToString(), v2.ToString(), xmlDocument.GetElementsByTagName("date")[0].InnerText), "Обновление") == System.Windows.Forms.DialogResult.Yes)
+                        if (
+                            ShowQuestionFlexMessage(
+                                string.Format(
+                                    "Доступна новая версия {0} от {2}.\nВаша версия {1}.\nПерейти на сайт для скачивания новой версии?",
+                                    v1.ToString(), v2.ToString(), xmlDocument.GetElementsByTagName("date")[0].InnerText),
+                                "Обновление") == DialogResult.Yes)
                         {
-                            System.Diagnostics.Process.Start("http://ef-pmr.org/persuchet/soft/");
+                            Process.Start("http://ef-pmr.org/persuchet/soft/");
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                MainForm.ShowInfoMessage("Не удалось проверить наличие обновлений!\n\n" + ex.Message, "Обновление");
+                ShowInfoMessage("Не удалось проверить наличие обновлений!\n\n" + ex.Message, "Обновление");
             }
         }
 
-        void webClientAuto_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        private void webClientAuto_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error != null)
             {
@@ -488,58 +524,66 @@ namespace Pers_uchet_org
             }
             try
             {
-                System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+                XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.InnerXml = e.Result;
 
                 Version v1 = new Version(xmlDocument.GetElementsByTagName("version")[0].InnerText);
-                Version v2 = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                Version v2 = Assembly.GetExecutingAssembly().GetName().Version;
                 switch (v1.CompareTo(v2))
                 {
                     case -1:
                     case 0:
                         break;
                     case 1:
-                        if (MainForm.ShowQuestionFlexMessage(string.Format("Доступна новая версия {0} от {2}.\nВаша версия {1}.\nПерейти на сайт для скачивания новой версии?", v1.ToString(), v2.ToString(), xmlDocument.GetElementsByTagName("date")[0].InnerText), "Обновление") == System.Windows.Forms.DialogResult.Yes)
+                        if (
+                            ShowQuestionFlexMessage(
+                                string.Format(
+                                    "Доступна новая версия {0} от {2}.\nВаша версия {1}.\nПерейти на сайт для скачивания новой версии?",
+                                    v1.ToString(), v2.ToString(), xmlDocument.GetElementsByTagName("date")[0].InnerText),
+                                "Обновление") == DialogResult.Yes)
                         {
-                            System.Diagnostics.Process.Start("http://ef-pmr.org/persuchet/soft/");
+                            Process.Start("http://ef-pmr.org/persuchet/soft/");
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
+                //При автоматической проверке не пугаем пользователя сообщениями об ошибках
+
                 //MainForm.ShowInfoMessage("Не удалось проверить наличие обновлений!\n\n" + ex.Message, "Обновление");
             }
         }
 
         private void ReadProxySettings()
         {
-            string proxyAddr = Properties.Settings.Default.ProxyAddr;
-            int proxyPort = Properties.Settings.Default.ProxyPort;
-            string proxyLogin = Properties.Settings.Default.ProxyLogin;
-            string proxyPass = Properties.Settings.Default.ProxyPass;
-            bool proxyUseAuto = Properties.Settings.Default.ProxyUseAuto;
-            bool bypassProxyOnLocal = Properties.Settings.Default.BypassProxyOnLocal;
-            bool useDefaultCredentials = Properties.Settings.Default.UseDefaultCredentials;
+            string proxyAddr = Settings.Default.ProxyAddr;
+            int proxyPort = Settings.Default.ProxyPort;
+            string proxyLogin = Settings.Default.ProxyLogin;
+            string proxyPass = Settings.Default.ProxyPass;
+            bool proxyUseAuto = Settings.Default.ProxyUseAuto;
+            bool bypassProxyOnLocal = Settings.Default.BypassProxyOnLocal;
+            bool useDefaultCredentials = Settings.Default.UseDefaultCredentials;
 
             if (proxyUseAuto)
             {
-                this.proxy = WebProxy.GetDefaultProxy();
-                if (this.proxy != null)
+                _proxy = WebProxy.GetDefaultProxy();
+                if (_proxy != null)
                 {
-                    this.proxy.BypassProxyOnLocal = bypassProxyOnLocal;
-                    this.proxy.UseDefaultCredentials = useDefaultCredentials;
+                    _proxy.BypassProxyOnLocal = bypassProxyOnLocal;
+                    _proxy.UseDefaultCredentials = useDefaultCredentials;
                 }
             }
             else
             {
-                this.proxy = new WebProxy(proxyAddr, proxyPort);
-                this.proxy.BypassProxyOnLocal = bypassProxyOnLocal;
-                this.proxy.UseDefaultCredentials = useDefaultCredentials;
+                _proxy = new WebProxy(proxyAddr, proxyPort);
+                _proxy.BypassProxyOnLocal = bypassProxyOnLocal;
+                _proxy.UseDefaultCredentials = useDefaultCredentials;
             }
 
-            netCredential = useDefaultCredentials ? new NetworkCredential(proxyLogin, proxyPass) : null;
+            _netCredential = useDefaultCredentials ? new NetworkCredential(proxyLogin, proxyPass) : null;
         }
+
         #endregion
     }
 }

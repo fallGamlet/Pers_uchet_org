@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Reflection;
@@ -13,15 +9,18 @@ namespace Pers_uchet_org.Forms
     public partial class OperatorEnterForm : Form
     {
         #region Поля
+
         // строка соединения
         private string _mainConnection;
-        private DataTable operatorTable;
+        private DataTable _operatorTable;
         private Operator _operator;
-        private int attemptsCount; //количество попыток входа
-        private int maxAttemptsCount;
+        private int _attemptsCount; //количество попыток входа
+        private int _maxAttemptsCount;
+
         #endregion
 
         #region Конструктор и инициализатор
+
         private OperatorEnterForm()
         {
             InitializeComponent();
@@ -30,41 +29,43 @@ namespace Pers_uchet_org.Forms
         public OperatorEnterForm(string connection)
             : this()
         {
-            attemptsCount = 0;
-            maxAttemptsCount = 10;
-            this._mainConnection = connection;
+            _attemptsCount = 0;
+            _maxAttemptsCount = 10;
+            _mainConnection = connection;
         }
 
         private void OperatorEnterForm_Load(object sender, EventArgs e)
         {
-            operatorTable = Operator.CreateTable();
+            _operatorTable = Operator.CreateTable();
             SQLiteDataAdapter adapter = Operator.CreateAdapter(_mainConnection);
-            adapter.Fill(operatorTable);
+            adapter.Fill(_operatorTable);
 
             loginComboBox.DisplayMember = Operator.name;
             loginComboBox.ValueMember = Operator.id;
-            loginComboBox.DataSource = operatorTable;
+            loginComboBox.DataSource = _operatorTable;
 
-            foreach (DataRow dr in operatorTable.Rows)
+            foreach (DataRow dr in _operatorTable.Rows)
             {
-                this.loginComboBox.AutoCompleteCustomSource.Add(dr[Operator.name].ToString());
+                loginComboBox.AutoCompleteCustomSource.Add(dr[Operator.name].ToString());
             }
 
             labelVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
+
         #endregion
 
         #region Свойства
+
         public string Login
         {
-            get { return this.loginComboBox.Text; }
+            get { return loginComboBox.Text; }
             //set { this.loginBox.Text = value; }
         }
 
         public string Password
         {
-            get { return this.passwordBox.Text; }
-            set { this.passwordBox.Text = value; }
+            get { return passwordBox.Text; }
+            set { passwordBox.Text = value; }
         }
 
         public Operator Operator
@@ -72,9 +73,11 @@ namespace Pers_uchet_org.Forms
             get { return _operator; }
             set { _operator = value; }
         }
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void loginComboBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -99,29 +102,34 @@ namespace Pers_uchet_org.Forms
                 string password = passwordBox.Text;
 
                 _operator = Operator.GetOperator(login, password, _mainConnection);
-                if (_operator == null && attemptsCount <= maxAttemptsCount)
+                if (_operator == null && _attemptsCount <= _maxAttemptsCount)
                 {
                     MainForm.ShowWarningMessage("Указанные логин и пароль не существуют!",
                         "Не удалось выполнить авторизацию");
-                    attemptsCount++;
+                    _attemptsCount++;
                     passwordBox.Focus();
                     return;
                 }
 
-                if (attemptsCount > maxAttemptsCount)
+                if (_attemptsCount > _maxAttemptsCount)
                 {
-                    MainForm.ShowInfoMessage(string.Format("Вы {0} раз(а) неверно ввели логин или пароль.\r\nПрограмма будет закрыта!", attemptsCount),
+                    MainForm.ShowInfoMessage(
+                        string.Format("Вы {0} раз(а) неверно ввели логин или пароль.\r\nПрограмма будет закрыта!",
+                            _attemptsCount),
                         "Не удалось выполнить авторизацию");
-                    this.DialogResult = DialogResult.Abort;
+                    DialogResult = DialogResult.Abort;
                     return;
                 }
 
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
             catch (Exception exception)
             {
                 MainForm.ShowErrorMessage(exception.Message, "Ошибка");
-                if (MainForm.ShowQuestionMessage("Файл базы данных не найден или поврежден!\nЖелаете попробовать восстановить базу из резервной копии?", "Ошибка") == DialogResult.Yes)
+                if (
+                    MainForm.ShowQuestionMessage(
+                        "Файл базы данных не найден или поврежден!\nЖелаете попробовать восстановить базу из резервной копии?",
+                        "Ошибка") == DialogResult.Yes)
                 {
                     RestoreDBForm tmpForm = new RestoreDBForm();
                     tmpForm.ShowDialog();
@@ -131,7 +139,7 @@ namespace Pers_uchet_org.Forms
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void showPassButton_MouseDown(object sender, MouseEventArgs e)
@@ -143,7 +151,7 @@ namespace Pers_uchet_org.Forms
         {
             passwordBox.UseSystemPasswordChar = true;
         }
-       
+
         private void showPassButton_KeyDown(object sender, KeyEventArgs e)
         {
             passwordBox.UseSystemPasswordChar = false;
@@ -153,11 +161,12 @@ namespace Pers_uchet_org.Forms
         {
             passwordBox.UseSystemPasswordChar = true;
         }
-       
+
         private void showPassButton_Leave(object sender, EventArgs e)
         {
             passwordBox.UseSystemPasswordChar = true;
         }
+
         #endregion
     }
 }

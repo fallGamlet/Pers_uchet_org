@@ -1,29 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class AddEditAdditionalPeriodForm : Form
     {
         #region Поля
-        int _repYear;
-        BindingSource _classpercentView500BS;
-        BindingSource _dopPeriodBS;
-        bool isNew;
+
+        private int _repYear;
+        private BindingSource _classpercentView500BS;
+        private BindingSource _dopPeriodBS;
+        private bool isNew;
 
         public long Code;
         public string CodeName;
         public DateTime Begin;
         public DateTime End;
-         #endregion
+
+        #endregion
 
         #region Конструктор и инициализатор
+
         public AddEditAdditionalPeriodForm()
         {
             InitializeComponent();
@@ -32,21 +30,22 @@ namespace Pers_uchet_org
         public AddEditAdditionalPeriodForm(int repYear, BindingSource periodBS)
             : this()
         {
-            this._repYear = repYear;
-            this._dopPeriodBS = periodBS;
-            this.Begin =  new DateTime(_repYear, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
-            this.End = new DateTime(_repYear, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
-            this.Code = 0;
-            this.CodeName = "";
+            _repYear = repYear;
+            _dopPeriodBS = periodBS;
+            Begin = new DateTime(_repYear, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
+            End = new DateTime(_repYear, DateTime.Now.Date.Month, DateTime.Now.Date.Day);
+            Code = 0;
+            CodeName = "";
             isNew = true;
         }
 
-        public AddEditAdditionalPeriodForm(int repYear, long classificatorId, BindingSource periodBS, DateTime beginDate, DateTime endDate)
+        public AddEditAdditionalPeriodForm(int repYear, long classificatorId, BindingSource periodBS, DateTime beginDate,
+            DateTime endDate)
             : this(repYear, periodBS)
         {
-            this.Code = classificatorId;
-            this.Begin = beginDate;
-            this.End = endDate;
+            Code = classificatorId;
+            Begin = beginDate;
+            End = endDate;
             isNew = false;
         }
 
@@ -61,7 +60,8 @@ namespace Pers_uchet_org
             {
                 _classpercentView500BS = new BindingSource();
                 _classpercentView500BS.DataSource = new DataView(MainForm.ClasspercentViewTable);
-                _classpercentView500BS.Filter = ClasspercentView.GetBindingSourceFilterFor500(DateTime.Parse(_repYear + "-01-01"));
+                _classpercentView500BS.Filter =
+                    ClasspercentView.GetBindingSourceFilterFor500(DateTime.Parse(_repYear + "-01-01"));
                 _classpercentView500BS.Sort = ClasspercentView.code;
                 _classpercentView500BS.CurrentChanged += new EventHandler(_classpercentView500BS_CurrentChanged);
                 codeComboBox.DataSource = _classpercentView500BS;
@@ -81,10 +81,12 @@ namespace Pers_uchet_org
                 endDateTimePicker.Value = End;
             }
         }
+
         #endregion
 
         #region Методы - обработчики событий
-        void _classpercentView500BS_CurrentChanged(object sender, EventArgs e)
+
+        private void _classpercentView500BS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
@@ -121,29 +123,29 @@ namespace Pers_uchet_org
             End = endDateTimePicker.Value;
 
             bool isAllRight = true;
-            DateTime begin;
-            DateTime end;
             foreach (DataRowView row in _dopPeriodBS)
             {
                 if (row != (_dopPeriodBS.Current as DataRowView) || isNew)
                 {
-                    begin = (DateTime)row[DopPeriod.beginDate];
-                    end = (DateTime)row[DopPeriod.endDate];
-                    if (this.Begin <= end && this.Begin >= begin)
+                    DateTime begin = (DateTime)row[DopPeriod.beginDate];
+                    DateTime end = (DateTime)row[DopPeriod.endDate];
+                    if (Begin <= end && Begin >= begin)
                         isAllRight = false;
-                    if (this.End <= end && this.End >= begin)
+                    if (End <= end && End >= begin)
                         isAllRight = false;
-                    if (this.End >= end && this.Begin <= begin)
+                    if (End >= end && Begin <= begin)
                         isAllRight = false;
                 }
             }
             if (isAllRight)
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                DialogResult = DialogResult.OK;
             else
             {
-                MainForm.ShowWarningMessage("Указанный период пересекается с уже имеющимся периодом!", "Ошибка добавления периода");
+                MainForm.ShowWarningMessage("Указанный период пересекается с уже имеющимся периодом!",
+                    "Ошибка добавления периода");
             }
         }
+
         #endregion
     }
 }

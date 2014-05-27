@@ -1,4 +1,4 @@
-﻿namespace Pers_uchet_org
+﻿namespace Pers_uchet_org.Forms
 {
     partial class AnketaPersonOrgForm
     {

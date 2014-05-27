@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class CopyPacketOtherOrgForm : Form
     {
         #region Поля
-        const string viewCol = "view_col";
+
+        private const string ViewCol = "view_col";
         private string _connection;
-        private long listId;
+        private long _listId;
         private Operator _operator;
         private DataTable _orgTable;
         private BindingSource _orgBS;
-        
-        
+
         #endregion
 
         public CopyPacketOtherOrgForm()
@@ -28,25 +23,25 @@ namespace Pers_uchet_org
             InitializeComponent();
         }
 
-        public CopyPacketOtherOrgForm(Operator _operator, string _connection, long listId)
+        public CopyPacketOtherOrgForm(Operator @operator, string connection, long listId)
             : this()
         {
-            this._operator = _operator;
-            this._connection = _connection;
-            this.listId = listId;
+            _operator = @operator;
+            _connection = connection;
+            _listId = listId;
         }
 
         private void CopyPacketForm_Load(object sender, EventArgs e)
         {
-            label2.Text += listId;
+            label2.Text += _listId;
             _orgTable = Org.CreateTable();
-            _orgTable.Columns.Add(viewCol);
+            _orgTable.Columns.Add(ViewCol);
             _orgBS = new BindingSource();
             _orgBS.DataSource = _orgTable;
 
             orgsComboBox.DataSource = _orgBS;
             orgsComboBox.ValueMember = Org.id;
-            orgsComboBox.DisplayMember = viewCol;
+            orgsComboBox.DisplayMember = ViewCol;
 
             if (_operator == null)
             {
@@ -71,7 +66,7 @@ namespace Pers_uchet_org
             adapter.Fill(_orgTable);
             foreach (DataRow rowItem in _orgTable.Rows)
             {
-                rowItem[viewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
+                rowItem[ViewCol] = string.Format("{0}    {1}", rowItem[Org.regnum], rowItem[Org.name]);
             }
             _orgTable.AcceptChanges();
             if (_orgBS.Count < 1)

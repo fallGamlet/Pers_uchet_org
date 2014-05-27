@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Pers_uchet_org.Properties;
 
@@ -22,7 +16,7 @@ namespace Pers_uchet_org.Forms
             if (SaveProperties())
             {
                 MainForm.ShowInfoMessage("Настройки успешно сохранены", "Сохранение настроек");
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
         }
 
@@ -30,14 +24,15 @@ namespace Pers_uchet_org.Forms
         {
             try
             {
-                Properties.Settings.Default.ProxyUseAuto = autoProxyRadioButton.Checked;
-                Properties.Settings.Default.UseDefaultCredentials = autoProxyRadioButton.Checked ? false : customCredentialsCheckBox.Checked;
-                Properties.Settings.Default.ProxyAddr = serverProxyTextBox.Text.Trim();
+                Settings.Default.ProxyUseAuto = autoProxyRadioButton.Checked;
+                Settings.Default.UseDefaultCredentials = !autoProxyRadioButton.Checked &&
+                                                         customCredentialsCheckBox.Checked;
+                Settings.Default.ProxyAddr = serverProxyTextBox.Text.Trim();
                 int port;
                 if (Int32.TryParse(portProxyTextBox.Text, out port))
-                    Properties.Settings.Default.ProxyPort = port;
-                Properties.Settings.Default.ProxyLogin = loginProxyTextBox.Text.Trim();
-                Properties.Settings.Default.ProxyPass = passwordProxyTextBox.Text;
+                    Settings.Default.ProxyPort = port;
+                Settings.Default.ProxyLogin = loginProxyTextBox.Text.Trim();
+                Settings.Default.ProxyPass = passwordProxyTextBox.Text;
                 Settings.Default.Save();
                 return true;
             }
@@ -70,13 +65,13 @@ namespace Pers_uchet_org.Forms
         {
             try
             {
-                bool proxyUseAuto = Properties.Settings.Default.ProxyUseAuto;
-                bool useDefaultCredentials = Properties.Settings.Default.UseDefaultCredentials;
+                bool proxyUseAuto = Settings.Default.ProxyUseAuto;
+                bool useDefaultCredentials = Settings.Default.UseDefaultCredentials;
 
-                string proxyAddr = Properties.Settings.Default.ProxyAddr;
-                int proxyPort = Properties.Settings.Default.ProxyPort;
-                string proxyLogin = Properties.Settings.Default.ProxyLogin;
-                string proxyPass = Properties.Settings.Default.ProxyPass;
+                string proxyAddr = Settings.Default.ProxyAddr;
+                int proxyPort = Settings.Default.ProxyPort;
+                string proxyLogin = Settings.Default.ProxyLogin;
+                string proxyPass = Settings.Default.ProxyPass;
 
                 //bool bypassProxyOnLocal = Properties.Settings.Default.BypassProxyOnLocal;
 
@@ -128,6 +123,5 @@ namespace Pers_uchet_org.Forms
             passwordProxyTextBox.Enabled = isEnabled;
             showPassProxyButton.Enabled = isEnabled;
         }
-
     }
 }

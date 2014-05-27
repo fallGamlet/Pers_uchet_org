@@ -2,42 +2,42 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SQLite;
-using System.Xml;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class StajDohodForm : Form
     {
         #region Поля
+
         // строка подключения к БД
-        string _connection;
+        private string _connection;
         // активный оператор
-        Operator _operator;
+        private Operator _operator;
         // активная организация
-        Org _organization;
+        private Org _organization;
         // привилегия
-        string _privilege;
+        private string _privilege;
         // таблица пакетов
-        DataTable _listsTable;
+        private DataTable _listsTable;
         // таблица документов
-        DataTable _docsTable;
+        private DataTable _docsTable;
         // биндинг сорс для таблиц
-        BindingSource _listsBS;
-        BindingSource _docsBS;
+        private BindingSource _listsBS;
+        private BindingSource _docsBS;
         // адаптер для чтения данных из БД
-        SQLiteDataAdapter _listsAdapter;
-        SQLiteDataAdapter _docsAdapter;
+        private SQLiteDataAdapter _listsAdapter;
+        private SQLiteDataAdapter _docsAdapter;
         // названия добавочного виртуального столбца
-        const string CHECK = "check";
+        private const string Check = "check";
         // переменная содержит текущий используемый год
-        int _repYear;
+        private int _repYear;
         // переменная содержит id текущего пакета
-        static long _currentListId;
+        private static long _currentListId;
         // переменная содержит год, в который будет перемещен пакет
         public static int NewRepYear = 0;
         // переменная содержит id организации, в которую будет перемещен пакет
@@ -55,6 +55,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Конструктор и инициализатор
+
         public StajDohodForm(Operator oper, Org organization, string connection)
         {
             InitializeComponent();
@@ -67,7 +68,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                this.Text += " - " + _organization.regnumVal;
+                Text += " - " + _organization.regnumVal;
 
                 // получить код привилегии (уровня доступа) Оператора к Организации
                 if (_operator.IsAdmin())
@@ -83,8 +84,8 @@ namespace Pers_uchet_org
                 _listsTable = ListsView.CreateTable();
                 _docsTable = DocsView.CreateTable();
                 // добавление виртуального столбца для возможности отмечать записи
-                _docsTable.Columns.Add(CHECK, typeof(bool));
-                _docsTable.Columns[CHECK].DefaultValue = false;
+                _docsTable.Columns.Add(Check, typeof(bool));
+                _docsTable.Columns[Check].DefaultValue = false;
 
                 // инициализация биндинг сорса к таблице документов
                 _docsBS = new BindingSource();
@@ -104,32 +105,32 @@ namespace Pers_uchet_org
                 _listsAdapter.Fill(_listsTable);
 
                 // присвоение источника dataGrid
-                this.listsView.AutoGenerateColumns = false;
-                this.listsView.Columns["id"].DataPropertyName = ListsView.id;
-                this.listsView.Columns["list_type"].DataPropertyName = ListsView.nameType;
-                this.listsView.Columns["operatorRegColumn"].DataPropertyName = ListsView.operatorNameReg;
-                this.listsView.Columns["datecreateColumn"].DataPropertyName = ListsView.regDate;
-                this.listsView.Columns["operatorEditColumn"].DataPropertyName = ListsView.operatorNameChange;
-                this.listsView.Columns["dateEditColumn"].DataPropertyName = ListsView.changeDate;
-                this.listsView.DataSource = _listsBS;
+                listsView.AutoGenerateColumns = false;
+                listsView.Columns["id"].DataPropertyName = ListsView.id;
+                listsView.Columns["list_type"].DataPropertyName = ListsView.nameType;
+                listsView.Columns["operatorRegColumn"].DataPropertyName = ListsView.operatorNameReg;
+                listsView.Columns["datecreateColumn"].DataPropertyName = ListsView.regDate;
+                listsView.Columns["operatorEditColumn"].DataPropertyName = ListsView.operatorNameChange;
+                listsView.Columns["dateEditColumn"].DataPropertyName = ListsView.changeDate;
+                listsView.DataSource = _listsBS;
 
 
-                this.docView.AutoGenerateColumns = false;
-                this.docView.Columns["checkColumn"].DataPropertyName = CHECK;
-                this.docView.Columns["idColumn"].DataPropertyName = DocsView.id;
-                this.docView.Columns["socNumColumn"].DataPropertyName = DocsView.socNumber;
-                this.docView.Columns["fioColumn"].DataPropertyName = DocsView.fio;
-                this.docView.Columns["typeformColumn"].DataPropertyName = DocsView.nameType;
-                this.docView.Columns["categoryColumn"].DataPropertyName = DocsView.code;
-                this.docView.Columns["operRegColumn"].DataPropertyName = DocsView.operNameReg;
-                this.docView.Columns["regDateColumn"].DataPropertyName = DocsView.regDate;
-                this.docView.Columns["operChangeColumn"].DataPropertyName = DocsView.operNameChange;
-                this.docView.Columns["changeDateColumn"].DataPropertyName = DocsView.changeDate;
+                docView.AutoGenerateColumns = false;
+                docView.Columns["checkColumn"].DataPropertyName = Check;
+                docView.Columns["idColumn"].DataPropertyName = DocsView.id;
+                docView.Columns["socNumColumn"].DataPropertyName = DocsView.socNumber;
+                docView.Columns["fioColumn"].DataPropertyName = DocsView.fio;
+                docView.Columns["typeformColumn"].DataPropertyName = DocsView.nameType;
+                docView.Columns["categoryColumn"].DataPropertyName = DocsView.code;
+                docView.Columns["operRegColumn"].DataPropertyName = DocsView.operNameReg;
+                docView.Columns["regDateColumn"].DataPropertyName = DocsView.regDate;
+                docView.Columns["operChangeColumn"].DataPropertyName = DocsView.operNameChange;
+                docView.Columns["changeDateColumn"].DataPropertyName = DocsView.changeDate;
 
 
-                this.docView.DataSource = _docsBS;
+                docView.DataSource = _docsBS;
 
-                this.SetPrivilege(_privilege);
+                SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -142,19 +143,19 @@ namespace Pers_uchet_org
             bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(privilegeCode) == 1;
             if (readOnly)
             {
-                addListStripButton.Enabled = !readOnly;
-                delListStripButton.Enabled = !readOnly;
-                copyToYearListStripButton.Enabled = !readOnly;
-                copyToOrgListStripButton.Enabled = !readOnly;
-                moveToYearListStripButton.Enabled = !readOnly;
-                moveToOrgListStripButton.Enabled = !readOnly;
+                addListStripButton.Enabled = false;
+                delListStripButton.Enabled = false;
+                copyToYearListStripButton.Enabled = false;
+                copyToOrgListStripButton.Enabled = false;
+                moveToYearListStripButton.Enabled = false;
+                moveToOrgListStripButton.Enabled = false;
 
-                addDocStripButton.Enabled = !readOnly;
-                editDocStripButton.Enabled = !readOnly;
-                delDocStripButton.Enabled = !readOnly;
-                copyToListDocStripButton.Enabled = !readOnly;
-                moveToListDocStripButton.Enabled = !readOnly;
-                changeTypeDocStripButton.Enabled = !readOnly;
+                addDocStripButton.Enabled = false;
+                editDocStripButton.Enabled = false;
+                delDocStripButton.Enabled = false;
+                copyToListDocStripButton.Enabled = false;
+                moveToListDocStripButton.Enabled = false;
+                changeTypeDocStripButton.Enabled = false;
 
                 docView.CellDoubleClick -= documentView_CellDoubleClick;
 
@@ -177,10 +178,12 @@ namespace Pers_uchet_org
         {
             MainForm.RepYear = _repYear;
         }
+
         #endregion
 
         #region Методы - обработчики событий
-        void _listsBS_ListChanged(object sender, ListChangedEventArgs e)
+
+        private void _listsBS_ListChanged(object sender, ListChangedEventArgs e)
         {
             try
             {
@@ -199,7 +202,7 @@ namespace Pers_uchet_org
                 if (!isEnabled && _docsTable != null)
                     _docsTable.Clear();
 
-                this.SetPrivilege(_privilege);
+                SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -207,7 +210,7 @@ namespace Pers_uchet_org
             }
         }
 
-        void _listsBS_CurrentChanged(object sender, EventArgs e)
+        private void _listsBS_CurrentChanged(object sender, EventArgs e)
         {
             try
             {
@@ -234,7 +237,7 @@ namespace Pers_uchet_org
                     _docsBS.ResetBindings(false);
                 }
 
-                this.SetPrivilege(_privilege);
+                SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -242,7 +245,7 @@ namespace Pers_uchet_org
             }
         }
 
-        void _docsBS_ListChanged(object sender, ListChangedEventArgs e)
+        private void _docsBS_ListChanged(object sender, ListChangedEventArgs e)
         {
             try
             {
@@ -256,7 +259,7 @@ namespace Pers_uchet_org
                 changeTypeDocStripButton.Enabled = isEnabled;
                 previewDocStripButton.Enabled = isEnabled;
 
-                this.SetPrivilege(_privilege);
+                SetPrivilege(_privilege);
             }
             catch (Exception ex)
             {
@@ -271,11 +274,11 @@ namespace Pers_uchet_org
                 if (e.RowIndex == -1 && e.ColumnIndex == 1)
                 {
                     docView.EndEdit();
-                    bool allchecked = _docsBS.Cast<DataRowView>().All(row => (bool)row[CHECK]);
+                    bool allchecked = _docsBS.Cast<DataRowView>().All(row => (bool)row[Check]);
                     foreach (DataRowView row in _docsBS)
-                        row[CHECK] = !allchecked;
+                        row[Check] = !allchecked;
                 }
-                this.docView.Refresh();
+                docView.Refresh();
             }
             catch (Exception ex)
             {
@@ -301,7 +304,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
                     //if (!r.Selected)
@@ -330,20 +333,23 @@ namespace Pers_uchet_org
                     ContextMenuStrip cms = cmsLists;
                     if (cms == null)
                         return;
-                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex,
+                        currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
 
                     DataGridView dataView = sender as DataGridView;
                     ToolStripItem[] items; //Массив в который возвращает элементы метод Find
-                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
-                    menuItems.Add("viewOpisMenuItem");
-                    menuItems.Add("calcMenuItem");
-                    menuItems.Add("printListMenuItem");
-                    menuItems.Add("copyToOtherYearMenuItem");
-                    menuItems.Add("moveToOtherYearMenuItem");
-                    menuItems.Add("copyToOtherOrgMenuItem");
-                    menuItems.Add("moveToOtherOrgMenuItem");
-                    menuItems.Add("delListMenuItem");
+                    List<string> menuItems = new List<string>
+                    {
+                        "viewOpisMenuItem",
+                        "calcMenuItem",
+                        "printListMenuItem",
+                        "copyToOtherYearMenuItem",
+                        "moveToOtherYearMenuItem",
+                        "copyToOtherOrgMenuItem",
+                        "moveToOtherOrgMenuItem",
+                        "delListMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
 
                     int currentMouseOverRow = dataView.CurrentCell.RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -407,15 +413,17 @@ namespace Pers_uchet_org
 
                     DataGridView dataView = sender as DataGridView;
                     ToolStripItem[] items; //Массив в который возвращает элементы метод Find
-                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
-                    menuItems.Add("viewOpisMenuItem");
-                    menuItems.Add("calcMenuItem");
-                    menuItems.Add("printListMenuItem");
-                    menuItems.Add("copyToOtherYearMenuItem");
-                    menuItems.Add("moveToOtherYearMenuItem");
-                    menuItems.Add("copyToOtherOrgMenuItem");
-                    menuItems.Add("moveToOtherOrgMenuItem");
-                    menuItems.Add("delListMenuItem");
+                    List<string> menuItems = new List<string>
+                    {
+                        "viewOpisMenuItem",
+                        "calcMenuItem",
+                        "printListMenuItem",
+                        "copyToOtherYearMenuItem",
+                        "moveToOtherYearMenuItem",
+                        "copyToOtherOrgMenuItem",
+                        "moveToOtherOrgMenuItem",
+                        "delListMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -489,18 +497,21 @@ namespace Pers_uchet_org
                     ContextMenuStrip cms = cmsLists;
                     if (cms == null)
                         return;
-                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex,
+                        currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
 
                     DataGridView dataView = sender as DataGridView;
                     ToolStripItem[] items; //Массив в который возвращает элементы метод Find
-                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
-                    menuItems.Add("editDocMenuItem");
-                    menuItems.Add("changeTypeDocMenuItem");
-                    menuItems.Add("previewDocMenuItem");
-                    menuItems.Add("copyToOtherListMenuItem");
-                    menuItems.Add("moveToOtherListMenuItem");
-                    menuItems.Add("delDocMenuItem");
+                    List<string> menuItems = new List<string>
+                    {
+                        "editDocMenuItem",
+                        "changeTypeDocMenuItem",
+                        "previewDocMenuItem",
+                        "copyToOtherListMenuItem",
+                        "moveToOtherListMenuItem",
+                        "delDocMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
 
                     int currentMouseOverRow = dataView.CurrentCell.RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -534,7 +545,6 @@ namespace Pers_uchet_org
                     }
 
                     cms.Show((sender as DataGridView), p);
-
                 }
 
                 if (e.KeyCode == Keys.Delete)
@@ -564,7 +574,8 @@ namespace Pers_uchet_org
                     if ((sender as DataGridView).CurrentRow == null)
                         return;
 
-                    (_docsBS.Current as DataRowView)[CHECK] = !Convert.ToBoolean((_docsBS.Current as DataRowView)[CHECK]);
+                    (_docsBS.Current as DataRowView)[Check] =
+                        !Convert.ToBoolean((_docsBS.Current as DataRowView)[Check]);
                     (sender as DataGridView).EndEdit();
                     (sender as DataGridView).Refresh();
                 }
@@ -587,13 +598,15 @@ namespace Pers_uchet_org
 
                     DataGridView dataView = sender as DataGridView;
                     ToolStripItem[] items; //Массив в который возвращает элементы метод Find
-                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
-                    menuItems.Add("editDocMenuItem");
-                    menuItems.Add("changeTypeDocMenuItem");
-                    menuItems.Add("previewDocMenuItem");
-                    menuItems.Add("copyToOtherListMenuItem");
-                    menuItems.Add("moveToOtherListMenuItem");
-                    menuItems.Add("delDocMenuItem");
+                    List<string> menuItems = new List<string>
+                    {
+                        "editDocMenuItem",
+                        "changeTypeDocMenuItem",
+                        "previewDocMenuItem",
+                        "copyToOtherListMenuItem",
+                        "moveToOtherListMenuItem",
+                        "delDocMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -709,7 +722,9 @@ namespace Pers_uchet_org
         {
             try
             {
-                if (MainForm.ShowQuestionMessage("Вы действительно хотите создать\nновый пакет документов СЗВ-1?", "Создание пакета") == DialogResult.No)
+                if (
+                    MainForm.ShowQuestionMessage("Вы действительно хотите создать\nновый пакет документов СЗВ-1?",
+                        "Создание пакета") == DialogResult.No)
                     return;
                 //TODO: Загружать список доступных типов пакета для текущего года, спрашивать пользователя 
                 using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -728,10 +743,12 @@ namespace Pers_uchet_org
                                 throw new SQLiteException("Не удалось создать новый пакет.");
                             }
 
-                            command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.New, listId, _operator.nameVal, DateTime.Now);
+                            command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.New, listId,
+                                _operator.nameVal, DateTime.Now);
                             if ((long)command.ExecuteScalar() < 1)
                             {
-                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename +
+                                                          ".");
                             }
                         }
                         transaction.Commit();
@@ -753,7 +770,10 @@ namespace Pers_uchet_org
             {
                 if (listsView.CurrentRow == null)
                     return;
-                if (MainForm.ShowQuestionMessage("Вы действительно хотите удалить выбранный пакет\nдокументов СЗВ-1 и все документы в нём?", "Удаление пакета") == DialogResult.No)
+                if (
+                    MainForm.ShowQuestionMessage(
+                        "Вы действительно хотите удалить выбранный пакет\nдокументов СЗВ-1 и все документы в нём?",
+                        "Удаление пакета") == DialogResult.No)
                     return;
 
                 string commandText = Lists.GetDeleteText(_currentListId);
@@ -787,12 +807,10 @@ namespace Pers_uchet_org
 
         private void calcListStripButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void printFioListStripButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void copyToYearListStripButton_Click(object sender, EventArgs e)
@@ -806,7 +824,10 @@ namespace Pers_uchet_org
 
                 if (copyPacketOtherYear.ShowDialog() == DialogResult.OK)
                 {
-                    if (MainForm.ShowQuestionMessage("Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Копирование пакета") == DialogResult.No)
+                    if (
+                        MainForm.ShowQuestionMessage(
+                            "Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId +
+                            " и все документы в нём?", "Копирование пакета") == DialogResult.No)
                         return;
 
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -840,7 +861,10 @@ namespace Pers_uchet_org
                 MovePacketOtherYearForm movePacketOtherYear = new MovePacketOtherYearForm(listId);
                 if (movePacketOtherYear.ShowDialog() == DialogResult.OK)
                 {
-                    if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
+                    if (
+                        MainForm.ShowQuestionMessage(
+                            "Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId +
+                            " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                         return;
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
@@ -856,10 +880,12 @@ namespace Pers_uchet_org
                                 {
                                     throw new SQLiteException("Не удалось переместить пакет.");
                                 }
-                                command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId, _operator.nameVal, DateTime.Now);
+                                command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit,
+                                    listId, _operator.nameVal, DateTime.Now);
                                 if ((long)command.ExecuteScalar() < 1)
                                 {
-                                    throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                    throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename +
+                                                              ".");
                                 }
                             }
                             transaction.Commit();
@@ -885,7 +911,21 @@ namespace Pers_uchet_org
                 CopyPacketOtherOrgForm movePacketForm = new CopyPacketOtherOrgForm(_operator, _connection, listId);
                 if (movePacketForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (MainForm.ShowQuestionMessage("Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Копирование пакета") == DialogResult.No)
+                    if (_operator.candeleteVal != 0)
+                    {
+                        string code = OperatorOrg.GetPrivilege(_operator.idVal, NewOrgId, _connection);
+                        if (int.Parse(code[2].ToString()) != 2)
+                        {
+                            MainForm.ShowWarningFlexMessage(
+                                "У вас недостаточно прав для копирования пакетов в выбранную организацию. Обратитесь к администратору.", "Копирование пакета");
+                            return;
+                        }
+                    }
+
+                    if (
+                        MainForm.ShowQuestionMessage(
+                            "Вы действительно хотите копировать выбранный пакет\nдокументов СЗВ-1 № " + listId +
+                            " и все документы в нём?", "Копирование пакета") == DialogResult.No)
                         return;
 
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -899,10 +939,12 @@ namespace Pers_uchet_org
                                 command.Transaction = transaction;
 
                                 NewListId = CopyListToOtherYear(listId, _repYear, connection, transaction);
-                                long res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, NewListId, _operator.nameVal, DateTime.Now, connection, transaction);
+                                long res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, NewListId,
+                                    _operator.nameVal, DateTime.Now, connection, transaction);
                                 if (res < 1)
                                 {
-                                    throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
+                                    throw new SQLiteException("Невозможно создать документ. Таблица " +
+                                                              FixData.tablename + ".");
                                 }
 
                                 MoveListToOrg(NewListId, NewOrgId, connection, transaction);
@@ -930,7 +972,21 @@ namespace Pers_uchet_org
                 MovePacketOtherOrgForm movePacketForm = new MovePacketOtherOrgForm(_operator, _connection, listId);
                 if (movePacketForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (MainForm.ShowQuestionMessage("Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId + " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
+                    if (_operator.candeleteVal != 0)
+                    {
+                        string code = OperatorOrg.GetPrivilege(_operator.idVal, NewOrgId, _connection);
+                        if (int.Parse(code[2].ToString()) != 2)
+                        {
+                            MainForm.ShowWarningFlexMessage(
+                                "У вас недостаточно прав для перемещения пакетов в выбранную организацию. Обратитесь к администратору.", "Копирование пакета");
+                            return;
+                        }
+                    }
+
+                    if (
+                        MainForm.ShowQuestionMessage(
+                            "Вы действительно хотите переместить выбранный пакет\nдокументов СЗВ-1 № " + listId +
+                            " и все документы в нём?", "Перемещение пакета") == DialogResult.No)
                         return;
 
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -964,10 +1020,12 @@ namespace Pers_uchet_org
                         "Добавление документа(ов)");
                     return;
                 }
-                ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _currentListId, _connection);
+                ChoicePersonForm choicePersonForm = new ChoicePersonForm(_organization, _repYear, _currentListId,
+                    _connection);
                 if (choicePersonForm.ShowDialog() == DialogResult.OK)
                 {
-                    AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection);
+                    AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator,
+                        _currentListId, _repYear, PersonId, FlagDoc, _connection);
                     if (szv1Form.ShowDialog() == DialogResult.OK)
                     {
                         _listsBS_CurrentChanged(_listsBS, new EventArgs());
@@ -990,7 +1048,8 @@ namespace Pers_uchet_org
                 long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
                 PersonId = (long)(_docsBS.Current as DataRowView)[DocsView.personID];
                 FlagDoc = (int)(_docsBS.Current as DataRowView)[DocsView.docTypeId];
-                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId, _repYear, PersonId, FlagDoc, _connection, docId);
+                AddEditDocumentSzv1Form szv1Form = new AddEditDocumentSzv1Form(_organization, _operator, _currentListId,
+                    _repYear, PersonId, FlagDoc, _connection, docId);
                 if (szv1Form.ShowDialog() == DialogResult.OK)
                 {
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
@@ -1010,22 +1069,24 @@ namespace Pers_uchet_org
                 if (docView.CurrentRow == null)
                     return;
 
-                (_docsBS.Current as DataRowView)[CHECK] = true;
+                (_docsBS.Current as DataRowView)[Check] = true;
                 docView.EndEdit();
                 docView.Refresh();
 
-                List<long> docIdList;
-                docIdList = GetSelectedDocIds();
+                List<long> docIdList = GetSelectedDocIds();
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
-                        (_docsBS.Current as DataRowView)[CHECK] = true;
+                        (_docsBS.Current as DataRowView)[Check] = true;
                         docIdList = GetSelectedDocIds();
                     }
 
                 string listFio = GetFioForSelectedDocIds(docIdList);
 
-                if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите удалить выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Удаление документа(ов)") == DialogResult.No)
+                if (
+                    MainForm.ShowQuestionFlexMessage(
+                        "Вы действительно хотите удалить выбранные документы СЗВ-1?\nКоличество выбранных документов: " +
+                        docIdList.Count + "\n" + listFio, "Удаление документа(ов)") == DialogResult.No)
                     return;
 
                 using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -1052,13 +1113,12 @@ namespace Pers_uchet_org
                     }
                 }
                 //Перезагрузка данных
-                int position = -1;
+                int position;
                 position = _docsBS.Find(DocsView.id, docIdList[0]);
 
                 _listsBS_CurrentChanged(_listsBS, new EventArgs());
 
                 _docsBS.Position = position - 1;
-
             }
             catch (Exception ex)
             {
@@ -1071,27 +1131,30 @@ namespace Pers_uchet_org
             if (docView.CurrentRow == null)
                 return;
 
-            (_docsBS.Current as DataRowView)[CHECK] = true;
+            (_docsBS.Current as DataRowView)[Check] = true;
             docView.EndEdit();
             docView.Refresh();
 
-            List<long> docIdList;
-            docIdList = GetSelectedDocIds();
+            List<long> docIdList = GetSelectedDocIds();
             if (docIdList.Count < 1)
                 if (_docsBS.Current != null)
                 {
-                    (_docsBS.Current as DataRowView)[CHECK] = true;
+                    (_docsBS.Current as DataRowView)[Check] = true;
                     docIdList = GetSelectedDocIds();
                 }
 
             ReplaceDocTypeForm replaceDocTypeForm = new ReplaceDocTypeForm(_connection);
-            if (replaceDocTypeForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (replaceDocTypeForm.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     string listFio = GetFioForSelectedDocIds(docIdList);
 
-                    if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите изменить тип у выбранных документов СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Замена типа формы документа(ов) СЗВ-1") == DialogResult.No)
+                    if (
+                        MainForm.ShowQuestionFlexMessage(
+                            "Вы действительно хотите изменить тип у выбранных документов СЗВ-1?\nКоличество выбранных документов: " +
+                            docIdList.Count + "\n" + listFio, "Замена типа формы документа(ов) СЗВ-1") ==
+                        DialogResult.No)
                         return;
 
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
@@ -1107,10 +1170,12 @@ namespace Pers_uchet_org
                                 Docs.UpdateDocTypeByDocId(docIdList, NewDocTypeId, connection, transaction);
                                 foreach (long docId in docIdList)
                                 {
-                                    command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, docId, _operator.nameVal, DateTime.Now);
+                                    command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit,
+                                        docId, _operator.nameVal, DateTime.Now);
                                     if ((long)command.ExecuteScalar() < 1)
                                     {
-                                        throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                        throw new SQLiteException("Невозможно создать запись. Таблица " +
+                                                                  FixData.tablename + ".");
                                     }
                                 }
                             }
@@ -1120,7 +1185,8 @@ namespace Pers_uchet_org
                 }
                 catch (Exception ex)
                 {
-                    MainForm.ShowErrorFlexMessage("Не удалось изменить тип документа(ов).\n" + ex.Message, "Ошибка изменения типа документа(ов)");
+                    MainForm.ShowErrorFlexMessage("Не удалось изменить тип документа(ов).\n" + ex.Message,
+                        "Ошибка изменения типа документа(ов)");
                 }
 
                 //Перезагрузка данных
@@ -1163,7 +1229,7 @@ namespace Pers_uchet_org
                 if (docView.CurrentRow == null)
                     return;
 
-                (_docsBS.Current as DataRowView)[CHECK] = true;
+                (_docsBS.Current as DataRowView)[Check] = true;
                 docView.EndEdit();
                 docView.Refresh();
 
@@ -1171,7 +1237,7 @@ namespace Pers_uchet_org
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
-                        (_docsBS.Current as DataRowView)[CHECK] = true;
+                        (_docsBS.Current as DataRowView)[Check] = true;
                         docIdList = GetSelectedDocIds();
                     }
 
@@ -1189,7 +1255,11 @@ namespace Pers_uchet_org
                         return;
                     }
 
-                    if (MainForm.ShowQuestionFlexMessage(string.Format("Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio), "Копирование документа(ов) СЗВ-1") == DialogResult.No)
+                    if (
+                        MainForm.ShowQuestionFlexMessage(
+                            string.Format(
+                                "Вы действительно хотите копировать выбранные документы СЗВ-1?\nКоличество выбранных документов: " +
+                                docIdList.Count + "\n" + listFio), "Копирование документа(ов) СЗВ-1") == DialogResult.No)
                         return;
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
@@ -1201,7 +1271,8 @@ namespace Pers_uchet_org
                             transaction.Commit();
                         }
                     }
-                    MainForm.ShowInfoFlexMessage("Копирование документов успешно завершено!", "Копирование документа(ов)");
+                    MainForm.ShowInfoFlexMessage("Копирование документов успешно завершено!",
+                        "Копирование документа(ов)");
                     _listsBS_CurrentChanged(_listsBS, new EventArgs());
                 }
             }
@@ -1218,7 +1289,7 @@ namespace Pers_uchet_org
                 if (docView.CurrentRow == null)
                     return;
 
-                (_docsBS.Current as DataRowView)[CHECK] = true;
+                (_docsBS.Current as DataRowView)[Check] = true;
                 docView.EndEdit();
                 docView.Refresh();
 
@@ -1226,7 +1297,7 @@ namespace Pers_uchet_org
                 if (docIdList.Count < 1)
                     if (_docsBS.Current != null)
                     {
-                        (_docsBS.Current as DataRowView)[CHECK] = true;
+                        (_docsBS.Current as DataRowView)[Check] = true;
                         docIdList = GetSelectedDocIds();
                     }
 
@@ -1249,7 +1320,10 @@ namespace Pers_uchet_org
                         return;
                     }
 
-                    if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите переместить выбранные документы СЗВ-1?\nКоличество выбранных документов: " + docIdList.Count + "\n" + listFio, "Перемещение документа(ов) СЗВ-1") == DialogResult.No)
+                    if (
+                        MainForm.ShowQuestionFlexMessage(
+                            "Вы действительно хотите переместить выбранные документы СЗВ-1?\nКоличество выбранных документов: " +
+                            docIdList.Count + "\n" + listFio, "Перемещение документа(ов) СЗВ-1") == DialogResult.No)
                         return;
                     using (SQLiteConnection connection = new SQLiteConnection(_connection))
                     {
@@ -1266,10 +1340,12 @@ namespace Pers_uchet_org
                                     {
                                         throw new SQLiteException("Не удалось переместить документ.");
                                     }
-                                    command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit, docId, _operator.nameVal, DateTime.Now);
+                                    command.CommandText = FixData.GetReplaceText(Docs.tablename, FixData.FixType.Edit,
+                                        docId, _operator.nameVal, DateTime.Now);
                                     if ((long)command.ExecuteScalar() < 1)
                                     {
-                                        throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
+                                        throw new SQLiteException("Невозможно создать запись. Таблица " +
+                                                                  FixData.tablename + ".");
                                     }
                                 }
                             }
@@ -1291,14 +1367,14 @@ namespace Pers_uchet_org
             }
         }
 
-
         #endregion
 
         #region Методы - свои
+
         private List<long> GetSelectedDocIds()
         {
             docView.EndEdit();
-            return (from DataRowView docRow in _docsBS where (bool)docRow[CHECK] select (long)docRow["id"]).ToList();
+            return (from DataRowView docRow in _docsBS where (bool)docRow[Check] select (long)docRow["id"]).ToList();
         }
 
         private string GetFioForSelectedDocIds(IEnumerable<long> docIdList)
@@ -1308,7 +1384,8 @@ namespace Pers_uchet_org
             foreach (var item in docIdList)
             {
                 int position = _docsBS.Find(DocsView.id, item);
-                builder.AppendFormat("\n{0} {1}", (_docsBS[position] as DataRowView)[DocsView.fio].ToString(), (_docsBS[position] as DataRowView)[DocsView.socNumber].ToString());
+                builder.AppendFormat("\n{0} {1}", (_docsBS[position] as DataRowView)[DocsView.fio].ToString(),
+                    (_docsBS[position] as DataRowView)[DocsView.socNumber].ToString());
             }
             return builder.ToString();
         }
@@ -1332,10 +1409,11 @@ namespace Pers_uchet_org
             _listsBS.RaiseListChangedEvents = true;
             _listsBS.ResetBindings(false);
 
-            this.SetPrivilege(_privilege);
+            SetPrivilege(_privilege);
         }
 
-        private void CopyDocsByDocId(IEnumerable<long> docIdList, long newListId, SQLiteConnection connection, SQLiteTransaction transaction)
+        private void CopyDocsByDocId(IEnumerable<long> docIdList, long newListId, SQLiteConnection connection,
+            SQLiteTransaction transaction)
         {
             foreach (long oldDocId in docIdList)
             {
@@ -1344,9 +1422,10 @@ namespace Pers_uchet_org
                 if (newDocId < 1)
                     throw new SQLiteException("Невозможно создать документ.");
 
-                long res = 0;
+                long res;
                 //Сохранение в таблицу Fixdata
-                res = FixData.ExecReplaceText(Docs.tablename, FixData.FixType.New, newDocId, _operator.nameVal, DateTime.Now, connection, transaction);
+                res = FixData.ExecReplaceText(Docs.tablename, FixData.FixType.New, newDocId, _operator.nameVal,
+                    DateTime.Now, connection, transaction);
                 if (res < 1)
                 {
                     throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
@@ -1372,7 +1451,8 @@ namespace Pers_uchet_org
             }
         }
 
-        private void MoveListToOrg(long listId, long newOrgId, SQLiteConnection connection, SQLiteTransaction transaction)
+        private void MoveListToOrg(long listId, long newOrgId, SQLiteConnection connection,
+            SQLiteTransaction transaction)
         {
             using (SQLiteCommand command = connection.CreateCommand())
             {
@@ -1391,7 +1471,8 @@ namespace Pers_uchet_org
                 {
                     throw new SQLiteException("Не удалось переместить пакет.");
                 }
-                command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId, _operator.nameVal, DateTime.Now);
+                command.CommandText = FixData.GetReplaceText(Lists.tablename, FixData.FixType.Edit, listId,
+                    _operator.nameVal, DateTime.Now);
                 if ((long)command.ExecuteScalar() < 1)
                 {
                     throw new SQLiteException("Невозможно создать запись. Таблица " + FixData.tablename + ".");
@@ -1399,7 +1480,8 @@ namespace Pers_uchet_org
             }
         }
 
-        private long CopyListToOtherYear(long listId, int newRepYear, SQLiteConnection connection, SQLiteTransaction transaction)
+        private long CopyListToOtherYear(long listId, int newRepYear, SQLiteConnection connection,
+            SQLiteTransaction transaction)
         {
             long newListId;
             using (SQLiteCommand command = connection.CreateCommand())
@@ -1420,7 +1502,8 @@ namespace Pers_uchet_org
                 Lists.UpdateYear(newListId, newRepYear, connection, transaction);
 
                 //Сохранение в таблицу Fixdata
-                long res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, newListId, _operator.nameVal, DateTime.Now, connection, transaction);
+                long res = FixData.ExecReplaceText(Lists.tablename, FixData.FixType.New, newListId, _operator.nameVal,
+                    DateTime.Now, connection, transaction);
                 if (res < 1)
                 {
                     throw new SQLiteException("Невозможно создать документ. Таблица " + FixData.tablename + ".");
@@ -1428,6 +1511,7 @@ namespace Pers_uchet_org
             }
             return newListId;
         }
+
         #endregion
     }
 }

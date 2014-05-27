@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
 namespace Pers_uchet_org
 {
-
-
-    class ReadKey
+    internal class ReadKey
     {
         #region unmanaged CreateFile function
+
         public enum EFileAccess
         {
             GenericRead = unchecked((int)0x80000000),
@@ -69,14 +65,29 @@ namespace Pers_uchet_org
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern SafeFileHandle CreateFile(string lpFileName, uint dwDesiredAccess, uint dwShareMode, IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile);
+        public static extern SafeFileHandle CreateFile(string lpFileName, uint dwDesiredAccess, uint dwShareMode,
+            IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile);
+
         #endregion
 
-        public enum DeviceType { CD, CDImage, Diskette, DisketteImage };
-        public enum DataType { Key = 1, Table = 2};
+        public enum DeviceType
+        {
+            CD,
+            CDImage,
+            Diskette,
+            DisketteImage
+        };
+
+        public enum DataType
+        {
+            Key = 1,
+            Table = 2
+        };
+
         private delegate byte[] ReadData(string name, int shift);
 
         #region Методы
+
         public static byte[] MakeKey(byte[] key)
         {
             byte[] resArr = new byte[key.Length * 4];
@@ -91,11 +102,11 @@ namespace Pers_uchet_org
             return resArr;
         }
 
-        public static void ReadDates(string driveName, DeviceType deviceType, out DateTime beginDate, out DateTime endDate)
+        public static void ReadDates(string driveName, DeviceType deviceType, out DateTime beginDate,
+            out DateTime endDate)
         {
             int shift;
-            ReadData readData = null;
-            byte[] resData = null;
+            ReadData readData;
 
             switch (deviceType)
             {
@@ -117,7 +128,7 @@ namespace Pers_uchet_org
                     break;
                 default:
                     shift = 2048;
-                    readData = ReadCD;
+                    //readData = ReadCD;
                     readData = ReadCDImage;
                     break;
             }
@@ -127,8 +138,8 @@ namespace Pers_uchet_org
             byte[] arr = new byte[4];
             Array.Copy(data, iStart, arr, 0, 4);
             Array.Reverse(arr);
-            long begin = BitConverter.ToInt32(arr,0);
-            Array.Copy(data, iStart+50, arr, 0, 4);
+            long begin = BitConverter.ToInt32(arr, 0);
+            Array.Copy(data, iStart + 50, arr, 0, 4);
             Array.Reverse(arr);
             long end = BitConverter.ToInt32(arr, 0);
             //
@@ -139,7 +150,7 @@ namespace Pers_uchet_org
         public static byte[] Read(string driveName, DeviceType deviceType, DataType dataType)
         {
             int shift;
-            ReadData readData = null;
+            ReadData readData;
             byte[] resData = null;
 
             switch (deviceType)
@@ -162,7 +173,7 @@ namespace Pers_uchet_org
                     break;
                 default:
                     shift = 2048;
-                    readData = ReadCD;
+                    //readData = ReadCD;
                     readData = ReadCDImage;
                     break;
             }
@@ -202,13 +213,13 @@ namespace Pers_uchet_org
             byte[] resBuff = new byte[2048];
             string lpFileName = @"\\.\" + driveName;
             using (SafeFileHandle drive = CreateFile(
-                  lpFileName,
-                  unchecked((uint)EFileAccess.GenericRead),
-                  (uint)EFileShare.Read,
-                  IntPtr.Zero,
-                  (uint)ECreationDisposition.OpenExisting,
-                  (uint)EFileAttributes.eNormal,
-                  IntPtr.Zero))
+                lpFileName,
+                unchecked((uint)EFileAccess.GenericRead),
+                (uint)EFileShare.Read,
+                IntPtr.Zero,
+                (uint)ECreationDisposition.OpenExisting,
+                (uint)EFileAttributes.eNormal,
+                IntPtr.Zero))
             {
                 if (drive.IsInvalid)
                     throw new IOException("Unable to access drive. Win32 Error Code " + Marshal.GetLastWin32Error());
@@ -226,11 +237,11 @@ namespace Pers_uchet_org
         public static string ReadCDStr(string driveName, int shift)
         {
             byte[] buff = ReadCD(driveName, shift);
-            string key = BitConverter.ToString(buff).Replace("-","");
+            string key = BitConverter.ToString(buff).Replace("-", "");
             //
             return key;
         }
-        
+
         public static byte[] ReadCDImage(string imgFilePath, int shift)
         {
             if (!File.Exists(imgFilePath))
@@ -269,13 +280,13 @@ namespace Pers_uchet_org
             byte[] resBuff = new byte[512];
             string lpFileName = @"\\.\" + driveName;
             using (SafeFileHandle drive = CreateFile(
-                  lpFileName,
-                  unchecked((uint)EFileAccess.GenericRead),
-                  (uint)EFileShare.Read,
-                  IntPtr.Zero,
-                  (uint)ECreationDisposition.OpenExisting,
-                  (uint)EFileAttributes.eNormal,
-                  IntPtr.Zero))
+                lpFileName,
+                unchecked((uint)EFileAccess.GenericRead),
+                (uint)EFileShare.Read,
+                IntPtr.Zero,
+                (uint)ECreationDisposition.OpenExisting,
+                (uint)EFileAttributes.eNormal,
+                IntPtr.Zero))
             {
                 if (drive.IsInvalid)
                     throw new IOException("Unable to access drive. Win32 Error Code " + Marshal.GetLastWin32Error());
@@ -345,7 +356,6 @@ namespace Pers_uchet_org
                 m = (ibuf & 0xFF) / 16;
                 n = (ibuf & 0xFF) % 16;
                 tmp += hexins[m] + hexins[n];
-
             }
             return tmp;
         }
@@ -386,12 +396,11 @@ namespace Pers_uchet_org
 
         public static long Date2Julian(DateTime date)
         {
-            long x1, x2, x3;
             try
             {
-                x1 = 1461 * (date.Year + 4800 + (date.Month - 14) / 12) / 4;
-                x2 = (367 * (date.Month - 2 - 12 * (((date.Month - 14) / 12)))) / 12;
-                x3 = (3 * (date.Year + 4900 + (date.Month - 14) / 12) / 100) / 4;
+                long x1 = 1461 * (date.Year + 4800 + (date.Month - 14) / 12) / 4;
+                long x2 = (367 * (date.Month - 2 - 12 * (((date.Month - 14) / 12)))) / 12;
+                long x3 = (3 * (date.Year + 4900 + (date.Month - 14) / 12) / 100) / 4;
                 return x1 + x2 - x3 + date.Day - 32075;
             }
             catch
@@ -399,6 +408,7 @@ namespace Pers_uchet_org
                 return 0;
             }
         }
+
         #endregion
     }
 }

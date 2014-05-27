@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class OperatorsEditPersonForm : Form
     {
@@ -18,8 +12,8 @@ namespace Pers_uchet_org
 
         public string OperatorName
         {
-            get { return this.nameBox.Text; }
-            set { this.nameBox.Text = value; }
+            get { return nameBox.Text; }
+            set { nameBox.Text = value; }
         }
 
         private void acceptButton_Click(object sender, EventArgs e)

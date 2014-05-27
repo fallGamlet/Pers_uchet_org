@@ -1,41 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class EditPersonForm : Form
     {
         #region Поля
-        string _connection; // строка соединения с БД
-        string _operName;   // имя оператора, работающего с формой
-        long _orgID;        // ID организации, для для которой открыта форма
-        long _personID;     // ID персоны, котору редактируют, или создают (при создании сначала = -1)
-        long _idocID;       // ID записи документа
-        long _regadrID;     // ID записи рег. адреса
-        long _factadrID;    // ID записи фактического адреса
-        long _bornadrID;    // ID записи адреса рождения рождения
 
-        DataTable _doctypeTable;    // таблица с типами документов
-        DataTable _citizenTable;    // таблица с странами (для гражданства)
+        private string _connection; // строка соединения с БД
+        private string _operName; // имя оператора, работающего с формой
+        private long _orgID; // ID организации, для для которой открыта форма
+        private long _personID; // ID персоны, котору редактируют, или создают (при создании сначала = -1)
+        private long _idocID; // ID записи документа
+        private long _regadrID; // ID записи рег. адреса
+        private long _factadrID; // ID записи фактического адреса
+        private long _bornadrID; // ID записи адреса рождения рождения
 
-        BindingSource _doctypeBS;
-        BindingSource _citizen1BS;
-        BindingSource _citizen2BS;
+        private DataTable _doctypeTable; // таблица с типами документов
+        private DataTable _citizenTable; // таблица с странами (для гражданства)
+
+        private BindingSource _doctypeBS;
+        private BindingSource _citizen1BS;
+        private BindingSource _citizen2BS;
+
         #endregion
 
         #region Конструктор и инициализатор
-        public EditPersonForm(string connection, string operatorName, long orgID)
+
+        public EditPersonForm(string connection, string operatorName, long orgId)
         {
             InitializeComponent();
 
-            this.adressrealCheckBox_CheckedChanged(null, null);
+            adressrealCheckBox_CheckedChanged(null, null);
 
             _connection = connection;
             _personID = -1;
@@ -50,7 +48,7 @@ namespace Pers_uchet_org
                 //this.DialogResult = DialogResult.Abort;
                 _operName = "Mr.Unknown";
             }
-            _orgID = orgID;
+            _orgID = orgId;
         }
 
         private void EditPersonForm_Load(object sender, EventArgs e)
@@ -78,15 +76,15 @@ namespace Pers_uchet_org
             if (_citizenTable.Rows.Count <= 0)
                 countryAdapter.Fill(_citizenTable);
 
-            this.doctypeBox.DataSource = _doctypeBS;
-            this.doctypeBox.DisplayMember = IDocType.name;
+            doctypeBox.DataSource = _doctypeBS;
+            doctypeBox.DisplayMember = IDocType.name;
 
-            this.citizen1Box.DataSource = _citizen1BS;
-            this.citizen1Box.DisplayMember = Country.name;
-            this.citizen1Box.ValueMember = Country.id;
-            this.citizen2Box.DataSource = _citizen2BS;
-            this.citizen2Box.DisplayMember = Country.name;
-            this.citizen2Box.ValueMember = Country.id;
+            citizen1Box.DataSource = _citizen1BS;
+            citizen1Box.DisplayMember = Country.name;
+            citizen1Box.ValueMember = Country.id;
+            citizen2Box.DataSource = _citizen2BS;
+            citizen2Box.DisplayMember = Country.name;
+            citizen2Box.ValueMember = Country.id;
 
             int pos = _citizen1BS.Find(Country.name, "ПМР");
             if (pos != -1)
@@ -96,21 +94,19 @@ namespace Pers_uchet_org
 
             _citizen2BS.MoveFirst();
             _doctypeBS.MoveFirst();
-            this.sexBox.SelectedIndex = this.sexBox.Items.Count > 0 ? 0 : -1;
+            sexBox.SelectedIndex = sexBox.Items.Count > 0 ? 0 : -1;
         }
+
         #endregion
 
         #region Свойство
-        public long PersonID
+
+        public long PersonId
         {
             get { return _personID; }
             set
             {
-
                 _personID = value;
-                int ifind;
-                string dateStr;
-                SQLiteDataReader reader;
                 SQLiteCommand command = new SQLiteCommand();
                 try
                 {
@@ -119,19 +115,20 @@ namespace Pers_uchet_org
 
                     if (command.Connection.State != ConnectionState.Open)
                         command.Connection.Open();
+                    SQLiteDataReader reader;
                     reader = command.ExecuteReader();
                     if (reader.Read())
                     {
                         // заполнение полей формы данными Персоны
-                        this.socNumBox.Text = reader[PersonInfo.socNumber] as string;
-                        this.fNameBox.Text = reader[PersonInfo.fname] as string;
-                        this.mNameBox.Text = reader[PersonInfo.mname] as string;
-                        this.lNameBox.Text = reader[PersonInfo.lname] as string;
+                        socNumBox.Text = reader[PersonInfo.socNumber] as string;
+                        fNameBox.Text = reader[PersonInfo.fname] as string;
+                        mNameBox.Text = reader[PersonInfo.mname] as string;
+                        lNameBox.Text = reader[PersonInfo.lname] as string;
                         object sexCode = reader[PersonInfo.sex];
-                        this.sexBox.SelectedIndex = sexCode is DBNull ? -1 : (int)sexCode;
-                        dateStr = reader[PersonInfo.birthday] as string;
-                        this.birthdayBox.Value = DateTime.Parse(dateStr);
-                        ifind = _citizen1BS.Find(Country.id, reader[PersonInfo.citizen1]);
+                        sexBox.SelectedIndex = sexCode is DBNull ? -1 : (int)sexCode;
+                        string dateStr = reader[PersonInfo.birthday] as string;
+                        birthdayBox.Value = DateTime.Parse(dateStr);
+                        int ifind = _citizen1BS.Find(Country.id, reader[PersonInfo.citizen1]);
                         _citizen1BS.Position = ifind;
                         ifind = _citizen2BS.Find(Country.id, reader[PersonInfo.citizen2]);
                         _citizen2BS.Position = ifind;
@@ -146,12 +143,12 @@ namespace Pers_uchet_org
 
                         if (_regadrID == _factadrID)
                         {
-                            this.adressrealCheckBox.Checked = false;
+                            adressrealCheckBox.Checked = false;
                             _factadrID = -1;
                         }
                         else
                         {
-                            this.adressrealCheckBox.Checked = true;
+                            adressrealCheckBox.Checked = true;
                         }
 
                         command.CommandText = IDocInfo.GetSelectCommandText(_idocID);
@@ -161,11 +158,11 @@ namespace Pers_uchet_org
                         {
                             ifind = _doctypeBS.Find(IDocType.id, reader[IDocInfo.docTypeID]);
                             _doctypeBS.Position = ifind;
-                            this.docseriesBox.Text = reader[IDocInfo.series] as string;
-                            this.docnumBox.Text = reader[IDocInfo.number] as string;
+                            docseriesBox.Text = reader[IDocInfo.series] as string;
+                            docnumBox.Text = reader[IDocInfo.number] as string;
                             dateStr = reader[IDocInfo.date] as string;
-                            this.docdateBox.Value = DateTime.Parse(dateStr);
-                            this.docorgBox.Text = reader[IDocInfo.org] as string;
+                            docdateBox.Value = DateTime.Parse(dateStr);
+                            docorgBox.Text = reader[IDocInfo.org] as string;
                         }
                         reader.Close();
 
@@ -173,14 +170,14 @@ namespace Pers_uchet_org
                         reader = command.ExecuteReader();
                         if (reader.Read())
                         {
-                            this.regCountryBox.Text = reader[Adress.country] as string;
-                            this.regAreaBox.Text = reader[Adress.area] as string;
-                            this.regRegionBox.Text = reader[Adress.region] as string;
-                            this.regCityBox.Text = reader[Adress.city] as string;
-                            this.regIndexBox.Text = reader[Adress.zipCode] as string;
-                            this.regStreetBox.Text = reader[Adress.street] as string;
-                            this.regBuildingBox.Text = reader[Adress.building] as string;
-                            this.regAppartmentBox.Text = reader[Adress.appartment] as string;
+                            regCountryBox.Text = reader[Adress.country] as string;
+                            regAreaBox.Text = reader[Adress.area] as string;
+                            regRegionBox.Text = reader[Adress.region] as string;
+                            regCityBox.Text = reader[Adress.city] as string;
+                            regIndexBox.Text = reader[Adress.zipCode] as string;
+                            regStreetBox.Text = reader[Adress.street] as string;
+                            regBuildingBox.Text = reader[Adress.building] as string;
+                            regAppartmentBox.Text = reader[Adress.appartment] as string;
                         }
                         reader.Close();
 
@@ -190,14 +187,14 @@ namespace Pers_uchet_org
                             reader = command.ExecuteReader();
                             if (reader.Read())
                             {
-                                this.factCountryBox.Text = reader[Adress.country] as string;
-                                this.factAreaBox.Text = reader[Adress.area] as string;
-                                this.factRegionBox.Text = reader[Adress.region] as string;
-                                this.factCityBox.Text = reader[Adress.city] as string;
-                                this.factIndexBox.Text = reader[Adress.zipCode] as string;
-                                this.factStreetBox.Text = reader[Adress.street] as string;
-                                this.factBuildingBox.Text = reader[Adress.building] as string;
-                                this.factAppartmentBox.Text = reader[Adress.appartment] as string;
+                                factCountryBox.Text = reader[Adress.country] as string;
+                                factAreaBox.Text = reader[Adress.area] as string;
+                                factRegionBox.Text = reader[Adress.region] as string;
+                                factCityBox.Text = reader[Adress.city] as string;
+                                factIndexBox.Text = reader[Adress.zipCode] as string;
+                                factStreetBox.Text = reader[Adress.street] as string;
+                                factBuildingBox.Text = reader[Adress.building] as string;
+                                factAppartmentBox.Text = reader[Adress.appartment] as string;
                             }
                             reader.Close();
                         }
@@ -205,18 +202,18 @@ namespace Pers_uchet_org
                         reader = command.ExecuteReader();
                         if (reader.Read())
                         {
-                            this.bornCountryBox.Text = reader[Adress.country] as string;
-                            this.bornAreaBox.Text = reader[Adress.area] as string;
-                            this.bornRegionBox.Text = reader[Adress.region] as string;
-                            this.bornCityBox.Text = reader[Adress.city] as string;
+                            bornCountryBox.Text = reader[Adress.country] as string;
+                            bornAreaBox.Text = reader[Adress.area] as string;
+                            bornRegionBox.Text = reader[Adress.region] as string;
+                            bornCityBox.Text = reader[Adress.city] as string;
                         }
                         reader.Close();
                     }
                     else
                     {
-                        MessageBox.Show("Персона с указанным идентификатором не найдена!", "Неверный идентификатор", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Персона с указанным идентификатором не найдена!", "Неверный идентификатор",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-
                 }
                 finally
                 {
@@ -224,38 +221,40 @@ namespace Pers_uchet_org
                 }
             }
         }
+
         #endregion
 
         #region Методы - свои
+
         private bool ValidateData()
         {
             bool res = true;
             string err = "";
 
-            if (this.lNameBox.Text.Trim().Length <= 0)
+            if (lNameBox.Text.Trim().Length <= 0)
             {
                 err += "\nНекорректная фамилия.";
-                res &= false;
+                res = false;
             }
-            if (this.fNameBox.Text.Trim().Length <= 0)
+            if (fNameBox.Text.Trim().Length <= 0)
             {
                 err += "\nНекорректное имя.";
-                res &= false;
+                res = false;
             }
-            if (this.sexBox.SelectedIndex == -1)
+            if (sexBox.SelectedIndex == -1)
             {
                 err += "\nНекорректный пол.";
-                res &= false;
+                res = false;
             }
-            if (!PersonInfo.IsCorrectSocNumber(this.socNumBox.Text.Trim('-', ' ')))
+            if (!PersonInfo.IsCorrectSocNumber(socNumBox.Text.Trim('-', ' ')))
             {
                 err += "\nНекорректный страховой номер.";
-                res &= false;
+                res = false;
             }
-            if (this.citizen1Box.SelectedValue == null || (long)this.citizen1Box.SelectedValue <= 0)
+            if (citizen1Box.SelectedValue == null || (long)citizen1Box.SelectedValue <= 0)
             {
                 err += "\nНе указано основное гражданство.";
-                res &= false;
+                res = false;
             }
             //if (regCityBox.Text.Trim().Length <= 0)
             //{
@@ -272,10 +271,10 @@ namespace Pers_uchet_org
             //    err += "\nНекорректное название города рождения.";
             //    res &= false;
             //}
-            if (this.doctypeBox.SelectedIndex < 0)
+            if (doctypeBox.SelectedIndex < 0)
             {
                 err += "\nНе указан тип документа.";
-                res &= false;
+                res = false;
             }
             //if (this.docnumBox.Text.Trim().Length <= 0)
             //{
@@ -284,7 +283,8 @@ namespace Pers_uchet_org
             //}
 
             if (!res)
-                MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные");
+                MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err,
+                    "Введены некорректные данные");
             return res;
         }
 
@@ -295,47 +295,47 @@ namespace Pers_uchet_org
             command.Parameters[IDocInfo.pId].Value = _idocID;
             if (doctype != null)
                 command.Parameters[IDocInfo.pDocTypeID].Value = doctype[IDocType.id];
-            command.Parameters[IDocInfo.pSeries].Value = this.docseriesBox.Text.Trim();
-            command.Parameters[IDocInfo.pNumber].Value = this.docnumBox.Text.Trim();
-            command.Parameters[IDocInfo.pDate].Value = this.docdateBox.Value.ToString("yyyy-MM-dd");
-            command.Parameters[IDocInfo.pOrg].Value = this.docorgBox.Text.Trim();
+            command.Parameters[IDocInfo.pSeries].Value = docseriesBox.Text.Trim();
+            command.Parameters[IDocInfo.pNumber].Value = docnumBox.Text.Trim();
+            command.Parameters[IDocInfo.pDate].Value = docdateBox.Value.ToString("yyyy-MM-dd");
+            command.Parameters[IDocInfo.pOrg].Value = docorgBox.Text.Trim();
         }
 
         private void SetRegAdressValues(SQLiteCommand command)
         {
             command.Parameters[Adress.pId].Value = _regadrID;
-            command.Parameters[Adress.pCountry].Value = this.regCountryBox.Text.Trim();
-            command.Parameters[Adress.pArea].Value = this.regAreaBox.Text.Trim();
-            command.Parameters[Adress.pRegion].Value = this.regRegionBox.Text.Trim();
-            command.Parameters[Adress.pCity].Value = this.regCityBox.Text.Trim();
-            command.Parameters[Adress.pZipCode].Value = this.regIndexBox.Text.Trim();
-            command.Parameters[Adress.pStreet].Value = this.regStreetBox.Text.Trim();
-            command.Parameters[Adress.pBuilding].Value = this.regBuildingBox.Text.Trim();
-            command.Parameters[Adress.pAppartment].Value = this.regAppartmentBox.Text.Trim();
+            command.Parameters[Adress.pCountry].Value = regCountryBox.Text.Trim();
+            command.Parameters[Adress.pArea].Value = regAreaBox.Text.Trim();
+            command.Parameters[Adress.pRegion].Value = regRegionBox.Text.Trim();
+            command.Parameters[Adress.pCity].Value = regCityBox.Text.Trim();
+            command.Parameters[Adress.pZipCode].Value = regIndexBox.Text.Trim();
+            command.Parameters[Adress.pStreet].Value = regStreetBox.Text.Trim();
+            command.Parameters[Adress.pBuilding].Value = regBuildingBox.Text.Trim();
+            command.Parameters[Adress.pAppartment].Value = regAppartmentBox.Text.Trim();
             //command.Parameters[Adress.pPhone].Value;
         }
 
         private void SetFactAdressValues(SQLiteCommand command)
         {
             command.Parameters[Adress.pId].Value = _factadrID;
-            command.Parameters[Adress.pCountry].Value = this.factCountryBox.Text.Trim();
-            command.Parameters[Adress.pArea].Value = this.factAreaBox.Text.Trim();
-            command.Parameters[Adress.pRegion].Value = this.factRegionBox.Text.Trim();
-            command.Parameters[Adress.pCity].Value = this.factCityBox.Text.Trim();
-            command.Parameters[Adress.pZipCode].Value = this.factIndexBox.Text.Trim();
-            command.Parameters[Adress.pStreet].Value = this.factStreetBox.Text.Trim();
-            command.Parameters[Adress.pBuilding].Value = this.factBuildingBox.Text.Trim();
-            command.Parameters[Adress.pAppartment].Value = this.factAppartmentBox.Text.Trim();
+            command.Parameters[Adress.pCountry].Value = factCountryBox.Text.Trim();
+            command.Parameters[Adress.pArea].Value = factAreaBox.Text.Trim();
+            command.Parameters[Adress.pRegion].Value = factRegionBox.Text.Trim();
+            command.Parameters[Adress.pCity].Value = factCityBox.Text.Trim();
+            command.Parameters[Adress.pZipCode].Value = factIndexBox.Text.Trim();
+            command.Parameters[Adress.pStreet].Value = factStreetBox.Text.Trim();
+            command.Parameters[Adress.pBuilding].Value = factBuildingBox.Text.Trim();
+            command.Parameters[Adress.pAppartment].Value = factAppartmentBox.Text.Trim();
             //command.Parameters[Adress.pPhone].Value;
         }
 
         private void SetBornplaceValues(SQLiteCommand command)
         {
             command.Parameters[Adress.pId].Value = _bornadrID;
-            command.Parameters[Adress.pCountry].Value = this.bornCountryBox.Text.Trim();
-            command.Parameters[Adress.pArea].Value = this.bornAreaBox.Text.Trim();
-            command.Parameters[Adress.pRegion].Value = this.bornRegionBox.Text.Trim();
-            command.Parameters[Adress.pCity].Value = this.bornCityBox.Text.Trim();
+            command.Parameters[Adress.pCountry].Value = bornCountryBox.Text.Trim();
+            command.Parameters[Adress.pArea].Value = bornAreaBox.Text.Trim();
+            command.Parameters[Adress.pRegion].Value = bornRegionBox.Text.Trim();
+            command.Parameters[Adress.pCity].Value = bornCityBox.Text.Trim();
             //command.Parameters[Adress.pZipCode].Value;
             //command.Parameters[Adress.pStreet].Value;
             //command.Parameters[Adress.pBuilding].Value;
@@ -345,38 +345,39 @@ namespace Pers_uchet_org
 
         private void SetPersonValues(SQLiteCommand command)
         {
-            long citizen1ID, citizen2ID;
+            long citizen1Id;
+            long citizen2Id;
             DataRowView citizen1 = _citizen1BS.Current as DataRowView;
             DataRowView citizen2 = _citizen2BS.Current as DataRowView;
             if (citizen1 == null)
-                citizen1ID = -1;
+                citizen1Id = -1;
             else
-                citizen1ID = (long)citizen1[Adress.id];
+                citizen1Id = (long)citizen1[Adress.id];
             if (citizen2 == null)
-                citizen2ID = -1;
+                citizen2Id = -1;
             else
-                citizen2ID = (long)citizen2[Adress.id];
+                citizen2Id = (long)citizen2[Adress.id];
 
-            if (citizen1ID == -1 && citizen2ID != -1)
+            if (citizen1Id == -1 && citizen2Id != -1)
             {
-                citizen1ID = citizen2ID;
-                citizen2ID = -1;
+                citizen1Id = citizen2Id;
+                citizen2Id = -1;
             }
 
             command.Parameters[PersonInfo.pId].Value = _personID;
-            command.Parameters[PersonInfo.pSocNumber].Value = this.socNumBox.Text.Trim('-', ' '); ;
-            command.Parameters[PersonInfo.pFname].Value = this.fNameBox.Text.Trim();
-            command.Parameters[PersonInfo.pMname].Value = this.mNameBox.Text.Trim();
-            command.Parameters[PersonInfo.pLname].Value = this.lNameBox.Text.Trim();
-            command.Parameters[PersonInfo.pBirthday].Value = this.birthdayBox.Value.ToString("yyyy-MM-dd"); ;
-            command.Parameters[PersonInfo.pCitizen1].Value = citizen1ID;
-            command.Parameters[PersonInfo.pCitizen2].Value = citizen2ID;
+            command.Parameters[PersonInfo.pSocNumber].Value = socNumBox.Text.Trim('-', ' ');
+            command.Parameters[PersonInfo.pFname].Value = fNameBox.Text.Trim();
+            command.Parameters[PersonInfo.pMname].Value = mNameBox.Text.Trim();
+            command.Parameters[PersonInfo.pLname].Value = lNameBox.Text.Trim();
+            command.Parameters[PersonInfo.pBirthday].Value = birthdayBox.Value.ToString("yyyy-MM-dd");
+            command.Parameters[PersonInfo.pCitizen1].Value = citizen1Id;
+            command.Parameters[PersonInfo.pCitizen2].Value = citizen2Id;
             command.Parameters[PersonInfo.pDocID].Value = _idocID;
             command.Parameters[PersonInfo.pRegadrID].Value = _regadrID;
             command.Parameters[PersonInfo.pFactadrID].Value = _factadrID;
             command.Parameters[PersonInfo.pBornplaceID].Value = _bornadrID;
 
-            command.Parameters[PersonInfo.pSex].Value = this.sexBox.SelectedIndex;
+            command.Parameters[PersonInfo.pSex].Value = sexBox.SelectedIndex;
         }
 
         private void InsertDataToDB()
@@ -400,22 +401,26 @@ namespace Pers_uchet_org
             insFixdata.Connection = connection;
             insPersonOrg.Connection = connection;
             // заполнение команд параметрами
-            this.SetRegAdressValues(insRegadr);
-            this.SetFactAdressValues(insFactadr);
-            this.SetBornplaceValues(insBornadr);
-            this.SetDocValues(insIDoc);
+            SetRegAdressValues(insRegadr);
+            SetFactAdressValues(insFactadr);
+            SetBornplaceValues(insBornadr);
+            SetDocValues(insIDoc);
             // открытие соединения
             connection.Open();
             // создание транзакции
             SQLiteTransaction transaction = connection.BeginTransaction();
             // присвоение транзакции командам
-            insPersonOrg.Transaction = insFixdata.Transaction = insFactadr.Transaction = insRegadr.Transaction = insBornadr.Transaction = insIDoc.Transaction = insPerson.Transaction = transaction;
+            insPersonOrg.Transaction =
+                insFixdata.Transaction =
+                    insFactadr.Transaction =
+                        insRegadr.Transaction =
+                            insBornadr.Transaction = insIDoc.Transaction = insPerson.Transaction = transaction;
 
             // выполнение запросов для вставки данных в смежные таблицы
             // вставка прописки и получение ID записи
             _regadrID = (long)insRegadr.ExecuteScalar();
             // если фактический адресс проживания отличается от прописки
-            if (this.adressrealCheckBox.Checked)
+            if (adressrealCheckBox.Checked)
             {
                 // вставка адресса проживания и получение ID записи
                 _factadrID = (long)insFactadr.ExecuteScalar();
@@ -430,11 +435,12 @@ namespace Pers_uchet_org
             _idocID = (long)insIDoc.ExecuteScalar();
             // заполнение команды вставки Персоны параметрами, 
             // в том числе определенными ID ранее вставленных записей адрессов и документа
-            this.SetPersonValues(insPerson);
+            SetPersonValues(insPerson);
             // исполнение команды вставки Персоны
             _personID = (long)insPerson.ExecuteScalar();
             // выполнение запроса на фиксацию факта создания записи
-            insFixdata.CommandText = FixData.GetReplaceText(PersonInfo.tablename, FixData.FixType.New, _personID, _operName, DateTime.Now);
+            insFixdata.CommandText = FixData.GetReplaceText(PersonInfo.tablename, FixData.FixType.New, _personID,
+                _operName, DateTime.Now);
             insFixdata.ExecuteNonQuery();
 
             insPersonOrg.CommandText = PersonOrg.GetInsertPersonOrgText(_personID, _orgID);
@@ -450,27 +456,28 @@ namespace Pers_uchet_org
             // создание соединения с БД
             SQLiteConnection connection = new SQLiteConnection(_connection);
             // команда для фиксации факта изменения записи
-            SQLiteCommand fixdata = new SQLiteCommand(FixData.GetReplaceText(PersonInfo.tablename, FixData.FixType.Edit, _personID, _operName, DateTime.Now));
+            SQLiteCommand fixdata =
+                new SQLiteCommand(FixData.GetReplaceText(PersonInfo.tablename, FixData.FixType.Edit, _personID,
+                    _operName, DateTime.Now));
             // создание команд для обновления
             SQLiteCommand updatePerson = PersonInfo.CreateUpdateCommand();
             // инициализация комманды для Адресса прописки
-            SQLiteCommand commandRegadr = null;
-            commandRegadr = _regadrID == -1 ? Adress.CreateInsertCommand() : Adress.CreateUpdateCommand();
+            SQLiteCommand commandRegadr = _regadrID == -1 ? Adress.CreateInsertCommand() : Adress.CreateUpdateCommand();
 
             // инициализация комманды для Адресса проживания
             SQLiteCommand commandFactadr = null;
-            if (this.adressrealCheckBox.Checked)
+            if (adressrealCheckBox.Checked)
             {
                 commandFactadr = _factadrID == -1 ? Adress.CreateInsertCommand() : Adress.CreateUpdateCommand();
             }
 
             // инициализация комманды для Места рождения
-            SQLiteCommand commandBornadr = null;
-            commandBornadr = _bornadrID == -1 ? Adress.CreateInsertCommand() : Adress.CreateUpdateCommand();
+            SQLiteCommand commandBornadr = _bornadrID == -1
+                ? Adress.CreateInsertCommand()
+                : Adress.CreateUpdateCommand();
 
             // инициализация комманды для документа
-            SQLiteCommand commandIDoc = null;
-            commandIDoc = _idocID == -1 ? IDocInfo.CreateInsertCommand() : IDocInfo.CreateUpdateCommand();
+            SQLiteCommand commandIDoc = _idocID == -1 ? IDocInfo.CreateInsertCommand() : IDocInfo.CreateUpdateCommand();
 
             // присвоение подключения командам
             updatePerson.Connection = connection;
@@ -480,10 +487,10 @@ namespace Pers_uchet_org
             commandIDoc.Connection = connection;
             fixdata.Connection = connection;
             // заполнение команд параметрами
-            this.SetRegAdressValues(commandRegadr);
-            if (commandFactadr != null) this.SetFactAdressValues(commandFactadr);
-            this.SetBornplaceValues(commandBornadr);
-            this.SetDocValues(commandIDoc);
+            SetRegAdressValues(commandRegadr);
+            if (commandFactadr != null) SetFactAdressValues(commandFactadr);
+            SetBornplaceValues(commandBornadr);
+            SetDocValues(commandIDoc);
 
             // открытие соединения
             connection.Open();
@@ -491,10 +498,10 @@ namespace Pers_uchet_org
             SQLiteTransaction transaction = connection.BeginTransaction();
             // присвоение транзакции командам
             fixdata.Transaction =
-            commandRegadr.Transaction =
-            commandBornadr.Transaction =
-            commandIDoc.Transaction =
-            updatePerson.Transaction = transaction;
+                commandRegadr.Transaction =
+                    commandBornadr.Transaction =
+                        commandIDoc.Transaction =
+                            updatePerson.Transaction = transaction;
             if (commandFactadr != null) commandFactadr.Transaction = transaction;
 
             // выполнение запросов для вставки данных в смежные таблицы
@@ -506,7 +513,7 @@ namespace Pers_uchet_org
                 commandRegadr.ExecuteNonQuery();
 
             // если фактический адресс проживания отличается от прописки
-            if (commandFactadr != null && this.adressrealCheckBox.Checked)
+            if (commandFactadr != null && adressrealCheckBox.Checked)
             {
                 if (_factadrID == -1)
                     // вставка адресса проживания и получение ID записи
@@ -535,7 +542,7 @@ namespace Pers_uchet_org
 
             // заполнение команды вставки Персоны параметрами, 
             // в том числе определенными ID ранее вставленных записей адрессов и документа
-            this.SetPersonValues(updatePerson);
+            SetPersonValues(updatePerson);
             // исполнение команды обновления Персоны
             updatePerson.ExecuteNonQuery();
             fixdata.ExecuteNonQuery();
@@ -544,46 +551,50 @@ namespace Pers_uchet_org
             // закрытие соединения
             connection.Close();
         }
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (!this.ValidateData())
+            if (!ValidateData())
             {
                 //MainForm.ShowWarningMessage("Введенные данные не прошли проверку на корректность!", "Внимание");
                 return;
             }
 
-            this.socNumBox.Text = PersonInfo.CorrectSocnumberRusToEn(this.socNumBox.Text.Trim());
-            string socNumber = this.socNumBox.Text.Trim('-', ' ');
+            socNumBox.Text = PersonInfo.CorrectSocnumberRusToEn(socNumBox.Text.Trim());
+            string socNumber = socNumBox.Text.Trim('-', ' ');
             if (PersonInfo.IsExist(_personID, socNumber, _connection))
             {
-                MainForm.ShowWarningMessage("Анкетные данные с таким номером уже присутствуют в базе данных!", "Внимание");
+                MainForm.ShowWarningMessage("Анкетные данные с таким номером уже присутствуют в базе данных!",
+                    "Внимание");
                 return;
             }
 
             if (_personID == -1)
             {
-                this.InsertDataToDB();
+                InsertDataToDB();
             }
             else
             {
-                this.UpdateDataToDB();
+                UpdateDataToDB();
             }
             MainForm.ShowInfoMessage("Данные успешно сохранены!", "Сохранение");
-            this.Close();
+            Close();
         }
 
         private void adressrealCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.adressrealGroupBox.Enabled = this.adressrealCheckBox.Checked;
+            adressrealGroupBox.Enabled = adressrealCheckBox.Checked;
         }
+
         #endregion
     }
 }

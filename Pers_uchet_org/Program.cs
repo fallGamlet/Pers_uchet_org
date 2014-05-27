@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
+using Pers_uchet_org.Forms;
 using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
@@ -93,8 +93,6 @@ namespace Pers_uchet_org
                         break;
                     case Backup.BackupCreate.DoNotCreate:
                         isCreateBackup = false;
-                        break;
-                    default:
                         break;
                 }
 
