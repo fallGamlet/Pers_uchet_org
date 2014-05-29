@@ -340,5 +340,17 @@ namespace Pers_uchet_org.Properties {
                 return ((string)(this["report_calculate"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Static/template/report_(пофамильный список).html")]
+        public string report_docs_list {
+            get {
+                return ((string)(this["report_docs_list"]));
+            }
+            set {
+                this["report_docs_list"] = value;
+            }
+        }
     }
 }

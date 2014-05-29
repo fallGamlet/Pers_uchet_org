@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Калькуляция по пакету</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setPacketNum = function(valStr) {
+			$("#packet_num").text(valStr);
+		}
+		var setOrgRegnum = function(valStr) {
+			$('#org_regnum').text(valStr);
+		};
+		var setOrgName = function(valStr) {
+			$("#org_name").text(valStr);
+		};
+		var setRepyear = function(valStr) {
+			$('#repyear').text(valStr);
+		};
+		var setPacketCount = function(valStr) {
+			$("#packet_count").text(valStr);
+		};
+		var setDocCount = function(valStr) {
+			$("#doc_count").text(valStr);
+		};
+		var setPrintDate = function(dateStr) {
+			var darr = dateStr.split(".");
+			$("#print_day").text(darr[0]);
+			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_year").text(darr[2]);
+		};
+		var setPerformer = function(valStr) {
+			$("#performer").text(valStr);
+		};
+		var setChiefPost = function(valStr) {
+			$("#chief_post").text(valStr);
+		};
+		var setXml = function(xmlStr) {
+			var i, j, children, colls,
+				sumRow = $(".evolument>tbody>tr"),
+				sums = [0,0,0,0,0];
+				// <root><org_regnum/> </> <item><col1/> <col2/> <col3/> <col4/> <col5/> <col6/> <col7/></item></root>
+				xml = $($.parseXML(xmlStr)),
+				items = xml.find("item"),
+				orgRegnum = $(xml.find("org_regnum")).text(),
+				orgName = $(xml.find("org_name")).text(),
+				repYear = $(xml.find("rep_year")).text(),
+				packetNum = $(xml.find("packet_num")).text(),
+				docCount = $(xml.find("doc_count")).text(),
+			
+			setOrgRegnum(orgRegnum);
+			setOrgName(orgName);
+			setRepyear(repYear);
+			setPacketNum(packetNum);
+			setDocCount(docCount);
+			
+			for(i=0; i<items.length; i++) {
+				var col1, col2, col3, col4, col5, col6, col7,
+					newRow = $(sumRow.clone()),
+					item = $(items[i]);
+				
+				children = newRow.children();
+				colls = []
+				colls[0] = $(item.find("col1")).text();
+				colls[1] = $(item.find("col2")).text();
+				colls[2] = $(item.find("col3")).text().replace(',', '.');
+				colls[3] = $(item.find("col4")).text().replace(',', '.');
+				colls[4] = $(item.find("col5")).text().replace(',', '.');
+				colls[5] = $(item.find("col6")).text().replace(',', '.');
+				colls[6] = $(item.find("col7")).text().replace(',', '.');
+				
+				$(children[0]).text(i+1);
+				for(j=0; j<colls.length; j++) {
+					$(children[j+1]).text(colls[j]);
+					
+				}
+				for(j=0; j<sums.length; j++) {
+					sums[j] += parseFloat(colls[j+2]);
+				}
+				
+				newRow.insertBefore(sumRow);
+			}
+			
+			children = $(sumRow.children());
+			for(j=0; j<sums.length; j++) {
+				var val = Math.floor(sums[j] * 100) / 100;
+				$(children[j+3]).text(val);
+			}
+			children.css({'border-top-color': '#000', 'border-top-width': '2px'});
+		};
+	</script>
+	<style type="text/css">
+		body { background: #def; text-align: center; padding:0in; font-family:serif;}
+		div {margin:0; padding:0;}
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin:0.7em auto; position:relative; }
+		#top { margin:0 auto; padding:1em 0 1em; font-size:12pt; font-weight:bold; }
+		#data {text-align: left; padding:0; position:relative; margin:0;}
+		#footer {position:relative; margin:0; padding:0; text-align:left; border:none;}
+		
+		.evolument {width:100%; margin:1em 0; padding:0; border-collapse:collapse; border:1px solid #999; font-size:small;}
+		td, th {border:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
+		th {font-weight:normal;}
+		td.fio { text-align:left;}		
+		
+		.container { border:solid 1px #999;	margin:5px 0; padding:5px 0; position: relative; }
+				
+		.field_underline {	
+			display: inline-block;	
+			margin: 0 0.2em; 
+			padding:0;
+			border-bottom: solid 1px #555; 
+			position: relative;	
+			vertical-align: bottom;
+			text-align: center;
+			min-width: 1em;
+			height: 1em;
+			font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		.field_wrapper { display:inline-block; position:relative; bottom:-1.05em; text-align:center;
+			zoom: 1;
+			*display: inline;
+		}
+	</style>
+	<style media="print">
+	.main_container {
+		margin-bottom:11.69in;
+		width:8.27in; 
+		height:11.69in;
+	}
+	</style>
+</head>
+<body>
+	<div class="main_container">
+		<div id="top">
+			Приложение к пакету документов СЗВ-1 <br/>
+			Пофамильный список лиц, на которых представлены сведения о стаже и доходе
+		</div>
+		
+		<div id="data">
+			<div class="container" style="border:none;">
+				<div id="org_regnum" class="field_underline" style="min-width:5em;"></div>
+				<div id="org_name" class="field_underline" style="min-width:10em;"></div>
+				<div style="display:inline-block; position:relative; zoom: 1; *display: inline;">
+					<div id="repyear" class="field_underline" style="min-width:3em;"></div> <span class="myspan">год</span>
+				</div>
+				<br/>
+				
+				<span  class="myspan" style="width: 4em;">Пакет №</span>
+				<div id="packet_num" class="field_underline" style="width:3em;"></div>
+				
+				<span class="myspan" style="width: 14em; margin-left:3em;">Количество документов СЗВ-1:  </span> 
+				<div id="doc_count" class="field_underline" style="width:5em;"></div>
+			</div>
+			<table class="evolument">
+			<thead>
+				<tr>
+					<th rowspan=2 style="min-width:1em; width:1.5em; padding:5px;">№ п/п</th>
+					<th rowspan=2 style="width:8em;">Страховой номер</th>
+					<th rowspan=2>Фамилия И.О.</th>
+					<th rowspan=2 style="width:7em;">Сумма дохода, на который начислены страховые взносы</th>
+					<th rowspan=2 style="width:7em;">Сумма выплат, учитываемых для назначения пенсий</th>
+					<th colspan=2>Сумма единого социального налога</th>
+					<th rowspan=2 style="width:7em;">Сумма обязательных страховых взносов</th>
+				</tr>
+				<tr>
+					<th style="width:7em;">начисленных страхователем</th>
+					<th style="width:7em;">уплаченных страхователем</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>&Sigma;</td><td></td><td class="fio"></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		
+		<div id="footer">			
+			<div style="padding-bottom:1em; text-align:center;">
+				<div class="field_wrapper">
+					<div class="field_underline" id="chief_post" style="min-width: 17em;"></div> <br/>
+					<span style="font-size:small; text-align:left;">Наименование должности руководителя</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+			
+			<div style="padding-bottom:1em; text-align:center;">
+				<span style="width:18em; display:inline-block; zoom:1; *display:inline;">Бухгалтер</span>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Подпись</span>
+				</div>
+				<div class="field_wrapper">
+					<div class="field_underline" style="min-width: 13em;"></div>
+					<br/><span style="font-size:small;">Расшифровка подписи</span>
+				</div>
+			</div>
+			
+			<div id="print_date" style="position:relative; margin:0 1em; height:3em;">
+				<span style="margin-right:1em;">Дата заполнения</span>
+				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
+				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 
+				<div id="print_year" class="field_underline" style="min-width: 5em;"></div> г.
+			</div>
+		</div>	
+	</div>
+</body>
+</html>

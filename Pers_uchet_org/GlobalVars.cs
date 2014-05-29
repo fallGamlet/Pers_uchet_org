@@ -400,7 +400,7 @@ namespace Pers_uchet_org
             return string.Format("SELECT o.{0} as id, COUNT(d.{1}) as count_docs FROM {2} o INNER JOIN {3} l ON l.{4} = o.{0} INNER JOIN {5} d ON l.{6} = d.{7} WHERE d.{8} = {9} GROUP BY o.{0} HAVING count_docs > 0 ",
                                                           Org.id, Docs.id, Org.tablename,
                                                           Lists.tablename, Lists.orgID,
-                                                          Docs.tablename, Lists.id, Docs.listId,
+                                                          Docs.tablename, Lists.id, Docs.listID,
                                                           Docs.personID, person_id);
         }
 
@@ -1586,7 +1586,7 @@ namespace Pers_uchet_org
 	AND {7} NOT IN (SELECT d.[{8}] FROM {9} d
 	INNER JOIN {10} l ON d.[{11}] = l.[{12}] AND  l.[{13}] = {14} AND l.[{15}] = {6})",
          orgID, org_id, state, (int)PersonState.Rabotaet, (int)PersonState.Uvolen, dismisDate, rep_year,
-         id, Docs.personID, Docs.tablename, Lists.tablename, Docs.listId, Lists.id, Lists.orgID, org_id, Lists.repYear);
+         id, Docs.personID, Docs.tablename, Lists.tablename, Docs.listID, Lists.id, Lists.orgID, org_id, Lists.repYear);
         }
         #endregion
     }
@@ -2446,7 +2446,7 @@ namespace Pers_uchet_org
                                     INNER JOIN {2} d ON d.{3} = l.{0}
                                     INNER JOIN {4} id ON id.{5} = d.{6}
                                     WHERE {7} = {8} AND {9} = {10} AND {11} = {12} AND {13} = {14} AND {15} = {16} AND {17} = {18} AND d.{6} <> {19} ",
-                               id, tablename, Docs.tablename, Docs.listId, IndDocs.tablename, IndDocs.docId, Docs.id, orgID, org_id, repYear, rep_year, Docs.docTypeId, doc_type, Docs.personID, person_id, IndDocs.classpercentId, classpercent_id, IndDocs.isGeneral, (int)job, cur_doc_id);
+                               id, tablename, Docs.tablename, Docs.listID, IndDocs.tablename, IndDocs.docId, Docs.id, orgID, org_id, repYear, rep_year, Docs.docTypeID, doc_type, Docs.personID, person_id, IndDocs.classpercentId, classpercent_id, IndDocs.isGeneral, (int)job, cur_doc_id);
         }
 
         #endregion
@@ -2657,8 +2657,8 @@ namespace Pers_uchet_org
 
         #region Названия полей в представления БД
         static public string id = Docs.id;
-        static public string docTypeId = Docs.docTypeId;
-        static public string listId = Docs.listId;
+        static public string docTypeId = Docs.docTypeID;
+        static public string listId = Docs.listID;
         static public string socNumber = PersonInfo.socNumber;
         static public string fname = PersonInfo.fname;
         static public string mname = PersonInfo.mname;
@@ -2804,8 +2804,8 @@ namespace Pers_uchet_org
 
         #region Названия полей в представления БД
         static public string id = "id";
-        static public string docTypeId = "doc_type_id";
-        static public string listId = "list_id";
+        static public string docTypeID = "doc_type_id";
+        static public string listID = "list_id";
         static public string personID = "person_id";
         #endregion
 
@@ -2814,8 +2814,8 @@ namespace Pers_uchet_org
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
-            table.Columns.Add(docTypeId, typeof(int));
-            table.Columns.Add(listId, typeof(long));
+            table.Columns.Add(docTypeID, typeof(int));
+            table.Columns.Add(listID, typeof(long));
             table.Columns.Add(personID, typeof(long));
             return table;
         }
@@ -2827,19 +2827,19 @@ namespace Pers_uchet_org
 
         static public string GetSelectText(long list_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", listId, list_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", listID, list_id);
         }
 
         static public string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
         {
             return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-                                tablename, docTypeId, new_doc_type_id, id, doc_id);
+                                tablename, docTypeID, new_doc_type_id, id, doc_id);
         }
 
         static public string GetUpdateDocTypeByListText(long list_id, long new_doc_type_id)
         {
             return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-                                tablename, docTypeId, new_doc_type_id, listId, list_id);
+                                tablename, docTypeID, new_doc_type_id, listID, list_id);
         }
 
         static public int UpdateDocTypeByDocId(List<long> doc_idArr, long new_doc_type_id, SQLiteConnection connection)
@@ -2884,7 +2884,7 @@ namespace Pers_uchet_org
         static public string GetUpdateListIdText(long doc_id, long new_list_id)
         {
             return string.Format(@"UPDATE {0} SET {1} = {2} WHERE {3} = {4}",
-                                tablename, listId, new_list_id, id, doc_id);
+                                tablename, listID, new_list_id, id, doc_id);
         }
 
         static public int UpdateListId(long doc_id, long new_list_id, SQLiteConnection connection)
@@ -2904,14 +2904,14 @@ namespace Pers_uchet_org
 
         static public string GetInsertText(long doc_type_id, long list_id, long person_id)
         {
-            return string.Format("INSERT INTO {0} ({1},{2},{3}) VALUES ({4},{5},{6}); SELECT LAST_INSERT_ROWID();", tablename, docTypeId, listId, personID, doc_type_id, list_id, person_id);
+            return string.Format("INSERT INTO {0} ({1},{2},{3}) VALUES ({4},{5},{6}); SELECT LAST_INSERT_ROWID();", tablename, docTypeID, listID, personID, doc_type_id, list_id, person_id);
         }
 
         static public string GetCopyText(long doc_id, long list_id)
         {
             return string.Format(@"INSERT INTO {0} ({1}, {2}, {3})
 	SELECT {1}, {6}, {3} FROM {0} WHERE {4} = {5}; SELECT LAST_INSERT_ROWID();",
-                                tablename, docTypeId, listId, personID, id, doc_id, list_id);
+                                tablename, docTypeID, listID, personID, id, doc_id, list_id);
         }
 
         static public long CopyDocByDocId(long doc_id, long list_id, SQLiteConnection connection)
@@ -2932,7 +2932,7 @@ namespace Pers_uchet_org
         static public string GetCountDocsText(long list_id, long doc_type)
         {
             return string.Format(@"SELECT COUNT({0}) FROM {1} WHERE {2} = {3} AND {4} = {5} ",
-                                id, tablename, listId, list_id, docTypeId, doc_type);
+                                id, tablename, listID, list_id, docTypeID, doc_type);
         }
 
         static public long CountDocsInList(long list_id, long doc_type, SQLiteConnection connection)
@@ -2951,7 +2951,7 @@ namespace Pers_uchet_org
         static public string GetCountDocsByYearText(long year, long person_id)
         {
             return string.Format(@"SELECT COUNT({0}) FROM {1} WHERE {2} = {3} AND {4} IN (SELECT {5} FROM {6} WHERE {7} = {8}) ",
-                                id, tablename, personID, person_id, listId, Lists.id, Lists.tablename, Lists.repYear, year);
+                                id, tablename, personID, person_id, listID, Lists.id, Lists.tablename, Lists.repYear, year);
         }
 
         static public long CountDocsByYear(long year, long person_id, SQLiteConnection connection)
@@ -2976,7 +2976,7 @@ namespace Pers_uchet_org
         static public string GetSelectCountText(long list_id, long docType_id)
         {
             return string.Format("SELECT count(distinct {0}) as [count] FROM {1} WHERE {2}={3} AND {4}={5} ",
-                                id, tablename, listId, list_id, docTypeId, docType_id);
+                                id, tablename, listID, list_id, docTypeID, docType_id);
         }
 
         /// <summary>
@@ -2992,11 +2992,11 @@ namespace Pers_uchet_org
                                     INNER JOIN {6} pi ON pi.{7} = d.{8} AND length(pi.{9}) > 0
                                     WHERE {10} = {11}
                                     GROUP BY {0}",
-                                docTypeId, id,
+                                docTypeID, id,
                                 tablename,
                                 DocTypes.tablename, DocTypes.id, DocTypes.listTypeId,
                                 PersonInfo.tablename, PersonInfo.id, personID, PersonInfo.socNumber,
-                                listId, list_id);
+                                listID, list_id);
         }
 
         /// <summary>
@@ -3014,7 +3014,7 @@ namespace Pers_uchet_org
             list_id_str[list_id_str.Length - 1] = ' ';
 
             return string.Format(@" SELECT count(distinct {0}) as [count] FROM {1} WHERE {2} in ({3}) ",
-                                id, tablename, listId, list_id_str);
+                                id, tablename, listID, list_id_str);
         }
 
         /// <summary>
@@ -3061,7 +3061,7 @@ namespace Pers_uchet_org
         static public DataTable CountDocsByListAndType(long list_id, string connectionStr)
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add(docTypeID, typeof(long));
             table.Columns.Add("count", typeof(int));
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectCountText(list_id), connectionStr);
             adapter.Fill(table);
@@ -3081,10 +3081,10 @@ namespace Pers_uchet_org
                                 WHERE d.{11} = {12}
                                 GROUP BY d.{0}, si.{1}
                                 ORDER BY d.{0}, si.{1}",
-                                docTypeId, SalaryInfo.salaryGroupsId, SalaryInfo.sum,
+                                docTypeID, SalaryInfo.salaryGroupsId, SalaryInfo.sum,
                                 tablename, SalaryInfo.tablename, SalaryInfo.docId, id,
                                 PersonInfo.tablename, PersonInfo.id, personID, PersonInfo.socNumber,
-                                listId, list_id);
+                                listID, list_id);
         }
 
         /// <summary>
@@ -3096,7 +3096,7 @@ namespace Pers_uchet_org
         static public DataTable SumsByDocType(long list_id, string connectionStr)
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add(docTypeID, typeof(long));
             table.Columns.Add(SalaryInfo.salaryGroupsId, typeof(long));
             table.Columns.Add(SalaryInfo.sum, typeof(double));
 
@@ -3113,7 +3113,7 @@ namespace Pers_uchet_org
         static public string GetSelectDocsIDText(long list_id)
         {
             return string.Format("SELECT d.{0} FROM {1} d INNER JOIN {2} pi ON d.{3} = pi.{4} AND pi.{5} IS NOT NULL AND TRIM(pi.{5}) <> '' WHERE d.{6} = {7}",
-                                id, tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id, PersonInfo.socNumber, listId, list_id);
+                                id, tablename, PersonInfo.tablename, Docs.personID, PersonInfo.id, PersonInfo.socNumber, listID, list_id);
         }
 
         /// <summary>
@@ -3410,7 +3410,7 @@ namespace Pers_uchet_org
                         salaryGroupsId,
                         january, february, march, april, may, june, july, august, september, october, november, december,
                         tablename, docId,
-                        Docs.id, Docs.tablename, Docs.listId, list_id_str, Docs.docTypeId, doc_type_id_str);
+                        Docs.id, Docs.tablename, Docs.listID, list_id_str, Docs.docTypeID, doc_type_id_str);
         }
 
         //        static public SQLiteCommand CreateReplaceCommand()
@@ -3695,6 +3695,118 @@ namespace Pers_uchet_org
                 connection.Open();
             SQLiteCommand command = new SQLiteCommand(GetCopyText(old_doc_id, new_doc_id), connection, transaction);
             return command.ExecuteNonQuery();
+        }
+        #endregion
+    }
+
+    public class PersonSalarySums
+    {
+        static public string tablename = "DocsSalaryInfoSumsView";
+        
+        #region Названия полей в представления БД 
+        static public string docID = "doc_id";
+        static public string docTypeID = Docs.docTypeID;
+        static public string listID = Docs.listID;
+        static public string personID = Docs.personID;
+        static public string socNumber = PersonInfo.socNumber;
+        static public string fio = "fio";
+        static public string col1 = "col1";
+        static public string col2 = "col2";
+        static public string col3 = "col3";
+        static public string col4 = "col4";
+        static public string col5 = "col5";
+        #endregion
+
+        #region Параметры для полей таблицы
+        static public string pDocID = "@doc_id";
+        static public string pDocTypeID = "@" + Docs.docTypeID;
+        static public string pListID = "@" + Docs.listID;
+        static public string pPersonID = "@" + Docs.personID;
+        static public string pSocNumber = "@" + PersonInfo.socNumber;
+        static public string pFio = "@fio";
+        static public string pCol1 = "@col1";
+        static public string pCol2 = "@col2";
+        static public string pCol3 = "@col3";
+        static public string pCol4 = "@col4";
+        static public string pCol5 = "@col5";
+        #endregion
+
+        #region
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(docID, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(docTypeID, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(listID, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(personID, typeof(long)).DefaultValue = 0.0;
+            table.Columns.Add(socNumber, typeof(string)).DefaultValue = 0.0;
+            table.Columns.Add(fio, typeof(string)).DefaultValue = 0.0;
+            table.Columns.Add(col1, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col2, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col3, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col4, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col5, typeof(double)).DefaultValue = 0.0;
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0}", tablename);
+        }
+
+        static public string GetSelectText(long list_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), listID, list_id);
+        }
+
+        static public string GetSelectText(IEnumerable<long> doc_type_id)
+        {
+            string instr = "( ";
+            foreach (long val in doc_type_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+
+            return string.Format("{0} WHERE {1} in {2}", GetSelectText(),docTypeID, instr);
+        }
+
+        static public string GetSelectText(long list_id, IEnumerable<long> doc_type_id)
+        {
+            string instr = "( ";
+            foreach (long val in doc_type_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+
+            return string.Format("{0} WHERE {1}={2} AND {3} in {4}", GetSelectText(), listID, list_id, docTypeID, instr);
+        }
+
+        static public string GetSelectText(long list_id, IEnumerable<long> doc_type_id, bool excludeAvoidSocnum)
+        {
+            string query = GetSelectText(list_id, doc_type_id);
+            if (excludeAvoidSocnum)
+            {
+                query += string.Format(" AND ({0} is not null and length({0}) > 0)", socNumber);
+            }
+            return query;
+        }
+
+        static public DataTable GetSums(long list_id,IEnumerable<long> doc_type_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            string query = GetSelectText(list_id, doc_type_id);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
+        static public DataTable GetSums(long list_id, IEnumerable<long> doc_type_id, string connectionStr, bool excludeAvoidSocnum)
+        {
+            DataTable table = CreateTable();
+            string query = GetSelectText(list_id, doc_type_id, excludeAvoidSocnum);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connectionStr);
+            adapter.Fill(table);
+            return table;
         }
         #endregion
     }

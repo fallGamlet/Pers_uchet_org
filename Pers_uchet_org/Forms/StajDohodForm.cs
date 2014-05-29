@@ -52,7 +52,7 @@ namespace Pers_uchet_org
         // переменная содержит id добавляемого человека
         public static long PersonId;
         // браузеры для формирования отчетов для печати
-        WebBrowser _wbSZV2, _wbCalculating, _wbSZV1Print;
+        WebBrowser _wbSZV2, _wbCalculating, _wbSZV1Print, _wbFIOSumsList;
         #endregion
 
         #region Конструктор и инициализатор
@@ -747,7 +747,103 @@ namespace Pers_uchet_org
 
         private void printFioListStripButton_Click(object sender, EventArgs e)
         {
+            DataRowView curListRow = _listsBS.Current as DataRowView;
+            if (curListRow == null)
+            {
+                MainForm.ShowWarningMessage("Необходимо сначала выбрать пакет!", "Внимание");
+                return;
+            }
+            long listID = (long)curListRow[ListsView.id];
+            long[] docTypeID = { 21,22,24 };
+            DataTable table = PersonSalarySums.GetSums(listID, docTypeID, _connection, true);
+            if (table.Rows.Count == 0)
+            {
+                MainForm.ShowInfoMessage("В пакете нет подходящих документов!", "Внимание");
+                return;
+            }
+            if (_wbFIOSumsList == null)
+            {
+                _wbFIOSumsList = new WebBrowser();
+                _wbFIOSumsList.Visible = false;
+                _wbFIOSumsList.Parent = this;
+                _wbFIOSumsList.ScriptErrorsSuppressed = true;
+                _wbFIOSumsList.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbFIOSumsList_DocumentCompleted);
+            }
+            ///////////////////////////////////////////////////
+            XmlDocument xmlRes = new XmlDocument();
+            xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "utf-8", null));
+            XmlElement root = xmlRes.CreateElement("root");
+            XmlElement orgRegnum = xmlRes.CreateElement("org_regnum");
+            XmlElement orgName = xmlRes.CreateElement("org_name");
+            XmlElement repYear = xmlRes.CreateElement("rep_year");
+            XmlElement packetNum = xmlRes.CreateElement("packet_num");
+            XmlElement docCount = xmlRes.CreateElement("doc_count");
 
+            orgRegnum.InnerText = _org.regnumVal;
+            orgName.InnerText = _org.nameVal;
+            repYear.InnerText = yearBox.Value.ToString();
+            packetNum.InnerText = listID.ToString();
+            docCount.InnerText = table.Rows.Count.ToString();
+
+            root.AppendChild(orgRegnum);
+            root.AppendChild(orgName);
+            root.AppendChild(repYear);
+            root.AppendChild(packetNum);
+            root.AppendChild(docCount);
+
+            foreach(DataRow docRow in table.Rows)
+            {
+                XmlElement item = xmlRes.CreateElement("item");
+                XmlElement col1 = xmlRes.CreateElement("col1");
+                XmlElement col2 = xmlRes.CreateElement("col2");
+                XmlElement col3 = xmlRes.CreateElement("col3");
+                XmlElement col4 = xmlRes.CreateElement("col4");
+                XmlElement col5 = xmlRes.CreateElement("col5");
+                XmlElement col6 = xmlRes.CreateElement("col6");
+                XmlElement col7 = xmlRes.CreateElement("col7");
+
+                col1.InnerText = docRow[PersonSalarySums.socNumber] as string;
+                col2.InnerText = docRow[PersonSalarySums.fio] as string;
+                col3.InnerText = docRow[PersonSalarySums.col1].ToString();
+                col4.InnerText = docRow[PersonSalarySums.col2].ToString();
+                col5.InnerText = docRow[PersonSalarySums.col3].ToString();
+                col6.InnerText = docRow[PersonSalarySums.col4].ToString();
+                col7.InnerText = docRow[PersonSalarySums.col5].ToString();
+
+                item.AppendChild(col1);
+                item.AppendChild(col2);
+                item.AppendChild(col3);
+                item.AppendChild(col4);
+                item.AppendChild(col5);
+                item.AppendChild(col6);
+                item.AppendChild(col7);
+                root.AppendChild(item);
+            }
+            xmlRes.AppendChild(root);
+            ///////////////////////////////////////////////////
+
+            _wbFIOSumsList.Tag = xmlRes;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_docs_list);
+            _wbFIOSumsList.Navigate(file);
+        }
+
+        void _wbFIOSumsList_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if(xml == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setXml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void copyToYearListStripButton_Click(object sender, EventArgs e)

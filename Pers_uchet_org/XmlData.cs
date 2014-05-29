@@ -752,7 +752,7 @@ namespace Pers_uchet_org
             long docTypeID;
             foreach (DataRow row in docsCount.Rows)
             {
-                docTypeID = (long)row[Docs.docTypeId];
+                docTypeID = (long)row[Docs.docTypeID];
                 if (docTypeID == DocTypes.InitialFormId)
                     init = true;
                 else if (docTypeID == DocTypes.CorrectionFormId)
@@ -788,7 +788,7 @@ namespace Pers_uchet_org
             xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
             xmlRes.AppendChild(inddocs);
 
-            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeId);
+            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeID);
             //docsSums.DefaultView.Sort = string.Format("{0}, {1} asc", Docs.docTypeId, SalaryInfo.salaryGroupsId);
             foreach (DataRowView row in docsCount.DefaultView)
             {
@@ -802,7 +802,7 @@ namespace Pers_uchet_org
                 XmlElement col4 = xmlRes.CreateElement(tagCol4);
                 XmlElement col5 = xmlRes.CreateElement(tagCol5);
 
-                long curDoctypeID = (long)row[Docs.docTypeId];
+                long curDoctypeID = (long)row[Docs.docTypeID];
                 typeID.InnerText = curDoctypeID.ToString();
                 count.InnerText = row["count"].ToString();
                 inddocs.AppendChild(inddoc);
@@ -822,7 +822,7 @@ namespace Pers_uchet_org
 
                 foreach (DataRow sumRow in docsSums.Rows)
                 {
-                    long doctypeID = (long)sumRow[Docs.docTypeId];
+                    long doctypeID = (long)sumRow[Docs.docTypeID];
                     double val = (double)sumRow[SalaryInfo.sum];
                     if (doctypeID == curDoctypeID)
                     {
