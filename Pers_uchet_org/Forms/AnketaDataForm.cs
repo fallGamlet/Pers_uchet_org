@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Xml;
 
 namespace Pers_uchet_org
 {
@@ -29,6 +30,8 @@ namespace Pers_uchet_org
         SQLiteDataAdapter _personAdapter;
         // названия добавочного виртуального столбца
         const string CHECK = "check";
+        // Браузер для формирования оточета по незарегистрированным персонам
+        WebBrowser _wbUnregisteredPewrsons;
         #endregion
 
         #region Конструктор и инициализатор
@@ -400,11 +403,64 @@ namespace Pers_uchet_org
                 MainForm.ShowInfoMessage("У всех работников заполнены страховые свидетельства!", "Внимание");
                 return;
             }
-            List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
-            foreach (DataRowView rowItem in selectedRowList)
-                rowList.Add(rowItem.Row);
+            //List<DataRow> rowList = new List<DataRow>(selectedRowList.Count);
+            XmlDocument xml = new XmlDocument();
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
+            XmlElement root = xml.CreateElement("root");
+            XmlElement orgname = xml.CreateElement("org_name");
+            XmlElement orgregnum = xml.CreateElement("org_regnum");
+            XmlElement personlist = xml.CreateElement("person_list");
 
-            PersonView.Print(rowList, this);
+            orgname.InnerText = _org.nameVal;
+            orgregnum.InnerText = _org.regnumVal;
+            root.AppendChild(orgname);
+            root.AppendChild(orgregnum);
+
+            foreach (DataRowView rowItem in selectedRowList)
+            {
+                XmlElement person = xml.CreateElement("person");
+                XmlElement fio = xml.CreateElement("fio");
+                XmlElement bdate = xml.CreateElement("borndate");
+                fio.InnerText = rowItem[PersonView.fio] as string;
+                bdate.InnerText = string.Format("{0:dd.MM.yyyy}",rowItem[PersonView.birthday]);
+                person.AppendChild(fio);
+                person.AppendChild(bdate);
+                personlist.AppendChild(person);                
+            }
+
+            root.AppendChild(personlist);
+            xml.AppendChild(root);
+
+            if (_wbUnregisteredPewrsons == null)
+            {
+                _wbUnregisteredPewrsons = new WebBrowser();
+                _wbUnregisteredPewrsons.Visible = false;
+                _wbUnregisteredPewrsons.Parent = this;
+                _wbUnregisteredPewrsons.ScriptErrorsSuppressed = true;
+                _wbUnregisteredPewrsons.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbUnregisteredPewrsons_DocumentCompleted);
+            }
+            _wbUnregisteredPewrsons.Tag = xml;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_unregistered_list);
+            _wbUnregisteredPewrsons.Navigate(file);
+        }
+
+        void _wbUnregisteredPewrsons_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                MainForm.ShowInfoMessage("отчет не может быть отображен, та как нет входных данных данных!", "Внимание");
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setAllData", new object[] { xml.InnerXml });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void personView_CellClick(object sender, DataGridViewCellEventArgs e)

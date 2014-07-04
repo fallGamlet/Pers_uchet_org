@@ -98,5 +98,8 @@
     <Setting Name="report_docs_list" Type="System.String" Scope="User">
       <Value Profile="(Default)">Static/template/report_(пофамильный список).html</Value>
     </Setting>
+    <Setting Name="report_unregistered_list" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Static/template/report_(список незарегистрированных лиц).html</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

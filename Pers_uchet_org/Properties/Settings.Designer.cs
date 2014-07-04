@@ -352,5 +352,17 @@ namespace Pers_uchet_org.Properties {
                 this["report_docs_list"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Static/template/report_(список незарегистрированных лиц).html")]
+        public string report_unregistered_list {
+            get {
+                return ((string)(this["report_unregistered_list"]));
+            }
+            set {
+                this["report_unregistered_list"] = value;
+            }
+        }
     }
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Список незарегестрированных лиц</title>
+	<script type="text/javascript" src="./lib/jquery.min.js"></script>
+	<script type="text/javascript">
+		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+		var setOrgName = function(orgnameStr) {
+			$('#orgname').text(orgnameStr);
+		};
+		var setOrgRegnum = function(orgnameStr) {
+			$('#orgregnum').text(orgnameStr);
+		};
+		var setPersons = function(arr) {
+			var tbody = $("#table_data>tbody");
+			
+			for(var i=0; i < arr.length; i++) {
+				var tr = $("<tr><td>"+(i+1)+"</td><td class='field_fio'>"+arr[i][0]+"</td><td>"+arr[i][1]+"</td></tr>");
+				tbody.append(tr);
+			}
+		};
+		var setAllData = function(xmlStr) {
+			var xml = $($.parseXML(xmlStr)),
+				arr = [],
+				orgName = xml.find("org_name"),
+				orgRegnum = xml.find("org_regnum"),
+				personList = xml.find("person_list>person");
+			
+			setOrgName(orgName.text());
+			setOrgRegnum(orgRegnum.text());
+			
+			for(var i=0; i< personList.length; i++) {
+				var pers = $(personList[i]),
+					fio = pers.find("fio").text(),
+					bdate = pers.find("borndate").text();
+				
+				arr.push([fio, bdate]);
+			}
+			setPersons(arr);
+		};
+	</script>
+	<style type="text/css">
+		body { background: #def; text-align: center; padding:0;}
+		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ text-align:left; margin:0.5em auto; position:relative; }			
+		.field_underline {	
+			display: inline-block;	
+			margin: 0 0.2em; 
+			border-bottom: solid 1px #555; 
+			position: relative;	
+			vertical-align: bottom;
+			text-align: center;
+			min-width: 1em;
+			font-weight:bold;
+			zoom: 1;
+			*display: inline;
+		}
+		.subcontainer {
+			margin:1em 2em;
+		}
+		#table_data {
+			width:100%; text-align:left; margin:2em auto 1em;
+			padding:0; border-collapse:collapse;
+		}
+		#table_data td, #table_data th {
+			border:solid 1px #999; 
+			min-width:1.5em; 
+			text-align:center;
+			padding:2px 10px;
+		}
+		#table_data td.field_fio {
+			text-align:left;
+		}
+	</style>
+	<style media="print">
+    .main_container {
+		margin-bottom:999em;
+		width:8.27in; 
+		height:11.69in;
+	}
+  </style>
+</head>
+<body>
+	<div class="main_container">
+		<div class="subcontainer">
+			Организация: 
+			<div id="orgname" class="field_underline" style="width:200px;"></div>
+		</div>
+		<div class="subcontainer">
+			Регистрационный №: 
+			<div id="orgregnum" class="field_underline" style="width:6em;"></div>
+		</div>
+		<div class="subcontainer">			
+			<table id="table_data">
+				<caption style="padding:10px 0;">
+					Список лиц, незастрахованных в системе Государственного пенсионного страхования<br/>
+					Приднестровской Молдавской Республики
+				</caption>
+				<thead>
+					<tr>
+						<th style="width:1em;"></th>
+						<th>Ф.И.О.</th>
+						<th style="width:8em;">Дата рождения</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
