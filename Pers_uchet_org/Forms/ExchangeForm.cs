@@ -293,7 +293,7 @@ namespace Pers_uchet_org.Forms
                 // соответствующие директории (папки) пакетов
                 if (count < dirNumArr.Length)
                 {
-                    errMessage += "\nНе всем файлам описей (СЗВ-2) найдены соответствующие директории (папки) пакетов";
+                    errMessage += "\nНе всем файлам описей СЗВ-2 найдены соответствующие директории (папки) пакетов";
                     res = false;
                 }
             }
@@ -331,7 +331,7 @@ namespace Pers_uchet_org.Forms
             errMessage = "";
             if (_mergiesCountLists < 0)
             {
-                errMessage += "\nСводная ведомость (СЗВ-3) не обнаружена!";
+                errMessage += "\nСводная ведомость СЗВ-3 не обнаружена!";
                 result = false;
             }
             else
@@ -345,7 +345,7 @@ namespace Pers_uchet_org.Forms
 
                 if (_mergiesCountDocs < 1)
                 {
-                    errMessage += string.Format("\nКоличество документов \"СЗВ-1\" в сводной ведомости: {0}",
+                    errMessage += string.Format("\nКоличество документов СЗВ-1 в сводной ведомости: {0}",
                         _mergiesCountDocs);
                     result = false;
                 }
@@ -359,7 +359,7 @@ namespace Pers_uchet_org.Forms
 
             if (_checkedCountDocs < 1)
             {
-                errMessage += string.Format("\nКоличество выбранных документов \"СЗВ-1\": {0}.", _checkedCountDocs);
+                errMessage += string.Format("\nКоличество выбранных документов СЗВ-1: {0}.", _checkedCountDocs);
                 result = false;
             }
 
@@ -378,7 +378,7 @@ namespace Pers_uchet_org.Forms
                 {
                     errMessage +=
                         string.Format(
-                            "\nКоличество выбранных документов \"СЗВ-1\" ({0}) больше, чем указано в сводной ведомости: {1}.",
+                            "\nКоличество выбранных документов СЗВ-1 ({0}) больше, чем указано в сводной ведомости: {1}.",
                             _checkedCountDocs, _mergiesCountDocs);
                     result = false;
                 }
@@ -396,7 +396,7 @@ namespace Pers_uchet_org.Forms
                 {
                     errMessage +=
                         string.Format(
-                            "\nКоличество выбранных документов \"СЗВ-1\" ({0}) меньше, чем указано в сводной ведомости: {1}."
+                            "\nКоличество выбранных документов СЗВ-1 ({0}) меньше, чем указано в сводной ведомости: {1}."
                             , _checkedCountDocs, _mergiesCountDocs);
                     result = true;
                 }
@@ -526,8 +526,8 @@ namespace Pers_uchet_org.Forms
                         szv3WarningLabel.Name = "szv3WarningLabel";
                         szv3WarningLabel.Size = new Size(286, 53);
                         szv3WarningLabel.TabIndex = 12;
-                        szv3WarningLabel.Text =
-                            "Сводная ведомость (СЗВ-3) не обнаружена!\r\nФормирование электронных данных невозможно!";
+                        szv3WarningLabel.Text =@"Сводная ведомость СЗВ-3 не обнаружена!
+Формирование электронных данных невозможно!";
                         szv3WarningLabel.TextAlign = ContentAlignment.MiddleCenter;
                         tabPageDB.Controls.Add(szv3WarningLabel);
                     }

@@ -319,8 +319,7 @@
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(280, 26);
             this.label14.TabIndex = 10;
-            this.label14.Text = "(СЗВ-3) Сводная ведомость форм документов СЗВ-1, \r\nпередаваемых страхователем в Ф" +
-    "онд";
+            this.label14.Text = "(СЗВ-3) Сводная ведомость форм документов СЗВ-1, \r\nпередаваемых страхователем в Фонд";
             // 
             // label13
             // 

@@ -772,7 +772,7 @@
             this.viewOpisMenuItem.Image = global::Pers_uchet_org.Properties.Resources._2_16;
             this.viewOpisMenuItem.Name = "viewOpisMenuItem";
             this.viewOpisMenuItem.Size = new System.Drawing.Size(275, 22);
-            this.viewOpisMenuItem.Text = "Просмотреть опись \"СЗВ-2\"";
+            this.viewOpisMenuItem.Text = "Просмотреть опись СЗВ-2";
             this.viewOpisMenuItem.Click += new System.EventHandler(this.viewOpisMenuItem_Click);
             // 
             // calcMenuItem

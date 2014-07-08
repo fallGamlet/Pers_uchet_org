@@ -517,7 +517,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SvodVedomostEditDocumentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Добавление\\редактирование документа \"СЗВ-3\"";
+            this.Text = "Добавление\\редактирование документа СЗВ-3";
             this.Load += new System.EventHandler(this.SvodVedomostEditDocumentForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -173,7 +173,7 @@
             this.szvGroupBox.Size = new System.Drawing.Size(289, 50);
             this.szvGroupBox.TabIndex = 8;
             this.szvGroupBox.TabStop = false;
-            this.szvGroupBox.Text = "Сводная ведомость (СЗВ-3)";
+            this.szvGroupBox.Text = "Сводная ведомость СЗВ-3";
             // 
             // docCountBox
             // 
