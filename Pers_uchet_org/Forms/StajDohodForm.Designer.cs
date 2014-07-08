@@ -75,7 +75,6 @@
             this.printDocStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.docStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.previewDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.docView = new System.Windows.Forms.DataGridView();
@@ -115,6 +114,7 @@
             this.moveToOtherListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.delDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previewDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yearBox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -457,11 +457,12 @@
             this.toolStripSeparator8,
             this.changeTypeDocStripButton,
             this.printDocStripButton,
+            this.previewDocStripButton,
             this.toolStripSeparator9,
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(546, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(740, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";
@@ -525,7 +526,6 @@
             // docStripDropDownButton1
             // 
             this.docStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.previewDocStripButton,
             this.copyToListDocStripButton,
             this.moveToListDocStripButton});
             this.docStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -533,19 +533,11 @@
             this.docStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
             this.docStripDropDownButton1.Text = "...";
             // 
-            // previewDocStripButton
-            // 
-            this.previewDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
-            this.previewDocStripButton.Name = "previewDocStripButton";
-            this.previewDocStripButton.Size = new System.Drawing.Size(233, 22);
-            this.previewDocStripButton.Text = "Предварительный просмотр";
-            this.previewDocStripButton.Click += new System.EventHandler(this.previewDocStripButton_Click);
-            // 
             // copyToListDocStripButton
             // 
             this.copyToListDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.copy_16;
             this.copyToListDocStripButton.Name = "copyToListDocStripButton";
-            this.copyToListDocStripButton.Size = new System.Drawing.Size(233, 22);
+            this.copyToListDocStripButton.Size = new System.Drawing.Size(229, 22);
             this.copyToListDocStripButton.Text = "Копировать в другой пакет";
             this.copyToListDocStripButton.Click += new System.EventHandler(this.copyToListDocStripButton_Click);
             // 
@@ -553,7 +545,7 @@
             // 
             this.moveToListDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.cut_16;
             this.moveToListDocStripButton.Name = "moveToListDocStripButton";
-            this.moveToListDocStripButton.Size = new System.Drawing.Size(233, 22);
+            this.moveToListDocStripButton.Size = new System.Drawing.Size(229, 22);
             this.moveToListDocStripButton.Text = "Переместить в другой пакет";
             this.moveToListDocStripButton.Click += new System.EventHandler(this.moveToListDocStripButton_Click);
             // 
@@ -924,6 +916,14 @@
             this.delDocMenuItem.Text = "Удалить";
             this.delDocMenuItem.Click += new System.EventHandler(this.delDocMenuItem_Click);
             // 
+            // previewDocStripButton
+            // 
+            this.previewDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
+            this.previewDocStripButton.Name = "previewDocStripButton";
+            this.previewDocStripButton.Size = new System.Drawing.Size(194, 25);
+            this.previewDocStripButton.Text = "Предварительный просмотр";
+            this.previewDocStripButton.Click += new System.EventHandler(this.previewDocStripButton_Click);
+            // 
             // StajDohodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1016,7 +1016,6 @@
         private System.Windows.Forms.ToolStripButton changeTypeDocStripButton;
         private System.Windows.Forms.ToolStripButton printDocStripButton;
         private System.Windows.Forms.ToolStripDropDownButton docStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem previewDocStripButton;
         private System.Windows.Forms.ToolStripMenuItem copyToListDocStripButton;
         private System.Windows.Forms.ToolStripMenuItem moveToListDocStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
@@ -1036,5 +1035,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn regDateColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn operChangeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn changeDateColumn;
+        private System.Windows.Forms.ToolStripMenuItem previewDocStripButton;
     }
 }

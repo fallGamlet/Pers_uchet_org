@@ -1432,6 +1432,10 @@ namespace Pers_uchet_org.Forms
 
         private void printDocStripButton_Click(object sender, EventArgs e)
         {
+            (_docsBS.Current as DataRowView)[Check] = true;
+            docView.EndEdit();
+            docView.Refresh();
+
             List<long> docs = GetSelectedDocIds();
             if(docs == null || docs.Count == 0)
             {

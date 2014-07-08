@@ -408,15 +408,15 @@ namespace Pers_uchet_org.Forms
             {
                 sum3Box.ReadOnly = false;
                 sum3Box.TabStop = true;
-                sum4Box.ReadOnly = false;
-                sum4Box.TabStop = true;
+                //sum4Box.ReadOnly = false;
+                //sum4Box.TabStop = true;
             }
             else
             {
                 sum3Box.ReadOnly = true;
                 sum3Box.TabStop = false;
-                sum4Box.ReadOnly = true;
-                sum4Box.TabStop = false;
+                //sum4Box.ReadOnly = true;
+                //sum4Box.TabStop = false;
             }
 
             dataViewProfit_CellValidated(null, null);
@@ -1376,6 +1376,13 @@ namespace Pers_uchet_org.Forms
                 docRow[DocsViewForXml.isGeneral] = additionalRadioButton.Checked
                     ? IndDocs.Job.Second
                     : IndDocs.Job.General;
+
+                _salaryInfoTable.Rows[
+                                SalaryInfo.FindRowIndex(_salaryInfoTable, SalaryInfo.salaryGroupsId,
+                                    (long)SalaryGroups.Column3)][SalaryInfo.sum] = Convert.ToDouble(sum3Box.Text);
+                _salaryInfoTable.Rows[
+                                SalaryInfo.FindRowIndex(_salaryInfoTable, SalaryInfo.salaryGroupsId,
+                                    (long)SalaryGroups.Column5)][SalaryInfo.sum] = Convert.ToDouble(sum5Box.Text);
 
                 //MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docRow, _org, _salaryInfoTable, _salaryInfoTableTranspose, _generalPeriodTable, _specPeriodTable, _dopPeriodTable));
                 XmlDocument xml = Szv1Xml.GetXml(docRow, _org, _salaryInfoTable, _salaryInfoTableTranspose, _generalPeriodTable, _specPeriodTable, _dopPeriodTable);
