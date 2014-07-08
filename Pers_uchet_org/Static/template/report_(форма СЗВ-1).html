@@ -80,16 +80,20 @@
 			for(var i=0; i < tr.length && i < arr.length; i++) {
 				var j, cells = $(tr[i]).children();
 				for(j=0; j < arr[i].length-1 && j*2+1 < cells.length-1; j++) {
-					var rub = Math.floor(arr[i][j]),
-						kop = Math.floor(arr[i][j] %1 *100);
-					if(rub==0 && kop==0) {
+					var rubkol = arr[i][j].toString().split('.');
+					var rub, kop;
+					if(rubkol.length == 1) {
+						rub = rubkol[0];
+						kop = '00';
+					} else {
+						rub = rubkol[0];
+						kop = rubkol[1];
+						if(kop.length < 2) kop += '0';
+					}
+					if(rub == '0' && kop == '00') { 
 						rub = '';
 						kop = '';
-					} else {
-						if(kop < 10) kop = '0'+kop;
 					}
-					//~ if(rub == 0) rub = '';
-					//~ if(kop == 0) kop = '';
 					cells[j*2+1].innerText = rub;
 					cells[j*2+2].innerText = kop;
 				}
@@ -180,6 +184,7 @@
 			var workplace = xml.find("work_place").text();
 			var repyear = xml.find("rep_year").text();
 			var firmpay = xml.find("firm_pay").text();
+			var firmadd = xml.find("firm_add").text();
 			
 			var months = $(xml.find("payment>month"));
 			var genperiods = $(xml.find("gen_period>period"));
@@ -213,6 +218,9 @@
 					sums[j] += cols[j];
 				arr.push(cols);
 			}
+			// записываем firm_add в нужный столбец, так как он подсчитан ранее и указан в XML
+			sums[2] = firmadd;
+			
 			arr.push(sums);
 			setEvolument(arr);
 			
@@ -298,6 +306,8 @@
 		th {font-weight:normal;}
 		th p {padding:0px; margin:-3px auto;}
 		tr.cvartal > td, tr.cvartal > th, th.cvartal {border-top:1px solid #000;}
+		.rub {width:7em;}
+		.kop {width:2em;}
 		.col_rub { text-align:right; padding-right:5px;}
 		.col_kop {text-align:left; padding-left:5px; width:2em;}
 		.spec_staj_table {width:100%; margin:auto; border-collapse:collapse; font-size:small;}
@@ -520,7 +530,7 @@
 				<tr>
 					<td>12</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
-				<tr class="cvartal">
+				<tr class="cvartal tr_sum">
 					<td>&Sigma;</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 			</tbody>

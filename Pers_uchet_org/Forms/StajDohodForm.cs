@@ -1196,6 +1196,7 @@ namespace Pers_uchet_org
             if (_wbSZV1Print == null)
             {
                 _wbSZV1Print = new WebBrowser();
+                _wbSZV1Print.Visible = false;
                 _wbSZV1Print.Parent = this;
                 _wbSZV1Print.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbSZV1Print_DocumentCompleted);
                 _wbSZV1Print.ScriptErrorsSuppressed = true;
@@ -1216,13 +1217,13 @@ namespace Pers_uchet_org
             XmlDocument szv1Xml;
             StringBuilder htmlStr = new StringBuilder();
             List<long> docs = wb.Tag as List<long>;
-            string xmlStrLArr;
+            string xmlStrArr;
             int i;
             for (i = 0; i < docs.Count; i++)
             {
                 szv1Xml = Szv1Xml.GetXml(docs[i], _org, _connection);
-                xmlStrLArr = szv1Xml.InnerXml;
-                htmlDoc.InvokeScript("setSzv1Xml", new object[] { xmlStrLArr });
+                xmlStrArr = szv1Xml.InnerXml;
+                htmlDoc.InvokeScript("setSzv1Xml", new object[] { xmlStrArr });
                 htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
                 htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
                 string str = htmlDoc.Body.InnerHtml;

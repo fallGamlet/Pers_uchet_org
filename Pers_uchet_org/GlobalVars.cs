@@ -1444,6 +1444,7 @@ namespace Pers_uchet_org
         {
             string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
             WebBrowser wb = new WebBrowser();
+            wb.Visible = false;
             wb.Parent = parent;
             wb.Tag = printRows;
             wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
@@ -1484,8 +1485,6 @@ namespace Pers_uchet_org
                     sb.Append(div);
                 htmlDoc.Body.InnerHtml = sb.ToString();
             }
-
-            //MyPrinter.SetPrintSettings();
             wb.ShowPrintPreviewDialog();
         }
         #endregion

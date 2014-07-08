@@ -68,16 +68,19 @@
 			for(var i=0; i < tr.length && i < arr.length; i++) {
 				var j, cells = $(tr[i]).children();
 				for(j=0; j < arr[i].length && j*2+1 < cells.length; j++) {
-					var rub = Math.floor(arr[i][j]),
-						kop = Math.floor(arr[i][j] %1 *100);
-					if(rub == 0) {
-						rub = '';
-						if(kop == 0) kop = '';
+					var rubkol = arr[i][j].toString().split('.');
+					var rub, kop;
+					if(rubkol.length == 1) {
+						rub = rubkol[0];
+						kop = '00';
 					} else {
-						if(kop == 0) kop = '00';
-						else { 
-							if(kop < 10) kop = '0'+kop;
-						}
+						rub = rubkol[0];
+						kop = rubkol[1];
+						if(kop.length < 2) kop += '0';
+					}
+					if(rub == '0' && kop == '00') { 
+						rub = '';
+						kop = '';
 					}
 					cells[j*2+1].innerText = rub;
 					cells[j*2+2].innerText = kop;
@@ -99,12 +102,12 @@
 		.evolument {width:100%; margin:1em 0; padding:0; border-collapse:collapse; font-size:small;}
 		td, th {border:solid 1px #999; min-width:1.5em; text-align:center;}
 		th {font-weight:normal;}
-		th p {padding:0px; margin:-3px auto;}
+		th>p {padding:0px; margin:-3px auto;}
 		tr.cvartal > td, tr.cvartal > th, th.cvartal {border-bottom:solid 1px #000;}		
-		.rub {width:7em;}
-		.kop {width:2em;}
-		.rubval {text-align:right; padding-right:5px;}
-		.kopval {text-align:left; padding-left:5px;}
+		.rub {width:7em; text-align:center;}
+		.kop {width:2em; text-align:center;}
+		td.rubval {text-align:right; padding-right:5px;}
+		td.kopval {text-align:left; padding-left:5px; width:2em;}
 		
 		ul { padding: 0px; margin:0px;}
 		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
