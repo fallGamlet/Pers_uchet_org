@@ -461,7 +461,7 @@
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(515, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(546, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";
@@ -781,6 +781,7 @@
             this.calcMenuItem.Name = "calcMenuItem";
             this.calcMenuItem.Size = new System.Drawing.Size(275, 22);
             this.calcMenuItem.Text = "Калькуляция по пакету";
+            this.calcMenuItem.Click += new System.EventHandler(this.calcMenuItem_Click);
             // 
             // printListMenuItem
             // 
@@ -788,6 +789,7 @@
             this.printListMenuItem.Name = "printListMenuItem";
             this.printListMenuItem.Size = new System.Drawing.Size(275, 22);
             this.printListMenuItem.Text = "Печать пофамильного списка";
+            this.printListMenuItem.Click += new System.EventHandler(this.printListMenuItem_Click);
             // 
             // toolStripSeparator2
             // 

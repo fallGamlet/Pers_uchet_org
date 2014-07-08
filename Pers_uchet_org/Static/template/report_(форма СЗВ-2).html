@@ -59,7 +59,7 @@
 			/*
 			* 21 - Исходная форма
 			* 22 - Корректирующая форма
-			* 23 - Корректирующая форма
+			* 23 - Отменяющая форма
 			* 24 - Назначение пенсии
 			*/
 			var i, j, 
@@ -106,12 +106,12 @@
 			$(rows[1]).children()[3].innerText = arr[22].summary[2];
 			$(rows[1]).children()[4].innerText = arr[22].summary[3];
 			$(rows[1]).children()[5].innerText = arr[22].summary[4];
-			// 23 - Корректирующая форма
-			$(rows[2]).children()[1].innerText = arr[23].summary[0];
-			$(rows[2]).children()[2].innerText = arr[23].summary[1];
-			$(rows[2]).children()[3].innerText = arr[23].summary[2];
-			$(rows[2]).children()[4].innerText = arr[23].summary[3];
-			$(rows[2]).children()[5].innerText = arr[23].summary[4];
+			// 24 - Назначение пенсии форма
+			$(rows[2]).children()[1].innerText = arr[24].summary[0];
+			$(rows[2]).children()[2].innerText = arr[24].summary[1];
+			$(rows[2]).children()[3].innerText = arr[24].summary[2];
+			$(rows[2]).children()[4].innerText = arr[24].summary[3];
+			$(rows[2]).children()[5].innerText = arr[24].summary[4];
 		};
 	</script>
 	<style type="text/css">

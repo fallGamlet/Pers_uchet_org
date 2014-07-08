@@ -132,6 +132,7 @@ namespace Pers_uchet_org
         /// <param name="szv2XmlArray">Описи - выходной параметр</param>
         /// <param name="szv1XmlArray">Документы СЗВ1 - выходной параметр</param>
         /// <returns></returns>
+        public static int MakeXml(int repYear, Org org, IEnumerable<long> listId, string connectionStr,
             out XmlDocument mapXml,
             out XmlDocument szv3Xml,
             out IEnumerable<XmlDocument> szv2XmlArray,

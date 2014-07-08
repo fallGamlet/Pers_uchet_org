@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Pers_uchet_org.Forms
 {
@@ -69,7 +70,7 @@ namespace Pers_uchet_org.Forms
         {
             try
             {
-                this.Text += " - " + _org.regnumVal;
+                this.Text += " - " + _organization.regnumVal;
 
                 // получить код привилегии (уровня доступа) Оператора к Организации
                 if (_operator.IsAdmin())
@@ -100,7 +101,7 @@ namespace Pers_uchet_org.Forms
                 _listsBS.DataSource = _listsTable;
 
                 // инициализация Адаптера для считывания пакетов из БД
-                string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
+                string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
                 _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
                 // заполнение таблицы данными с БД
                 _listsAdapter.Fill(_listsTable);
@@ -719,6 +720,16 @@ namespace Pers_uchet_org.Forms
             delDocStripButton_Click(sender, e);
         }
 
+        private void calcMenuItem_Click(object sender, EventArgs e)
+        {
+            calcListStripButton_Click(sender, e);
+        }
+
+        private void printListMenuItem_Click(object sender, EventArgs e)
+        {
+            printFioListStripButton_Click(sender, e);
+        }
+
         private void addListStripButton_Click(object sender, EventArgs e)
         {
             try
@@ -737,7 +748,7 @@ namespace Pers_uchet_org.Forms
                         using (SQLiteCommand command = connection.CreateCommand())
                         {
                             command.Transaction = transaction;
-                            command.CommandText = Lists.GetInsertText(1, _org.idVal, _repYear);
+                            command.CommandText = Lists.GetInsertText(1, _organization.idVal, _repYear);
                             long listId = (long)command.ExecuteScalar();
                             if (listId < 1)
                             {
@@ -834,12 +845,12 @@ namespace Pers_uchet_org.Forms
             System.Xml.XmlDocument xml = Szv2Xml.GetXml(merge_id, _connection);
             HtmlDocument htmlDoc = wb.Document;
             string repYear = this.yearBox.Value.ToString();
-            htmlDoc.InvokeScript("setOrgRegnum", new object[] { _org.regnumVal });
-            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
+            htmlDoc.InvokeScript("setOrgRegnum", new object[] { _organization.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _organization.nameVal });
             htmlDoc.InvokeScript("setRepyear", new object[] { _repYear.ToString() });
             htmlDoc.InvokeScript("setSzv2Xml", new object[] { xml.InnerXml });
             htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
             //MyPrinter.ShowWebPage(wb);
             MyPrinter.ShowPrintPreviewWebPage(wb);
         }
@@ -876,7 +887,7 @@ namespace Pers_uchet_org.Forms
             long[] markedPacked = { packet_id };
             long docCount = Docs.Count(markedPacked, _connection);
             /////////////////////////////////////////////////            
-            long[] doctypes = { 21, 22, 24 };
+            long[] doctypes = { 21, 22, 23, 24 };
             double[,] evolument = new double[13,5];
             DataTable salaryInfoTranspose = SalaryInfoTranspose.CreateTableWithRows();
             if (markedPacked.Length > 0)
@@ -894,7 +905,7 @@ namespace Pers_uchet_org.Forms
                 for (col = 0; col < 5; col++)
                 {
                     object val = salaryInfoTranspose.Rows[row][col+1];
-                    evolument[row,col] = (double)val;
+                    evolument[row,col] = Math.Round((double)val, 2);
                 }
             }
             for (col = 0; col < 5; col++)
@@ -921,13 +932,13 @@ namespace Pers_uchet_org.Forms
             HtmlDocument htmlDoc = wb.Document;
             string repYear = this.yearBox.Value.ToString();
             htmlDoc.InvokeScript("setPacketNum", new object[] { packet_id.ToString() });
-            htmlDoc.InvokeScript("setRegnum", new object[] { _org.regnumVal });
-            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
+            htmlDoc.InvokeScript("setRegnum", new object[] { _organization.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _organization.nameVal });
             htmlDoc.InvokeScript("setYear", new object[] { _repYear.ToString() });
             htmlDoc.InvokeScript("setDocCount", new object[] { docCount.ToString() });
             htmlDoc.InvokeScript("setEvolument", new object[] { arrStr.ToString() });
             htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
             //MyPrinter.ShowWebPage(wb);
             MyPrinter.ShowPrintPreviewWebPage(wb);
         }
@@ -941,7 +952,7 @@ namespace Pers_uchet_org.Forms
                 return;
             }
             long listID = (long)curListRow[ListsView.id];
-            long[] docTypeID = { 21,22,24 };
+            long[] docTypeID = { 21,22,23,24 };
             DataTable table = PersonSalarySums.GetSums(listID, docTypeID, _connection, true);
             if (table.Rows.Count == 0)
             {
@@ -965,8 +976,8 @@ namespace Pers_uchet_org.Forms
             XmlElement repYear = xmlRes.CreateElement("rep_year");
             XmlElement packetNum = xmlRes.CreateElement("packet_num");
             XmlElement docCount = xmlRes.CreateElement("doc_count");
-            orgRegnum.InnerText = _org.regnumVal;
-            orgName.InnerText = _org.nameVal;
+            orgRegnum.InnerText = _organization.regnumVal;
+            orgName.InnerText = _organization.nameVal;
             repYear.InnerText = yearBox.Value.ToString();
             packetNum.InnerText = listID.ToString();
             docCount.InnerText = table.Rows.Count.ToString();
@@ -1454,11 +1465,11 @@ namespace Pers_uchet_org.Forms
             int i;
             for (i = 0; i < docs.Count; i++)
             {
-                szv1Xml = Szv1Xml.GetXml(docs[i], _org, _connection);
+                szv1Xml = Szv1Xml.GetXml(docs[i], _organization, _connection);
                 xmlStrLArr = szv1Xml.InnerXml;
                 htmlDoc.InvokeScript("setSzv1Xml", new object[] { xmlStrLArr });
                 htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-                htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+                htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
                 string str = htmlDoc.Body.InnerHtml;
                 htmlStr.Append(str);
             }
@@ -1474,7 +1485,7 @@ namespace Pers_uchet_org.Forms
                 if (_docsBS.Current == null)
                     return;
                 long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
-                XmlDocument szv1Xml = Szv1Xml.GetXml(docId, _org, _connection);
+                XmlDocument szv1Xml = Szv1Xml.GetXml(docId, _organization, _connection);
                 WebBrowser wbSZV1 = new WebBrowser();
                 wbSZV1 = new WebBrowser();
                 wbSZV1.ScriptErrorsSuppressed = true;
@@ -1504,7 +1515,7 @@ namespace Pers_uchet_org.Forms
             HtmlDocument htmlDoc = wb.Document;
             htmlDoc.InvokeScript("setSzv1Xml", new object[] { xml.InnerXml });
             htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
-            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _organization.chiefpostVal });
             MyPrinter.ShowWebPage(wb);
             //MyPrinter.ShowPrintPreviewWebPage(wb);
         }
@@ -1530,7 +1541,7 @@ namespace Pers_uchet_org.Forms
 
                 string listFio = GetFioForSelectedDocIds(docIdList);
 
-                CopyDocumentForm copyDocForm = new CopyDocumentForm(_org, _repYear, _connection);
+                CopyDocumentForm copyDocForm = new CopyDocumentForm(_organization, _repYear, _connection);
                 if (copyDocForm.ShowDialog() == DialogResult.OK)
                 {
                     int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
@@ -1595,7 +1606,7 @@ namespace Pers_uchet_org.Forms
                 //    return;
                 //docId = (long)row[Docs.id];
 
-                MoveDocumentForm moveDocForm = new MoveDocumentForm(_org, _repYear, _connection);
+                MoveDocumentForm moveDocForm = new MoveDocumentForm(_organization, _repYear, _connection);
                 if (moveDocForm.ShowDialog() == DialogResult.OK)
                 {
                     int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
@@ -1687,7 +1698,7 @@ namespace Pers_uchet_org.Forms
             _listsBS.RaiseListChangedEvents = false;
 
             _listsTable.Clear();
-            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
+            string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
             _listsAdapter.Fill(_listsTable);
 
@@ -1798,6 +1809,6 @@ namespace Pers_uchet_org.Forms
             return newListId;
         }
 
-        #endregion
+        #endregion  
     }
 }

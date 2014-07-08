@@ -67,6 +67,7 @@ namespace Pers_uchet_org
             wb.ShowPrintPreviewDialog();
         }
 
+        public static void ShowWebPage(WebBrowser wb, bool maximased)
         {
             Form webForm = new Form { Width = 850, Height = 600 };
             webForm.Controls.Add(wb);
@@ -1504,6 +1505,7 @@ namespace Pers_uchet_org
             wb.Navigate(file);
         }
 
+        public static void Print(IEnumerable<DataRow> printRows)
         {
             string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
             WebBrowser wb = new WebBrowser();
@@ -3002,8 +3004,8 @@ namespace Pers_uchet_org
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
-            table.Columns.Add(docTypeID, typeof(int));
-            table.Columns.Add(listID, typeof(long));
+            table.Columns.Add(docTypeId, typeof(int));
+            table.Columns.Add(listId, typeof(long));
             table.Columns.Add(personID, typeof(long));
             return table;
         }
@@ -3015,7 +3017,7 @@ namespace Pers_uchet_org
 
         public static string GetSelectText(long list_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", listID, list_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", listId, list_id);
         }
 
         public static string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
@@ -3255,7 +3257,7 @@ namespace Pers_uchet_org
         public static DataTable CountDocsByListAndType(long list_id, string connectionStr)
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(docTypeID, typeof(long));
+            table.Columns.Add(docTypeId, typeof(long));
             table.Columns.Add("count", typeof(int));
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectCountText(list_id), connectionStr);
             adapter.Fill(table);
@@ -3290,7 +3292,7 @@ namespace Pers_uchet_org
         public static DataTable SumsByDocType(long list_id, string connectionStr)
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(docTypeID, typeof(long));
+            table.Columns.Add(docTypeId, typeof(long));
             table.Columns.Add(SalaryInfo.salaryGroupsId, typeof(long));
             table.Columns.Add(SalaryInfo.sum, typeof(double));
 
@@ -3933,8 +3935,8 @@ namespace Pers_uchet_org
         
         #region Названия полей в представления БД 
         static public string docID = "doc_id";
-        static public string docTypeID = Docs.docTypeID;
-        static public string listID = Docs.listID;
+        static public string docTypeID = Docs.docTypeId;
+        static public string listID = Docs.listId;
         static public string personID = Docs.personID;
         static public string socNumber = PersonInfo.socNumber;
         static public string fio = "fio";
@@ -3947,8 +3949,8 @@ namespace Pers_uchet_org
 
         #region Параметры для полей таблицы
         static public string pDocID = "@doc_id";
-        static public string pDocTypeID = "@" + Docs.docTypeID;
-        static public string pListID = "@" + Docs.listID;
+        static public string pDocTypeID = "@" + Docs.docTypeId;
+        static public string pListID = "@" + Docs.listId;
         static public string pPersonID = "@" + Docs.personID;
         static public string pSocNumber = "@" + PersonInfo.socNumber;
         static public string pFio = "@fio";

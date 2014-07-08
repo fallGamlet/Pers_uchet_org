@@ -30,7 +30,8 @@ namespace Pers_uchet_org
             Rdv1,
             Rdv21,
             Rdv22,
-            Rdv3
+            Rdv3,
+            Calculate
         }
 
         public static string GetReportUrl(ReportType type)
@@ -65,7 +66,7 @@ namespace Pers_uchet_org
                 case ReportType.Szv3:
                     url = Settings.Default.report_szv3;
                     break;
-                case XmlData.ReportType.Calculate:
+                case ReportType.Calculate:
                     url = Properties.Settings.Default.report_calculate;
                     break;
                 default:
@@ -833,7 +834,7 @@ namespace Pers_uchet_org
             xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
             xmlRes.AppendChild(inddocs);
 
-            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeID);
+            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeId);
             //docsSums.DefaultView.Sort = string.Format("{0}, {1} asc", Docs.docTypeId, SalaryInfo.salaryGroupsId);
             foreach (DataRowView row in docsCount.DefaultView)
             {
@@ -847,7 +848,7 @@ namespace Pers_uchet_org
                 XmlElement col4 = xmlRes.CreateElement(tagCol4);
                 XmlElement col5 = xmlRes.CreateElement(tagCol5);
 
-                long curDoctypeID = (long)row[Docs.docTypeID];
+                long curDoctypeID = (long)row[Docs.docTypeId];
                 typeID.InnerText = curDoctypeID.ToString();
                 count.InnerText = row["count"].ToString();
                 inddocs.AppendChild(inddoc);
@@ -867,7 +868,7 @@ namespace Pers_uchet_org
 
                 foreach (DataRow sumRow in docsSums.Rows)
                 {
-                    long doctypeID = (long)sumRow[Docs.docTypeID];
+                    long doctypeID = (long)sumRow[Docs.docTypeId];
                     double val = (double)sumRow[SalaryInfo.sum];
                     if (doctypeID == curDoctypeID)
                     {
