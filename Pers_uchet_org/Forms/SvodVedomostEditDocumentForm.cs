@@ -1,33 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Linq;
+using System.Windows.Forms;
 using System.Xml;
-using System.Xml.XPath;
-using System.Xml.Xsl;
-using System.Xml.Linq;
-using System.IO;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class SvodVedomostEditDocumentForm : Form
     {
         #region Поля
-        Org _org;                  // организация
-        Operator _oper;            // оператор
-        string _connection;        // строка соединения с БД
-        DataRow _mergeRow;         // строка Сводной ведомости
-        DataTable _svodTable;      // таблица для взаимодействия с формой
-        DataTable _mergeInfoTable; // таблица для взаимодействия с БД
-        BindingSource _svodBS;     // бинд для таблицы для отображения в пользовательском интерфейсе
+
+        private Org _org; // организация
+        private Operator _oper; // оператор
+        private string _connection; // строка соединения с БД
+        private DataRow _mergeRow; // строка Сводной ведомости
+        private DataTable _svodTable; // таблица для взаимодействия с формой
+        private DataTable _mergeInfoTable; // таблица для взаимодействия с БД
+        private BindingSource _svodBS; // бинд для таблицы для отображения в пользовательском интерфейсе
+
         #endregion
 
         #region Конструкторы и инициализатор
+
         public SvodVedomostEditDocumentForm(string connectionStr, Operator oper, Org org)
         {
             InitializeComponent();
@@ -53,8 +48,8 @@ namespace Pers_uchet_org
             _svodBS = new BindingSource();
             _svodTable = MergeInfoTranspose.CreateTable();
 
-            this.regnumBox.Text = _org.regnumVal;
-            this.orgnameBox.Text = _org.nameVal;
+            regnumBox.Text = _org.regnumVal;
+            orgnameBox.Text = _org.nameVal;
 
             if (_mergeRow == null)
             {
@@ -64,49 +59,54 @@ namespace Pers_uchet_org
             }
             else
             {
-                this.yearBox.Text = _mergeRow[MergiesView.repYear].ToString();
-                this.packetcountBox.Value = (int)_mergeRow[MergiesView.listCount];
-                this.documentcountBox.Value = (int)_mergeRow[MergiesView.docCount];
+                yearBox.Text = _mergeRow[MergiesView.repYear].ToString();
+                packetcountBox.Value = (int)_mergeRow[MergiesView.listCount];
+                documentcountBox.Value = (int)_mergeRow[MergiesView.docCount];
 
                 _mergeInfoTable = MergeInfo.CreateTable();
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(MergeInfo.GetSelectText((long)_mergeRow[MergiesView.id]), _connection);
+                SQLiteDataAdapter adapter =
+                    new SQLiteDataAdapter(MergeInfo.GetSelectText((long)_mergeRow[MergiesView.id]), _connection);
                 adapter.Fill(_mergeInfoTable);
                 MergeInfoTranspose.ConvertFromMergeInfo(_svodTable, _mergeInfoTable);
 
-                this.sum1Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column1).ToString("N2");
-                this.sum2Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column2).ToString("N2");
-                this.sum3Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column3).ToString("N2");
-                this.sum4Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column4).ToString("N2");
-                this.sum5Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column5).ToString("N2");
+                sum1Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column1).ToString("N2");
+                sum2Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column2).ToString("N2");
+                sum3Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column3).ToString("N2");
+                sum4Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column4).ToString("N2");
+                sum5Box.Text = MergeInfo.GetSum(_mergeInfoTable, SalaryGroups.Column5).ToString("N2");
 
                 if (!(bool)_mergeRow[MergiesView.actual])
                 {
-                    this.packetcountBox.Enabled = false;
-                    this.documentcountBox.Enabled = false;
-                    this.dataView.ReadOnly = true;
-                    this.saveButton.Enabled = false;
-                    this.autofillButton.Enabled = false;
+                    packetcountBox.Enabled = false;
+                    documentcountBox.Enabled = false;
+                    dataView.ReadOnly = true;
+                    saveButton.Enabled = false;
+                    autofillButton.Enabled = false;
                 }
             }
             _svodBS.DataSource = _svodTable;
-            this.dataView.AutoGenerateColumns = false;
-            this.dataView.DataSource = _svodBS;
+            dataView.AutoGenerateColumns = false;
+            dataView.DataSource = _svodBS;
 
             _svodTable.ColumnChanged += new DataColumnChangeEventHandler(_svodTable_ColumnChanged);
-            this.dataView.CellParsing += new DataGridViewCellParsingEventHandler(dataView_CellParsing);
-            this.dataView.DataError += new DataGridViewDataErrorEventHandler(dataView_DataError);
+            dataView.CellParsing += new DataGridViewCellParsingEventHandler(dataView_CellParsing);
+            dataView.DataError += new DataGridViewDataErrorEventHandler(dataView_DataError);
         }
+
         #endregion
 
         #region Свойства
+
         public int RepYear
         {
-            get { return int.Parse(this.yearBox.Text); }
-            set { this.yearBox.Text = value.ToString(); }
+            get { return int.Parse(yearBox.Text); }
+            set { yearBox.Text = value.ToString(); }
         }
+
         #endregion
 
         #region Методы - свои
+
         /// <summary>
         /// Производит заполнение записи сводной ведомости из полей формы
         /// </summary>
@@ -118,14 +118,15 @@ namespace Pers_uchet_org
                 _mergeRow[MergiesView.newDate] = DateTime.Now.ToString("yyyy-MM-dd H:mm:ss");
                 _mergeRow[MergiesView.id] = -1;
             }
-            _mergeRow[MergiesView.listCount] = (int)this.packetcountBox.Value;
-            _mergeRow[MergiesView.docCount] = (int)this.documentcountBox.Value;
-            _mergeRow[MergiesView.repYear] = int.Parse(this.yearBox.Text);
+            _mergeRow[MergiesView.listCount] = (int)packetcountBox.Value;
+            _mergeRow[MergiesView.docCount] = (int)documentcountBox.Value;
+            _mergeRow[MergiesView.repYear] = int.Parse(yearBox.Text);
             _mergeRow[MergiesView.orgID] = _org.idVal;
             _mergeRow[MergiesView.operName] = _oper.nameVal;
             _mergeRow[MergiesView.editDate] = DateTime.Now;
             _mergeRow.EndEdit();
         }
+
         /// <summary>
         /// Производит сохранение данных в БД созданной сводной ведомости
         /// </summary>
@@ -138,31 +139,33 @@ namespace Pers_uchet_org
             // просчитать суммы в созданной таблицйе
             MergeInfo.MathSums(_mergeInfoTable);
             // заполнение данными записи Сводной ведомости
-            this.SetMergeData();
+            SetMergeData();
             // создание подключения к БД
             SQLiteConnection connection = new SQLiteConnection(_connection);
             // создание команд для вставки данных в БД
             SQLiteCommand mergeInsert = MergiesView.InsertCommand(_mergeRow);
             SQLiteCommand tableInsert = MergeInfo.CreateInsertCommand();
             SQLiteCommand fixdataReplace = new SQLiteCommand();
-            SQLiteCommand setUnactual = new SQLiteCommand(MergiesView.GetChangeActualByOrgText(_org.idVal, (int)_mergeRow[MergiesView.repYear], false));
+            SQLiteCommand setUnactual =
+                new SQLiteCommand(MergiesView.GetChangeActualByOrgText(_org.idVal, (int)_mergeRow[MergiesView.repYear],
+                    false));
             // создание Адаптера для обработки таблицы
             SQLiteDataAdapter adapter = new SQLiteDataAdapter();
             adapter.InsertCommand = tableInsert;
             // присвоение созданного подключения коммандам
             mergeInsert.Connection =
-            tableInsert.Connection =
-            fixdataReplace.Connection = 
-            setUnactual.Connection = connection;
+                tableInsert.Connection =
+                    fixdataReplace.Connection =
+                        setUnactual.Connection = connection;
             // открытие соединения
             connection.Open();
             // начать транзакция
             SQLiteTransaction transaction = connection.BeginTransaction();
             // прикрепление транзакции 
             mergeInsert.Transaction =
-            tableInsert.Transaction =
-            fixdataReplace.Transaction =
-            setUnactual.Transaction = transaction;
+                tableInsert.Transaction =
+                    fixdataReplace.Transaction =
+                        setUnactual.Transaction = transaction;
             // выполнить команду обнуления актуальности сводных ведомостей в выбранном году для текущей организаций
             setUnactual.ExecuteNonQuery();
             // выполнить команду вставки записи о новой сводной ведомости и назначения ее актуальной
@@ -180,6 +183,7 @@ namespace Pers_uchet_org
             // закрыть соединение
             connection.Close();
         }
+
         /// <summary>
         /// Производит сохранение данных в БД измененной сводной ведомости
         /// </summary>
@@ -190,7 +194,7 @@ namespace Pers_uchet_org
             // просчитать суммы в созданной таблицйе
             MergeInfo.MathSums(_mergeInfoTable);
             // заполнение данными записи Сводной ведомости
-            this.SetMergeData();
+            SetMergeData();
             // создание подключения к БД
             SQLiteConnection connection = new SQLiteConnection(_connection);
             // создание команд для вставки данных в БД
@@ -202,16 +206,16 @@ namespace Pers_uchet_org
             adapter.UpdateCommand = tableInsert;
             // присвоение созданного подключения коммандам
             mergeInsert.Connection =
-            tableInsert.Connection =
-            fixdataReplace.Connection = connection;
+                tableInsert.Connection =
+                    fixdataReplace.Connection = connection;
             // открытие соединения
             connection.Open();
             // начать транзакция
             SQLiteTransaction transaction = connection.BeginTransaction();
             // прикрепление транзакции 
             mergeInsert.Transaction =
-            tableInsert.Transaction =
-            fixdataReplace.Transaction = transaction;
+                tableInsert.Transaction =
+                    fixdataReplace.Transaction = transaction;
             // выполнить обновление данных о сводной ведомости
             mergeInsert.ExecuteNonQuery();
             // выполнить вставку(обновление) данных о факте изменения сводной ведомости
@@ -224,10 +228,12 @@ namespace Pers_uchet_org
             // закрыть соединение
             connection.Close();
         }
+
         #endregion
 
         #region Методы - обработчики событий
-        void dataView_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
+
+        private void dataView_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
         {
             string valStr = e.Value as string;
             double valD;
@@ -247,47 +253,46 @@ namespace Pers_uchet_org
             e.ParsingApplied = true;
         }
 
-        void dataView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void dataView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MainForm.ShowWarningMessage("Введены некорректные данные!", "Внимание");
         }
 
-        void _svodTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        private void _svodTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
         {
-
             TextBox tmpSumBox = null;
 
             if (e.Column.ColumnName == MergeInfoTranspose.col1)
             {
-                tmpSumBox = this.sum1Box;
+                tmpSumBox = sum1Box;
             }
             else if (e.Column.ColumnName == MergeInfoTranspose.col2)
             {
-                tmpSumBox = this.sum2Box;
+                tmpSumBox = sum2Box;
             }
             else if (e.Column.ColumnName == MergeInfoTranspose.col3)
             {
-                tmpSumBox = this.sum3Box;
+                tmpSumBox = sum3Box;
             }
             else if (e.Column.ColumnName == MergeInfoTranspose.col4)
             {
-                tmpSumBox = this.sum4Box;
+                tmpSumBox = sum4Box;
             }
             else if (e.Column.ColumnName == MergeInfoTranspose.col5)
             {
-                tmpSumBox = this.sum5Box;
+                tmpSumBox = sum5Box;
             }
             if (tmpSumBox == null)
                 return;
-            double sum = _svodTable.Rows.Cast<DataRow>().Sum(row => (double) row[e.Column]);
+            double sum = _svodTable.Rows.Cast<DataRow>().Sum(row => (double)row[e.Column]);
             tmpSumBox.Text = Math.Round(sum, 2).ToString("N2");
         }
 
         private void printButton_Click(object sender, EventArgs e)
         {
             DataRow mergeRow = _mergeRow ?? Mergies.CreateRow();
-            mergeRow[MergiesView.listCount] = (int)this.packetcountBox.Value;
-            mergeRow[MergiesView.docCount] = (int)this.documentcountBox.Value;
+            mergeRow[MergiesView.listCount] = (int)packetcountBox.Value;
+            mergeRow[MergiesView.docCount] = (int)documentcountBox.Value;
 
             XmlDocument xml = Szv3Xml.GetXml(mergeRow, _svodTable);
             MyPrinter.ShowWebPage(Szv3Xml.GetHtml(xml));
@@ -297,23 +302,23 @@ namespace Pers_uchet_org
         {
             if (_mergeRow == null)
             {
-                this.SaveNew();
+                SaveNew();
             }
             else
             {
-                this.SaveEdited();
+                SaveEdited();
             }
-            this.Close();
+            Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void autofillButton_Click(object sender, EventArgs e)
         {
-            Forms.SvodVedomostGetPacketsForm tmpForm = new Forms.SvodVedomostGetPacketsForm(_org, this.RepYear, _connection);
+            SvodVedomostGetPacketsForm tmpForm = new SvodVedomostGetPacketsForm(_org, RepYear, _connection);
             DialogResult dRes = tmpForm.ShowDialog(this);
             if (dRes == DialogResult.OK)
             {
@@ -323,18 +328,20 @@ namespace Pers_uchet_org
                 if (markedPacked.Length > 0)
                 {
                     DataTable salaryInfoTable = SalaryInfo.CreateTable();
-                    SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(markedPacked, doctypes), _connection);
+                    SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(markedPacked, doctypes),
+                        _connection);
                     adapter.Fill(salaryInfoTable);
                     SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTranspose, salaryInfoTable);
-                    this.packetcountBox.Value = markedPacked.Length;
-                    this.documentcountBox.Value = Docs.Count(markedPacked, _connection);
+                    packetcountBox.Value = markedPacked.Length;
+                    documentcountBox.Value = Docs.Count(markedPacked, _connection);
+                    // (long)salaryInfoTable.Rows[0][SalaryInfo.docId];
                 }
                 else
                 {
-                    this.packetcountBox.Value = 0;
-                    this.documentcountBox.Value = 0;
+                    packetcountBox.Value = 0;
+                    documentcountBox.Value = 0;
                 }
-                int i = 0;
+                int i;
                 for (i = 0; i < 12; i++)
                 {
                     _svodTable.Rows[i][SalaryGroups.Column1] = salaryInfoTranspose.Rows[i][SalaryGroups.Column1];
@@ -347,6 +354,7 @@ namespace Pers_uchet_org
                 }
             }
         }
+
         #endregion
     }
 }

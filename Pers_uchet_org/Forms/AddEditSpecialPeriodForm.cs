@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class AddEditSpecialPeriodForm : Form
     {
         #region Поля
-        int _repYear;
+
+        private int _repYear;
         //bool _isNew;
-        BindingSource _classpercentView200BS;
-        BindingSource _classpercentView300BS;
-        BindingSource _classpercentView400BS;
-        BindingSource _generalPeriodBS;
+        private BindingSource _classpercentView200BS;
+        private BindingSource _classpercentView300BS;
+        private BindingSource _classpercentView400BS;
+        private BindingSource _generalPeriodBS;
 
         public int TypePeriod; //Тип периода, зависит от выбранного radioButton
         public long Code;
@@ -29,47 +25,50 @@ namespace Pers_uchet_org
         public int Hour;
         public int Minute;
         public string Profession;
+
         #endregion
 
         #region Конструктор и инициализатор
+
         private AddEditSpecialPeriodForm()
         {
             InitializeComponent();
-            this._repYear = DateTime.Now.Year;
-            this.TypePeriod = 1;
-            this.Code = 0;
-            this.CodeName = "";
-            this.Begin = DateTime.Now.Date;
-            this.End = DateTime.Now.Date;
-            this.Month = 0;
-            this.Day = 0;
-            this.Hour = 0;
-            this.Minute = 0;
-            this.Profession = "";
+            _repYear = DateTime.Now.Year;
+            TypePeriod = 1;
+            Code = 0;
+            CodeName = "";
+            Begin = DateTime.Now.Date;
+            End = DateTime.Now.Date;
+            Month = 0;
+            Day = 0;
+            Hour = 0;
+            Minute = 0;
+            Profession = "";
         }
 
         public AddEditSpecialPeriodForm(int repYear, BindingSource generalPeriodBS)
             : this()
         {
-            this._repYear = repYear;
-            this._generalPeriodBS = generalPeriodBS;
+            _repYear = repYear;
+            _generalPeriodBS = generalPeriodBS;
             //this._isNew = true;
-            this.Begin = DateTime.Parse(_repYear + "-01-01");
-            this.End = DateTime.Parse(_repYear + "-12-31");
+            Begin = DateTime.Parse(_repYear + "-01-01");
+            End = DateTime.Parse(_repYear + "-12-31");
         }
 
-        public AddEditSpecialPeriodForm(int repYear, BindingSource generalPeriodBS, int typePeriod, long classificatorId, DateTime beginDate, DateTime endDate, int month, int day, int hour, int minute, string profession)
+        public AddEditSpecialPeriodForm(int repYear, BindingSource generalPeriodBS, int typePeriod, long classificatorId,
+            DateTime beginDate, DateTime endDate, int month, int day, int hour, int minute, string profession)
             : this(repYear, generalPeriodBS)
         {
-            this.TypePeriod = typePeriod;
-            this.Code = classificatorId;
-            this.Begin = beginDate;
-            this.End = endDate;
-            this.Month = month;
-            this.Day = day;
-            this.Hour = hour;
-            this.Minute = minute;
-            this.Profession = profession;
+            TypePeriod = typePeriod;
+            Code = classificatorId;
+            Begin = beginDate;
+            End = endDate;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Profession = profession;
             //this._isNew = false;
         }
 
@@ -90,13 +89,16 @@ namespace Pers_uchet_org
                 _classpercentView200BS.DataSource = new DataView(MainForm.ClasspercentViewTable);
                 _classpercentView300BS.DataSource = new DataView(MainForm.ClasspercentViewTable);
                 _classpercentView400BS.DataSource = new DataView(MainForm.ClasspercentViewTable);
-                _classpercentView200BS.Filter = ClasspercentView.GetBindingSourceFilterFor200(DateTime.Parse(_repYear + "-01-01"));
+                _classpercentView200BS.Filter =
+                    ClasspercentView.GetBindingSourceFilterFor200(DateTime.Parse(_repYear + "-01-01"));
                 _classpercentView200BS.Sort = ClasspercentView.code;
                 _classpercentView200BS.CurrentChanged += new EventHandler(_classpercentView200BS_CurrentChanged);
-                _classpercentView300BS.Filter = ClasspercentView.GetBindingSourceFilterFor300(DateTime.Parse(_repYear + "-01-01"));
+                _classpercentView300BS.Filter =
+                    ClasspercentView.GetBindingSourceFilterFor300(DateTime.Parse(_repYear + "-01-01"));
                 _classpercentView300BS.Sort = ClasspercentView.code;
                 _classpercentView300BS.CurrentChanged += new EventHandler(_classpercentView300BS_CurrentChanged);
-                _classpercentView400BS.Filter = ClasspercentView.GetBindingSourceFilterFor400(DateTime.Parse(_repYear + "-01-01"));
+                _classpercentView400BS.Filter =
+                    ClasspercentView.GetBindingSourceFilterFor400(DateTime.Parse(_repYear + "-01-01"));
                 _classpercentView400BS.Sort = ClasspercentView.code;
                 _classpercentView400BS.CurrentChanged += new EventHandler(_classpercentView400BS_CurrentChanged);
 
@@ -140,10 +142,12 @@ namespace Pers_uchet_org
             minutesNumUpDown.Value = Minute;
             professionRichTextBox.Text = Profession;
         }
+
         #endregion
 
         #region Методы - обработчики событий
-        void _classpercentView400BS_CurrentChanged(object sender, EventArgs e)
+
+        private void _classpercentView400BS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
@@ -155,7 +159,7 @@ namespace Pers_uchet_org
             CodeName = row[ClasspercentView.code].ToString();
         }
 
-        void _classpercentView300BS_CurrentChanged(object sender, EventArgs e)
+        private void _classpercentView300BS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
@@ -167,7 +171,7 @@ namespace Pers_uchet_org
             CodeName = row[ClasspercentView.code].ToString();
         }
 
-        void _classpercentView200BS_CurrentChanged(object sender, EventArgs e)
+        private void _classpercentView200BS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
@@ -274,7 +278,8 @@ namespace Pers_uchet_org
 
             if (Month == 0 && Day == 0 && Hour == 0 && Minute == 0)
             {
-                MainForm.ShowWarningMessage("Необходимо указать количество месяцев/дней (или часов/минут)!", "Ошибка добавления периода");
+                MainForm.ShowWarningMessage("Необходимо указать количество месяцев/дней (или часов/минут)!",
+                    "Ошибка добавления периода");
                 isAllRight = false;
             }
             if (String.IsNullOrEmpty(Profession.Trim()) && TypePeriod != 2)
@@ -283,14 +288,12 @@ namespace Pers_uchet_org
                 isAllRight = false;
             }
 
-            DateTime begin;
-            DateTime end;
             bool isPeriodCross = true;
             foreach (DataRowView row in _generalPeriodBS)
             {
-                begin = (DateTime)row[GeneralPeriod.beginDate];
-                end = (DateTime)row[GeneralPeriod.endDate];
-                if (this.Begin >= begin && this.End <= end)
+                DateTime begin = (DateTime)row[GeneralPeriod.beginDate];
+                DateTime end = (DateTime)row[GeneralPeriod.endDate];
+                if (Begin >= begin && End <= end)
                 {
                     isPeriodCross = false;
                 }
@@ -298,21 +301,25 @@ namespace Pers_uchet_org
 
             if (_generalPeriodBS.Count < 1)
             {
-                MainForm.ShowWarningMessage("Указанный период не попадает\nне в один из периодов основного стажа!\nНет записей о периодах основного стажа!", "Ошибка добавления периода");
+                MainForm.ShowWarningMessage(
+                    "Указанный период не попадает\nне в один из периодов основного стажа!\nНет записей о периодах основного стажа!",
+                    "Ошибка добавления периода");
                 isAllRight = false;
                 isPeriodCross = false;
             }
 
             if (isPeriodCross)
             {
-                MainForm.ShowWarningMessage("Указанный период не попадает не в один из периодов основного стажа!", "Ошибка добавления периода");
+                MainForm.ShowWarningMessage("Указанный период не попадает не в один из периодов основного стажа!",
+                    "Ошибка добавления периода");
                 isAllRight = false;
             }
 
 
             if (isAllRight)
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
+
         #endregion
 
         private void TimePicker_ValueChanged(object sender, EventArgs e)
@@ -320,8 +327,7 @@ namespace Pers_uchet_org
             try
             {
                 endDateTimePicker.MinDate = beginDateTimePicker.Value;
-                TimeSpan span = new TimeSpan();
-                span = endDateTimePicker.Value - beginDateTimePicker.Value;
+                TimeSpan span = endDateTimePicker.Value - beginDateTimePicker.Value;
                 if (Convert.ToDecimal(span.Days + 1) <= daysNumUpDown.Maximum)
                     daysNumUpDown.Value = Convert.ToDecimal(span.Days + 1);
             }

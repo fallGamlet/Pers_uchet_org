@@ -1,32 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Data.SQLite;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class SvodVedomostForm : Form
     {
         #region Поля
-        DataTable _mergeTable;
-        BindingSource _mergeBS;
 
-        string _connection;
-        Org _org;
-        Operator _operator;
+        private DataTable _mergeTable;
+        private BindingSource _mergeBS;
 
-        const string viewStateText = "Просмотреть";
-        const string editStateText = "Изменить";
+        private string _connection;
+        private Org _org;
+        private Operator _operator;
+        // привилегия
+        private string _privilege;
+
+        private const string ViewStateText = "Просмотреть";
+        private const string EditStateText = "Изменить";
+
         // веб браезер для формирования отчета СЗВ-3
         WebBrowser _wb;
         #endregion
 
         #region Конструктор и Инициализатор
+
         public SvodVedomostForm(Org org, Operator oper, string connectionStr)
         {
             InitializeComponent();
@@ -37,18 +40,28 @@ namespace Pers_uchet_org
 
         private void SvodVedomostForm_Load(object sender, EventArgs e)
         {
-            this.Text += " - " + _org.regnumVal;
+            Text += " - " + _org.regnumVal;
 
-            this.yearBox.Value = MainForm.RepYear;
-            this.RefillData(MainForm.RepYear);
-            this.mergeView.Sorted += new EventHandler(mergeView_Sorted);
+            // получить код привилегии (уровня доступа) Оператора к Организации
+            if (_operator.IsAdmin())
+                _privilege = OperatorOrg.GetPrivilegeForAdmin();
+            else
+                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
+
+            yearBox.Value = MainForm.RepYear;
+            RefillData(MainForm.RepYear);
+            mergeView.Sorted += new EventHandler(mergeView_Sorted);
             _mergeBS.CurrentChanged += new EventHandler(_mergeBS_CurrentChanged);
             _mergeBS.MoveLast();
+
+            SetPrivilege(_privilege);
         }
+
         #endregion
 
         #region Методы - свои
-        public void RefillData(int rep_year)
+
+        public void RefillData(int repYear)
         {
             if (_mergeTable == null)
                 _mergeTable = MergiesView.CreateTable();
@@ -58,15 +71,17 @@ namespace Pers_uchet_org
             if (_mergeBS == null)
                 _mergeBS = new BindingSource();
 
-            string commText = MergiesView.GetSelectText(_org.idVal, rep_year);
+            string commText = MergiesView.GetSelectText(_org.idVal, repYear);
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(commText, _connection);
             adapter.Fill(_mergeTable);
 
-            this.mergeView.AutoGenerateColumns = false;
-            this.mergeView.DataSource = _mergeBS;
+            mergeView.AutoGenerateColumns = false;
+            mergeView.DataSource = _mergeBS;
             _mergeBS.DataSource = _mergeTable;
 
-            this.MarkActualRow();
+            MarkActualRow();
+
+            SetPrivilege(_privilege);
         }
 
         private void MarkActualRow()
@@ -74,57 +89,78 @@ namespace Pers_uchet_org
             int icur = _mergeBS.Find(MergiesView.actual, true);
             if (icur != -1)
             {
-                this.mergeView.Rows[icur].DefaultCellStyle.BackColor = Color.LightGreen;
+                mergeView.Rows[icur].DefaultCellStyle.BackColor = Color.LightGreen;
             }
         }
+
+        private void SetPrivilege(string privilegeCode)
+        {
+            bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(privilegeCode) == 1;
+            if (readOnly)
+            {
+                addStripButton.Enabled = false;
+                editStripButton.Enabled = false;
+                delStripButton.Enabled = false;
+
+                mergeView.CellDoubleClick -= mergeView_CellDoubleClick;
+
+                addStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                editStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                delStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+            }
+        }
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void yearBox_ValueChanged(object sender, EventArgs e)
         {
             MainForm.RepYear = (int)yearBox.Value;
-            this.RefillData((int)yearBox.Value);
+            RefillData((int)yearBox.Value);
         }
 
-        void mergeView_Sorted(object sender, EventArgs e)
+        private void mergeView_Sorted(object sender, EventArgs e)
         {
-            this.MarkActualRow();
+            MarkActualRow();
         }
 
-        void _mergeBS_CurrentChanged(object sender, EventArgs e)
+        private void _mergeBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView curRow = _mergeBS.Current as DataRowView;
             if (curRow == null)
             {
-                this.editStripButton.Enabled = false;
-                this.delStripButton.Enabled = false;
-                this.printStripButton.Enabled = false;
+                editStripButton.Enabled = false;
+                delStripButton.Enabled = false;
+                printStripButton.Enabled = false;
                 return;
             }
 
-            this.editStripButton.Enabled = true;
-            this.delStripButton.Enabled = true;
-            this.printStripButton.Enabled = true;
+            editStripButton.Enabled = true;
+            delStripButton.Enabled = true;
+            printStripButton.Enabled = true;
 
             if ((bool)curRow[MergiesView.actual])
             {
-                this.editStripButton.Text = editStateText;
+                editStripButton.Text = EditStateText;
             }
             else
             {
-                this.editStripButton.Text = viewStateText;
+                editStripButton.Text = ViewStateText;
             }
+
+            SetPrivilege(_privilege);
         }
 
         private void addStripButton_Click(object sender, EventArgs e)
         {
             SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org);
             tmpform.Owner = this;
-            tmpform.RepYear = (int)this.yearBox.Value;
+            tmpform.RepYear = (int)yearBox.Value;
             DialogResult dRes = tmpform.ShowDialog();
             if (dRes == DialogResult.OK)
             {
-                RefillData((int)this.yearBox.Value);
+                RefillData((int)yearBox.Value);
             }
         }
 
@@ -136,12 +172,13 @@ namespace Pers_uchet_org
                 MainForm.ShowInfoMessage("Необходимо выбрать запись!", "Ошибка выбора сводной");
                 return;
             }
-            SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org, curRow.Row);
+            SvodVedomostEditDocumentForm tmpform = new SvodVedomostEditDocumentForm(_connection, _operator, _org,
+                curRow.Row);
             tmpform.Owner = this;
             DialogResult dRes = tmpform.ShowDialog();
             if (dRes == DialogResult.OK)
             {
-                RefillData((int)this.yearBox.Value);
+                RefillData((int)yearBox.Value);
             }
         }
 
@@ -154,12 +191,14 @@ namespace Pers_uchet_org
                 return;
             }
 
-            if (MainForm.ShowQuestionMessage("Вы действительно хотите удалить сводную ведомость СЗВ-3?", "Удаление сводной") != DialogResult.Yes)
+            if (
+                MainForm.ShowQuestionMessage("Вы действительно хотите удалить сводную ведомость СЗВ-3?",
+                    "Удаление сводной") != DialogResult.Yes)
             {
-               return;
+                return;
             }
             Mergies.DeleteExecute(curRow.Row, _connection);
-            RefillData((int)this.yearBox.Value);
+            RefillData((int)yearBox.Value);
         }
 
         private void printStripButton_Click(object sender, EventArgs e)
@@ -228,7 +267,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
                     //if (!r.Selected)
@@ -257,14 +296,69 @@ namespace Pers_uchet_org
                     ContextMenuStrip cms = cmsSvod;
                     if (cms == null)
                         return;
-                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex,
+                        currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
+
+                    DataGridView dataView = sender as DataGridView;
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>
+                    {
+                        "editSvodMenuItem",
+                        "delSvodMenuItem",
+                        "printSvodMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
+
+                    int currentMouseOverRow = dataView.CurrentCell.RowIndex;
+                    bool isEnabled = !(currentMouseOverRow < 0);
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = isEnabled;
+                    }
+
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addSvodMenuItem");
+                        menuItems.Add("editSvodMenuItem");
+                        menuItems.Add("delSvodMenuItem");
+                    }
+
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, false);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
                     cms.Show((sender as DataGridView), p);
                 }
 
                 if (e.KeyCode == Keys.Delete)
                 {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     delStripButton_Click(sender, e);
+                }
+
+                if (e.KeyCode == Keys.Enter)
+                {
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
+                    editSvodMenuItem_Click(sender, e);
                 }
             }
             catch (Exception ex)
@@ -285,10 +379,12 @@ namespace Pers_uchet_org
 
                     DataGridView dataView = sender as DataGridView;
                     ToolStripItem[] items; //Массив в который возвращает элементы метод Find
-                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
-                    menuItems.Add("editSvodMenuItem");
-                    menuItems.Add("delSvodMenuItem");
-                    menuItems.Add("printSvodMenuItem");
+                    List<string> menuItems = new List<string>
+                    {
+                        "editSvodMenuItem",
+                        "delSvodMenuItem",
+                        "printSvodMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -300,6 +396,16 @@ namespace Pers_uchet_org
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+
+                    // Проверка прав и отключение пунктов
+                    bool readOnly = OperatorOrg.GetStajDohodDataAccesseCode(_privilege) == 1;
+                    if (readOnly)
+                    {
+                        menuItems.Add("addSvodMenuItem");
+                        menuItems.Add("editSvodMenuItem");
+                        menuItems.Add("delSvodMenuItem");
+                    }
+
                     foreach (string t in menuItems)
                     {
                         items = menu.Items.Find(t, false);
@@ -315,7 +421,7 @@ namespace Pers_uchet_org
                 MainForm.ShowErrorFlexMessage(ex.Message, "Непредвиденная ошибка");
             }
         }
-        
+
         private void addSvodMenuItem_Click(object sender, EventArgs e)
         {
             addStripButton_Click(sender, e);
@@ -335,6 +441,7 @@ namespace Pers_uchet_org
         {
             printStripButton_Click(sender, e);
         }
+
         #endregion
     }
 }

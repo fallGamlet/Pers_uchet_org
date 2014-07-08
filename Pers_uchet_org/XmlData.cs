@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -10,48 +9,64 @@ using System.IO;
 using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Xml.Xsl;
-using System.Windows.Forms;
 using System.Xml.Schema;
+using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
 {
     public class XmlData
     {
-        public enum ReportType { Adv1 = 0, Adv2, Adv3, Adv4, Adv5, Adv6, Szv1, Szv2, Szv3, Calculate/*, Rdv1, Rdv21, Rdv22, Rdv3*/ }
+        public enum ReportType
+        {
+            Adv1 = 0,
+            Adv2,
+            Adv3,
+            Adv4,
+            Adv5,
+            Adv6,
+            Szv1,
+            Szv2,
+            Szv3,
+            Rdv1,
+            Rdv21,
+            Rdv22,
+            Rdv3,
+            Calculate
+        }
 
         public static string GetReportUrl(ReportType type)
         {
             string url;
             switch (type)
             {
-                case XmlData.ReportType.Adv1:
-                    url = Properties.Settings.Default.report_adv1;
+                case ReportType.Adv1:
+                    url = Settings.Default.report_adv1;
                     break;
-                case XmlData.ReportType.Adv2:
-                    url = Properties.Settings.Default.report_adv2;
+                case ReportType.Adv2:
+                    url = Settings.Default.report_adv2;
                     break;
-                case XmlData.ReportType.Adv3:
-                    url = Properties.Settings.Default.report_adv3;
+                case ReportType.Adv3:
+                    url = Settings.Default.report_adv3;
                     break;
-                case XmlData.ReportType.Adv4:
-                    url = Properties.Settings.Default.report_adv4;
+                case ReportType.Adv4:
+                    url = Settings.Default.report_adv4;
                     break;
-                case XmlData.ReportType.Adv5:
-                    url = Properties.Settings.Default.report_adv5;
+                case ReportType.Adv5:
+                    url = Settings.Default.report_adv5;
                     break;
-                case XmlData.ReportType.Adv6:
-                    url = Properties.Settings.Default.report_adv6;
+                case ReportType.Adv6:
+                    url = Settings.Default.report_adv6;
                     break;
-                case XmlData.ReportType.Szv1:
-                    url = Properties.Settings.Default.report_szv1;
+                case ReportType.Szv1:
+                    url = Settings.Default.report_szv1;
                     break;
-                case XmlData.ReportType.Szv2:
-                    url = Properties.Settings.Default.report_szv2;
+                case ReportType.Szv2:
+                    url = Settings.Default.report_szv2;
                     break;
-                case XmlData.ReportType.Szv3:
-                    url = Properties.Settings.Default.report_szv3;
+                case ReportType.Szv3:
+                    url = Settings.Default.report_szv3;
                     break;
-                case XmlData.ReportType.Calculate:
+                case ReportType.Calculate:
                     url = Properties.Settings.Default.report_calculate;
                     break;
                 default:
@@ -61,8 +76,7 @@ namespace Pers_uchet_org
             url = Path.GetFullPath(url);
             if (File.Exists(url))
                 return url;
-            else
-                return null;
+            return null;
         }
 
         public static XmlDocument PersonXml(DataRow row)
@@ -210,16 +224,16 @@ namespace Pers_uchet_org
             return xml;
         }
 
-        public static string FormatXml(String Xml)
+        public static string FormatXml(String xml)
         {
             try
             {
-                XDocument doc = XDocument.Parse(Xml);
+                XDocument doc = XDocument.Parse(xml);
                 return doc.ToString();
             }
             catch (Exception)
             {
-                return Xml;
+                return xml;
             }
         }
 
@@ -241,7 +255,6 @@ namespace Pers_uchet_org
         public static string GetHTML(byte[] xmlBytes, byte[] xslBytes)
         {
             XmlDocument mapXml = new XmlDocument();
-            string xslStr = Encoding.GetEncoding(1251).GetString(xslBytes);
             string xmlStr = Encoding.GetEncoding(1251).GetString(xmlBytes);
             mapXml.InnerXml = xmlStr;
 
@@ -255,7 +268,7 @@ namespace Pers_uchet_org
             setting.OmitXmlDeclaration = true;
             XmlWriter writer = XmlWriter.Create(outStream, setting);
             myXslTrans.Transform(xpn, writer);
-            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            String htmlStr = Encoding.GetEncoding(1251).GetString(outStream.ToArray());
             return htmlStr;
         }
 
@@ -274,7 +287,7 @@ namespace Pers_uchet_org
             setting.OmitXmlDeclaration = true;
             XmlWriter writer = XmlWriter.Create(outStream, setting);
             myXslTrans.Transform(xpn, writer);
-            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            String htmlStr = Encoding.GetEncoding(1251).GetString(outStream.ToArray());
             return htmlStr;
         }
 
@@ -289,7 +302,7 @@ namespace Pers_uchet_org
         public static Boolean ValidateXml(string xmlSchemaPath, string xmlDocumentPath, StreamWriter outputWriter)
         {
             bool isValid = true;
-            XmlDocument xmlDocument = XmlData.ReadXml(xmlDocumentPath);
+            XmlDocument xmlDocument = ReadXml(xmlDocumentPath);
             xmlDocument.Schemas.Add(null, xmlSchemaPath);
 
             outputWriter.WriteLine("Файл: " + Path.GetFileName(xmlDocumentPath));
@@ -311,8 +324,10 @@ namespace Pers_uchet_org
     public class Szv1Xml
     {
         // название формы
-        public static string name = "СЗВ-1";
+        public static string Name = "СЗВ-1";
+
         #region названия тегов, присутствующих в xml
+
         public static string tagDocInfo = "doc_info";
         public static string tagPerson = "person";
         public static string tagLname = "lname";
@@ -371,14 +386,15 @@ namespace Pers_uchet_org
         public static string tagDopCodeName = "dop_code_name";
         public static string tagDopStart = "dop_start";
         public static string tagDopEnd = "dop_end";
+
         #endregion
 
-        public static IEnumerable<XmlDocument> GetXml(IEnumerable<long> doc_id, Org org, string connection_str)
+        public static IEnumerable<XmlDocument> GetXml(IEnumerable<long> docId, Org org, string connectionStr)
         {
             List<XmlDocument> xmlArray = new List<XmlDocument>();
-            foreach (long id in doc_id)
+            foreach (long id in docId)
             {
-                XmlDocument xmlDoc = GetXml(id, org, connection_str);
+                XmlDocument xmlDoc = GetXml(id, org, connectionStr);
                 xmlArray.Add(xmlDoc);
             }
             //
@@ -388,34 +404,34 @@ namespace Pers_uchet_org
         /// <summary>
         /// Получить XML объект формы СЗВ-1
         /// </summary>
-        /// <param name="doc_id">Идентификатор документа</param>
+        /// <param name="docId">Идентификатор документа</param>
         /// <param name="org">Объект данных об организации</param>
-        /// <param name="connection_str">Строка подключения к БД</param>
+        /// <param name="connectionStr">Строка подключения к БД</param>
         /// <returns>Объект XML документа</returns>
-        public static XmlDocument GetXml(long doc_id, Org org, string connection_str)
+        public static XmlDocument GetXml(long docId, Org org, string connectionStr)
         {
             #region Считывание данных
 
-            DataRow docRow = DocsViewForXml.GetRow(doc_id, connection_str);
+            DataRow docRow = DocsViewForXml.GetRow(docId, connectionStr);
             if (docRow == null)
                 throw new NullReferenceException("Документ не найден");
 
             DataTable salaryInfoTable = SalaryInfo.CreateTable();
             DataTable salaryInfoTableTranspose = SalaryInfoTranspose.CreateTableWithRows();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(doc_id), connection_str);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(docId), connectionStr);
             adapter.Fill(salaryInfoTable);
             SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTableTranspose, salaryInfoTable);
 
             DataTable generalTable = GeneralPeriod.CreatetTable();
-            adapter = GeneralPeriod.CreateAdapter(new SQLiteConnection(connection_str), null);
-            adapter.SelectCommand.CommandText = GeneralPeriod.GetSelectText(doc_id);
+            adapter = GeneralPeriod.CreateAdapter(new SQLiteConnection(connectionStr), null);
+            adapter.SelectCommand.CommandText = GeneralPeriod.GetSelectText(docId);
             adapter.Fill(generalTable);
 
             DataTable specTable = SpecialPeriodView.CreatetTable();
             adapter = new SQLiteDataAdapter
             {
                 SelectCommand =
-                    new SQLiteCommand(SpecialPeriodView.GetSelectText(doc_id), new SQLiteConnection(connection_str))
+                    new SQLiteCommand(SpecialPeriodView.GetSelectText(docId), new SQLiteConnection(connectionStr))
             };
             adapter.Fill(specTable);
 
@@ -423,11 +439,12 @@ namespace Pers_uchet_org
             adapter = new SQLiteDataAdapter
             {
                 SelectCommand =
-                    new SQLiteCommand(DopPeriodView.GetSelectText(doc_id), new SQLiteConnection(connection_str))
+                    new SQLiteCommand(DopPeriodView.GetSelectText(docId), new SQLiteConnection(connectionStr))
             };
             adapter.Fill(dopTable);
 
             #endregion
+
             return GetXml(docRow, org, salaryInfoTable, salaryInfoTableTranspose, generalTable, specTable, dopTable);
         }
 
@@ -442,7 +459,8 @@ namespace Pers_uchet_org
         /// <param name="specTable">Таблица со специальными стажами</param>
         /// <param name="dopTable">Таблица с дополнительными стажами</param>
         /// <returns>Объект XML документа</returns>
-        public static XmlDocument GetXml(DataRow docRow, Org org, DataTable salaryInfoTable, DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
+        public static XmlDocument GetXml(DataRow docRow, Org org, DataTable salaryInfoTable,
+            DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
         {
             #region Создание xml элементов
 
@@ -480,6 +498,7 @@ namespace Pers_uchet_org
             XmlElement genPeriod = xmlRes.CreateElement(tagGenPeriod);
             XmlElement specStaj = xmlRes.CreateElement(tagSpecStaj);
             XmlElement dopStaj = xmlRes.CreateElement(tagDopStaj);
+
             #endregion
 
             #region Заполнение данными
@@ -506,8 +525,16 @@ namespace Pers_uchet_org
             workPlace.InnerText = docRow[DocsViewForXml.isGeneral].ToString();
             repYear.InnerText = docRow[DocsViewForXml.repYear].ToString();
 
-            firmAdd.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)][SalaryInfo.sum]).ToString("F2").Replace(',', '.');
-            firmPay.InnerText = ((double)salaryInfoTable.Rows[SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)][SalaryInfo.sum]).ToString("F2").Replace(',', '.');
+            firmAdd.InnerText =
+                ((double)
+                    salaryInfoTable.Rows[
+                        SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column3)
+                        ][SalaryInfo.sum]).ToString("F2").Replace(',', '.');
+            firmPay.InnerText =
+                ((double)
+                    salaryInfoTable.Rows[
+                        SalaryInfo.FindRowIndex(salaryInfoTable, SalaryInfo.salaryGroupsId, (long)SalaryGroups.Column5)
+                        ][SalaryInfo.sum]).ToString("F2").Replace(',', '.');
 
             #endregion
 
@@ -545,7 +572,6 @@ namespace Pers_uchet_org
             docInfo.AppendChild(firmAdd);
             docInfo.AppendChild(firmPay);
 
-
             #region Заполнение данными заработной платы
 
             for (int i = 0; i < 12; i++)
@@ -557,11 +583,21 @@ namespace Pers_uchet_org
                 XmlElement col4 = xmlRes.CreateElement(tagCol4);
                 XmlElement col5 = xmlRes.CreateElement(tagCol5);
                 XmlElement col6 = xmlRes.CreateElement(tagCol6);
-                col1.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col1]).ToString("F2").Replace(',', '.');
-                col2.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col2]).ToString("F2").Replace(',', '.');
-                col3.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3]).ToString("F2").Replace(',', '.');
-                col4.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4]).ToString("F2").Replace(',', '.');
-                col5.InnerText = ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5]).ToString("F2").Replace(',', '.');
+                col1.InnerText =
+                    ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col1]).ToString("F2")
+                        .Replace(',', '.');
+                col2.InnerText =
+                    ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col2]).ToString("F2")
+                        .Replace(',', '.');
+                col3.InnerText =
+                    ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col3]).ToString("F2")
+                        .Replace(',', '.');
+                col4.InnerText =
+                    ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col4]).ToString("F2")
+                        .Replace(',', '.');
+                col5.InnerText =
+                    ((double)salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col5]).ToString("F2")
+                        .Replace(',', '.');
                 col6.InnerText = salaryInfoTableTranspose.Rows[i][SalaryInfoTranspose.col6].ToString();
                 month.AppendChild(col1);
                 month.AppendChild(col2);
@@ -572,6 +608,7 @@ namespace Pers_uchet_org
                 payment.AppendChild(month);
             }
             docInfo.AppendChild(payment);
+
             #endregion
 
             #region Заполнение данными основного стажа
@@ -590,6 +627,7 @@ namespace Pers_uchet_org
                 period.AppendChild(genEnd);
             }
             docInfo.AppendChild(genPeriod);
+
             #endregion
 
             #region Заполнение данными специального стажа
@@ -612,7 +650,8 @@ namespace Pers_uchet_org
                 XmlElement specHours = xmlRes.CreateElement(tagSpecHours);
                 XmlElement specMinutes = xmlRes.CreateElement(tagSpecMinutes);
                 XmlElement specProfession = xmlRes.CreateElement(tagSpecProfession);
-                specStart.InnerText = (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
+                specStart.InnerText =
+                    (DateTime.Parse(row[SpecialPeriodView.beginDate].ToString())).ToString("dd.MM.yyyy");
                 specEnd.InnerText = (DateTime.Parse(row[SpecialPeriodView.endDate].ToString())).ToString("dd.MM.yyyy");
                 specPartConditionId.InnerText = row[SpecialPeriodView.partConditionClassificatorId].ToString();
                 specPartConditionName.InnerText = row[SpecialPeriodView.partCode].ToString();
@@ -641,6 +680,7 @@ namespace Pers_uchet_org
                 spec.AppendChild(specProfession);
             }
             docInfo.AppendChild(specStaj);
+
             #endregion
 
             #region Заполнение данными дополнительного стажа
@@ -665,6 +705,7 @@ namespace Pers_uchet_org
                 dopRecord.AppendChild(dopEnd);
             }
             docInfo.AppendChild(dopStaj);
+
             #endregion
 
             //string formStr = XmlData.FormatXml(xmlRes.InnerXml);
@@ -677,7 +718,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static string GetReportUrl()
         {
-            return Properties.Settings.Default.report_szv1;
+            return Settings.Default.report_szv1;
         }
 
         /// <summary>
@@ -686,7 +727,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static string GetXslUrl()
         {
-            return Properties.Settings.Default.xsl_szv1;
+            return Settings.Default.xsl_szv1;
         }
 
         /// <summary>
@@ -710,28 +751,32 @@ namespace Pers_uchet_org
         /// <param name="specTable">Таблица со специальными стажами</param>
         /// <param name="dopTable">Таблица с дополнительными стажами</param>
         /// <returns>Html строка</returns>
-        public static string GetHtml(DataRow docRow, Org org, DataTable salaryInfoTable, DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
+        public static string GetHtml(DataRow docRow, Org org, DataTable salaryInfoTable,
+            DataTable salaryInfoTableTranspose, DataTable generalTable, DataTable specTable, DataTable dopTable)
         {
-            return GetHtml(GetXml(docRow, org, salaryInfoTable, salaryInfoTableTranspose, generalTable, specTable, dopTable));
+            return
+                GetHtml(GetXml(docRow, org, salaryInfoTable, salaryInfoTableTranspose, generalTable, specTable, dopTable));
         }
 
         /// <summary>
         /// Получить Html строку формы СЗВ-1
         /// </summary>
-        /// <param name="doc_id">Идентификатор документа</param>
+        /// <param name="docId">Идентификатор документа</param>
         /// <param name="org">Объект данных об организации</param>
-        /// <param name="connection_str">Строка подключения к БД</param>
+        /// <param name="connectionStr">Строка подключения к БД</param>
         /// <returns>Html строка</returns>
-        public static string GetHtml(long doc_id, Org org, string connection_str)
+        public static string GetHtml(long docId, Org org, string connectionStr)
         {
-            return GetHtml(GetXml(doc_id, org, connection_str));
+            return GetHtml(GetXml(docId, org, connectionStr));
         }
     }
 
     public class Szv2Xml
     {
-        public static string name = "СЗВ-2";
+        public static string Name = "СЗВ-2";
+
         #region названия тегов, присутствующих в xml
+
         public static string tagInddocs = "inddocs";
         public static string tagInddoc = "inddoc";
         public static string tagTypeID = "type_id";
@@ -742,17 +787,18 @@ namespace Pers_uchet_org
         public static string tagCol3 = "col_3";
         public static string tagCol4 = "col_4";
         public static string tagCol5 = "col_5";
+
         #endregion
 
         #region Методы - статические
-        static void NormalizeDocsCountTable(DataTable docsCount)
+
+        private static void NormalizeDocsCountTable(DataTable docsCount)
         {
-            bool init, correct, cancel, granting;
-            init = correct = cancel = granting = false;
-            long docTypeID;
+            bool correct, cancel, granting;
+            bool init = correct = cancel = granting = false;
             foreach (DataRow row in docsCount.Rows)
             {
-                docTypeID = (long)row[Docs.docTypeID];
+                long docTypeID = (long)row[Docs.docTypeId];
                 if (docTypeID == DocTypes.InitialFormId)
                     init = true;
                 else if (docTypeID == DocTypes.CorrectionFormId)
@@ -788,7 +834,7 @@ namespace Pers_uchet_org
             xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "windows-1251", null));
             xmlRes.AppendChild(inddocs);
 
-            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeID);
+            docsCount.DefaultView.Sort = string.Format("{0} asc", Docs.docTypeId);
             //docsSums.DefaultView.Sort = string.Format("{0}, {1} asc", Docs.docTypeId, SalaryInfo.salaryGroupsId);
             foreach (DataRowView row in docsCount.DefaultView)
             {
@@ -802,7 +848,7 @@ namespace Pers_uchet_org
                 XmlElement col4 = xmlRes.CreateElement(tagCol4);
                 XmlElement col5 = xmlRes.CreateElement(tagCol5);
 
-                long curDoctypeID = (long)row[Docs.docTypeID];
+                long curDoctypeID = (long)row[Docs.docTypeId];
                 typeID.InnerText = curDoctypeID.ToString();
                 count.InnerText = row["count"].ToString();
                 inddocs.AppendChild(inddoc);
@@ -816,13 +862,13 @@ namespace Pers_uchet_org
                 summaryInfo.AppendChild(col5);
 
                 col1.InnerText = col2.InnerText =
-                                col3.InnerText =
-                                col4.InnerText =
-                                col5.InnerText = "0.00";
+                    col3.InnerText =
+                        col4.InnerText =
+                            col5.InnerText = "0.00";
 
                 foreach (DataRow sumRow in docsSums.Rows)
                 {
-                    long doctypeID = (long)sumRow[Docs.docTypeID];
+                    long doctypeID = (long)sumRow[Docs.docTypeId];
                     double val = (double)sumRow[SalaryInfo.sum];
                     if (doctypeID == curDoctypeID)
                     {
@@ -856,13 +902,13 @@ namespace Pers_uchet_org
         /// <summary>
         /// Получить XML объект формы СЗВ-2
         /// </summary>
-        /// <param name="list_id">идентификатор пакета</param>
+        /// <param name="listId">идентификатор пакета</param>
         /// <param name="connectionStr">строка подключения к БД</param>
         /// <returns>объект XML документа</returns>
-        public static XmlDocument GetXml(long list_id, string connectionStr)
+        public static XmlDocument GetXml(long listId, string connectionStr)
         {
-            DataTable docsCount = Docs.CountDocsByListAndType(list_id, connectionStr);
-            DataTable docsSums = Docs.SumsByDocType(list_id, connectionStr);
+            DataTable docsCount = Docs.CountDocsByListAndType(listId, connectionStr);
+            DataTable docsSums = Docs.SumsByDocType(listId, connectionStr);
             return GetXml(docsCount, docsSums);
         }
 
@@ -872,7 +918,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static string GetReportUrl()
         {
-            return Properties.Settings.Default.report_szv2;
+            return Settings.Default.report_szv2;
         }
 
         /// <summary>
@@ -881,7 +927,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static string GetXslUrl()
         {
-            return Properties.Settings.Default.xsl_szv2;
+            return Settings.Default.xsl_szv2;
         }
 
         /// <summary>
@@ -901,7 +947,7 @@ namespace Pers_uchet_org
             setting.OmitXmlDeclaration = true;
             XmlWriter writer = XmlWriter.Create(outStream, setting);
             myXslTrans.Transform(xpn, writer);
-            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            String htmlStr = Encoding.GetEncoding(1251).GetString(outStream.ToArray());
             return htmlStr;
         }
 
@@ -936,14 +982,17 @@ namespace Pers_uchet_org
         {
             return GetHtml(GetXml(list_id, coinnectionStr));
         }
+
         #endregion
     }
 
     public class Szv3Xml
     {
         // название формы
-        public static string name = "СЗВ-3";
+        public static string Name = "СЗВ-3";
+
         #region названия тегов, присутствующих в xml
+
         public static string tagSvod = "svod";
         public static string tagPacks = "packs_count";
         public static string tagDocs = "docs_count";
@@ -955,19 +1004,21 @@ namespace Pers_uchet_org
         public static string tagMonthCol4 = "col_4";
         public static string tagMonthCol5 = "col_5";
         public static string tagMonthCol6 = "col_6";
+
         #endregion
 
         #region Методы - статические
+
         /// <summary>
         /// Получить XML объект формы СЗВ-3
         /// </summary>
-        /// <param name="merge_id">Идентификатор сводной ведомости</param>
+        /// <param name="mergeId">Идентификатор сводной ведомости</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns>Объект XML документа</returns>
-        public static XmlDocument GetXml(long merge_id, string coinnectionStr)
+        public static XmlDocument GetXml(long mergeId, string coinnectionStr)
         {
-            DataRow mergeRow = Mergies.GetRow(merge_id, coinnectionStr);
-            DataTable mergeInfo = MergeInfo.GetTable(merge_id, coinnectionStr);
+            DataRow mergeRow = Mergies.GetRow(mergeId, coinnectionStr);
+            DataTable mergeInfo = MergeInfo.GetTable(mergeId, coinnectionStr);
             DataTable mergeInfoT = MergeInfoTranspose.CreateTable();
             MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
             return GetXml(mergeRow, mergeInfoT);
@@ -976,13 +1027,13 @@ namespace Pers_uchet_org
         /// <summary>
         /// Получить XML объект формы СЗВ-3 для актуальной сводной ведомости организации указанного года
         /// </summary>
-        /// <param name="org_id">Идентификатор организации</param>
-        /// <param name="rep_year">Год</param>
+        /// <param name="orgId">Идентификатор организации</param>
+        /// <param name="repYear">Год</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns></returns>
-        public static XmlDocument GetXml(long org_id, int rep_year, string coinnectionStr)
+        public static XmlDocument GetXml(long orgId, int repYear, string coinnectionStr)
         {
-            DataRow mergeRow = Mergies.GetActualRow(org_id, rep_year, coinnectionStr);
+            DataRow mergeRow = Mergies.GetActualRow(orgId, repYear, coinnectionStr);
             DataTable mergeInfo = MergeInfo.GetTable((long)mergeRow[Mergies.id], coinnectionStr);
             DataTable mergeInfoT = MergeInfoTranspose.CreateTable();
             MergeInfoTranspose.ConvertFromMergeInfo(mergeInfoT, mergeInfo);
@@ -1045,7 +1096,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static string GetReportUrl()
         {
-            return Properties.Settings.Default.report_szv3;
+            return Settings.Default.report_szv3;
         }
 
         /// <summary>
@@ -1054,7 +1105,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static string GetXslUrl()
         {
-            return Properties.Settings.Default.xsl_szv3;
+            return Settings.Default.xsl_szv3;
         }
 
         /// <summary>
@@ -1074,7 +1125,7 @@ namespace Pers_uchet_org
             setting.OmitXmlDeclaration = true;
             XmlWriter writer = XmlWriter.Create(outStream, setting);
             myXslTrans.Transform(xpn, writer);
-            String htmlStr = System.Text.Encoding.GetEncoding(1251).GetString(outStream.ToArray());
+            String htmlStr = Encoding.GetEncoding(1251).GetString(outStream.ToArray());
             return htmlStr;
         }
 
@@ -1102,13 +1153,14 @@ namespace Pers_uchet_org
         /// <summary>
         /// Получить текст с HTML
         /// </summary>
-        /// <param name="merge_id">Идентификатор сводной ведомости</param>
+        /// <param name="mergeId">Идентификатор сводной ведомости</param>
         /// <param name="coinnectionStr">Строка подключения к БД</param>
         /// <returns></returns>
-        public static string GetHtml(long merge_id, string coinnectionStr)
+        public static string GetHtml(long mergeId, string coinnectionStr)
         {
-            return GetHtml(GetXml(merge_id, coinnectionStr));
+            return GetHtml(GetXml(mergeId, coinnectionStr));
         }
+
         #endregion
     }
 
@@ -1118,6 +1170,7 @@ namespace Pers_uchet_org
         public static string name = "map";
 
         #region Названия тегов, присутствующих в XML
+
         public static string tagTopics = "TOPICS";
         public static string tagSvod = "SVOD";
         public static string tagTitle = "TITLE";
@@ -1130,14 +1183,16 @@ namespace Pers_uchet_org
 
         public static string paramType = "TYPE";
         public static string paramID = "ID";
+
         #endregion
 
         #region Методы - статические
-        public static XmlDocument GetXml(IEnumerable<XmlDocument> szv2Array, IEnumerable<IEnumerable<XmlDocument>> szv1Array)
+
+        public static XmlDocument GetXml(IEnumerable<XmlDocument> szv2Array,
+            IEnumerable<IEnumerable<XmlDocument>> szv1Array)
         {
-            int docCount, packetCount;
             string rootDirStr = "4";
-            packetCount = szv2Array.Count();
+            int packetCount = szv2Array.Count();
 
             XmlDocument xmlRes = new XmlDocument();
             XmlElement root = xmlRes.CreateElement(tagTopics);
@@ -1176,11 +1231,11 @@ namespace Pers_uchet_org
                 opis.AppendChild(opisPath);
 
                 opisTitle.InnerText = "Опись документов";
-                opisFilename.InnerText = string.Format("opis{0:000}", i);//GetImito();
+                opisFilename.InnerText = string.Format("opis{0:000}", i); //GetImito();
                 opisPath.InnerText = string.Format(@"4\{0}\", packetID);
 
                 IEnumerable<XmlDocument> szv1Docs = szv1Array.ElementAt(i);
-                docCount = szv1Docs.Count();
+                int docCount = szv1Docs.Count();
                 for (int j = 0; j < docCount; j++)
                 {
                     XmlElement topicNode = xmlRes.CreateElement(tagTopic);
@@ -1198,14 +1253,16 @@ namespace Pers_uchet_org
                     topicNode.AppendChild(topicNodeRegnum);
 
                     string fio = string.Format("{0} {1} {2}"
-                                            , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagLname)[0].InnerText
-                                            , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFname)[0].InnerText
-                                            , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagMname)[0].InnerText
-                                            );
+                        , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagLname)[0].InnerText
+                        , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFname)[0].InnerText
+                        , szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagMname)[0].InnerText
+                        );
                     topicNodeTitle.InnerText = fio;
                     topicNodeFilename.InnerText = string.Format("{0:000}{1:000}", i, j);
-                    topicNodeRegnum.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagPersonRegnum)[0].InnerText;
-                    topicNodeDoctype.InnerText = szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFormType)[0].InnerText;
+                    topicNodeRegnum.InnerText =
+                        szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagPersonRegnum)[0].InnerText;
+                    topicNodeDoctype.InnerText =
+                        szv1Docs.ElementAt(j).GetElementsByTagName(Szv1Xml.tagFormType)[0].InnerText;
                     topicNodePath.InnerText = string.Format(@"4\{0}\", packetID);
                 }
             }
@@ -1215,7 +1272,7 @@ namespace Pers_uchet_org
 
         public static string GetXslUrl()
         {
-            return Properties.Settings.Default.xsl_map;
+            return Settings.Default.xsl_map;
         }
 
         public static string GetHTML(byte[] mapXmlBytes, byte[] mapXslBytes)
@@ -1242,14 +1299,16 @@ namespace Pers_uchet_org
         {
             return GetHTML(GetXml(szv2Array, szv1Array));
         }
+
         #endregion
     }
 
     public class OrgPropXml
     {
-        public static string name = "org_property";
+        public static string Name = "org_property";
 
         #region Названия тегов, присутствующих в XML
+
         public static string tagProperties = "Properties";
         public static string tagOrgRegnum = "Organization_Regid";
         public static string tagOrgName = "Organization_Name";
@@ -1263,12 +1322,14 @@ namespace Pers_uchet_org
         public static string tagVersion = "Version";
         public static string tagProgramName = "Program_Name";
         public static string tagProgramVersion = "Program_Version";
+
         #endregion
 
         #region Поля
+
         public string orgRegnum;
         public string orgName;
-        public string repeyar;
+        public string repYear;
         public string directorType;
         public string directorFIO;
         public string bookkeeperFIO;
@@ -1278,14 +1339,16 @@ namespace Pers_uchet_org
         public string version;
         public string programName;
         public string programVersion;
+
         #endregion
 
         #region Конструкторы
+
         public OrgPropXml()
         {
             orgRegnum = null;
             orgName = null;
-            repeyar = null;
+            repYear = null;
             directorType = null;
             directorFIO = null;
             bookkeeperFIO = null;
@@ -1301,9 +1364,11 @@ namespace Pers_uchet_org
         {
             TakeValues(propertyXml);
         }
+
         #endregion
 
         #region Методы
+
         public XmlDocument GetXml()
         {
             XmlDocument xmlRes = new XmlDocument();
@@ -1323,7 +1388,7 @@ namespace Pers_uchet_org
 
             elOrgRegnum.InnerText = orgRegnum;
             elOrgName.InnerText = orgName;
-            elRepYear.InnerText = repeyar;
+            elRepYear.InnerText = repYear;
             elDirectorType.InnerText = directorType;
             elDirectorFIO.InnerText = directorFIO;
             elBookkeeperFIO.InnerText = bookkeeperFIO;
@@ -1356,7 +1421,7 @@ namespace Pers_uchet_org
         {
             orgRegnum = GetValue(propertyXml, tagOrgRegnum);
             orgName = GetValue(propertyXml, tagOrgName);
-            repeyar = GetValue(propertyXml, tagRepyear);
+            repYear = GetValue(propertyXml, tagRepyear);
             directorType = GetValue(propertyXml, tagDirectorType);
             directorFIO = GetValue(propertyXml, tagDirectorFIO);
             bookkeeperFIO = GetValue(propertyXml, tagBookkeeperFIO);
@@ -1369,14 +1434,16 @@ namespace Pers_uchet_org
 
         public string GetHTML()
         {
-            XmlDocument xml = this.GetXml();
+            XmlDocument xml = GetXml();
             string html = XmlData.GetHTML(xml, GetXslUrl());
             //
             return html;
         }
+
         #endregion
 
         #region Методы - статические
+
         public static string GetValue(XmlDocument propertyXml, string tagname)
         {
             string res = null;
@@ -1389,8 +1456,9 @@ namespace Pers_uchet_org
 
         public static string GetXslUrl()
         {
-            return Properties.Settings.Default.xsl_orgproperties;
+            return Settings.Default.xsl_orgproperties;
         }
+
         #endregion
     }
 }

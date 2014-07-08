@@ -1,4 +1,4 @@
-﻿namespace Pers_uchet_org
+﻿namespace Pers_uchet_org.Forms
 {
     partial class MainForm
     {
@@ -64,6 +64,7 @@
             this.statusCaptionLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -283,6 +284,7 @@
             this.helpMenuItem,
             this.historyChangeMenuItem,
             this.toolStripSeparator5,
+            this.checkUpdatesMenuItem,
             this.aboutMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
@@ -363,6 +365,13 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // checkUpdatesMenuItem
+            // 
+            this.checkUpdatesMenuItem.Name = "checkUpdatesMenuItem";
+            this.checkUpdatesMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.checkUpdatesMenuItem.Text = "Проверить обновления";
+            this.checkUpdatesMenuItem.Click += new System.EventHandler(this.checkUpdatesMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -425,6 +434,7 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem checkUpdatesMenuItem;
     }
 }
 

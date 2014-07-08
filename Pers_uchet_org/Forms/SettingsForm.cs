@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Ionic.Zip;
 using Pers_uchet_org.Properties;
 
-
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class SettingsForm : Form
     {
         #region Поля
-        string _connection;
-        private FolderBrowserDialog folderDialog;
+
+        private string _connection;
+        private FolderBrowserDialog _folderBrowserDialog;
+
         #endregion
 
         // конструктор класса
@@ -27,7 +22,7 @@ namespace Pers_uchet_org
         {
             InitializeComponent();
             _connection = connection;
-            folderDialog = new FolderBrowserDialog();
+            _folderBrowserDialog = new FolderBrowserDialog();
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -58,13 +53,13 @@ namespace Pers_uchet_org
                 databasePathTextBox.Text = Settings.Default.DataBasePath.Replace('/', '\\');
 
 
-                bool proxyUseAuto = Properties.Settings.Default.ProxyUseAuto;
-                bool useDefaultCredentials = Properties.Settings.Default.UseDefaultCredentials;
+                bool proxyUseAuto = Settings.Default.ProxyUseAuto;
+                bool useDefaultCredentials = Settings.Default.UseDefaultCredentials;
 
-                string proxyAddr = Properties.Settings.Default.ProxyAddr;
-                int proxyPort = Properties.Settings.Default.ProxyPort;
-                string proxyLogin = Properties.Settings.Default.ProxyLogin;
-                string proxyPass = Properties.Settings.Default.ProxyPass;
+                string proxyAddr = Settings.Default.ProxyAddr;
+                int proxyPort = Settings.Default.ProxyPort;
+                string proxyLogin = Settings.Default.ProxyLogin;
+                string proxyPass = Settings.Default.ProxyPass;
 
                 autoProxyRadioButton.Checked = proxyUseAuto;
                 manualProxyRadioButton.Checked = !proxyUseAuto;
@@ -83,21 +78,21 @@ namespace Pers_uchet_org
             }
         }
 
-        private bool ReadCustomSetting()
-        {
-            try
-            {
-                isBackupEnableCheckBox.Checked = Settings.Default.IsBackupEnabled;
-                backupMaxCountBox.Value = Settings.Default.BackupMaxCount;
-                backupPathTextBox.Text = Settings.Default.BackupPath;
-                return true;
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Ошибка считывания настроек:\n{0}", e.Message);
-                return false;
-            }
-        }
+        //private bool ReadCustomSetting()
+        //{
+        //    try
+        //    {
+        //        isBackupEnableCheckBox.Checked = Settings.Default.IsBackupEnabled;
+        //        backupMaxCountBox.Value = Settings.Default.BackupMaxCount;
+        //        backupPathTextBox.Text = Settings.Default.BackupPath;
+        //        return true;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.Print("Ошибка считывания настроек:\n{0}", e.Message);
+        //        return false;
+        //    }
+        //}
 
         private bool SaveProperties()
         {
@@ -105,20 +100,27 @@ namespace Pers_uchet_org
             {
                 Settings.Default.IsBackupEnabled = isBackupEnableCheckBox.Checked;
                 Settings.Default.BackupMaxCount = backupMaxCountBox.Value;
-                if (Directory.Exists(backupPathTextBox.Text.Trim()) || (MainForm.ShowQuestionMessage("Папка для резервного копирования не найдена!\r\nВы уверены что хотите сохранить этот путь?", "Сохранение настроек") == DialogResult.Yes))
+                if (Directory.Exists(backupPathTextBox.Text.Trim()) ||
+                    (MainForm.ShowQuestionMessage(
+                        "Папка для резервного копирования не найдена!\r\nВы уверены что хотите сохранить этот путь?",
+                        "Сохранение настроек") == DialogResult.Yes))
                     Settings.Default.BackupPath = backupPathTextBox.Text.Trim().Replace('\\', '/');
 
-                if (File.Exists(databasePathTextBox.Text.Trim()) || (MainForm.ShowQuestionMessage("Файл базы данных не найден!\r\nВы уверены что хотите сохранить в этот путь?", "Сохранение настроек") == DialogResult.Yes))
+                if (File.Exists(databasePathTextBox.Text.Trim()) ||
+                    (MainForm.ShowQuestionMessage(
+                        "Файл базы данных не найден!\r\nВы уверены что хотите сохранить в этот путь?",
+                        "Сохранение настроек") == DialogResult.Yes))
                     Settings.Default.DataBasePath = databasePathTextBox.Text.Trim().Replace('\\', '/');
 
-                Properties.Settings.Default.ProxyUseAuto = autoProxyRadioButton.Checked;
-                Properties.Settings.Default.UseDefaultCredentials = autoProxyRadioButton.Checked ? false : customCredentialsCheckBox.Checked;
-                Properties.Settings.Default.ProxyAddr = serverProxyTextBox.Text.Trim();
+                Settings.Default.ProxyUseAuto = autoProxyRadioButton.Checked;
+                Settings.Default.UseDefaultCredentials = !autoProxyRadioButton.Checked &&
+                                                         customCredentialsCheckBox.Checked;
+                Settings.Default.ProxyAddr = serverProxyTextBox.Text.Trim();
                 int port;
                 if (Int32.TryParse(portProxyTextBox.Text, out port))
-                    Properties.Settings.Default.ProxyPort = port;
-                Properties.Settings.Default.ProxyLogin = loginProxyTextBox.Text.Trim();
-                Properties.Settings.Default.ProxyPass = passwordProxyTextBox.Text;
+                    Settings.Default.ProxyPort = port;
+                Settings.Default.ProxyLogin = loginProxyTextBox.Text.Trim();
+                Settings.Default.ProxyPass = passwordProxyTextBox.Text;
 
                 Settings.Default.Save();
                 return true;
@@ -143,9 +145,11 @@ namespace Pers_uchet_org
         //{
         //    this.Text = "";
         //}
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             //try
@@ -163,8 +167,8 @@ namespace Pers_uchet_org
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void isBackupEnableCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -178,40 +182,43 @@ namespace Pers_uchet_org
         private void databaseBrowseButton_Click(object sender, EventArgs e)
         {
             //Если при нажатии зажат shift, то открыть папку в проводнике
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+            if ((ModifierKeys & Keys.Shift) == Keys.Shift)
             {
                 OpenPathInExplorer(databasePathTextBox.Text.Substring(0, databasePathTextBox.Text.LastIndexOf('\\')));
                 return;
             }
 
-            folderDialog.Description = "Выберите папку c базой данных";
-            folderDialog.ShowNewFolderButton = false;
-            if (folderDialog.ShowDialog() == DialogResult.OK)
+            _folderBrowserDialog.Description = "Выберите папку c базой данных";
+            _folderBrowserDialog.ShowNewFolderButton = false;
+            if (_folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                databasePathTextBox.Text = Path.Combine(folderDialog.SelectedPath, Properties.Settings.Default.DataBaseFileName);
+                databasePathTextBox.Text = Path.Combine(_folderBrowserDialog.SelectedPath, Settings.Default.DataBaseFileName);
             }
         }
 
         private void backupBrowseButton_Click(object sender, EventArgs e)
         {
             //Если при нажатии зажат shift, то открыть папку в проводнике
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+            if ((ModifierKeys & Keys.Shift) == Keys.Shift)
             {
                 OpenPathInExplorer(backupPathTextBox.Text);
                 return;
             }
 
-            folderDialog.Description = "Выберите папку для резервных копий";
-            folderDialog.ShowNewFolderButton = true;
-            if (folderDialog.ShowDialog() == DialogResult.OK)
+            _folderBrowserDialog.Description = "Выберите папку для резервных копий";
+            _folderBrowserDialog.ShowNewFolderButton = true;
+            if (_folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                backupPathTextBox.Text = folderDialog.SelectedPath;
+                backupPathTextBox.Text = _folderBrowserDialog.SelectedPath;
             }
         }
 
         private void vacuumButton_Click(object sender, EventArgs e)
         {
-            if (MainForm.ShowQuestionMessage("Команда VACUUM блокирует таблицы в монопольном режиме.\nЭто означает, что все запросы, использующие обрабатываемую базу, приостанавливаются и ожидают снятия блокировки.\n\nПродолжить?", "Предупреждение") != DialogResult.Yes)
+            if (
+                MainForm.ShowQuestionMessage(
+                    "Команда VACUUM блокирует таблицы в монопольном режиме.\nЭто означает, что все запросы, использующие обрабатываемую базу, приостанавливаются и ожидают снятия блокировки.\n\nПродолжить?",
+                    "Предупреждение") != DialogResult.Yes)
                 return;
 
             try

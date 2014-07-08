@@ -1,30 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class ClassifierCategoriesForm : Form
     {
         #region Поля
-        string _conection; // строка подключение к БД
+
+        private string _conection; // строка подключение к БД
         // объекты таблиц для хранения записей
-        DataTable _classgroupTable;         // таблица Classgroup
-        DataTable _classificatorTable;   // таблица Classificator
-        DataTable _classpercentTable;     // таблица Classpercent
+        private DataTable _classgroupTable; // таблица Classgroup
+        private DataTable _classificatorTable; // таблица Classificator
+        private DataTable _classpercentTable; // таблица Classpercent
         // объекты BindingSource для синхронизации таблиц и отображателей
-        BindingSource _classgroupBS;
-        BindingSource _classificatorBS;
-        BindingSource _classpercentBS;
+        private BindingSource _classgroupBS;
+        private BindingSource _classificatorBS;
+        private BindingSource _classpercentBS;
+
         #endregion
 
         #region Конструкторы и инициализатор
+
         public ClassifierCategoriesForm(string connection)
         {
             InitializeComponent();
@@ -32,7 +30,8 @@ namespace Pers_uchet_org
             _conection = connection;
         }
 
-        public ClassifierCategoriesForm(DataTable classpercentTable, DataTable classificatorTable, DataTable classgroupTable, string connection)
+        public ClassifierCategoriesForm(DataTable classpercentTable, DataTable classificatorTable,
+            DataTable classgroupTable, string connection)
         {
             InitializeComponent();
             // определить строку подключения к БД
@@ -54,16 +53,17 @@ namespace Pers_uchet_org
             adapter.SelectCommand = command;
 
             #region Определение и заполнение таблиц, при необходимости
+
             // если таблице не присвоенно значение, то создать новую таблицу
             if (_classgroupTable == null)
             {
                 _classgroupTable = Classgroup.CreateTable();
             }
             // если таблица новая (не имеет записей), то заполнить эту таблицу
-            if(_classgroupTable.Rows.Count <=0)
+            if (_classgroupTable.Rows.Count <= 0)
             {
                 // назначить текст комманды считывания
-                command.CommandText = Classgroup.GetSelectText(); 
+                command.CommandText = Classgroup.GetSelectText();
                 // заполнить таблицу
                 adapter.Fill(_classgroupTable);
             }
@@ -93,8 +93,9 @@ namespace Pers_uchet_org
                 // заполнить таблицу
                 adapter.Fill(_classpercentTable);
             }
+
             #endregion
-            
+
             // создание объектов BindingSource
             _classgroupBS = new BindingSource();
             _classificatorBS = new BindingSource();
@@ -121,10 +122,11 @@ namespace Pers_uchet_org
             // сделать активной первую запись
             _classificatorBS.MoveFirst();
         }
+
         #endregion
 
         // вызывается при выборе текущей записи в таблице Classgroup (смене текущего элемента)
-        void _classgroupBS_CurrentChanged(object sender, EventArgs e)
+        private void _classgroupBS_CurrentChanged(object sender, EventArgs e)
         {
             // получение текущей (выбранной) записи таблицы Classgroup
             DataRowView curRow = (DataRowView)_classgroupBS.Current;
@@ -134,8 +136,9 @@ namespace Pers_uchet_org
             // установить фильтр для таблицы Classificator по ключу выбранной записи
             _classificatorBS.Filter = string.Format("{0} = {1}", Classificator.classgroupID, curRow[Classgroup.id]);
         }
+
         // вызывается при выборе текущей записи в таблице Classificator (смене текущего элемента)
-        void _classificatorBS_CurrentChanged(object sender, EventArgs e)
+        private void _classificatorBS_CurrentChanged(object sender, EventArgs e)
         {
             // получение текущей (выбранной) записи таблицы Classificator
             DataRowView curRow = (DataRowView)_classificatorBS.Current;
@@ -149,7 +152,7 @@ namespace Pers_uchet_org
             // получаем значение описания
             string comment = (string)curRow[Classificator.description];
             // если описание отлично от 'NULL', то отображаем его для пользователя
-            if(comment.ToUpper() != "NULL")
+            if (comment.ToUpper() != "NULL")
                 this.commentBox.Text = comment;
             // устанавливаем фильтр для таблицы Classpercent
             _classpercentBS.Filter = string.Format("{0} = {1}", Classpercent.classificatorID, curRow[Classificator.id]);

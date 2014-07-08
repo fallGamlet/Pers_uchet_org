@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class EditOrgForm : Form
     {
         public static long _orgId;
         private string _connection;
 
-        public EditOrgForm(string _connection)
+        public EditOrgForm(string connection)
         {
             InitializeComponent();
             _orgId = -1;
-            this._connection = _connection;
+            _connection = connection;
         }
 
         #region Свойства
+
         public long OrgId
         {
             get { return _orgId; }
@@ -58,6 +52,7 @@ namespace Pers_uchet_org
             get { return this.buhfioorgBox.Text.Trim(); }
             set { this.buhfioorgBox.Text = value; }
         }
+
         #endregion
 
         private void acceptButton_Click(object sender, EventArgs e)
@@ -75,23 +70,24 @@ namespace Pers_uchet_org
             if (!Org.IsCorrectRegNumber(regNumOrgBox.Text))
             {
                 err += "\nНекорректный регистрационный номер (пример: У000123).";
-                result &= false;
+                result = false;
             }
 
             if (String.IsNullOrEmpty(nameorgBox.Text.Trim()))
             {
                 err += "\nНекорректное наименование.";
-                result &= false;
+                result = false;
             }
 
             if (Org.IsDuplicate(regNumOrgBox.Text, _orgId, _connection))
             {
                 err += "\nОрганизация с таким регистрационным номером уже существует.";
-                result &= false;
+                result = false;
             }
 
             if (!result)
-                MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err, "Введены некорректные данные");
+                MainForm.ShowWarningMessage("Были обнаружены следующие некорректные данные:" + err,
+                    "Введены некорректные данные");
 
             return result;
         }
@@ -103,7 +99,6 @@ namespace Pers_uchet_org
             //bossfioorgBox.Text = FirstUpper(bossfioorgBox.Text);
             //buhfioorgBox.Text = FirstUpper(buhfioorgBox.Text);
         }
-
 
 
         public String FirstUpper(String str) /*Один символ после пробела Заглавный*/

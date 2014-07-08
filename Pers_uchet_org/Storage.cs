@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using OpenMcdf;
 using System.IO;
-
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.OLE.Interop;
-using STATSTG = Microsoft.VisualStudio.OLE.Interop.STATSTG;
-using System.Xml.Schema;
-using System.Xml.Linq;
+using Pers_uchet_org.Properties;
 
 namespace Pers_uchet_org
 {
-    class Storage
+    internal class Storage
     {
         #region Поля
-        private static Random rand = new Random((int)DateTime.Now.Ticks);
+
+        private static Random _rand = new Random((int)DateTime.Now.Ticks);
+
         #endregion
 
         #region Методы - статические
@@ -28,7 +28,7 @@ namespace Pers_uchet_org
         private static byte[] GenerateSynchro()
         {
             long tick = DateTime.Now.Ticks;
-            tick *= rand.Next();
+            tick *= _rand.Next();
             return BitConverter.GetBytes(tick);
         }
 
@@ -105,7 +105,7 @@ namespace Pers_uchet_org
         {
             // сгенерировать синхропосылку
             byte[] synchroArr = GenerateSynchro();
-            byte[] imito = null;
+            byte[] imito;
             // зашифровать данные и получить от них хеш
             Mathdll.CryptData(diskKey, diskTable, synchroArr, ref data, out imito);
             // создать поток с именем, являющимся 16-тиричным представлением массива байт - imito
@@ -132,17 +132,17 @@ namespace Pers_uchet_org
         /// <param name="szv2XmlArray">Описи - выходной параметр</param>
         /// <param name="szv1XmlArray">Документы СЗВ1 - выходной параметр</param>
         /// <returns></returns>
-        public static int MakeXml(int rep_year, Org org, IEnumerable<long> list_id, string connectionStr,
-                                    out XmlDocument mapXml,
-                                    out XmlDocument szv3Xml,
-                                    out IEnumerable<XmlDocument> szv2XmlArray,
-                                    out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
+        public static int MakeXml(int repYear, Org org, IEnumerable<long> listId, string connectionStr,
+            out XmlDocument mapXml,
+            out XmlDocument szv3Xml,
+            out IEnumerable<XmlDocument> szv2XmlArray,
+            out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
         {
             int res = 0;
-            XmlDocument szv3 = Szv3Xml.GetXml(org.idVal, rep_year, connectionStr);
+            XmlDocument szv3 = Szv3Xml.GetXml(org.idVal, repYear, connectionStr);
             LinkedList<XmlDocument> szv2Array = new LinkedList<XmlDocument>();
             LinkedList<IEnumerable<XmlDocument>> szv1Array = new LinkedList<IEnumerable<XmlDocument>>();
-            foreach (long listID in list_id)
+            foreach (long listID in listId)
             {
                 XmlDocument szv2 = Szv2Xml.GetXml(listID, connectionStr);
                 long[] docsID = Docs.GetDocsID(listID, connectionStr);
@@ -176,9 +176,9 @@ namespace Pers_uchet_org
         /// <param name="diskTable">Таблица</param>
         /// <returns></returns>
         public static CompoundFile MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml,
-                                        IEnumerable<XmlDocument> szv2XmlArray,
-                                        IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
-                                        byte[] diskKey, byte[] diskTable)
+            IEnumerable<XmlDocument> szv2XmlArray,
+            IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
+            byte[] diskKey, byte[] diskTable)
         {
             XmlElement rootMap = mapXml[MapXml.tagTopics];
             XmlElement svodRootMap = rootMap[MapXml.tagSvod];
@@ -216,7 +216,6 @@ namespace Pers_uchet_org
                     CFStream docStream = AddStream(curDir, szv1Xml, diskKey, diskTable);
                     curDoc[MapXml.tagFilename].InnerText = docStream.Name;
                 }
-
             }
 
 
@@ -232,10 +231,10 @@ namespace Pers_uchet_org
             CFStream szv3StyleStream = styleDir.AddStream("svod_style");
             CFStream szv2StyleStream = styleDir.AddStream("szv_opis_style");
 
-            SetDataToStream(mapStyleStream, System.IO.File.ReadAllBytes(MapXml.GetXslUrl()), diskKey, diskTable);
-            SetDataToStream(szv1StyleStream, System.IO.File.ReadAllBytes(Szv1Xml.GetXslUrl()), diskKey, diskTable);
-            SetDataToStream(szv3StyleStream, System.IO.File.ReadAllBytes(Szv3Xml.GetXslUrl()), diskKey, diskTable);
-            SetDataToStream(szv2StyleStream, System.IO.File.ReadAllBytes(Szv2Xml.GetXslUrl()), diskKey, diskTable);
+            SetDataToStream(mapStyleStream, File.ReadAllBytes(MapXml.GetXslUrl()), diskKey, diskTable);
+            SetDataToStream(szv1StyleStream, File.ReadAllBytes(Szv1Xml.GetXslUrl()), diskKey, diskTable);
+            SetDataToStream(szv3StyleStream, File.ReadAllBytes(Szv3Xml.GetXslUrl()), diskKey, diskTable);
+            SetDataToStream(szv2StyleStream, File.ReadAllBytes(Szv2Xml.GetXslUrl()), diskKey, diskTable);
             return container;
         }
 
@@ -249,12 +248,12 @@ namespace Pers_uchet_org
         /// <param name="szv1XmlArray">Массив файлов XML</param>
         /// <returns></returns>
         public static bool ExportXml(string path, OrgPropXml orgProperty, XmlDocument szv3Xml,
-                                        IEnumerable<XmlDocument> szv2XmlArray,
-                                        IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
+            IEnumerable<XmlDocument> szv2XmlArray,
+            IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
         {
             if (szv2XmlArray.Count() != szv1XmlArray.Count())
                 return false;
-            string rootDirStr = string.Format(@"{0}\{1}\{2}", path, orgProperty.orgRegnum, orgProperty.repeyar);
+            string rootDirStr = string.Format(@"{0}\{1}\{2}", path, orgProperty.orgRegnum, orgProperty.repYear);
             DirectoryInfo rootDir = Directory.CreateDirectory(rootDirStr);
             szv3Xml.PreserveWhitespace = true;
             szv3Xml.Save(rootDir.FullName + @"\сводная.xml");
@@ -265,7 +264,8 @@ namespace Pers_uchet_org
                 XmlDocument szv2Xml = szv2XmlArray.ElementAt(i);
                 szv2Xml.PreserveWhitespace = true;
                 szv2Xml.Save(string.Format(@"{0}\z_опись_{1:000}.xml", rootDir.FullName, i + 1));
-                DirectoryInfo packetDir = Directory.CreateDirectory(string.Format(@"{0}\Пакет_Z{1:000}", rootDir.FullName, i + 1));
+                DirectoryInfo packetDir =
+                    Directory.CreateDirectory(string.Format(@"{0}\Пакет_Z{1:000}", rootDir.FullName, i + 1));
 
                 for (int j = 0; j < szv1XmlNodeArr.Count(); j++)
                 {
@@ -287,16 +287,16 @@ namespace Pers_uchet_org
         /// <param name="szv1XmlArray">Выходной параметр</param>
         /// <returns></returns>
         public static bool ImportXml(string path, OrgPropXml orgProperty,
-                                        out XmlDocument szv3Xml,
-                                        out IEnumerable<XmlDocument> szv2XmlArray,
-                                        out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
-                                        StreamWriter writer)
+            out XmlDocument szv3Xml,
+            out IEnumerable<XmlDocument> szv2XmlArray,
+            out IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
+            StreamWriter writer)
         {
             szv3Xml = null;
             szv2XmlArray = null;
             szv1XmlArray = null;
             string rootDirStr = Path.Combine(path, orgProperty.orgRegnum);
-            rootDirStr = Path.Combine(rootDirStr, orgProperty.repeyar);
+            rootDirStr = Path.Combine(rootDirStr, orgProperty.repYear);
             // если в корневой директории (папке) нет подпапки с Рег номером организации, 
             // в которой в свою очередь нет папки с отчетным годом (RepYear),
             // то процесс импорта невозможен
@@ -399,6 +399,7 @@ namespace Pers_uchet_org
                 for (int j = 0; j < szv1FilesArr[i].Length; j++)
                 {
                     #region COM Validate XML
+
                     //string xmlText = File.ReadAllText(szv1FilesArr[i][j].FullName);
                     //try
                     //{
@@ -428,6 +429,7 @@ namespace Pers_uchet_org
                     //    // an exception happened.
                     //    Console.WriteLine(e.Message);
                     //}
+
                     #endregion
 
                     XmlDocument szv1Xml = XmlData.ReadXml(szv1FilesArr[i][j].FullName);
@@ -473,7 +475,7 @@ namespace Pers_uchet_org
         /// <returns></returns>
         public static CFStream GetFileStream(CompoundFile file, string streamPath)
         {
-            string[] path = streamPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] path = streamPath.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
             CFStorage curDir = file.RootStorage;
             for (int i = 0; i < path.Length - 1; i++)
             {
@@ -521,55 +523,56 @@ namespace Pers_uchet_org
             //
             return resHTML;
         }
+
         #endregion
     }
 
-    class CFProperties
+    internal class CfProperties
     {
         [Flags]
-        public enum STGM : int
+        public enum Stgm : int
         {
-            DIRECT = 0x00000000,
-            TRANSACTED = 0x00010000,
-            SIMPLE = 0x08000000,
-            READ = 0x00000000,
-            WRITE = 0x00000001,
-            READWRITE = 0x00000002,
-            SHARE_DENY_NONE = 0x00000040,
-            SHARE_DENY_READ = 0x00000030,
-            SHARE_DENY_WRITE = 0x00000020,
-            SHARE_EXCLUSIVE = 0x00000010,
-            PRIORITY = 0x00040000,
-            DELETEONRELEASE = 0x04000000,
-            NOSCRATCH = 0x00100000,
-            CREATE = 0x00001000,
-            CONVERT = 0x00020000,
-            FAILIFTHERE = 0x00000000,
-            NOSNAPSHOT = 0x00200000,
-            DIRECT_SWMR = 0x00400000,
+            Direct = 0x00000000,
+            Transacted = 0x00010000,
+            Simple = 0x08000000,
+            Read = 0x00000000,
+            Write = 0x00000001,
+            ReadWrite = 0x00000002,
+            ShareDenyNone = 0x00000040,
+            ShareDenyRead = 0x00000030,
+            ShareDenyWrite = 0x00000020,
+            ShareExclusive = 0x00000010,
+            Priority = 0x00040000,
+            DeleteOnRelease = 0x04000000,
+            NoScratch = 0x00100000,
+            Create = 0x00001000,
+            Convert = 0x00020000,
+            FailIfThere = 0x00000000,
+            NoSnapshot = 0x00200000,
+            DirectSwmr = 0x00400000,
         }
 
-        enum ulKind : uint
-        {
-            PRSPEC_LPWSTR = 0,
-            PRSPEC_PROPID = 1
-        }
+        //enum ulKind : uint
+        //{
+        //    PrspecLpwstr = 0,
+        //    PrspecPropid = 1
+        //}
 
-        enum CustomInfoProperty : uint
-        {
-            PIDCI_Organization_Regid = 0x00000002,
-            PIDCI_Organization_Name = 0x00000003,
-            PIDCI_Report_Year = 0x00000004,
-            PIDCI_Director_Type = 0x00000005,
-            PIDCI_Director_FIO = 0x00000006,
-            PIDCI_Bookkeeper_FIO = 0x00000007,
-            PIDCI_Performer = 0x00000008,
-            PIDCI_Operator_Name = 0x00000009,
-            PIDCI_Date_of_Construction = 0x0000000A,
-            PIDCI_Version = 0x0000000B,
-            PIDCI_ProgramName = 0x0000000C,
-            PIDCI_ProgramVersion = 0x0000000D
-        }
+        //enum CustomInfoProperty : uint
+        //{
+        //    PIDCI_Organization_Regid = 0x00000002,
+        //    PIDCI_Organization_Name = 0x00000003,
+        //    PIDCI_Report_Year = 0x00000004,
+        //    PIDCI_Director_Type = 0x00000005,
+        //    PIDCI_Director_FIO = 0x00000006,
+        //    PIDCI_Bookkeeper_FIO = 0x00000007,
+        //    PIDCI_Performer = 0x00000008,
+        //    PIDCI_Operator_Name = 0x00000009,
+        //    PIDCI_Date_of_Construction = 0x0000000A,
+        //    PIDCI_Version = 0x0000000B,
+        //    PIDCI_ProgramName = 0x0000000C,
+        //    PIDCI_ProgramVersion = 0x0000000D
+        //}
 
         public enum VARTYPE : short
         {
@@ -639,16 +642,16 @@ namespace Pers_uchet_org
         }
 
         [DllImport("ole32.dll")]
-        static extern int StgOpenStorage(
-        [MarshalAs(UnmanagedType.LPWStr)]string pwcsName, IStorage pstgPriority,
-        int grfMode, IntPtr snbExclude, uint reserved, out IStorage ppstgOpen);
+        private static extern int StgOpenStorage(
+            [MarshalAs(UnmanagedType.LPWStr)] string pwcsName, IStorage pstgPriority,
+            int grfMode, IntPtr snbExclude, uint reserved, out IStorage ppstgOpen);
 
         [DllImport("ole32.dll")]
-        static extern int StgCreatePropSetStg(IStorage pStorage, uint reserved,
-        out IPropertySetStorage ppPropSetStg);
+        private static extern int StgCreatePropSetStg(IStorage pStorage, uint reserved,
+            out IPropertySetStorage ppPropSetStg);
 
         [DllImport("ole32.dll")]
-        private extern static int PropVariantClear(ref PROPVARIANT pvar);
+        private static extern int PropVariantClear(ref PROPVARIANT pvar);
 
         [ComImport]
         [Guid("00000138-0000-0000-C000-000000000046")]
@@ -657,30 +660,36 @@ namespace Pers_uchet_org
         {
             [PreserveSig]
             int ReadMultiple(uint cpspec,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertySpec[] rgpspec,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [Out] PropertyVariant[] rgpropvar);
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertySpec[] rgpspec,
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [Out] PropertyVariant[] rgpropvar);
 
             [PreserveSig]
             void WriteMultiple(uint cpspec,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertySpec[] rgpspec,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertyVariant[] rgpropvar,
-            uint propidNameFirst);
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertySpec[] rgpspec,
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertyVariant[] rgpropvar,
+                uint propidNameFirst);
 
             [PreserveSig]
             uint DeleteMultiple(uint cpspec,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertySpec[] rgpspec);
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] PropertySpec[] rgpspec);
+
             [PreserveSig]
             uint ReadPropertyNames(uint cpropid,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] uint[] rgpropid,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPWStr, SizeParamIndex = 0)] [Out] string[] rglpwstrName);
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] [In] uint[] rgpropid,
+                [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPWStr, SizeParamIndex = 0)] [Out] string[] rglpwstrName);
+
             [PreserveSig]
             uint NotDeclared1();
+
             [PreserveSig]
             uint NotDeclared2();
+
             [PreserveSig]
             uint Commit(uint grfCommitFlags);
+
             [PreserveSig]
             uint NotDeclared3();
+
             [PreserveSig]
             uint Enum(out IEnumSTATPROPSTG ppenum);
         }
@@ -692,10 +701,13 @@ namespace Pers_uchet_org
         {
             [PreserveSig]
             uint Create(ref Guid rfmtid, ref Guid pclsid, uint grfFlags, uint grfMode, out IPropertyStorage ppprstg);
+
             [PreserveSig]
-            uint Open(ref Guid rfmtid, STGM grfMode, out IPropertyStorage ppprstg);
+            uint Open(ref Guid rfmtid, Stgm grfMode, out IPropertyStorage ppprstg);
+
             [PreserveSig]
             uint NotDeclared3();
+
             [PreserveSig]
             uint Enum(out IEnumSTATPROPSETSTG ppenum);
         }
@@ -785,10 +797,11 @@ namespace Pers_uchet_org
             }
         }
 
-        static public void AddProperty(string path, OrgPropXml properties)
+        public static void AddProperty(string path, OrgPropXml properties)
         {
             IStorage Is;
-            if (StgOpenStorage(path, null, (int)(STGM.SHARE_EXCLUSIVE | STGM.READWRITE), IntPtr.Zero, 0, out Is) == 0 && Is != null)
+            if (StgOpenStorage(path, null, (int)(Stgm.ShareExclusive | Stgm.ReadWrite), IntPtr.Zero, 0, out Is) == 0 &&
+                Is != null)
             {
                 IPropertySetStorage pss;
                 if (StgCreatePropSetStg(Is, 0, out pss) == 0)
@@ -796,7 +809,8 @@ namespace Pers_uchet_org
                     var FMTID_CustomInformation = new Guid("{D170DF2E-1117-11D2-AA01-00805FFE11B8}");
                     var pCLSID = new Guid("{00000000-0000-0000-0000-000000000000}");
                     IPropertyStorage ps;
-                    pss.Create(ref FMTID_CustomInformation, ref pCLSID, (uint)grfFlags.PROPSETFLAG_DEFAULT, (uint)(STGM.SHARE_EXCLUSIVE | STGM.READWRITE), out ps);
+                    pss.Create(ref FMTID_CustomInformation, ref pCLSID, (uint)grfFlags.PROPSETFLAG_DEFAULT,
+                        (uint)(Stgm.ShareExclusive | Stgm.ReadWrite), out ps);
 
                     if (ps == null)
                     {
@@ -821,7 +835,7 @@ namespace Pers_uchet_org
 
                     propVariant[0] = CreatePropertyValue(properties.orgRegnum);
                     propVariant[1] = CreatePropertyValue(properties.orgName);
-                    propVariant[2] = CreatePropertyValue(properties.repeyar);
+                    propVariant[2] = CreatePropertyValue(properties.repYear);
                     propVariant[3] = CreatePropertyValue(properties.directorType);
                     propVariant[4] = CreatePropertyValue(properties.directorFIO);
                     propVariant[5] = CreatePropertyValue(properties.bookkeeperFIO);
@@ -837,7 +851,6 @@ namespace Pers_uchet_org
 
                     ReleaseProperties(propSpec, propVariant);
                     Marshal.FinalReleaseComObject(pss);
-                    pss = null;
                 }
                 else
                 {
@@ -845,7 +858,6 @@ namespace Pers_uchet_org
                 }
 
                 Marshal.FinalReleaseComObject(Is);
-                Is = null;
             }
             else
             {
@@ -855,20 +867,21 @@ namespace Pers_uchet_org
             GC.Collect();
         }
 
-        static public OrgPropXml ReadProperty(string path)
+        public static OrgPropXml ReadProperty(string path)
         {
             IStorage Is;
             OrgPropXml properties = null;
-            if (StgOpenStorage(path, null, (int)(STGM.SHARE_EXCLUSIVE | STGM.READWRITE), IntPtr.Zero, 0, out Is) == 0 && Is != null)
+            if (StgOpenStorage(path, null, (int)(Stgm.ShareExclusive | Stgm.ReadWrite), IntPtr.Zero, 0, out Is) == 0 &&
+                Is != null)
             {
                 IPropertySetStorage pss;
                 if (StgCreatePropSetStg(Is, 0, out pss) == 0)
                 {
                     var FMTID_CustomInformation = new Guid("{D170DF2E-1117-11D2-AA01-00805FFE11B8}");
-                    var pCLSID = new Guid("{00000000-0000-0000-0000-000000000000}");
+                    //var pCLSID = new Guid("{00000000-0000-0000-0000-000000000000}");
                     IPropertyStorage ps;
                     UInt32 propCount = 12;
-                    pss.Open(ref FMTID_CustomInformation, (STGM.SHARE_EXCLUSIVE | STGM.READ), out ps);
+                    pss.Open(ref FMTID_CustomInformation, (Stgm.ShareExclusive | Stgm.Read), out ps);
                     if (ps != null)
                     {
                         PropertySpec[] propSpec = new PropertySpec[propCount];
@@ -887,29 +900,27 @@ namespace Pers_uchet_org
                         propSpec[10] = CreateProperty(OrgPropXml.tagProgramName);
                         propSpec[11] = CreateProperty(OrgPropXml.tagProgramVersion);
 
-                        int res = ps.ReadMultiple(propCount, propSpec, propVariant);
+                        ps.ReadMultiple(propCount, propSpec, propVariant);
 
                         properties = new OrgPropXml();
 
                         properties.orgRegnum = GetString(propVariant[0].unionmember.pszVal);
                         properties.orgName = GetString(propVariant[1].unionmember.pszVal);
-                        properties.repeyar = GetString(propVariant[2].unionmember.pszVal);
+                        properties.repYear = GetString(propVariant[2].unionmember.pszVal);
                         properties.directorType = GetString(propVariant[3].unionmember.pszVal);
                         properties.directorFIO = GetString(propVariant[4].unionmember.pszVal);
                         properties.bookkeeperFIO = GetString(propVariant[5].unionmember.pszVal);
                         properties.performer = GetString(propVariant[6].unionmember.pszVal);
                         properties.operatorName = GetString(propVariant[7].unionmember.pszVal);
                         properties.date = DateTime.ParseExact(GetString(propVariant[8].unionmember.pszVal),
-                                                                "dd.MM.yyyy H:mm:ss",
-                                                                System.Globalization.CultureInfo.InvariantCulture);
+                            "dd.MM.yyyy H:mm:ss",
+                            CultureInfo.InvariantCulture);
                         properties.version = GetString(propVariant[9].unionmember.pszVal);
                         properties.programName = GetString(propVariant[10].unionmember.pszVal);
                         properties.programVersion = GetString(propVariant[11].unionmember.pszVal);
 
 
-
                         Marshal.FinalReleaseComObject(ps);
-                        ps = null;
                     }
                     else
                     {
@@ -917,7 +928,6 @@ namespace Pers_uchet_org
                     }
 
                     Marshal.FinalReleaseComObject(pss);
-                    pss = null;
                 }
                 else
                 {
@@ -925,7 +935,6 @@ namespace Pers_uchet_org
                 }
 
                 Marshal.FinalReleaseComObject(Is);
-                Is = null;
             }
             else
             {

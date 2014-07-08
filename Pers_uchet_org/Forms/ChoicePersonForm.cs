@@ -1,36 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class ChoicePersonForm : Form
     {
-
-
         #region Поля
+
         // строка подключения к БД
-        string _connection;
+        private string _connection;
         // текущая организация
         private Org _org;
         // текущий отчетный год
-        private int RepYear;
+        private int _repYear;
         // идентификатор текущего пакета
         private long _listId;
         // таблица
-        DataTable _personTable;
+        private DataTable _personTable;
         // биндинг сорс для таблицы
-        BindingSource _personBS;
+        private BindingSource _personBS;
         // адаптер для чтения данных из БД
-        SQLiteDataAdapter _personAdapter;
+        private SQLiteDataAdapter _personAdapter;
         //переменнная содержит тип документа
-        long flag = 0;
+        private long _flag;
+
         #endregion
 
         public ChoicePersonForm()
@@ -38,13 +34,13 @@ namespace Pers_uchet_org
             InitializeComponent();
         }
 
-        public ChoicePersonForm(Org _org, int RepYear, long listId, string _connection)
+        public ChoicePersonForm(Org org, int repYear, long listId, string connection)
             : this()
         {
-            this._org = _org;
-            this.RepYear = RepYear;
-            this._connection = _connection;
-            this._listId = listId;
+            _org = org;
+            _repYear = repYear;
+            _connection = connection;
+            _listId = listId;
         }
 
         private void ChoicePersonForm_Load(object sender, EventArgs e)
@@ -65,7 +61,7 @@ namespace Pers_uchet_org
                 this.personView.DataSource = _personBS;
 
                 // инициализация Адаптера для считывания персон из БД
-                string commandStr = PersonView2.GetSelectText(_org.idVal, RepYear);
+                string commandStr = PersonView2.GetSelectText(_org.idVal, _repYear);
                 _personAdapter = new SQLiteDataAdapter(commandStr, _connection);
                 // запосление таблицы данными с БД
                 _personAdapter.Fill(_personTable);
@@ -101,31 +97,34 @@ namespace Pers_uchet_org
 
                     radioButton4.Checked = true;
                 }
-                else
-                    if (countPensDocsInList == 0 && countOtherDocsInList > 0)
-                    {
-                        radioButton1.Enabled = true;
-                        radioButton2.Enabled = true;
-                        radioButton3.Enabled = true;
-                        radioButton4.Enabled = false;
+                else if (countPensDocsInList == 0 && countOtherDocsInList > 0)
+                {
+                    radioButton1.Enabled = true;
+                    radioButton2.Enabled = true;
+                    radioButton3.Enabled = true;
+                    radioButton4.Enabled = false;
 
-                        radioButton1.Checked = true;
-                    }
-                    else if (countPensDocsInList > 0 && countOtherDocsInList > 0)
-                    {
-                        radioButton1.Enabled = false;
-                        radioButton2.Enabled = false;
-                        radioButton3.Enabled = false;
-                        radioButton4.Enabled = false;
+                    radioButton1.Checked = true;
+                }
+                else if (countPensDocsInList > 0 && countOtherDocsInList > 0)
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
 
-                        //radioButton1.Checked = true;
-                    }
+                    //radioButton1.Checked = true;
+                }
 
                 ToolTip toolTip1 = new ToolTip();
-                toolTip1.SetToolTip(radioButton1,"Создается для застрахованного лица, на которое данные еще не передавались в фонд");
-                toolTip1.SetToolTip(radioButton2, "Создается для застрахованного лица, если данные уже сданы в фонд и требуют корректировки");
-                toolTip1.SetToolTip(radioButton3, "Создается для застрахованного лица, если данные уже сданы в фонд и их необходимо отменить (удалить)");
-                toolTip1.SetToolTip(radioButton4, "Документы этого типа должны находиться в отдельном пакете и сдаются в бумажном виде");
+                toolTip1.SetToolTip(radioButton1,
+                    "Создается для застрахованного лица, на которое данные еще не передавались в фонд");
+                toolTip1.SetToolTip(radioButton2,
+                    "Создается для застрахованного лица, если данные уже сданы в фонд и требуют корректировки");
+                toolTip1.SetToolTip(radioButton3,
+                    "Создается для застрахованного лица, если данные уже сданы в фонд и их необходимо отменить (удалить)");
+                toolTip1.SetToolTip(radioButton4,
+                    "Документы этого типа должны находиться в отдельном пакете и сдаются в бумажном виде");
             }
             catch (Exception ex)
             {
@@ -134,18 +133,13 @@ namespace Pers_uchet_org
             }
         }
 
-        void _personBS_ListChanged(object sender, ListChangedEventArgs e)
+        private void _personBS_ListChanged(object sender, ListChangedEventArgs e)
         {
             this.countBox.Text = _personBS.Count.ToString();
-            if (_personBS.Count < 1)
-                choiceButton.Enabled = false;
-            else
-            {
-                choiceButton.Enabled = true;
-            }
+            choiceButton.Enabled = _personBS.Count >= 1;
         }
 
-        void _personBS_CurrentChanged(object sender, EventArgs e)
+        private void _personBS_CurrentChanged(object sender, EventArgs e)
         {
         }
 
@@ -159,7 +153,7 @@ namespace Pers_uchet_org
             _personBS.Filter = "";
 
             // инициализация Адаптера для считывания персон из БД
-            string commandStr = PersonView2.GetSelectText(_org.idVal, RepYear);
+            string commandStr = PersonView2.GetSelectText(_org.idVal, _repYear);
             _personAdapter = new SQLiteDataAdapter(commandStr, _connection);
             // запосление таблицы данными с БД
             _personAdapter.Fill(_personTable);
@@ -179,7 +173,7 @@ namespace Pers_uchet_org
             _personBS.Filter = "";
 
             // инициализация Адаптера для считывания персон из БД
-            string commandStr = PersonView2.GetSelectRawPersonsText(_org.idVal, RepYear);
+            string commandStr = PersonView2.GetSelectRawPersonsText(_org.idVal, _repYear);
             _personAdapter = new SQLiteDataAdapter(commandStr, _connection);
             // запосление таблицы данными с БД
             _personAdapter.Fill(_personTable);
@@ -213,19 +207,19 @@ namespace Pers_uchet_org
                 switch (current.Name)
                 {
                     case "radioButton1":
-                        flag = DocTypes.InitialFormId;
+                        _flag = DocTypes.InitialFormId;
                         break;
                     case "radioButton2":
-                        flag = DocTypes.CorrectionFormId;
+                        _flag = DocTypes.CorrectionFormId;
                         break;
                     case "radioButton3":
-                        flag = DocTypes.CancelingFormId;
+                        _flag = DocTypes.CancelingFormId;
                         break;
                     case "radioButton4":
-                        flag = DocTypes.GrantingPensionId;
+                        _flag = DocTypes.GrantingPensionId;
                         break;
                     default:
-                        flag = 0;
+                        _flag = 0;
                         break;
                 }
         }
@@ -240,25 +234,30 @@ namespace Pers_uchet_org
                 return;
             }
 
-            if (flag == 0)
+            if (_flag == 0)
             {
-                MainForm.ShowInfoFlexMessage("В текущем пакете содержаться формы разных типов!\nДокументы типа \"Назначение пенсии\" должны находится в отдельном пакете!", "Ошибка выбора анкеты");
+                MainForm.ShowInfoFlexMessage(
+                    "В текущем пакете содержаться формы разных типов!\nДокументы типа \"Назначение пенсии\" должны находится в отдельном пакете!",
+                    "Ошибка выбора анкеты");
                 return;
             }
             SQLiteConnection connection = new SQLiteConnection(_connection);
             if (connection.State != ConnectionState.Open)
                 connection.Open();
-            long countDocsForPerson = Docs.CountDocsByYear(RepYear, (long)row[PersonView2.id], connection);
+            long countDocsForPerson = Docs.CountDocsByYear(_repYear, (long)row[PersonView2.id], connection);
             connection.Close();
 
             if (countDocsForPerson > 0)
             {
-                if (MainForm.ShowQuestionFlexMessage("За выбранный отчетный год уже имеются сведения\nо стаже и заработке по застрахованному лицу.\n\nВы действительно желаете ввести еще один документ?", "Ошибка выбора анкеты") == DialogResult.No)
+                if (
+                    MainForm.ShowQuestionFlexMessage(
+                        "За выбранный отчетный год уже имеются сведения\nо стаже и заработке по застрахованному лицу.\n\nВы действительно желаете ввести еще один документ?",
+                        "Ошибка выбора анкеты") == DialogResult.No)
                     return;
             }
 
             StajDohodForm.PersonId = (long)row[PersonView2.id];
-            StajDohodForm.FlagDoc = flag;
+            StajDohodForm.FlagDoc = _flag;
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
@@ -277,6 +276,5 @@ namespace Pers_uchet_org
                     choiceButton_Click(sender, new EventArgs());
             }
         }
-
     }
 }

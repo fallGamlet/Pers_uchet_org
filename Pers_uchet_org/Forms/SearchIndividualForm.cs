@@ -1,32 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class SearchIndividualForm : Form
     {
         #region Поля
+
         // строка подключения к БД
-        string _connection;
+        private string _connection;
         // таблицы, для хранения данных
-        DataTable _personTable;
-        DataTable _orgTable;
+        private DataTable _personTable;
+        private DataTable _orgTable;
         // контроллеры
-        BindingSource _personBS;
-        BindingSource _orgBS;
+        private BindingSource _personBS;
+        private BindingSource _orgBS;
         // адаптеры
-        SQLiteDataAdapter _personAdapter;
-        SQLiteDataAdapter _orgAdapter;
+        private SQLiteDataAdapter _personAdapter;
+        private SQLiteDataAdapter _orgAdapter;
+
         #endregion
 
         #region Конструктор и инициализатор
+
         public SearchIndividualForm(string connectionStr)
         {
             InitializeComponent();
@@ -45,11 +43,11 @@ namespace Pers_uchet_org
             _orgBS = new BindingSource();
             _orgBS.DataSource = _orgTable;
 
-            this.personView.AutoGenerateColumns = false;
-            this.personView.DataSource = _personBS;
+            personView.AutoGenerateColumns = false;
+            personView.DataSource = _personBS;
 
-            this.orgView.AutoGenerateColumns = false;
-            this.orgView.DataSource = _orgBS;
+            orgView.AutoGenerateColumns = false;
+            orgView.DataSource = _orgBS;
 
             _personAdapter = new SQLiteDataAdapter("", _connection);
             _orgAdapter = new SQLiteDataAdapter("", _connection);
@@ -58,17 +56,17 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - обработчики событий
+
         private void searchButton_Click(object sender, EventArgs e)
         {
-            string socnum, fname, mname, lname;
             // получить скорректированный номер соц. страхования
-            socnum = PersonInfo.CorrectSocnumberRusToEn(this.socnumBox.Text.Trim());
+            string socnum = PersonInfo.CorrectSocnumberRusToEn(socnumBox.Text.Trim().ToUpper());
             // получить имя
-            fname = this.fnameBox.Text.Trim();
+            string fname = fnameBox.Text.Trim();
             // получить отчество
-            mname = this.mnameBox.Text.Trim();
+            string mname = mnameBox.Text.Trim();
             // получить фамилию
-            lname = this.lnameBox.Text.Trim();
+            string lname = lnameBox.Text.Trim();
 
             if ((socnum.Length + fname.Length + mname.Length + lname.Length) == 0)
             {
@@ -77,20 +75,22 @@ namespace Pers_uchet_org
             }
             _personAdapter.SelectCommand.CommandText = PersonShortView.GetSelectText(socnum, fname, mname, lname);
             _personTable.Rows.Clear();
+            _orgTable.Rows.Clear();
             _personAdapter.Fill(_personTable);
         }
 
-        void _personBS_CurrentChanged(object sender, EventArgs e)
+        private void _personBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView curPerson = _personBS.Current as DataRowView;
             if (curPerson == null)
             {
                 return;
             }
-            _orgAdapter.SelectCommand.CommandText = Org.GetSelectByPersonText((long)curPerson[PersonShortView.id]);
+            _orgAdapter.SelectCommand.CommandText = Org.GetSelectByPersonText((long) curPerson[PersonShortView.id]);
             _orgTable.Rows.Clear();
             _orgAdapter.Fill(_orgTable);
         }
+
         #endregion
     }
 }

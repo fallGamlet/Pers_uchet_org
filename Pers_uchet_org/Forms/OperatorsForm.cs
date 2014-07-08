@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class OperatorsForm : Form
     {
@@ -28,68 +23,71 @@ namespace Pers_uchet_org
          */
 
         #region Поля
+
         // строка подключения к БД
-        string _connectionStr;
+        private string _connectionStr;
 
         // Адаптеры
-        SQLiteDataAdapter _orgAdapter;
-        SQLiteDataAdapter _operatorAdapter;
-        SQLiteDataAdapter _operatororgAdapter;
+        private SQLiteDataAdapter _orgAdapter;
+        private SQLiteDataAdapter _operatorAdapter;
+        private SQLiteDataAdapter _operatororgAdapter;
 
         // Таблицы с данными
-        DataTable _operatorTable;
-        DataTable _orgTable;
-        DataTable _operOrgTable;
+        private DataTable _operatorTable;
+        private DataTable _orgTable;
+        private DataTable _operOrgTable;
 
         // чисто виртуальная таблица, без соответствия в БД (введена для удобства)
-        DataTable _accessTable;
+        private DataTable _accessTable;
 
         // контролеры для источников данных (таблиц)
-        BindingSource _operatorBS;
-        BindingSource _orgBS;
-        BindingSource _operOrgBS;
+        private BindingSource _operatorBS;
+        private BindingSource _orgBS;
+        private BindingSource _operOrgBS;
 
-        BindingSource _anketaAccessBS;
-        BindingSource _paystajAccessBS;
+        private BindingSource _anketaAccessBS;
+        private BindingSource _paystajAccessBS;
 
         // названия столбцов для удобства использования
-        const string CHECK = "check";
-        const string aNumber = "access_number";
-        const string aName = "access_name";
+        private const string Check = "check";
+        private const string ANumber = "access_number";
+        private const string AName = "access_name";
 
         // количество цифр в коде приввелегии (расшифровка кода сверху в комментариях)
-        const int codeLength = 6;
-        string adminCode;
-        string emptyCode;
+        private const int CodeLength = 6;
+        private string _adminCode;
+        private string _emptyCode;
+
         #endregion
 
         #region Конструктор и инициализатор
+
         public OperatorsForm(string connection)
         {
             InitializeComponent();
             _connectionStr = connection;
 
-            adminCode = OperatorOrg.GetPrivilegeForAdmin();//"212111";
-            emptyCode = new string('0', codeLength);
+            _adminCode = OperatorOrg.GetPrivilegeForAdmin(); //"212111";
+            _emptyCode = new string('0', CodeLength);
 
             // создание объектов таблиц
             _operatorTable = Operator.CreateTable();
 
             _orgTable = Org.CreateTable();
             // добавление виртуального столбца, для возможности отмечать
-            _orgTable.Columns.Add(CHECK, typeof(bool));
-            _orgTable.Columns[CHECK].DefaultValue = false;
+            _orgTable.Columns.Add(Check, typeof(bool));
+            _orgTable.Columns[Check].DefaultValue = false;
 
             _operOrgTable = OperatorOrg.CreateTable();
             // добавление виртуального столбца, для возможности отмечать
-            _operOrgTable.Columns.Add(CHECK, typeof(bool));
-            _operOrgTable.Columns[CHECK].DefaultValue = false;
+            _operOrgTable.Columns.Add(Check, typeof(bool));
+            _operOrgTable.Columns[Check].DefaultValue = false;
 
             // создание виртуальной таблицы для хранения уровня
             _accessTable = new DataTable();
             // добавление необходимых столбцов
-            _accessTable.Columns.Add(aNumber, typeof(int));
-            _accessTable.Columns.Add(aName, typeof(string));
+            _accessTable.Columns.Add(ANumber, typeof(int));
+            _accessTable.Columns.Add(AName, typeof(string));
             // заполнение данными виртуальной таблицы привелегий
             DataRow row;
             //row = _accessTable.NewRow();
@@ -99,14 +97,14 @@ namespace Pers_uchet_org
             //_accessTable.Rows.Add(row);
 
             row = _accessTable.NewRow();
-            row[aNumber] = 1;
-            row[aName] = "Только чтение";
+            row[ANumber] = 1;
+            row[AName] = "Только чтение";
             row.EndEdit();
             _accessTable.Rows.Add(row);
 
             row = _accessTable.NewRow();
-            row[aNumber] = 2;
-            row[aName] = "Полный доступ";
+            row[ANumber] = 2;
+            row[AName] = "Полный доступ";
             row.EndEdit();
             _accessTable.Rows.Add(row);
 
@@ -142,13 +140,13 @@ namespace Pers_uchet_org
             // добавить записи пересечений операторов и организаций для указания привелегий, если по каким-то причином они не созданы
             foreach (DataRowView itemRow in _operatorBS)
             {
-                this.addRelationsIfNeed(itemRow, _orgBS, _operOrgBS);
+                AddRelationsIfNeed(itemRow, _orgBS, _operOrgBS);
             }
 
             // Устанавливаем поле CHECK в значение true если код не пустой и наоборот
             foreach (DataRow itemRow in _operOrgTable.Rows)
             {
-                itemRow[CHECK] = (itemRow[OperatorOrg.code] as string).Replace("0", "").Length > 0;
+                itemRow[Check] = (itemRow[OperatorOrg.code] as string).Replace("0", "").Length > 0;
                 itemRow.EndEdit();
             }
 
@@ -158,16 +156,16 @@ namespace Pers_uchet_org
 
             // привязка контроллеров к вьюшкам
             // привязка к выпадающему списку операторов 
-            this.operatorBox.DataSource = _operatorBS;
-            this.operatorBox.DisplayMember = Operator.name;
+            operatorBox.DataSource = _operatorBS;
+            operatorBox.DisplayMember = Operator.name;
             // привязка к таблице органазаций
-            this.orgView.AutoGenerateColumns = false;
-            this.orgView.DataSource = _orgBS;
+            orgView.AutoGenerateColumns = false;
+            orgView.DataSource = _orgBS;
             // привязка к выпадающим спискам уровня доступа
-            this.anketaAccessLevelBox.DataSource = _anketaAccessBS;
-            this.anketaAccessLevelBox.DisplayMember = aName;
-            this.payStajAccessLevelBox.DataSource = _paystajAccessBS;
-            this.payStajAccessLevelBox.DisplayMember = aName;
+            anketaAccessLevelBox.DataSource = _anketaAccessBS;
+            anketaAccessLevelBox.DisplayMember = AName;
+            payStajAccessLevelBox.DataSource = _paystajAccessBS;
+            payStajAccessLevelBox.DisplayMember = AName;
 
             //// выбирается первый оператор
             //_operatorBS.MoveLast();
@@ -177,24 +175,25 @@ namespace Pers_uchet_org
             //anketaaccessCheckBox_CheckedChanged(null, null);
             //paystajaccessCheckBox_CheckedChanged(null, null);
         }
+
         #endregion
 
         #region Методы - свои
+
         /// <summary>
         /// Получить наибольшее абсолютное значение ключевого поля
         /// </summary>
         /// <param name="table">Таблица, в которой будет производиться поиск</param>
         /// <param name="idname">Название ключевого столбца</param>
         /// <returns></returns>
-        long GetMaxID(DataTable table, string idname)
+        private long GetMaxID(DataTable table, string idname)
         {
             long res = -1;
-            long val;
             foreach (DataRow row in table.Rows)
             {
                 if (row.RowState != DataRowState.Deleted)
                 {
-                    val = Math.Abs((long)row[idname]);
+                    long val = Math.Abs((long)row[idname]);
                     if (res < val)
                         res = val;
                 }
@@ -206,20 +205,20 @@ namespace Pers_uchet_org
         /// Получить код превилегий по значениям полей формы (чекбоксов и выпадающих списков)
         /// </summary>
         /// <returns></returns>
-        string GetPrivilegeCode()
+        private string GetPrivilegeCode()
         {
-            char[] res = new char[codeLength];
-            bool b0, b1, b2, b3, b4, b5;
-            int a0, a2;
+            char[] res = new char[CodeLength];
 
-            b0 = this.anketaAccessCheckBox.Checked;
-            b1 = this.anketaPrintCheckBox.Checked;
-            a0 = _anketaAccessBS.Position + 1;
-            b2 = this.payStajAccessCheckBox.Checked;
-            b3 = this.payStajPrintCheckBox.Checked;
-            a2 = _paystajAccessBS.Position + 1;
-            b4 = this.exchangeDataCheckBox.Checked;
-            b5 = this.importAnketaCheckBox.Checked;
+            bool b0 = anketaAccessCheckBox.Checked;
+            //b1 = this.anketaPrintCheckBox.Checked;
+            bool b1 = true;
+            int a0 = _anketaAccessBS.Position + 1;
+            bool b2 = payStajAccessCheckBox.Checked;
+            //b3 = this.payStajPrintCheckBox.Checked;
+            bool b3 = true;
+            int a2 = _paystajAccessBS.Position + 1;
+            bool b4 = exchangeDataCheckBox.Checked;
+            bool b5 = importAnketaCheckBox.Checked;
 
             if (!b0)
             {
@@ -246,34 +245,33 @@ namespace Pers_uchet_org
         /// Установить значения полей в соответствии с указанным кодом превилегии
         /// </summary>
         /// <param name="accessCode">Код превилегии (длина должна быть 6 или более)</param>
-        void setPrivilegeCode(string accessCode)
+        private void SetPrivilegeCode(string accessCode)
         {
             accessCode = accessCode.Trim();
-            if (accessCode.Length < codeLength)
+            if (accessCode.Length < CodeLength)
             {
-                this.anketaAccessCheckBox.Checked = false;
-                this.anketaPrintCheckBox.Checked = false;
+                anketaAccessCheckBox.Checked = false;
+                anketaPrintCheckBox.Checked = false;
                 _anketaAccessBS.Position = 0;
-                this.payStajAccessCheckBox.Checked = false;
-                this.payStajPrintCheckBox.Checked = false;
+                payStajAccessCheckBox.Checked = false;
+                payStajPrintCheckBox.Checked = false;
                 _paystajAccessBS.Position = 0;
-                this.exchangeDataCheckBox.Checked = false;
-                this.importAnketaCheckBox.Checked = false;
+                exchangeDataCheckBox.Checked = false;
+                importAnketaCheckBox.Checked = false;
                 return;
             }
 
-            int a0, a2;
-            a0 = int.Parse(accessCode[0].ToString());
-            a2 = int.Parse(accessCode[2].ToString());
+            int a0 = int.Parse(accessCode[0].ToString());
+            int a2 = int.Parse(accessCode[2].ToString());
 
-            this.anketaAccessCheckBox.Checked = a0 > 0;
+            anketaAccessCheckBox.Checked = a0 > 0;
             _anketaAccessBS.Position = a0 - 1;
-            this.anketaPrintCheckBox.Checked = int.Parse(accessCode[1].ToString()) > 0;
-            this.payStajAccessCheckBox.Checked = a2 > 0;
+            anketaPrintCheckBox.Checked = int.Parse(accessCode[1].ToString()) > 0;
+            payStajAccessCheckBox.Checked = a2 > 0;
             _paystajAccessBS.Position = a2 - 1;
-            this.payStajPrintCheckBox.Checked = int.Parse(accessCode[3].ToString()) > 0;
-            this.exchangeDataCheckBox.Checked = int.Parse(accessCode[4].ToString()) > 0;
-            this.importAnketaCheckBox.Checked = int.Parse(accessCode[5].ToString()) > 0;
+            payStajPrintCheckBox.Checked = int.Parse(accessCode[3].ToString()) > 0;
+            exchangeDataCheckBox.Checked = int.Parse(accessCode[4].ToString()) > 0;
+            importAnketaCheckBox.Checked = int.Parse(accessCode[5].ToString()) > 0;
         }
 
         /// <summary>
@@ -282,12 +280,12 @@ namespace Pers_uchet_org
         /// <param name="operRow">Строка с данными об опрераторе</param>
         /// <param name="orgBS"> Биндинг сорс с привязкой к таблице организацый</param>
         /// <param name="operOrgRelationBS">Биндинг сорс с привязкой к к таблице с данными отношения Операторов и Организаций</param>
-        void addRelationsIfNeed(DataRowView operRow, BindingSource orgBS, BindingSource operOrgRelationBS)
+        private void AddRelationsIfNeed(DataRowView operRow, BindingSource orgBS, BindingSource operOrgRelationBS)
         {
             string oldFilter = operOrgRelationBS.Filter;
             int oldPos = operOrgRelationBS.Position;
             operOrgRelationBS.Filter = string.Format("{0} = {1}", OperatorOrg.operatorID, operRow[Operator.id]);
-            string priveledgeCode = IsAdminCurrent(operRow) ? adminCode : new string('0', codeLength);
+            string priveledgeCode = IsAdminCurrent(operRow) ? _adminCode : new string('0', CodeLength);
             foreach (DataRowView orgRow in orgBS)
                 if (operOrgRelationBS.Find(OperatorOrg.orgID, orgRow[Org.id]) <= -1)
                 {
@@ -308,7 +306,7 @@ namespace Pers_uchet_org
         /// <summary>
         /// Проставить галочки в поле Check для организаций, для указанного оператора
         /// </summary>
-        void SetOrgsChecked(DataRowView operRow)
+        private void SetOrgsChecked(DataRowView operRow)
         {
             string oldFilter = _operOrgBS.Filter;
             int oldPos = _operOrgBS.Position;
@@ -327,7 +325,7 @@ namespace Pers_uchet_org
                 //    row[CHECK] = operOrgRow[CHECK];
                 //    row.EndEdit();
                 //}
-                row[CHECK] = false;
+                row[Check] = false;
                 foreach (DataRowView operatorOrgRow in _operOrgBS)
                 {
                     if (operatorOrgRow[OperatorOrg.orgID].ToString() == row[Org.id].ToString()
@@ -335,8 +333,8 @@ namespace Pers_uchet_org
                     {
                         bool isChecked = false;
                         //isChecked |= (row[OperatorOrg.code] as string).Replace("0", "").Length > 0;
-                        isChecked |= (bool)operatorOrgRow[CHECK];
-                        row[CHECK] = isChecked;
+                        isChecked |= (bool)operatorOrgRow[Check];
+                        row[Check] = isChecked;
                         row.EndEdit();
                     }
                 }
@@ -345,22 +343,22 @@ namespace Pers_uchet_org
             _operOrgBS.Position = oldPos;
         }
 
-        void SetOrgsCheckedAll()
+        private void SetOrgsCheckedAll()
         {
             // проставить галочки рядом с названиями организациями
             foreach (DataRowView row in _orgBS)
             {
-                row[CHECK] = true;
+                row[Check] = true;
             }
             _orgBS.EndEdit();
         }
 
-        void SetOrgsUncheckedAll()
+        private void SetOrgsUncheckedAll()
         {
             // проставить галочки рядом с названиями организациями
             foreach (DataRowView row in _orgBS)
             {
-                row[CHECK] = false;
+                row[Check] = false;
             }
             _orgBS.EndEdit();
         }
@@ -372,7 +370,7 @@ namespace Pers_uchet_org
         /// <param name="newOperatorID">Новый идентификатор оператора</param>
         /// <param name="operRow">Строка записи оператора</param>
         /// <param name="operOrgRelationBS">Биндинг связующей таблицы между оператами и организациями</param>
-        void ChangeOperatorId(long newOperatorID, DataRowView operRow, BindingSource operOrgRelationBS)
+        private void ChangeOperatorId(long newOperatorID, DataRowView operRow, BindingSource operOrgRelationBS)
         {
             int oldPos = operOrgRelationBS.Position;
             string oldFilter = operOrgRelationBS.Filter;
@@ -396,21 +394,21 @@ namespace Pers_uchet_org
         /// <summary>
         /// Записать код привелегии в текущую запись OperOrg
         /// </summary>
-        void OperOrgRowCurrentEndEdit()
+        private void OperOrgRowCurrentEndEdit()
         {
             DataRowView operOrgRow = _operOrgBS.Current as DataRowView;
             // если запись не нулевая , то нужно сохранить изменения
             if (operOrgRow != null)
             {
                 // считывание и получение кода
-                string codeStr = this.GetPrivilegeCode();
+                string codeStr = GetPrivilegeCode();
                 // запись кода
                 operOrgRow[OperatorOrg.code] = codeStr;
                 operOrgRow.EndEdit();
             }
         }
 
-        void SetOperOrgPosition(long orgID, long operId)
+        private void SetOperOrgPosition(long orgID, long operId)
         {
             // установить фильтр по оператору
             _operOrgBS.Filter = string.Format("{0} = {1}", OperatorOrg.operatorID, operId);
@@ -425,27 +423,29 @@ namespace Pers_uchet_org
             if (operOrgRow != null)
                 code = operOrgRow[OperatorOrg.code] as string;
             else // иначе создать код привелегии указывающий об отсутствии доступа
-                code = emptyCode;
+                code = _emptyCode;
             // отобразить код привелегии на форме
-            this.setPrivilegeCode(code);
-            this.accessGroupBox.Enabled = (bool)operOrgRow[CHECK];
+            SetPrivilegeCode(code);
+            accessGroupBox.Enabled = (bool)operOrgRow[Check];
         }
 
-        bool IsAdminCurrent(DataRowView operRow)
+        private bool IsAdminCurrent(DataRowView operRow)
         {
             return (operRow != null && (int)operRow[Operator.candelete] == 0);
         }
+
         #endregion
 
         #region Методы - обработчики событий
-        void _operatorBS_CurrentChanged(object sender, EventArgs e)
+
+        private void _operatorBS_CurrentChanged(object sender, EventArgs e)
         {
             // получение ссылки на текущую запись оператора
             DataRowView operRow = _operatorBS.Current as DataRowView;
             // если запись не выбрана, то выйти из метода
             if (operRow == null)
             {
-                this.orgView.Enabled = false;
+                orgView.Enabled = false;
                 return;
             }
             // получить текущую запись о пересечении выбранного оператора и выбранной организации
@@ -453,11 +453,11 @@ namespace Pers_uchet_org
             // если запись не нулевая и соответствует другому оператору, то нужно сохранить изменения
             if (operOrgRow != null && (long)operOrgRow[OperatorOrg.operatorID] != (long)operRow[Operator.id])
             {
-                this.OperOrgRowCurrentEndEdit();
+                OperOrgRowCurrentEndEdit();
             }
 
             // добавить записи пересечений операторов и организаций для указания привелегий.
-            this.addRelationsIfNeed(operRow, _orgBS, _operOrgBS);
+            AddRelationsIfNeed(operRow, _orgBS, _operOrgBS);
 
             // получить выбранную запись организации
             DataRowView orgRow = _orgBS.Current as DataRowView;
@@ -467,50 +467,50 @@ namespace Pers_uchet_org
                 SetOperOrgPosition((long)orgRow[Org.id], (long)operRow[Operator.id]);
             }
             // проставить галочки рядом с названиями организациями
-            this.SetOrgsChecked(operRow);
+            SetOrgsChecked(operRow);
 
             if (IsAdminCurrent(operRow))
             {
                 //SetOrgsCheckedAll();
                 //this.setPrivilegeCode(adminCode);
-                this.orgView.ReadOnly = true;
-                this.accessGroupBox.Enabled = false;
-                this.removeButton.Enabled = false;
-                this.editButton.Enabled = false;
+                orgView.ReadOnly = true;
+                accessGroupBox.Enabled = false;
+                removeButton.Enabled = false;
+                editButton.Enabled = false;
             }
             else
             {
-                this.orgView.ReadOnly = false;
-                this.regNumColumn.ReadOnly = true;
-                this.orgNameColumn.ReadOnly = true;
-                this.removeButton.Enabled = true;
-                this.editButton.Enabled = true;
+                orgView.ReadOnly = false;
+                regNumColumn.ReadOnly = true;
+                orgNameColumn.ReadOnly = true;
+                removeButton.Enabled = true;
+                editButton.Enabled = true;
             }
         }
 
-        void _orgBS_CurrentChanged(object sender, EventArgs e)
+        private void _orgBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView operRow = _operatorBS.Current as DataRowView;
-           
+
             // получить ссылку на запись текущей выбранной организации
             DataRowView orgRow = _orgBS.Current as DataRowView;
             // если ссылка пуста, то завершить метод
             if (orgRow == null)
             {
-                this.accessGroupBox.Enabled = false;
+                accessGroupBox.Enabled = false;
                 return;
             }
             // установить флаг активности в соответствии с флагом огранизации
-            this.accessGroupBox.Enabled = (bool)(_orgBS.Current as DataRowView)[CHECK];
+            accessGroupBox.Enabled = (bool)(_orgBS.Current as DataRowView)[Check];
 
-            this.OperOrgRowCurrentEndEdit();
+            OperOrgRowCurrentEndEdit();
 
-            this.SetOperOrgPosition((long)orgRow[Org.id], (long)operRow[Operator.id]);
+            SetOperOrgPosition((long)orgRow[Org.id], (long)operRow[Operator.id]);
 
             if (IsAdminCurrent(operRow))
             {
                 //this.setPrivilegeCode(adminCode);
-                this.accessGroupBox.Enabled = false;
+                accessGroupBox.Enabled = false;
                 //return;
             }
         }
@@ -527,13 +527,13 @@ namespace Pers_uchet_org
                 // принять изменение ячейки, чтобы флаг поменялся и послались изменения в контролер.
                 orgView.EndEdit();
                 // установить флаг активности в соответствии с флагом огранизации
-                bool b = (_orgBS.Current as DataRowView) == null ? false : (bool)(_orgBS.Current as DataRowView)[CHECK];
-                this.accessGroupBox.Enabled = b;
+                bool b = (_orgBS.Current as DataRowView) != null && (bool)(_orgBS.Current as DataRowView)[Check];
+                accessGroupBox.Enabled = b;
                 DataRowView operOrgRow = _operOrgBS.Current as DataRowView;
                 if (operOrgRow != null)
                 {
-                    operOrgRow[CHECK] = b;
-                    operOrgRow[OperatorOrg.code] = this.GetPrivilegeCode();
+                    operOrgRow[Check] = b;
+                    operOrgRow[OperatorOrg.code] = GetPrivilegeCode();
                     operOrgRow.EndEdit();
                 }
             }
@@ -553,9 +553,10 @@ namespace Pers_uchet_org
                 string operName = tmpForm.OperatorName.Trim();
                 if (_operatorBS.Find(Operator.name, operName) > 0)
                 {
-                    MainForm.ShowInfoMessage("Пользователь с таким именем уже существует!", "Ошибка добавления оператора");
+                    MainForm.ShowInfoMessage("Пользователь с таким именем уже существует!",
+                        "Ошибка добавления оператора");
                     return;
-                }               
+                }
 
                 // пароль пока пустой
                 string operPassword = "";
@@ -678,18 +679,17 @@ namespace Pers_uchet_org
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            OperOrgRowCurrentEndEdit();
             // создание адаптера для записей операторов
             SQLiteDataAdapter adapter = Operator.CreateAdapter(_connectionStr);
-            SQLiteCommand command;
-            SQLiteConnection connection;
 
-            command = adapter.InsertCommand;
-            connection = command.Connection;
+            SQLiteCommand command = adapter.InsertCommand;
+            SQLiteConnection connection = command.Connection;
             // обработать все записи операторов на вставку и пометить как обработанные
             foreach (DataRowView operRow in _operatorBS)
             {
@@ -702,18 +702,18 @@ namespace Pers_uchet_org
                     command.Parameters[Operator.pName].Value = operRow[Operator.name];
                     command.Parameters[Operator.pPassword].Value = operRow[Operator.password];
                     // выполнение запроса на исполнение и получение ID записи
-                    object rowID = adapter.InsertCommand.ExecuteScalar();
+                    object rowId = adapter.InsertCommand.ExecuteScalar();
                     // закрыть соединение
                     connection.Close();
 
                     // присвоить полоученный ID всем привелегиям с всталяемым оператором и самому оператору
-                    long idVal = (long)rowID;
+                    long idVal = (long)rowId;
                     ChangeOperatorId(idVal, operRow, _operOrgBS);
                     operRow.Row.AcceptChanges();
                 }
             }
             // отправить оставшиеся записи операторов на обработку в Адаптер
-            int rescount = adapter.Update(_operatorTable);
+            adapter.Update(_operatorTable);
 
             // получить ссылку на текущую запись с привелегией
             DataRowView operOrgRow = _operOrgBS.Current as DataRowView;
@@ -721,7 +721,7 @@ namespace Pers_uchet_org
             if (operOrgRow != null)
             {
                 // считывание и получение кода
-                string codeStr = this.GetPrivilegeCode();
+                string codeStr = GetPrivilegeCode();
                 // запись кода
                 operOrgRow[OperatorOrg.code] = codeStr;
                 operOrgRow.EndEdit();
@@ -745,12 +745,12 @@ namespace Pers_uchet_org
                 if (itemRow.Row.RowState != DataRowState.Deleted)
                 {
                     // если строка с привелегией содержит "пустой" код привелегии, то пометить ее как удаленную
-                    if ((itemRow[OperatorOrg.code] as string).Replace("0", "").Length <= 0 || !(bool)itemRow[CHECK])
+                    if ((itemRow[OperatorOrg.code] as string).Replace("0", "").Length <= 0 || !(bool)itemRow[Check])
                         itemRow.Row.Delete();
                     else
                     {
                         // если строка новая, то произвести ее вставку в БД
-                        if (itemRow.Row.RowState == DataRowState.Added && (bool)itemRow[CHECK])
+                        if (itemRow.Row.RowState == DataRowState.Added && (bool)itemRow[Check])
                         {
                             // открыть соединение
                             connection.Open();
@@ -779,21 +779,21 @@ namespace Pers_uchet_org
             _operOrgBS.Position = pos;
 
             MainForm.ShowInfoMessage("Данные успешно сохранены", "Сохранение");
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void anketaaccessCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            bool b = this.anketaAccessCheckBox.Checked;
-            this.anketaAccessLevelBox.Enabled = b;
-            this.anketaPrintCheckBox.Enabled = b;
+            bool b = anketaAccessCheckBox.Checked;
+            anketaAccessLevelBox.Enabled = b;
+            anketaPrintCheckBox.Enabled = b;
         }
 
         private void paystajaccessCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            bool b = this.payStajAccessCheckBox.Checked;
-            this.payStajAccessLevelBox.Enabled = b;
-            this.payStajPrintCheckBox.Enabled = b;
+            bool b = payStajAccessCheckBox.Checked;
+            payStajAccessLevelBox.Enabled = b;
+            payStajPrintCheckBox.Enabled = b;
         }
 
         private void orgView_KeyDown(object sender, KeyEventArgs e)
@@ -810,14 +810,14 @@ namespace Pers_uchet_org
                 bool b = false;
                 if (_orgBS.Current != null)
                 {
-                    b = (bool)(_orgBS.Current as DataRowView)[CHECK];
-                    (_orgBS.Current as DataRowView)[CHECK] = !b;
+                    b = (bool)(_orgBS.Current as DataRowView)[Check];
+                    (_orgBS.Current as DataRowView)[Check] = !b;
                 }
-                this.accessGroupBox.Enabled = b;
+                accessGroupBox.Enabled = b;
                 DataRowView operOrgRow = _operOrgBS.Current as DataRowView;
                 if (operOrgRow != null)
                 {
-                    operOrgRow[CHECK] = b;
+                    operOrgRow[Check] = b;
                     operOrgRow.EndEdit();
                 }
                 orgView.Refresh();

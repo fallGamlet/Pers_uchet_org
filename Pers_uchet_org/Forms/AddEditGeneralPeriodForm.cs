@@ -1,27 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class AddEditGeneralPeriodForm : Form
     {
         #region Поля
-        int _repYear;
-        BindingSource _generalPeriodBS;
-        BindingSource _specPeriodBS;
-        bool _isNew;
+
+        private int _repYear;
+        private BindingSource _generalPeriodBS;
+        private BindingSource _specPeriodBS;
+        private bool _isNew;
 
         public DateTime Begin;
         public DateTime End;
+
         #endregion
 
         #region Конструктор и инициализатор
+
         private AddEditGeneralPeriodForm()
         {
             InitializeComponent();
@@ -32,19 +30,20 @@ namespace Pers_uchet_org
         public AddEditGeneralPeriodForm(int repYear, BindingSource generalPeriodBS, BindingSource specialPeriodBS)
             : this()
         {
-            this._repYear = repYear;
-            this._generalPeriodBS = generalPeriodBS;
-            this._specPeriodBS = specialPeriodBS;
-            this.Begin = DateTime.Parse(_repYear + "-01-01");
-            this.End = DateTime.Parse(_repYear + "-12-31");
+            _repYear = repYear;
+            _generalPeriodBS = generalPeriodBS;
+            _specPeriodBS = specialPeriodBS;
+            Begin = DateTime.Parse(_repYear + "-01-01");
+            End = DateTime.Parse(_repYear + "-12-31");
             _isNew = true;
         }
 
-        public AddEditGeneralPeriodForm(int repYear, BindingSource generalPeriodBS, BindingSource specialPeriodBS, DateTime beginDate, DateTime endDate)
+        public AddEditGeneralPeriodForm(int repYear, BindingSource generalPeriodBS, BindingSource specialPeriodBS,
+            DateTime beginDate, DateTime endDate)
             : this(repYear, generalPeriodBS, specialPeriodBS)
         {
-            this.Begin = beginDate;
-            this.End = endDate;
+            Begin = beginDate;
+            End = endDate;
             _isNew = false;
         }
 
@@ -58,9 +57,11 @@ namespace Pers_uchet_org
             beginDateTimePicker.Value = Begin;
             endDateTimePicker.Value = End;
         }
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void beginDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             endDateTimePicker.MinDate = beginDateTimePicker.Value;
@@ -81,17 +82,18 @@ namespace Pers_uchet_org
                 {
                     begin = (DateTime)row[GeneralPeriod.beginDate];
                     end = (DateTime)row[GeneralPeriod.endDate];
-                    if (this.Begin <= end && this.Begin >= begin)
+                    if (Begin <= end && Begin >= begin)
                         isPeriodCross = true;
-                    if (this.End <= end && this.End >= begin)
+                    if (End <= end && End >= begin)
                         isPeriodCross = true;
-                    if (this.End >= end && this.Begin <= begin)
+                    if (End >= end && Begin <= begin)
                         isPeriodCross = true;
                 }
             }
             if (isPeriodCross)
             {
-                MainForm.ShowWarningMessage("Указанный период пересекается с уже имеющимся периодом!", "Ошибка добавления периода");
+                MainForm.ShowWarningMessage("Указанный период пересекается с уже имеющимся периодом!",
+                    "Ошибка добавления периода");
                 isAllRight = false;
             }
 
@@ -106,20 +108,23 @@ namespace Pers_uchet_org
                     end = (DateTime)row[SpecialPeriod.endDate];
                     if (begin >= beginCurrent && end <= endCurrent)
                     {
-                        if (this.Begin > begin || this.End < end)
+                        if (Begin > begin || End < end)
                             isPeriodCross = true;
                     }
                 }
                 if (isPeriodCross)
                 {
-                    MainForm.ShowWarningMessage("Среди записей специального стажа есть периоды выходящие за указанные границы!", "Ошибка добавления периода");
+                    MainForm.ShowWarningMessage(
+                        "Среди записей специального стажа есть периоды выходящие за указанные границы!",
+                        "Ошибка добавления периода");
                     isAllRight = false;
                 }
             }
 
             if (isAllRight)
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                DialogResult = DialogResult.OK;
         }
+
         #endregion
     }
 }

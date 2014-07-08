@@ -1,4 +1,4 @@
-﻿namespace Pers_uchet_org
+﻿namespace Pers_uchet_org.Forms
 {
     partial class AddEditDocumentSzv1Form
     {
@@ -1423,7 +1423,7 @@
             this.MinimumSize = new System.Drawing.Size(808, 450);
             this.Name = "AddEditDocumentSzv1Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Добавление\\редактирование документа \"СЗВ-1\" - исходная форма";
+            this.Text = "Добавление\\редактирование документа СЗВ-1 - исходная форма";
             this.Load += new System.EventHandler(this.AddEditDocumentSzv1Form_Load);
             this.tabPage3.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

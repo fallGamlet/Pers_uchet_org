@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Data;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-using System.Threading;
-
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class DoctypeForm : Form
     {
         #region Поля
-        DataTable _doctypeTable; // таблица типов документов
-        BindingSource _doctypeBS;                   // связыватель таблицы документов и просмотрщика (GridView)
-        string _connection;
-        delegate void MyUpdate();
+
+        private DataTable _doctypeTable; // таблица типов документов
+        private BindingSource _doctypeBS; // связыватель таблицы документов и просмотрщика (GridView)
+        private string _connection;
+
         #endregion
 
         #region Конструкторы
+
         public DoctypeForm(string connectionStr)
         {
             InitializeComponent();
@@ -31,9 +25,11 @@ namespace Pers_uchet_org
             this.idoc_typeView.AutoGenerateColumns = false;
             this.idoc_typeView.DataSource = _doctypeBS;
         }
+
         #endregion
 
         #region Свойства
+
         public DataTable DoctypeTable
         {
             get { return this._doctypeTable; }
@@ -48,14 +44,15 @@ namespace Pers_uchet_org
                 _doctypeBS.DataSource = this._doctypeTable;
             }
         }
+
         #endregion
 
         #region Свои методы
 
-        
         #endregion
 
         #region Методы - обработчики событий
+
         #endregion
     }
 }

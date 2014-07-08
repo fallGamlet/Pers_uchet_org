@@ -1,40 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class ReplaceDocTypeForm : Form
     {
         #region Поля
-        // строка подключения к БД
-        string _connection;
-        // таблица
-        DataTable _docTypesTable;
-        // биндинг сорс для таблицы
-        BindingSource _docTypesBS;
-        // адаптер для чтения данных из БД
-        SQLiteDataAdapter _docTypesAdapter;
-        //переменнная указывает каким документам менять тип
-        int flag = 0;
-        #endregion
 
+        // строка подключения к БД
+        private string _connection;
+        // таблица
+        private DataTable _docTypesTable;
+        // биндинг сорс для таблицы
+        private BindingSource _docTypesBS;
+        // адаптер для чтения данных из БД
+        private SQLiteDataAdapter _docTypesAdapter;
+        //переменнная указывает каким документам менять тип
+        private int _flag;
+
+        #endregion
 
         public ReplaceDocTypeForm()
         {
             InitializeComponent();
         }
 
-        public ReplaceDocTypeForm(string _connection)
+        public ReplaceDocTypeForm(string connection)
             : this()
         {
-            this._connection = _connection;
+            _connection = connection;
         }
 
         private void ReplaceDocTypeForm_Load(object sender, EventArgs e)
@@ -62,34 +58,34 @@ namespace Pers_uchet_org
             curDocRadioButton.Checked = true;
         }
 
-        void _docTypesBS_CurrentChanged(object sender, EventArgs e)
+        private void _docTypesBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = (sender as BindingSource).Current as DataRowView;
             if (row == null)
                 return;
-            StajDohodForm.NewDocTypeId = (long)row[DocTypes.id];
+            StajDohodForm.NewDocTypeId = (long) row[DocTypes.id];
         }
 
         private void DocRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton current = (RadioButton)sender;
+            RadioButton current = (RadioButton) sender;
             if (current.Checked)
                 switch (current.Name)
                 {
                     case "curDocRadioButton":
-                        flag = 1;
+                        _flag = 1;
                         break;
                     case "checkedDocsRadioButton":
-                        flag = 2;
+                        _flag = 2;
                         break;
                     case "allDocsRadioButton":
-                        flag = 3;
+                        _flag = 3;
                         break;
                     default:
-                        flag = 0;
+                        _flag = 0;
                         break;
                 }
-            StajDohodForm.FlagDoc = flag;
+            StajDohodForm.FlagDoc = _flag;
         }
     }
 }

@@ -2,39 +2,41 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SQLite;
 using System.Xml;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class AnketadataForm : Form
     {
         #region Поля
+
         // строка подключения к БД
-        string _connection;
+        private string _connection;
         // активный оператор
-        Operator _operator;
+        private Operator _operator;
         // активная организация
-        Org _org;
+        private Org _org;
         // привилегия
-        string _privilege;
+        private string _privilege;
         // таблица
-        DataTable _personTable;
+        private DataTable _personTable;
         // биндинг сорс для таблицы
-        BindingSource _personBS;
+        private BindingSource _personBS;
         // адаптер для чтения данных из БД
-        SQLiteDataAdapter _personAdapter;
+        private SQLiteDataAdapter _personAdapter;
         // названия добавочного виртуального столбца
-        const string CHECK = "check";
+        private const string Check = "check";
         // Браузер для формирования оточета по незарегистрированным персонам
         WebBrowser _wbUnregisteredPewrsons;
         #endregion
 
         #region Конструктор и инициализатор
+
         public AnketadataForm(Operator oper, Org org, string connection)
         {
             InitializeComponent();
@@ -46,12 +48,19 @@ namespace Pers_uchet_org
 
         private void AnketadataForm_Load(object sender, EventArgs e)
         {
-            this.Text += " - " + _org.regnumVal;
+            Text += " - " + _org.regnumVal;
+
+            // получить код привилегии (уровня доступа) Оператора к Организации
+            if (_operator.IsAdmin())
+                _privilege = OperatorOrg.GetPrivilegeForAdmin();
+            else
+                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
+
             // иництализация таблицы персон (записи с анкетными данными)
             _personTable = PersonView.CreatetTable();
             // добавление виртуального столбца для возможности отмечать записи
-            _personTable.Columns.Add(CHECK, typeof(bool));
-            _personTable.Columns[CHECK].DefaultValue = false;
+            _personTable.Columns.Add(Check, typeof(bool));
+            _personTable.Columns[Check].DefaultValue = false;
 
             // инициализация биндинг сорса к таблице персон
             _personBS = new BindingSource();
@@ -59,36 +68,33 @@ namespace Pers_uchet_org
             _personBS.ListChanged += new ListChangedEventHandler(_personBS_ListChanged);
             _personBS.DataSource = _personTable;
             // присвоение источника вьюшке
-            this.personView.AutoGenerateColumns = false;
-            this.personView.DataSource = _personBS;
+            personView.AutoGenerateColumns = false;
+            personView.DataSource = _personBS;
             // инициализация Адаптера для считывания персон из БД
             string commandStr = PersonView.GetSelectText(_org.idVal);
             _personAdapter = new SQLiteDataAdapter(commandStr, _connection);
             // запосление таблицы данными с БД
             _personAdapter.Fill(_personTable);
 
-            // получить код привилегии (уровня доступа) Оператора к Организации
-            if (_operator.IsAdmin())
-                _privilege = OperatorOrg.GetPrivilegeForAdmin();
-            else
-                _privilege = OperatorOrg.GetPrivilege(_operator.idVal, _org.idVal, _connection);
-            // отобразить привилегию на форме для пользователя
-            this.SetPrivilege(_privilege);
-
-            this.workButton.Enabled = false;
+            workButton.Enabled = false;
             // отобразить работающих персон
-            stateButton_Click(this.workButton, null);
+            stateButton_Click(workButton, null);
+
+            // отобразить привилегию на форме для пользователя
+            SetPrivilege(_privilege);
         }
+
         #endregion
 
         #region Методы - свои
+
         private List<DataRowView> GetSelectedRows()
         {
             if (_personBS.Current != null)
-                (_personBS.Current as DataRowView)[CHECK] = true;
+                (_personBS.Current as DataRowView)[Check] = true;
 
             personView.EndEdit();
-            List<DataRowView> list = _personBS.Cast<DataRowView>().Where(personRow => (bool)personRow[CHECK]).ToList();
+            List<DataRowView> list = _personBS.Cast<DataRowView>().Where(personRow => (bool)personRow[Check]).ToList();
             personView.Refresh();
 
             return list;
@@ -97,56 +103,86 @@ namespace Pers_uchet_org
         private void SetPrivilege(string privilegeCode)
         {
             int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(privilegeCode);
-            bool canWrite = (anketaAccess == 2);
-            this.addStripButton.Enabled = canWrite;
-            this.editStripButton.Enabled = canWrite;
-            this.delStripButton.Enabled = canWrite;
-            this.dismissStripButton.Enabled = canWrite;
-            this.restoreStripButton.Enabled = canWrite;
-            this.attachToOrgButton.Enabled = canWrite;
+            bool readOnly = (anketaAccess == 1);
+            if (readOnly)
+            {
+                addStripButton.Enabled = !readOnly;
+                editStripButton.Enabled = !readOnly;
+                delStripButton.Enabled = !readOnly;
+                dismissStripButton.Enabled = !readOnly;
+                restoreStripButton.Enabled = !readOnly;
+                attachToOrgButton.Enabled = !readOnly;
+
+                addStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                editStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                delStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                dismissStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+                restoreStripButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+
+                ToolTip toolTip1 = new ToolTip();
+                toolTip1.SetToolTip(attachToOrgButton, "У вас недостаточно прав. Обратитесь к администратору");
+
+                personView.CellDoubleClick -= personView_CellDoubleClick;
+            }
 
             int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(privilegeCode);
-            this.printStripDropDownButton.Enabled = (anketaPrint > 0);
+            printStripDropDownButton.Enabled = (anketaPrint > 0);
+            if (anketaPrint == 0)
+            {
+                printStripDropDownButton.ToolTipText = "У вас недостаточно прав. Обратитесь к администратору";
+            }
         }
+
         #endregion
 
         #region Методы - обработчики событий
 
-        void _personBS_CurrentChanged(object sender, EventArgs e)
+        private void _personBS_CurrentChanged(object sender, EventArgs e)
         {
             DataRowView row = _personBS.Current as DataRowView;
             if (row == null)
             {
-                this.restoreStripButton.Enabled = this.dismissStripButton.Enabled = false;
+                restoreStripButton.Enabled = dismissStripButton.Enabled = false;
                 return;
             }
-            this.fioBox.Text = row[PersonView.fio] as string;
-            this.datarojdBox.Text = row[PersonView.birthday] is DBNull ? "" : ((DateTime)row[PersonView.birthday]).ToShortDateString();
-            this.grajdanstvoBox.Text = row[PersonView.citizen1] as string;
-            this.grajdanstvoBox.Text += " " + row[PersonView.citizen2] as string;
+            fioBox.Text = row[PersonView.fio] as string;
+            datarojdBox.Text = row[PersonView.birthday] is DBNull
+                ? ""
+                : ((DateTime)row[PersonView.birthday]).ToShortDateString();
+            grajdanstvoBox.Text = row[PersonView.citizen1] as string;
+            grajdanstvoBox.Text += " " + row[PersonView.citizen2] as string;
             object sexObj = row[PersonView.sex];
-            this.polBox.Text = sexObj is DBNull ? "не определено" : (int)sexObj == 1 ? "мужской" : "женский";
-            this.mestorojdBox.Text = row[PersonView.bornAdress] as string;
-            this.adrespropiskiBox.Text = row[PersonView.regAdress] as string;
-            this.adressprojivBox.Text = row[PersonView.factAdress] as string;
-            this.documentBox.Text = row[PersonView.docType] as string;
-            this.docseriaBox.Text = row[PersonView.docSeries] as string;
-            this.docnumBox.Text = row[PersonView.docNumber] as string;
-            this.docdataBox.Text = row[PersonView.docDate] is DBNull ? "" : ((DateTime)row[PersonView.docDate]).ToShortDateString();
-            this.docvidanBox.Text = row[PersonView.docOrg] as string;
+            polBox.Text = sexObj is DBNull ? "не определено" : (int)sexObj == 1 ? "мужской" : "женский";
+            mestorojdBox.Text = row[PersonView.bornAdress] as string;
+            adrespropiskiBox.Text = row[PersonView.regAdress] as string;
+            adressprojivBox.Text = row[PersonView.factAdress] as string;
+            documentBox.Text = row[PersonView.docType] as string;
+            docseriaBox.Text = row[PersonView.docSeries] as string;
+            docnumBox.Text = row[PersonView.docNumber] as string;
+            docdataBox.Text = row[PersonView.docDate] is DBNull
+                ? ""
+                : ((DateTime)row[PersonView.docDate]).ToShortDateString();
+            docvidanBox.Text = row[PersonView.docOrg] as string;
 
-            this.newdateBox.Text = row[PersonView.newDate] is DBNull ? "" : ((DateTime)row[PersonView.newDate]).ToShortDateString();
-            this.editdateBox.Text = row[PersonView.editDate] is DBNull ? "" : ((DateTime)row[PersonView.editDate]).ToShortDateString();
-            this.operatorBox.Text = row[PersonView.operName] as string;
+            newdateBox.Text = row[PersonView.newDate] is DBNull
+                ? ""
+                : ((DateTime)row[PersonView.newDate]).ToShortDateString();
+            editdateBox.Text = row[PersonView.editDate] is DBNull
+                ? ""
+                : ((DateTime)row[PersonView.editDate]).ToShortDateString();
+            operatorBox.Text = row[PersonView.operName] as string;
 
             object stateObj = row[PersonView.state];
-            this.dismissStripButton.Enabled = (stateObj is DBNull) || (int)stateObj == 1;
-            this.restoreStripButton.Enabled = !this.dismissStripButton.Enabled;
+            dismissStripButton.Enabled = (stateObj is DBNull) || (int)stateObj == 1;
+            restoreStripButton.Enabled = !dismissStripButton.Enabled;
+
+            // отобразить привилегию на форме для пользователя
+            SetPrivilege(_privilege);
         }
 
-        void _personBS_ListChanged(object sender, ListChangedEventArgs e)
+        private void _personBS_ListChanged(object sender, ListChangedEventArgs e)
         {
-            this.countLabel.Text = _personBS.Count.ToString();
+            countLabel.Text = _personBS.Count.ToString();
         }
 
         private void searchSocnumBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -154,7 +190,7 @@ namespace Pers_uchet_org
             if (e.KeyChar == '\r')
             {
                 searchFioBox.Text = "";
-                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.socNumber, this.searchSocnumBox.Text);
+                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.socNumber, searchSocnumBox.Text);
                 //int pos;
                 //string sval = this.searchSocnumBox.Text;
                 //for (pos = 0; pos < _personBS.Count; pos++)
@@ -178,7 +214,7 @@ namespace Pers_uchet_org
             if (e.KeyChar == '\r')
             {
                 searchSocnumBox.Text = "";
-                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.fio, this.searchFioBox.Text);
+                _personBS.Filter = string.Format("{0} like '%{1}%'", PersonView.fio, searchFioBox.Text);
                 //int pos;
                 //string sval = this.searchFioBox.Text;
                 //for (pos = 0; pos < _personBS.Count; pos++)
@@ -199,28 +235,32 @@ namespace Pers_uchet_org
 
         private void stateButton_Click(object sender, EventArgs e)
         {
-            foreach (DataRowView personRow in _personBS.Cast<DataRowView>().Where(personRow => (bool)personRow[CHECK]))
+            foreach (DataRowView personRow in _personBS.Cast<DataRowView>().Where(personRow => (bool)personRow[Check]))
             {
-                personRow[CHECK] = false;
+                personRow[Check] = false;
                 personRow.EndEdit();
             }
 
-            if (sender == this.dismissedButton)
+            if (sender == dismissedButton)
             {
                 _personBS.Filter = string.Format("{0} = {1}", PersonView.state, (int)PersonView.PersonState.Uvolen);
-                this.dismissdateColumn.Visible = true;
+                dismissdateColumn.Visible = true;
                 workButton.Enabled = true;
                 dismissedButton.Enabled = false;
                 addStripButton.Enabled = false;
             }
-            else if (sender == this.workButton)
+            else if (sender == workButton)
             {
-                _personBS.Filter = string.Format("{0} is NULL OR {0} = {1}", PersonView.state, (int)PersonView.PersonState.Rabotaet);
-                this.dismissdateColumn.Visible = false;
+                _personBS.Filter = string.Format("{0} is NULL OR {0} = {1}", PersonView.state,
+                    (int)PersonView.PersonState.Rabotaet);
+                dismissdateColumn.Visible = false;
                 workButton.Enabled = false;
                 dismissedButton.Enabled = true;
                 addStripButton.Enabled = true;
             }
+
+            // отобразить привилегию на форме для пользователя
+            SetPrivilege(_privilege);
         }
 
         private void addStripButton_Click(object sender, EventArgs e)
@@ -231,7 +271,7 @@ namespace Pers_uchet_org
             tmpform.Show();
         }
 
-        void EditPersonForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void EditPersonForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (sender != null)
             {
@@ -240,14 +280,12 @@ namespace Pers_uchet_org
                     EditPersonForm tmpForm = sender as EditPersonForm;
                     if (tmpForm.DialogResult == DialogResult.OK)
                     {
-                        long personID = tmpForm.PersonID;
+                        long personID = tmpForm.PersonId;
                         _personTable.Rows.Clear();
                         _personAdapter.Fill(_personTable);
                         _personBS.Position = _personBS.Find(PersonInfo.id, personID);
                     }
                 }
-
-
             }
         }
 
@@ -265,12 +303,12 @@ namespace Pers_uchet_org
             tmpform.Owner = this;
             tmpform.Show();
 
-            tmpform.PersonID = personId;
+            tmpform.PersonId = personId;
         }
 
         private void delStripButton_Click(object sender, EventArgs e)
         {
-            List<DataRowView> personList = this.GetSelectedRows();
+            List<DataRowView> personList = GetSelectedRows();
             List<long> personIdList = new List<long>();
             StringBuilder personFios = new StringBuilder();
             StringBuilder personFiosNotDelete = new StringBuilder();
@@ -283,23 +321,28 @@ namespace Pers_uchet_org
                 if (tmp.Rows.Count < 1)
                 {
                     personIdList.Add(personId);
-                    personFios.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(), rowItem[PersonView.socNumber].ToString());
+                    personFios.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(),
+                        rowItem[PersonView.socNumber].ToString());
                 }
                 else
                 {
                     breakDelete = true;
-                    personFiosNotDelete.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(), rowItem[PersonView.socNumber].ToString());
+                    personFiosNotDelete.AppendFormat("{0} {1}\n", rowItem[PersonView.fio].ToString(),
+                        rowItem[PersonView.socNumber].ToString());
 
                     foreach (DataRow row in tmp.Rows)
                     {
-                        personFiosNotDelete.AppendFormat("\t{0} год {1}, пакет {2}\n", row[DocsView2.regNum], row[DocsView2.repYear], row[DocsView2.listId]);
+                        personFiosNotDelete.AppendFormat("\t{0} год {1}, пакет {2}\n", row[DocsView2.regNum],
+                            row[DocsView2.repYear], row[DocsView2.listId]);
                     }
                 }
             }
 
             if (breakDelete)
             {
-                MainForm.ShowWarningFlexMessage("Удаление анкетных данных невозможно, так как имеются документы СЗВ-1!\n\n" + personFiosNotDelete, "Удаление анкет(ы)");
+                MainForm.ShowWarningFlexMessage(
+                    "Удаление анкетных данных невозможно, так как имеются документы СЗВ-1!\n\n" + personFiosNotDelete,
+                    "Удаление анкет(ы)");
                 return;
             }
 
@@ -309,7 +352,9 @@ namespace Pers_uchet_org
                 return;
             }
 
-            if (MainForm.ShowQuestionFlexMessage("Вы действительно хотите удалить выбранные анкеты?\n\n" + personFios, "Удаление анкет(ы)") != DialogResult.Yes)
+            if (
+                MainForm.ShowQuestionFlexMessage("Вы действительно хотите удалить выбранные анкеты?\n\n" + personFios,
+                    "Удаление анкет(ы)") != DialogResult.Yes)
             {
                 return;
             }
@@ -318,7 +363,7 @@ namespace Pers_uchet_org
                 PersonInfo.Delete(personIdList, _connection);
                 foreach (DataRowView rowItem in personList)
                 {
-                    rowItem[CHECK] = false;
+                    rowItem[Check] = false;
                     rowItem.Delete();
                 }
             }
@@ -336,7 +381,7 @@ namespace Pers_uchet_org
             DialogResult dRes = tmpform.ShowDialog(this);
             if (dRes == DialogResult.OK)
             {
-                List<DataRowView> persons = this.GetSelectedRows();
+                List<DataRowView> persons = GetSelectedRows();
                 List<long> personIdList = new List<long>();
                 foreach (DataRowView rowItem in persons)
                     personIdList.Add((long)rowItem[PersonView.id]);
@@ -346,7 +391,7 @@ namespace Pers_uchet_org
                 {
                     rowItem[PersonView.state] = (int)PersonView.PersonState.Uvolen;
                     rowItem[PersonView.dismissDate] = tmpform.DismissDate;
-                    rowItem[CHECK] = false;
+                    rowItem[Check] = false;
                     rowItem.EndEdit();
                 }
                 _personBS.MoveFirst();
@@ -355,7 +400,7 @@ namespace Pers_uchet_org
 
         private void restoreStripButton_Click(object sender, EventArgs e)
         {
-            List<DataRowView> persons = this.GetSelectedRows();
+            List<DataRowView> persons = GetSelectedRows();
             List<long> personIdList = new List<long>();
             foreach (DataRowView rowItem in persons)
                 personIdList.Add((long)rowItem[PersonView.id]);
@@ -365,7 +410,7 @@ namespace Pers_uchet_org
             {
                 rowItem[PersonView.state] = (int)PersonView.PersonState.Rabotaet;
                 rowItem[PersonView.dismissDate] = DBNull.Value;
-                rowItem[CHECK] = false;
+                rowItem[Check] = false;
                 rowItem.EndEdit();
             }
             _personBS.MoveFirst();
@@ -373,7 +418,7 @@ namespace Pers_uchet_org
 
         private void printAnketsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<DataRowView> selectedRowList = this.GetSelectedRows();
+            List<DataRowView> selectedRowList = GetSelectedRows();
 
             if (selectedRowList.Count <= 0)
             {
@@ -443,7 +488,6 @@ namespace Pers_uchet_org
             string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_unregistered_list);
             _wbUnregisteredPewrsons.Navigate(file);
         }
-
         void _wbUnregisteredPewrsons_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             WebBrowser wb = sender as WebBrowser;
@@ -454,7 +498,7 @@ namespace Pers_uchet_org
             XmlDocument xml = wb.Tag as XmlDocument;
             if (xml == null)
             {
-                MainForm.ShowInfoMessage("отчет не может быть отображен, та как нет входных данных данных!", "Внимание");
+                MainForm.ShowInfoMessage("Отчет не может быть отображен, та как нет входных данных данных!", "Внимание");
                 return;
             }
             HtmlDocument htmlDoc = wb.Document;
@@ -470,11 +514,11 @@ namespace Pers_uchet_org
                 if (e.RowIndex == -1 && e.ColumnIndex == 0)
                 {
                     personView.EndEdit();
-                    bool allchecked = _personBS.Cast<DataRowView>().All(row => (bool)row[CHECK]);
+                    bool allchecked = _personBS.Cast<DataRowView>().All(row => (bool)row[Check]);
                     foreach (DataRowView row in _personBS)
-                        row[CHECK] = !allchecked;
+                        row[Check] = !allchecked;
                 }
-                this.personView.Refresh();
+                personView.Refresh();
             }
             catch (Exception ex)
             {
@@ -503,7 +547,7 @@ namespace Pers_uchet_org
             tmpform.ShowDialog(this);
         }
 
-        void AnketaPersonOrgForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void AnketaPersonOrgForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (sender != null)
             {
@@ -526,7 +570,6 @@ namespace Pers_uchet_org
 
         private void personView_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void personView_KeyDown(object sender, KeyEventArgs e)
@@ -541,18 +584,67 @@ namespace Pers_uchet_org
                     ContextMenuStrip cms = cmsPerson;
                     if (cms == null)
                         return;
-                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex,
+                        currentCell.RowIndex, false);
                     Point p = new Point(r.Left, r.Top);
+
+                    ToolStripItem[] items; //Массив в который возвращает элементы метод Find
+                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
+                    menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
+                    if (restoreStripButton.Enabled)
+                        menuItems.Add("dismissPersonMenuItem");
+                    else
+                        menuItems.Add("restorePersonMenuItem");
+
+                    // Проверка прав и отключение пунктов
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        menuItems.Add("addPersonMenuItem");
+                        menuItems.Add("editPersonMenuItem");
+                        menuItems.Add("delpersonMenuItem");
+                        menuItems.Add("dismissPersonMenuItem");
+                        menuItems.Add("restorePersonMenuItem");
+                    }
+                    int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(_privilege);
+                    if (anketaPrint == 0)
+                    {
+                        menuItems.Add("printAnketsMenuItem");
+                        menuItems.Add("printUnregisteredMenuItem");
+                    }
+
+                    foreach (string t in menuItems)
+                    {
+                        items = cms.Items.Find(t, true);
+                        if (items.Any())
+                            items[0].Enabled = false;
+                    }
+
                     cms.Show((sender as DataGridView), p);
                 }
 
                 if (e.KeyCode == Keys.Delete)
                 {
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     delStripButton_Click(sender, e);
                 }
 
                 if (e.KeyCode == Keys.Enter)
                 {
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        MainForm.ShowInfoMessage("У вас недостаточно прав. Обратитесь к администратору.", "Внимание");
+                        return;
+                    }
                     editStripButton_Click(sender, e);
                 }
 
@@ -561,7 +653,8 @@ namespace Pers_uchet_org
                     if ((sender as DataGridView).CurrentRow == null)
                         return;
 
-                    (_personBS.Current as DataRowView)[CHECK] = !Convert.ToBoolean((_personBS.Current as DataRowView)[CHECK]);
+                    (_personBS.Current as DataRowView)[Check] =
+                        !Convert.ToBoolean((_personBS.Current as DataRowView)[Check]);
                     (sender as DataGridView).EndEdit();
                     (sender as DataGridView).Refresh();
                 }
@@ -576,7 +669,7 @@ namespace Pers_uchet_org
         {
             try
             {
-                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
                 {
                     DataGridViewRow r = (sender as DataGridView).Rows[e.RowIndex];
                     //if (!r.Selected)
@@ -605,13 +698,15 @@ namespace Pers_uchet_org
 
                     DataGridView dataView = sender as DataGridView;
                     ToolStripItem[] items; //Массив в который возвращает элементы метод Find
-                    List<string> menuItems = new List<string>(); //Список элементов которые нужно включать\выключать
-                    menuItems.Add("editPersonMenuItem");
-                    menuItems.Add("delpersonMenuItem");
-                    menuItems.Add("dismissPersonMenuItem");
-                    menuItems.Add("restorePersonMenuItem");
-                    menuItems.Add("printAnketsMenuItem");
-                    menuItems.Add("printUnregisteredMenuItem");
+                    List<string> menuItems = new List<string>
+                    {
+                        "editPersonMenuItem",
+                        "delpersonMenuItem",
+                        "dismissPersonMenuItem",
+                        "restorePersonMenuItem",
+                        "printAnketsMenuItem",
+                        "printUnregisteredMenuItem"
+                    }; //Список элементов которые нужно включать\выключать
 
                     int currentMouseOverRow = dataView.HitTest(e.X, e.Y).RowIndex;
                     bool isEnabled = !(currentMouseOverRow < 0);
@@ -623,10 +718,29 @@ namespace Pers_uchet_org
                     }
 
                     menuItems = new List<string>(); //Список элементов которые нужно принудительно выключать
-                    if(this.restoreStripButton.Enabled)
+                    if (restoreStripButton.Enabled)
                         menuItems.Add("dismissPersonMenuItem");
                     else
                         menuItems.Add("restorePersonMenuItem");
+
+                    // Проверка прав и отключение пунктов
+                    int anketaAccess = OperatorOrg.GetAnketaDataAccesseCode(_privilege);
+                    bool readOnly = (anketaAccess == 1);
+                    if (readOnly)
+                    {
+                        menuItems.Add("addPersonMenuItem");
+                        menuItems.Add("editPersonMenuItem");
+                        menuItems.Add("delpersonMenuItem");
+                        menuItems.Add("dismissPersonMenuItem");
+                        menuItems.Add("restorePersonMenuItem");
+                    }
+                    int anketaPrint = OperatorOrg.GetAnketaPrintAccesseCode(_privilege);
+                    if (anketaPrint == 0)
+                    {
+                        menuItems.Add("printAnketsMenuItem");
+                        menuItems.Add("printUnregisteredMenuItem");
+                    }
+
                     foreach (string t in menuItems)
                     {
                         items = menu.Items.Find(t, true);

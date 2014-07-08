@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Pers_uchet_org
+namespace Pers_uchet_org.Forms
 {
     public partial class PrintDocBlanksForm : Form
     {
@@ -16,6 +11,7 @@ namespace Pers_uchet_org
         #endregion
 
         #region Конструктор
+
         public PrintDocBlanksForm()
         {
             InitializeComponent();
@@ -24,9 +20,11 @@ namespace Pers_uchet_org
             wb.Visible = false;
             wb.Parent = this;
         }
+
         #endregion
 
         #region Методы - обработчики событий
+
         private void viewSZV1Button_Click(object sender, EventArgs e)
         {
             //MyPrinter.ShowWebPage(null, XmlData.ReportType.Szv1);
@@ -61,7 +59,6 @@ namespace Pers_uchet_org
         {
             //MyPrinter.ShowWebPage(null, XmlData.ReportType.Adv3);
             MyPrinter.ShowPrintPreviewWebPage(wb, XmlData.ReportType.Adv3);
-
         }
 
         private void viewADV4Button_Click(object sender, EventArgs e)
@@ -95,7 +92,7 @@ namespace Pers_uchet_org
             }
         }
 
-        static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             WebBrowser wb = (sender as WebBrowser);
             if (wb == null)
@@ -109,6 +106,7 @@ namespace Pers_uchet_org
             wb.Document.Body.InnerHtml = sb.ToString();
             MyPrinter.PrintWebPage(wb);
         }
+
         #endregion
     }
 }
