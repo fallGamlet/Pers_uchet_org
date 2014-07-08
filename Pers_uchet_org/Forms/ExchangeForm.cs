@@ -965,9 +965,11 @@ namespace Pers_uchet_org.Forms
             _container = new CompoundFile(filename);
             CFStream mapStream = _container.RootStorage.GetStream("map");
             byte[] mapBytes = Storage.DecryptStream(mapStream, _diskKey, _diskTable);
+            //string mapStr = Encoding.GetEncoding(1251).GetString(mapBytes);
             CFStorage stylesDir = _container.RootStorage.GetStorage("styles");
             CFStream mapStyleStream = stylesDir.GetStream("map_style");
             byte[] mapStyleBytes = Storage.DecryptStream(mapStyleStream, _diskKey, _diskTable);
+            //string styleStr = Encoding.GetEncoding(1251).GetString(mapStyleBytes);
             _container.Close();
 
             OrgPropXml props = CfProperties.ReadProperty(filename);

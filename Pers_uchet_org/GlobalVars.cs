@@ -33,7 +33,40 @@ namespace Pers_uchet_org
             wb.ShowPrintPreviewDialog();
         }
 
-        public static void ShowWebPage(WebBrowser wb, bool maximased)
+        static public void ShowPrintPreviewWebPage(WebBrowser wb, string url)
+        {
+            if (wb == null)
+                wb = new WebBrowser();
+            wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(wb_DocumentCompleted);
+            wb.Navigate(url);
+            //ShowPrintPreviewWebPage(wb);
+        }
+
+        static public void ShowPrintPreviewWebPage(WebBrowser wb, XmlData.ReportType type)
+        {
+            string url = XmlData.GetReportUrl(type);
+            if (url != null)
+            {
+                ShowPrintPreviewWebPage(wb, url);
+            }
+            else
+            {
+                MainForm.ShowWarningMessage("Не удалось найти файл отчета!", "Внимание");
+            }
+        }
+
+        static void wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                MainForm.ShowInfoMessage("Нет ссылки на объект браузера (GlobalWars.cs -> wb_DocumentCompleted)", "Внимание");
+                return;
+            }
+            MyPrinter.SetPrintSettings();
+            wb.ShowPrintPreviewDialog();
+        }
+
         {
             Form webForm = new Form { Width = 850, Height = 600 };
             webForm.Controls.Add(wb);
@@ -1460,14 +1493,24 @@ namespace Pers_uchet_org
                        orgID, org_id, state, dismissDate, rep_year);
         }
 
-        public static void Print(IEnumerable<DataRow> printRows)
+        public static void Print(IEnumerable<DataRow> printRows, Form parent)
         {
             string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
-            WebBrowser webBrowser = new WebBrowser();
-            webBrowser.Tag = printRows;
-            webBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
-            webBrowser.ScriptErrorsSuppressed = true;
-            webBrowser.Navigate(file);
+            WebBrowser wb = new WebBrowser();
+            wb.Parent = parent;
+            wb.Tag = printRows;
+            wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
+            wb.ScriptErrorsSuppressed = true;
+            wb.Navigate(file);
+        }
+
+        {
+            string file = Path.GetFullPath(Properties.Settings.Default.report_adv1);
+            WebBrowser wb = new WebBrowser();
+            wb.Tag = printRows;
+            wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser_DocumentCompleted);
+            wb.ScriptErrorsSuppressed = true;
+            wb.Navigate(file);
         }
 
         private static void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -1494,7 +1537,7 @@ namespace Pers_uchet_org
                 htmlDoc.Body.InnerHtml = sb.ToString();
             }
 
-            MyPrinter.SetPrintSettings();
+            //MyPrinter.SetPrintSettings();
             wb.ShowPrintPreviewDialog();
         }
 
@@ -2959,8 +3002,8 @@ namespace Pers_uchet_org
         {
             DataTable table = new DataTable(tablename);
             table.Columns.Add(id, typeof(long));
-            table.Columns.Add(docTypeId, typeof(int));
-            table.Columns.Add(listId, typeof(long));
+            table.Columns.Add(docTypeID, typeof(int));
+            table.Columns.Add(listID, typeof(long));
             table.Columns.Add(personID, typeof(long));
             return table;
         }
@@ -2972,7 +3015,7 @@ namespace Pers_uchet_org
 
         public static string GetSelectText(long list_id)
         {
-            return GetSelectText() + string.Format(" WHERE {0} = {1}", listId, list_id);
+            return GetSelectText() + string.Format(" WHERE {0} = {1}", listID, list_id);
         }
 
         public static string GetUpdateDocTypeByDocIdText(long doc_id, long new_doc_type_id)
@@ -3212,7 +3255,7 @@ namespace Pers_uchet_org
         public static DataTable CountDocsByListAndType(long list_id, string connectionStr)
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add(docTypeID, typeof(long));
             table.Columns.Add("count", typeof(int));
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(GetSelectCountText(list_id), connectionStr);
             adapter.Fill(table);
@@ -3247,7 +3290,7 @@ namespace Pers_uchet_org
         public static DataTable SumsByDocType(long list_id, string connectionStr)
         {
             DataTable table = new DataTable(tablename);
-            table.Columns.Add(docTypeId, typeof(long));
+            table.Columns.Add(docTypeID, typeof(long));
             table.Columns.Add(SalaryInfo.salaryGroupsId, typeof(long));
             table.Columns.Add(SalaryInfo.sum, typeof(double));
 
@@ -3880,6 +3923,118 @@ namespace Pers_uchet_org
                 connection.Open();
             SQLiteCommand command = new SQLiteCommand(GetCopyText(old_doc_id, new_doc_id), connection, transaction);
             return command.ExecuteNonQuery();
+        }
+        #endregion
+    }
+
+    public class PersonSalarySums
+    {
+        static public string tablename = "DocsSalaryInfoSumsView";
+        
+        #region Названия полей в представления БД 
+        static public string docID = "doc_id";
+        static public string docTypeID = Docs.docTypeID;
+        static public string listID = Docs.listID;
+        static public string personID = Docs.personID;
+        static public string socNumber = PersonInfo.socNumber;
+        static public string fio = "fio";
+        static public string col1 = "col1";
+        static public string col2 = "col2";
+        static public string col3 = "col3";
+        static public string col4 = "col4";
+        static public string col5 = "col5";
+        #endregion
+
+        #region Параметры для полей таблицы
+        static public string pDocID = "@doc_id";
+        static public string pDocTypeID = "@" + Docs.docTypeID;
+        static public string pListID = "@" + Docs.listID;
+        static public string pPersonID = "@" + Docs.personID;
+        static public string pSocNumber = "@" + PersonInfo.socNumber;
+        static public string pFio = "@fio";
+        static public string pCol1 = "@col1";
+        static public string pCol2 = "@col2";
+        static public string pCol3 = "@col3";
+        static public string pCol4 = "@col4";
+        static public string pCol5 = "@col5";
+        #endregion
+
+        #region
+        static public DataTable CreateTable()
+        {
+            DataTable table = new DataTable(tablename);
+            table.Columns.Add(docID, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(docTypeID, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(listID, typeof(long)).DefaultValue = 0;
+            table.Columns.Add(personID, typeof(long)).DefaultValue = 0.0;
+            table.Columns.Add(socNumber, typeof(string)).DefaultValue = 0.0;
+            table.Columns.Add(fio, typeof(string)).DefaultValue = 0.0;
+            table.Columns.Add(col1, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col2, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col3, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col4, typeof(double)).DefaultValue = 0.0;
+            table.Columns.Add(col5, typeof(double)).DefaultValue = 0.0;
+            return table;
+        }
+
+        static public string GetSelectText()
+        {
+            return string.Format("SELECT * FROM {0}", tablename);
+        }
+
+        static public string GetSelectText(long list_id)
+        {
+            return string.Format("{0} WHERE {1} = {2} ", GetSelectText(), listID, list_id);
+        }
+
+        static public string GetSelectText(IEnumerable<long> doc_type_id)
+        {
+            string instr = "( ";
+            foreach (long val in doc_type_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+
+            return string.Format("{0} WHERE {1} in {2}", GetSelectText(),docTypeID, instr);
+        }
+
+        static public string GetSelectText(long list_id, IEnumerable<long> doc_type_id)
+        {
+            string instr = "( ";
+            foreach (long val in doc_type_id)
+                instr += val + ",";
+            instr = instr.Remove(instr.Length - 1);
+            instr += " )";
+
+            return string.Format("{0} WHERE {1}={2} AND {3} in {4}", GetSelectText(), listID, list_id, docTypeID, instr);
+        }
+
+        static public string GetSelectText(long list_id, IEnumerable<long> doc_type_id, bool excludeAvoidSocnum)
+        {
+            string query = GetSelectText(list_id, doc_type_id);
+            if (excludeAvoidSocnum)
+            {
+                query += string.Format(" AND ({0} is not null and length({0}) > 0)", socNumber);
+            }
+            return query;
+        }
+
+        static public DataTable GetSums(long list_id,IEnumerable<long> doc_type_id, string connectionStr)
+        {
+            DataTable table = CreateTable();
+            string query = GetSelectText(list_id, doc_type_id);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connectionStr);
+            adapter.Fill(table);
+            return table;
+        }
+
+        static public DataTable GetSums(long list_id, IEnumerable<long> doc_type_id, string connectionStr, bool excludeAvoidSocnum)
+        {
+            DataTable table = CreateTable();
+            string query = GetSelectText(list_id, doc_type_id, excludeAvoidSocnum);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connectionStr);
+            adapter.Fill(table);
+            return table;
         }
 
         #endregion

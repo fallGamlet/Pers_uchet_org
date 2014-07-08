@@ -6,11 +6,16 @@
 	<script type="text/javascript" src="./lib/jquery.min.js"></script>
 	<script type="text/javascript">
 		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
-		var setArrayValues = function(selectorStr, valStr) {
-			var valStr = valStr.toUpperCase();
-	 		var strLen = valStr.length;
-			var liArray = $(selectorStr);  
-			var liLen = liArray.length;
+		var setArrayValues = function(selectorStr, valStr, reversed) {
+			var valStr = valStr.toUpperCase(),
+				strLen = valStr.length,
+				liArray = $(selectorStr),
+				liLen = liArray.length;
+			if(reversed == true) {
+				valStr = valStr.split("").reverse().join("");
+				liArray = $(liArray.get().reverse());
+			}
+			liArray.text("");
 			for(var i=0; i<liLen; i++) {
 				if(i < strLen)
 					liArray[i].innerText  = valStr.charAt(i);
@@ -18,24 +23,265 @@
 					liArray[i].innerText  = "";
 			};
 		};
-		var setBornDate = function(dateStr) {
-			var darr = dateStr.split(".");
-			var mnum = parseInt(darr[1], 10);
-			var mname = months[mnum-1];
-			setArrayValues("#born_day li", darr[0]);
-			setArrayValues("#born_month li", mname);
-			setArrayValues("#born_year li", darr[2]);
+		var setFName = function(fnameStr) {
+			setArrayValues('#f_name li', fnameStr);
 		};
-		var setRegAddress = function(valStr) {
-			var i = valStr.lastIndexOf(' ', 45)
-			$("#reg_address1").text(valStr.slice(0, i));
-			$("#reg_address2").text(valStr.slice(i));
+		var setLName = function(lnameStr) {
+			setArrayValues("#l_name li", lnameStr);
 		};
+		var setMName = function(mnameStr) {
+			setArrayValues("#m_name li", mnameStr);
+		};
+		var setSocnumber = function(socnumberStr) {
+			setArrayValues('#soc_num li', socnumberStr);
+		};
+		var setCategoryCode = function(valStr) {
+			$("#category_code").text(valStr);
+		};
+		var setOrgRegnum = function(valStr) {
+			setArrayValues("#org_regnum li", valStr);
+		};
+		var setOrgName = function(valStr) {
+			$("#org_name").text(valStr);
+		};
+		var setSocPay = function(val) {
+			var rub = Math.floor(val),
+				kop = Math.floor(val %1 *100);
+			if(rub == 0) rub = '0'; else rub = rub.toString();
+			if(kop == 0) kop = '00'; else kop = kop.toString();
+			
+			setArrayValues("#soc_pay_rub li", rub, true);
+			setArrayValues("#soc_pay_kop li", kop);
+		};
+		var setFormType = function(val) {
+			var t = parseInt(val),
+				s = 'X',
+				ckeckBoxes = $("#form_type>.checkbox");
+			ckeckBoxes.text("");
+			if(t == 21) ckeckBoxes[0].innerText = s;
+			else if(t == 22) ckeckBoxes[1].innerText = s;
+			else if(t == 23) ckeckBoxes[2].innerText = s;
+			else if(t == 24) ckeckBoxes[3].innerText = s;
+		};
+		var setWorkState = function(val) {
+			var s = 'X',
+				ckeckBoxes = $("#work_place>.checkbox");
+			ckeckBoxes.text("");
+			if(val == true) ckeckBoxes[0].innerText = s;
+			else ckeckBoxes[1].innerText = s;
+				
+		};
+		var setRepyear = function(valStr) {
+			setArrayValues("#rep_year li", valStr);
+		};
+		var setEvolument = function(arr) {
+			var tr = $(".evolument>tbody>tr");
+			var sums = []
+			for(var i=0; i < tr.length && i < arr.length; i++) {
+				var j, cells = $(tr[i]).children();
+				for(j=0; j < arr[i].length-1 && j*2+1 < cells.length-1; j++) {
+					var rub = Math.floor(arr[i][j]),
+						kop = Math.floor(arr[i][j] %1 *100);
+					if(rub==0 && kop==0) {
+						rub = '';
+						kop = '';
+					} else {
+						if(kop < 10) kop = '0'+kop;
+					}
+					//~ if(rub == 0) rub = '';
+					//~ if(kop == 0) kop = '';
+					cells[j*2+1].innerText = rub;
+					cells[j*2+2].innerText = kop;
+				}
+				var val = Math.floor(arr[i][j]);
+				if(val == 0) val = '';
+				cells[j*2+1].innerText = val;
+			}
+		};
+		var setGeneralPeriods = function(strArr) {
+			var i,
+				gp = $("#data_staj_1"),
+				gpLast = $("#data_staj_2");		
+			gp.css({'width':'', 'margin-right':'1em'});
+			for(i=0; i< strArr.length; i++) {
+				var g1 = gp.clone();
+				g1.text(strArr[i]);
+				g1.insertBefore(gp);
+			}
+			gp.remove();
+			gpLast.remove();			
+		};
+		var setSpecStaj = function(arr) {
+			var i,
+				tr = $(".spec_staj_table>tbody>tr"),
+				tr0 = $(tr[0]);
+			for(i=0; i<arr.length; i++) {
+				var newtr = tr0.clone(),
+					cells = newtr.children();
+				$(cells[0]).text(arr[i][0]);
+				$(cells[1]).text(arr[i][1]);
+				$(cells[2]).text(arr[i][2]);
+				$(cells[3]).text(arr[i][3]);
+				$(cells[4]).text(arr[i][4]);
+				$(cells[5]).text(arr[i][5]);
+				$(cells[6]).text(arr[i][6]);
+				$(cells[7]).text(arr[i][7]);
+				newtr.insertBefore(tr0);
+				if(arr[i]['postname']) {
+					var posttr = $("<tr><td colspan=8></td></tr>");
+					$(posttr.find('td')).text(arr[i]['postname']);
+					posttr.insertAfter(newtr);
+				}
+			}
+			tr.remove();
+		};
+		var setDopStaj = function(arr) {
+			var i,
+				wraps = $(".dop_staj"),
+				wrap0 = $(wraps[0]);
+			
+			for(i=0; i<arr.length; i++) {
+				var staj = wrap0.clone();
+				$(staj.find("#dop_staj_code")).text(arr[i].code);
+				$(staj.find("#dop_staj_period")).text(arr[i].period);
+				staj.insertBefore(wrap0);
+			}
+			wraps.remove();
+			
+		};
+		var setChiefPost = function(valStr) {
+			$("#chief_post").text(valStr);
+		}
 		var setPrintDate = function(dateStr) {
 			var darr = dateStr.split(".");
 			$("#print_day").text(darr[0]);
 			$("#print_month").text(months[parseInt(darr[1])-1]);
 			$("#print_year").text(darr[2]);
+		};
+		var setSzv1Xml = function(xmlStr) {
+			var i, j, 
+				cols,
+				vals,
+				arr,
+				sums = [],
+				evol,
+				xml = $($.parseXML(xmlStr));
+			var lname = xml.find("person>lname").text();
+			var mname = xml.find("person>mname").text();
+			var fname = xml.find("person>fname").text();
+			var regnum = xml.find("person>regnum").text();
+			var citizen1 = xml.find("person>citizen>first>name").text();
+			var citizen2 = xml.find("person>citizen>second>name").text();
+			var category = xml.find("person>category_name").text();
+			var privelege = xml.find("person>privelege_name").text();
+			var orgRegnum = xml.find("firm>regnum").text();
+			var orgName = xml.find("firm>name").text();
+			var formtype = xml.find("formtype").text();
+			var workplace = xml.find("work_place").text();
+			var repyear = xml.find("rep_year").text();
+			var firmpay = xml.find("firm_pay").text();
+			
+			var months = $(xml.find("payment>month"));
+			var genperiods = $(xml.find("gen_period>period"));
+			var specstaj = $(xml.find("spec_staj>spec"));
+			var dopstaj = $(xml.find("dop_staj>record"));
+			
+			setFName(fname);
+			setMName(mname);
+			setLName(lname);
+			setSocnumber(regnum);
+			setCategoryCode(category);
+			setOrgRegnum(orgRegnum);
+			setOrgName(orgName);
+			setSocPay(firmpay);
+			setFormType(formtype);
+			setWorkState(workplace);
+			setRepyear(repyear);
+			
+			arr = []
+			sums = [0, 0, 0, 0, 0, 0];
+			for(i=0; i<months.length; i++) {
+				var month = $(months[i]);
+				cols = [0, 0, 0, 0, 0, 0];
+				cols[0] = parseFloat($(month.find('col_1')).text()), 
+				cols[1] = parseFloat($(month.find('col_2')).text()), 
+				cols[2] = parseFloat($(month.find('col_3')).text()), 
+				cols[3] = parseFloat($(month.find('col_4')).text()), 
+				cols[4] = parseFloat($(month.find('col_5')).text()), 
+				cols[5] = parseInt($(month.find('col_6')).text()); 
+				for(j=0; j<cols.length; j++)
+					sums[j] += cols[j];
+				arr.push(cols);
+			}
+			arr.push(sums);
+			setEvolument(arr);
+			
+			try {
+				arr = [];
+				for(i=0; i<genperiods.length; i++) {
+					var period = $(genperiods[i]);
+					var start = $(period.find("gen_start")).text(),
+						end = $(period.find("gen_end")).text();
+						val = start +' - '+ end;
+					arr.push(val);
+				}
+				setGeneralPeriods(arr);
+			} catch(err) {
+				alert("Problems whith general periods");
+			}
+			
+			try {
+				arr = [];
+				for(i=0; i<specstaj.length; i++) {
+					var staj = $(specstaj[i]);
+					cols = {};
+					cols[0] = i+1;
+					cols[1] = $(staj.find("start_date")).text();
+					cols[2] = $(staj.find("end_date")).text();
+					cols[3] = $(staj.find("part_condition_name")).text();
+					cols[4] = $(staj.find("staj_base_name")).text();
+					cols[6] = $(staj.find("servyear_base_name")).text();
+					
+					cols["postname"] = $(staj.find("profession")).text();
+					
+					var vMonths = $(staj.find("smonths")).text(),
+						vDays = $(staj.find("sdays")).text(),
+						vHours = $(staj.find("shours")).text(),
+						vMinutes = $(staj.find("sminutes")).text(),
+						val = "";
+					
+					if(vMonths) val += vMonths +" мес ";
+					if(vDays) val += vDays +" дн ";
+					if(vHours) val += vHours +" ч ";
+					if(vMinutes) val += vMinutes +" мин";
+					
+					if(cols[4] || cols[3]) {
+						cols[5] = val;
+					} else if(cols[6]) {
+						cols[7] = val;
+					}
+					
+					arr.push(cols);
+				}
+				setSpecStaj(arr);
+			} catch(err) {
+				alert("Problems whith spec periods");
+			}
+			
+			try {
+			arr = [];
+				for(i=0; i<dopstaj.length; i++) {
+					var staj = $(dopstaj[i]);
+					cols = {
+							code: $(staj.find("dop_code_name")).text(),
+							period: $(staj.find("dop_start")).text() +" - "+ $(staj.find("dop_end")).text()
+						};
+					arr.push(cols);
+				}
+				setDopStaj(arr);
+			} catch(err) {
+				alert("Problems whith dop periods");
+			}
 		};
 	</script>
 	<style type="text/css">
@@ -47,11 +293,14 @@
 		#data {	text-align: left; padding:0; position: relative; margin:0;}
 		#footer {position:relative; margin:0; padding:0; text-align:left; border:none;}
 		
-		td, th {border-top:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
+		.evolument {width:100%; margin:1em auto 0.5em; padding:0; border-collapse:collapse; font-size:small;}
+		td, th {border:1px solid #999; min-width:1.5em; text-align:center;}
 		th {font-weight:normal;}
 		th p {padding:0px; margin:-3px auto;}
-		tr.kvartal > td {border-top:solid 1px #000;}
-		.mytable {width:100%; margin:auto; border-right: solid 1px #777; border-bottom: solid 1px #777; font-size:small;}
+		tr.cvartal > td, tr.cvartal > th, th.cvartal {border-top:1px solid #000;}
+		.col_rub { text-align:right; padding-right:5px;}
+		.col_kop {text-align:left; padding-left:5px; width:2em;}
+		.spec_staj_table {width:100%; margin:auto; border-collapse:collapse; font-size:small;}
 		
 		
 		ul { padding: 0px; }
@@ -100,6 +349,11 @@
 			zoom: 1;
 			*display: inline;
 		}
+		.dop_staj { margin:0; padding:0;}
+		.dop_staj>.code { padding-left:2em; width:1.5em; }
+		.dop_staj>.period { padding-left:3em; width:3em; }
+		#dop_staj_code { width:10em; }
+		#dop_staj_period { width:20em; }
 	</style>
 	<style media="print">
     .main_container {
@@ -111,7 +365,7 @@
 
 </head>
 <body>
-	<div class="main_container">
+	<div class="main_container" id="main_container">
 		<div id="top">
 			<p style="text-align:right; margin:0; padding:0; font-size:small;">
 				Приложение №13 <br/>
@@ -169,7 +423,7 @@
 				</ul>
 				<br/>
 				Сумма обязательного страхового взноса
-				<ul id="soc_pay_rub" class="numlist"><li/><li/><li/><li/><li/></ul> руб.
+				<ul id="soc_pay_rub" class="numlist"><li/><li/><li/><li/><li/><li/><li/></ul> руб.
 				<ul id="soc_pay_kop" class="numlist"><li/><li/></ul> коп.
 				
 				<div class="absolute_box" style="height:7.7em;">
@@ -202,63 +456,72 @@
 				</div>
 			</div>
 			
-			<table id="payment" class="mytable" cellspacing=0 cellpadding=1>
+			<table id="payment" class="evolument">
 			<thead>
-				<tr style="border-top:solid 3px #3b3;">
-					<th rowspan=2 style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
-					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
-					<th colspan=2 style="width:10em; padding:0.8em 5px;">Сумма выплат, учитываемых для назначения пенсий</th>
-					<th colspan=2 style="width:10em;  padding:0.8em 5px;">Сумма обязательного страхового взноса</th>
-					<th rowspan=2 style="width:6em;">Всего фактически отработанных дней</th>
+				<tr>
+					<th rowspan=3 style="min-width:1em; width:1em; padding:5px;"><p>М</p><p>е</p>с<p>я</p>ц</th>
+					<th rowspan=2 colspan=2 style="width:10em; padding:0.8em 5px;">Сумма дохода, на который начислены страховые взносы</th>
+					<th rowspan=2 colspan=2 style="width:10em; padding:0.8em 5px;">Сумма выплат, учитываемых для назначения пенсий</th>
+					<th colspan=4>Сумма единого социального налога</th>
+					<th rowspan=2 colspan=2 style="width:10em;  padding:0.8em 5px;">Сумма обязательного страхового взноса</th>
+					<th rowspan=3 style="width:6em;">Всего фактически отработанных дней</th>
 				</tr>
 				<tr>
-					<th style="width:7em;">Руб.</th>
-					<th style="width:3em;">Коп.</th>
-					<th style="width:7em;">Руб.</th>
-					<th style="width:3em;">Коп.</th>
-					<th style="width:7em;">Руб.</th>
-					<th style="width:3em;">Коп.</th>
+					<th colspan=2>начисленных страхователем</th>
+					<th colspan=2>уплаченных страхователем</th>
+				</tr>
+				<tr>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
+					<th class="rub">Руб.</th>
+					<th class="kop">Коп.</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="kvartal">
-					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr class="cvartal">
+					<td>1</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>2</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>3</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
-				<tr class="kvartal">
-					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr class="cvartal">
+					<td>4</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr class="kvartal">
-					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>5</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>6</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
+				</tr>
+				<tr class="cvartal">
+					<td>7</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr class="kvartal">
-					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>8</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>9</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
+				</tr>
+				<tr class="cvartal">
+					<td>10</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 				<tr>
-					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>11</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
-				<tr class="kvartal">
-					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr>
+					<td>12</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
+				</tr>
+				<tr class="cvartal">
+					<td>&Sigma;</td> <td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td><td class="col_rub"></td><td class="col_kop"></td> <td></td>
 				</tr>
 			</tbody>
 			</table>		
@@ -266,16 +529,16 @@
 			<span class="myspan" style="width:19em; ">Данные о стаже в отчетном году (периоды)</span> 
 			<div id="data_staj_1" class="field_underline" style="width:29em;"></div>
 			<div id="data_staj_2" class="field_underline" style="width:48.3em; margin-bottom:0.5em;"></div>
-			
+			<br/>
 			<b>Специальный стаж работы за отчетный период</b>
 			
-			<table class="mytable" cellspacing=0 cellpadding=1>
+			<table class="spec_staj_table" cellspacing=0 cellpadding=1>
 			<thead style='display:table-header-group'>
 				<tr>
-					<th rowspan=2 style="min-width:1em; width:2em; padding:5px;"><p>№</p><p>п/п</p></th>
-					<th rowspan=2 style="">Начало периода (дд.мм.гггг)</th>
-					<th rowspan=2 style="">Конец периода (дд.мм.гггг)</th>
-					<th rowspan=2 style="">Особые условия труда (код)</th>
+					<th rowspan=2 style="min-width:1em; width:1.5em; padding:5px;"><p>№</p><p>п/п</p></th>
+					<th rowspan=2 style="width:7.5em;">Начало периода (дд.мм.гггг)</th>
+					<th rowspan=2 style="width:7.5em;">Конец периода (дд.мм.гггг)</th>
+					<th rowspan=2 style="width:8em;">Особые условия труда (код)</th>
 					<th colspan=2 style="">Исчисляемый страховой стаж</th>
 					<th colspan=2 style="">Выслуга лет</th>
 				</tr>
@@ -304,18 +567,21 @@
 			
 			Сведения за иной период, засчитываемые в страховой стаж:<br/>
 			<small>
-				<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
-				<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
-				<br/>
-				<span class="myspan" style="padding-left:2em; width:1.5em;">Код</span> <div class="field_underline" style="width:10em;"></div> 
-				<span class="myspan" style="padding-left:3em; width:3em;">Период</span> <div class="field_underline" style="width:20em;"></div> 
+				<div class="dop_staj">
+					<span class="myspan code" >Код</span> <div class="field_underline" id="dop_staj_code"></div> 
+					<span class="myspan period" >Период</span> <div class="field_underline" id="dop_staj_period"></div> 
+				</div>
+				<div class="dop_staj">
+					<span class="myspan code" >Код</span> <div class="field_underline" id="dop_staj_code"></div> 
+					<span class="myspan period" >Период</span> <div class="field_underline" id="dop_staj_period"></div> 
+				</div>
 			</small>
 		</div>
 			
 		<div id="footer">		
 			<div style="padding-bottom:1em; text-align:center;">
 				<div class="field_wrapper">
-					<div class="field_underline" style="min-width: 17em;"></div> <br/>
+					<div class="field_underline" id="chief_post" style="min-width: 17em;"></div> <br/>
 					<span style="font-size:small; text-align:left;">Наименование должности руководителя</span>
 				</div>
 				<div class="field_wrapper">

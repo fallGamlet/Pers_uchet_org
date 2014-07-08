@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Форма СЗВ-3</title>
+    <title>Калькуляция по пакету</title>
 	<script type="text/javascript" src="./lib/jquery.min.js"></script>
 	<script type="text/javascript">
 		var months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
@@ -18,6 +18,9 @@
 					liArray[i].innerText  = "";
 			};
 		};
+		var setPacketNum = function(valStr) {
+			$("#packet_num").text(valStr);
+		}
 		var setRegnum = function(fnameStr) {
 			setArrayValues('#regnum li', fnameStr);
 		};
@@ -46,72 +49,62 @@
 			$("#chief_post").text(valStr);
 		};
 		var setEvolument = function(arr) {
+			if(typeof(arr) == 'string') {
+				ar = arr.split("*");
+				arr = [];  
+				for(var i=0; i<ar.length; i++) { 
+					var vals = ar[i].split("_"); 
+					arr[i] = [];  
+					for(var j=0; j<vals.length; j++) { 
+						//~ alert(vals[j]);
+						arr[i][j] = parseFloat(vals[j]);
+						//~ alert(arr[i][j]);
+					} 
+				}
+			}
+			
 			var tr = $(".evolument>tbody>tr");
 			var sums = []
 			for(var i=0; i < tr.length && i < arr.length; i++) {
 				var j, cells = $(tr[i]).children();
-				for(j=0; j < arr[i].length-1 && j*2+1 < cells.length-1; j++) {
+				for(j=0; j < arr[i].length && j*2+1 < cells.length; j++) {
 					var rub = Math.floor(arr[i][j]),
 						kop = Math.floor(arr[i][j] %1 *100);
-					if(rub == 0) rub = '';
-					if(kop == 0) kop = '';
+					if(rub == 0) {
+						rub = '';
+						if(kop == 0) kop = '';
+					} else {
+						if(kop == 0) kop = '00';
+						else { 
+							if(kop < 10) kop = '0'+kop;
+						}
+					}
 					cells[j*2+1].innerText = rub;
 					cells[j*2+2].innerText = kop;
 				}
-				var val = Math.floor(arr[i][j]);
-				if(val == 0) val = '';
-				cells[j*2+1].innerText = val;
+				//~ var val = Math.floor(arr[i][j]);
+				//~ if(val == 0) val = '';
+				//~ cells[j*2+1].innerText = val;
 			}
 		};
-		var setSzv3Xml = function(szv3XmlStr) {
-			var i, j, 
-				cols,
-				vals,
-				sums = [],
-				evol,
-				xml = $($.parseXML(szv3XmlStr));
-			
-			setPacketCount( xml.find("packs_count").text() );
-			setDocCount( xml.find("docs_count").text() );
-			evol = xml.find("month");
-			var arr = [];
-			for(i=0; i<evol.length; i++) {
-				cols = $(evol[i]).children();
-				vals = [];
-				for(j=0; j< cols.length; j++) {
-					var v = $(cols[j]).text();
-					vals.push(v);
-				}
-				arr.push(vals);
-			}
-			var colCount = arr[0].length,
-				rowCount = arr.length;
-			for(j=0; j < colCount; j++) { sums[j] = 0; }
-			for(j=0; j < colCount; j++) {
-				for(i=0; i < rowCount; i++) {
-					sums[j] += parseFloat(arr[i][j]);
-				}
-			}
-			arr.push(sums);
-			setEvolument(arr);
-		}
 	</script>
 	<style type="text/css">
 		body { background: #def; text-align: center; padding:0in;}
 		div {margin:0; padding:0;}
 		.main_container {background:#fff; width:8.27in; height:11.69in; /*The A4 size print measures 8.27 x 11.69 inches*/ margin:0.7em auto; position:relative; }
-		#top {}
-		#title {}
+		#top { margin:0 auto; padding:3em 0 2em; font-size:14pt; font-weight:bold; }
 		#data {text-align: left; padding:0; position:relative; margin:0;}
 		#footer {position:relative; margin:0; padding:0; text-align:left; border:none;}
 		
 		.evolument {width:100%; margin:1em 0; padding:0; border-collapse:collapse; font-size:small;}
-		td, th {border:solid 1px #999; border-left:solid 1px #999; min-width:1.5em; text-align:center;}
+		td, th {border:solid 1px #999; min-width:1.5em; text-align:center;}
 		th {font-weight:normal;}
 		th p {padding:0px; margin:-3px auto;}
 		tr.cvartal > td, tr.cvartal > th, th.cvartal {border-bottom:solid 1px #000;}		
 		.rub {width:7em;}
 		.kop {width:2em;}
+		.rubval {text-align:right; padding-right:5px;}
+		.kopval {text-align:left; padding-left:5px;}
 		
 		ul { padding: 0px; margin:0px;}
 		li { margin: 1px auto; list-style-type: none; vertical-align: middle; }
@@ -171,23 +164,8 @@
 <body>
 	<div class="main_container">
 		<div id="top">
-			<p style="text-align:right; margin:0px; padding:0em; font-size:small;">
-				Приложение №14 <br/>
-				к приказу министра социальной защиты и труда <br/>
-				Приднестровской Молдавской Республики от _____ г. №____
-			</p>
-			<p style="">
-				Единый государственный фонд социального страхования<br/>
-				Приднестровской Молдавской Республики
-			</p>
-			<p style="position:absolute; top:2em; left:0em;;font-size:small;"><u>Форма СЗВ-3</u></p>
-		</div>
-		
-		<div id="title">
-			<p><b>
-			Сводная ведомость<br/>
-			форм документов СЗВ-1, передаваемых страхователем в Фонд
-			</b></p>
+			Калькуляция по пакету № 
+			<div id="packet_num" class="field_underline" style="width:3em;"></div>
 		</div>
 		
 		<div id="data">
@@ -211,9 +189,6 @@
 						<span class="myspan" style="width:8em;">Отчетный период</span> 
 						<ul id="year" class="numlist"> <li></li><li></li><li></li><li></li> </ul> <span class="myspan">год</span>
 					</li>
-					<li style="margin:1em 0;"> 
-						<span class="myspan" style="width: 19em;">Количество пакетов с документами СЗВ-1:</span> <div id="packet_count" class="field_underline" style="width:5em;"></div>
-					</li>
 					<li>
 						<span class="myspan" style="width: 19em;">Количество исходных документов СЗВ-1:  </span> <div id="doc_count" class="field_underline" style="width:5em;"></div>
 					</li>
@@ -228,7 +203,7 @@
 					<th rowspan=2 colspan=2 >Сумма выплат, учитываемых для назначения пенсий</th>
 					<th colspan=4>Сумма единого социального налога</th>
 					<th rowspan=2 colspan=2>Сумма обязательных страховых взносов</th>
-					<th rowspan=3  class="cvartal" style="width:4em;">Средняя численность работников (застрахованных лиц)</th>
+					<!--th rowspan=3  class="cvartal" style="width:4em;">Средняя численность работников (застрахованных лиц)</th-->
 				</tr>
 				<tr>
 					<th colspan=2>начисленных страхователем</th>
@@ -249,43 +224,43 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>1</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>2</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr class="cvartal">
-					<td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>3</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>4</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>5</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr class="cvartal">
-					<td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>6</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>7</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>8</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr class="cvartal">
-					<td>9</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>9</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>10</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>11</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr class="cvartal">
-					<td>12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>12</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 				<tr>
-					<td>&Sigma;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+					<td>&Sigma;</td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td><td class="rubval"></td><td class="kopval"></td>
 				</tr>
 			</tbody>
 			</table>

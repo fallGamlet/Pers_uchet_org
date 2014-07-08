@@ -34,13 +34,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.printButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.printDate = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // nameBox
             // 
-            this.nameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.nameBox.Location = new System.Drawing.Point(92, 26);
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(240, 20);
@@ -70,6 +70,7 @@
             // printButton
             // 
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.printButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.printButton.Location = new System.Drawing.Point(176, 141);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(75, 23);
@@ -88,10 +89,10 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(92, 80);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(142, 20);
-            this.dateTimePicker1.TabIndex = 3;
+            this.printDate.Location = new System.Drawing.Point(92, 80);
+            this.printDate.Name = "dateTimePicker1";
+            this.printDate.Size = new System.Drawing.Size(142, 20);
+            this.printDate.TabIndex = 3;
             // 
             // SvodVedomostPrintForm
             // 
@@ -99,7 +100,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.closeButton;
             this.ClientSize = new System.Drawing.Size(344, 176);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.printDate);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.printButton);
             this.Controls.Add(this.label1);
@@ -125,6 +126,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button printButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker printDate;
     }
 }

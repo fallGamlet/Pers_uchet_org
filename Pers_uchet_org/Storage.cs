@@ -21,7 +21,10 @@ namespace Pers_uchet_org
         #endregion
 
         #region Методы - статические
-
+        /// <summary>
+        /// Генерация синхропосылки для последующего шифрования
+        /// </summary>
+        /// <returns>Возвращает массив (8 байт)</returns>
         private static byte[] GenerateSynchro()
         {
             long tick = DateTime.Now.Ticks;
@@ -29,47 +32,106 @@ namespace Pers_uchet_org
             return BitConverter.GetBytes(tick);
         }
 
+        /// <summary>
+        /// Поместить данные в указанный поток
+        /// </summary>
+        /// <param name="stream">Поток для загрузки данных</param>
+        /// <param name="data">Строка данные, которые необходимо зашифровать и поместить</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
         private static void SetDataToStream(CFStream stream, string data, byte[] diskKey, byte[] diskTable)
         {
             byte[] cryptData = Encoding.GetEncoding(1251).GetBytes(data);
             SetDataToStream(stream, cryptData, diskKey, diskTable);
         }
 
+        /// <summary>
+        /// Поместить данные в указанный поток
+        /// </summary>
+        /// <param name="stream">Поток для загрузки данных</param>
+        /// <param name="data">Данные, которые необходимо зашифровать и поместить</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
         private static void SetDataToStream(CFStream stream, byte[] data, byte[] diskKey, byte[] diskTable)
         {
+            // сгенеррировать синхропосылку
             byte[] synchroArr = GenerateSynchro();
+            // зашифровать данные
             byte[] cryptData = Mathdll.GostGamma(data, diskKey, diskTable, synchroArr);
+            // создать буффер для объединения зашифрованных данных и синхропосылки
             byte[] buffer = new byte[data.Length + synchroArr.Length];
             Array.Copy(cryptData, 0, buffer, 0, cryptData.Length);
             Array.Copy(synchroArr, 0, buffer, cryptData.Length, synchroArr.Length);
+            // записать данные в поток
             stream.SetData(buffer);
         }
 
+        /// <summary>
+        /// Добавить поток с указанными зашифрованными данными в указанный каталог файла MCDF.
+        /// </summary>
+        /// <param name="dir">Каталог, в который необходимо добавить поток</param>
+        /// <param name="dataXml">Данные в виде Xml документа</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
+        /// <returns></returns>
         private static CFStream AddStream(CFStorage dir, XmlDocument dataXml, byte[] diskKey, byte[] diskTable)
         {
             return AddStream(dir, dataXml.InnerXml, diskKey, diskTable);
         }
 
+        /// <summary>
+        /// Добавить поток с указанными зашифрованными данными в указанный каталог файла MCDF.
+        /// </summary>
+        /// <param name="dir">Каталог, в который необходимо добавить поток</param>
+        /// <param name="data">Данные в виде строки</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
+        /// <returns></returns>
         private static CFStream AddStream(CFStorage dir, string data, byte[] diskKey, byte[] diskTable)
         {
             byte[] cryptData = Encoding.GetEncoding(1251).GetBytes(data);
             return AddStream(dir, cryptData, diskKey, diskTable);
         }
 
+        /// <summary>
+        /// Добавить поток с указанными зашифрованными данными в указанный каталог файла MCDF.
+        /// </summary>
+        /// <param name="dir">Каталог, в который необходимо добавить поток</param>
+        /// <param name="data">Данные в виде массива байт</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
+        /// <returns></returns>
         private static CFStream AddStream(CFStorage dir, byte[] data, byte[] diskKey, byte[] diskTable)
         {
+            // сгенерировать синхропосылку
             byte[] synchroArr = GenerateSynchro();
             byte[] imito;
+            // зашифровать данные и получить от них хеш
             Mathdll.CryptData(diskKey, diskTable, synchroArr, ref data, out imito);
+            // создать поток с именем, являющимся 16-тиричным представлением массива байт - imito
             CFStream stream = dir.AddStream(ReadKey.BinToHex(imito));
+            // создать бефер для объединения данных и синхропосылки
             byte[] buffer = new byte[data.Length + synchroArr.Length];
             Array.Copy(data, 0, buffer, 0, data.Length);
             Array.Copy(synchroArr, 0, buffer, data.Length, synchroArr.Length);
+            // записать данные в поток
             stream.SetData(buffer);
+            //
             return stream;
         }
 
-        public static int MakeXml(int repYear, Org org, IEnumerable<long> listId, string connectionStr,
+        /// <summary>
+        /// Создать XML файлы из данных, считанных из БД
+        /// </summary>
+        /// <param name="rep_year">Отчетный год</param>
+        /// <param name="org">Организация</param>
+        /// <param name="list_id">Список идентификаторов пакетов</param>
+        /// <param name="connectionStr">Строка подключения</param>
+        /// <param name="mapXml">Карта - выходной параметр</param>
+        /// <param name="szv3Xml">Сводная ведомость - выходной параметр</param>
+        /// <param name="szv2XmlArray">Описи - выходной параметр</param>
+        /// <param name="szv1XmlArray">Документы СЗВ1 - выходной параметр</param>
+        /// <returns></returns>
             out XmlDocument mapXml,
             out XmlDocument szv3Xml,
             out IEnumerable<XmlDocument> szv2XmlArray,
@@ -102,6 +164,16 @@ namespace Pers_uchet_org
             return res;
         }
 
+        /// <summary>
+        /// Получить ссылку на объект контейнера с заполненными данными
+        /// </summary>
+        /// <param name="mapXml">Карта</param>
+        /// <param name="szv3Xml">Сводная ведомость</param>
+        /// <param name="szv2XmlArray">Описи пакетов</param>
+        /// <param name="szv1XmlArray">Документы СЗВ-1</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
+        /// <returns></returns>
         public static CompoundFile MakeContainer(XmlDocument mapXml, XmlDocument szv3Xml,
             IEnumerable<XmlDocument> szv2XmlArray,
             IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray,
@@ -165,6 +237,15 @@ namespace Pers_uchet_org
             return container;
         }
 
+        /// <summary>
+        /// Экспортировать Xml фалы в указанну. директорию
+        /// </summary>
+        /// <param name="path">Путь, куда необходимо охранить файлы</param>
+        /// <param name="orgProperty">Свойства организации</param>
+        /// <param name="szv3Xml">Файл XML</param>
+        /// <param name="szv2XmlArray">Массив файлов XML</param>
+        /// <param name="szv1XmlArray">Массив файлов XML</param>
+        /// <returns></returns>
         public static bool ExportXml(string path, OrgPropXml orgProperty, XmlDocument szv3Xml,
             IEnumerable<XmlDocument> szv2XmlArray,
             IEnumerable<IEnumerable<XmlDocument>> szv1XmlArray)
@@ -195,6 +276,15 @@ namespace Pers_uchet_org
             return true;
         }
 
+        /// <summary>
+        /// Импортировать XML файлы по указанной директории
+        /// </summary>
+        /// <param name="path">Путь расположения файлов</param>
+        /// <param name="orgProperty">Свойства организации</param>
+        /// <param name="szv3Xml">Выходной параметр</param>
+        /// <param name="szv2XmlArray">Выходной параметр</param>
+        /// <param name="szv1XmlArray">Выходной параметр</param>
+        /// <returns></returns>
         public static bool ImportXml(string path, OrgPropXml orgProperty,
             out XmlDocument szv3Xml,
             out IEnumerable<XmlDocument> szv2XmlArray,
@@ -300,7 +390,8 @@ namespace Pers_uchet_org
             for (i = 0; i < opisFiles.Count(); i++)
             {
                 XmlDocument szv2Xml = XmlData.ReadXml(opisFiles[i].FullName);
-                isValid &= XmlData.ValidateXml(Settings.Default.xsd_szv2, opisFiles[i].FullName, writer);
+                szv2Xml.PreserveWhitespace = true;
+                isValid &= XmlData.ValidateXml(Properties.Settings.Default.xsd_szv2, opisFiles[i].FullName, writer);
                 szv2List.Add(szv2Xml);
 
                 List<XmlDocument> szv1Docs = new List<XmlDocument>(szv1FilesArr[i].Length);
@@ -341,14 +432,16 @@ namespace Pers_uchet_org
                     #endregion
 
                     XmlDocument szv1Xml = XmlData.ReadXml(szv1FilesArr[i][j].FullName);
-                    isValid &= XmlData.ValidateXml(Settings.Default.xsd_szv1, szv1FilesArr[i][j].FullName, writer);
+                    szv1Xml.PreserveWhitespace = true;
+                    isValid &= XmlData.ValidateXml(Properties.Settings.Default.xsd_szv1, szv1FilesArr[i][j].FullName, writer);
                     szv1Docs.Add(szv1Xml);
                 }
                 szv1Lists.Add(szv1Docs.ToArray());
             }
             // заполнение выходных параметров
             szv3Xml = XmlData.ReadXml(szv3Filename);
-            isValid &= XmlData.ValidateXml(Settings.Default.xsd_szv3, szv3Filename, writer);
+            szv3Xml.PreserveWhitespace = true;
+            isValid &= XmlData.ValidateXml(Properties.Settings.Default.xsd_szv3, szv3Filename, writer);
 
             szv2XmlArray = szv2List;
             szv1XmlArray = szv1Lists.ToArray();
@@ -356,7 +449,13 @@ namespace Pers_uchet_org
             return isValid;
         }
 
-
+        /// <summary>
+        /// Получить дешифрованные данные из потока файла MCDF.
+        /// </summary>
+        /// <param name="stream">Поток файла MCDF</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
+        /// <returns></returns>
         public static byte[] DecryptStream(CFStream stream, byte[] diskKey, byte[] diskTable)
         {
             int count = (int)stream.Size - 8;
@@ -367,6 +466,12 @@ namespace Pers_uchet_org
             return resData;
         }
 
+        /// <summary>
+        /// Получить ссылку на поток из файла MCDF по его пути
+        /// </summary>
+        /// <param name="file">Файл - хранилище</param>
+        /// <param name="streamPath">Путь к потоку в файле</param>
+        /// <returns></returns>
         public static CFStream GetFileStream(CompoundFile file, string streamPath)
         {
             string[] path = streamPath.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
@@ -378,6 +483,14 @@ namespace Pers_uchet_org
             return curDir.GetStream(path[path.Length - 1]);
         }
 
+        /// <summary>
+        /// Сформировать HTML разметку из данных, считанных и расшифрованных из файла MCDF.
+        /// </summary>
+        /// <param name="file">Файл источник (хранилище)</param>
+        /// <param name="fileUri">Ссылка на поток в файле</param>
+        /// <param name="diskKey">Ключ</param>
+        /// <param name="diskTable">Таблица</param>
+        /// <returns></returns>
         public static string GetHTML(CompoundFile file, string fileUri, byte[] diskKey, byte[] diskTable)
         {
             string[] uri = fileUri.Split(':');

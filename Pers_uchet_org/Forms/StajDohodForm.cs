@@ -51,7 +51,8 @@ namespace Pers_uchet_org.Forms
         public static long NewListId = 0;
         // переменная содержит id добавляемого человека
         public static long PersonId;
-
+        // браузеры для формирования отчетов для печати
+        WebBrowser _wbSZV2, _wbCalculating, _wbSZV1Print, _wbFIOSumsList;
         #endregion
 
         #region Конструктор и инициализатор
@@ -68,7 +69,7 @@ namespace Pers_uchet_org.Forms
         {
             try
             {
-                Text += " - " + _organization.regnumVal;
+                this.Text += " - " + _org.regnumVal;
 
                 // получить код привилегии (уровня доступа) Оператора к Организации
                 if (_operator.IsAdmin())
@@ -99,7 +100,7 @@ namespace Pers_uchet_org.Forms
                 _listsBS.DataSource = _listsTable;
 
                 // инициализация Адаптера для считывания пакетов из БД
-                string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
+                string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
                 _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
                 // заполнение таблицы данными с БД
                 _listsAdapter.Fill(_listsTable);
@@ -736,7 +737,7 @@ namespace Pers_uchet_org.Forms
                         using (SQLiteCommand command = connection.CreateCommand())
                         {
                             command.Transaction = transaction;
-                            command.CommandText = Lists.GetInsertText(1, _organization.idVal, _repYear);
+                            command.CommandText = Lists.GetInsertText(1, _org.idVal, _repYear);
                             long listId = (long)command.ExecuteScalar();
                             if (listId < 1)
                             {
@@ -797,7 +798,24 @@ namespace Pers_uchet_org.Forms
         {
             try
             {
-                MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _connection));
+                DataRowView curPacketRow = _listsBS.Current as DataRowView;
+                if (curPacketRow == null)
+                {
+                    MainForm.ShowInfoMessage("Необходимо сначала выделить пакет!", "Внимание");
+                }
+                if (_wbSZV2 == null)
+                {
+                    _wbSZV2 = new WebBrowser();
+                    _wbSZV2.Visible = false;
+                    _wbSZV2.Parent = this;
+                    _wbSZV2.ScriptErrorsSuppressed = true;
+                    _wbSZV2.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbSZV2_DocumentCompleted);
+
+                }
+                _wbSZV2.Tag = curPacketRow[ListsView.id];
+                string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv2);
+                _wbSZV2.Navigate(file);
+                //MyPrinter.ShowWebPage(Szv2Xml.GetHtml(_currentListId, _connection));
             }
             catch (Exception exception)
             {
@@ -805,12 +823,213 @@ namespace Pers_uchet_org.Forms
             }
         }
 
+        void _wbSZV2_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            long merge_id = (long)wb.Tag;
+            System.Xml.XmlDocument xml = Szv2Xml.GetXml(merge_id, _connection);
+            HtmlDocument htmlDoc = wb.Document;
+            string repYear = this.yearBox.Value.ToString();
+            htmlDoc.InvokeScript("setOrgRegnum", new object[] { _org.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
+            htmlDoc.InvokeScript("setRepyear", new object[] { _repYear.ToString() });
+            htmlDoc.InvokeScript("setSzv2Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
+        }
+
         private void calcListStripButton_Click(object sender, EventArgs e)
         {
+            DataRowView curPacketRow = _listsBS.Current as DataRowView;
+            if (curPacketRow == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо сначала выделить пакет!", "Внимание");
+            }
+            if (_wbCalculating == null)
+            {
+                _wbCalculating = new WebBrowser();
+                _wbCalculating.Visible = false;
+                _wbCalculating.Parent = this;
+                _wbCalculating.ScriptErrorsSuppressed = true;
+                _wbCalculating.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbCalculating_DocumentCompleted);
+            }
+            _wbCalculating.Tag = curPacketRow;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_calculate);
+            _wbCalculating.Navigate(file);
+        }
+
+        void _wbCalculating_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            DataRowView curPacketRow = wb.Tag as DataRowView;
+            long packet_id = (long)curPacketRow[Lists.id];
+            long[] markedPacked = { packet_id };
+            long docCount = Docs.Count(markedPacked, _connection);
+            /////////////////////////////////////////////////            
+            long[] doctypes = { 21, 22, 24 };
+            double[,] evolument = new double[13,5];
+            DataTable salaryInfoTranspose = SalaryInfoTranspose.CreateTableWithRows();
+            if (markedPacked.Length > 0)
+            {
+                DataTable salaryInfoTable = SalaryInfo.CreateTable();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(SalaryInfo.GetSelectText(markedPacked, doctypes), _connection);
+                adapter.Fill(salaryInfoTable);
+                SalaryInfoTranspose.ConvertFromSalaryInfo(salaryInfoTranspose, salaryInfoTable);
+            }
+            /////////////////////////////////////////////////
+            int row, col;
+            double sum;
+            for (row = 0; row < 12; row++)
+            {
+                for (col = 0; col < 5; col++)
+                {
+                    object val = salaryInfoTranspose.Rows[row][col+1];
+                    evolument[row,col] = (double)val;
+                }
+            }
+            for (col = 0; col < 5; col++)
+            {
+                sum = 0.0;
+                for (row = 0; row < 12; row++)
+                    sum += evolument[row,col];
+                evolument[12,col] = sum;
+            }
+            StringBuilder arrStr = new StringBuilder();
+            for (row = 0; row < 13; row++)
+            {
+                for (col = 0; col < 5; col++)
+                {
+                    arrStr.Append( evolument[row,col].ToString() );
+                    if (col != 4)
+                        arrStr.Append("_");
+                }
+                if(row != 12) 
+                    arrStr.Append("*");
+            }
+            arrStr.Replace(',', '.');
+            /////////////////////////////////////////////////
+            HtmlDocument htmlDoc = wb.Document;
+            string repYear = this.yearBox.Value.ToString();
+            htmlDoc.InvokeScript("setPacketNum", new object[] { packet_id.ToString() });
+            htmlDoc.InvokeScript("setRegnum", new object[] { _org.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
+            htmlDoc.InvokeScript("setYear", new object[] { _repYear.ToString() });
+            htmlDoc.InvokeScript("setDocCount", new object[] { docCount.ToString() });
+            htmlDoc.InvokeScript("setEvolument", new object[] { arrStr.ToString() });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void printFioListStripButton_Click(object sender, EventArgs e)
         {
+            DataRowView curListRow = _listsBS.Current as DataRowView;
+            if (curListRow == null)
+            {
+                MainForm.ShowWarningMessage("Необходимо сначала выбрать пакет!", "Внимание");
+                return;
+            }
+            long listID = (long)curListRow[ListsView.id];
+            long[] docTypeID = { 21,22,24 };
+            DataTable table = PersonSalarySums.GetSums(listID, docTypeID, _connection, true);
+            if (table.Rows.Count == 0)
+            {
+                MainForm.ShowInfoMessage("В пакете нет подходящих документов!", "Внимание");
+                return;
+            }
+            if (_wbFIOSumsList == null)
+            {
+                _wbFIOSumsList = new WebBrowser();
+                _wbFIOSumsList.Visible = false;
+                _wbFIOSumsList.Parent = this;
+                _wbFIOSumsList.ScriptErrorsSuppressed = true;
+                _wbFIOSumsList.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbFIOSumsList_DocumentCompleted);
+            }
+            ///////////////////////////////////////////////////
+            XmlDocument xmlRes = new XmlDocument();
+            xmlRes.AppendChild(xmlRes.CreateXmlDeclaration("1.0", "utf-8", null));
+            XmlElement root = xmlRes.CreateElement("root");
+            XmlElement orgRegnum = xmlRes.CreateElement("org_regnum");
+            XmlElement orgName = xmlRes.CreateElement("org_name");
+            XmlElement repYear = xmlRes.CreateElement("rep_year");
+            XmlElement packetNum = xmlRes.CreateElement("packet_num");
+            XmlElement docCount = xmlRes.CreateElement("doc_count");
+            orgRegnum.InnerText = _org.regnumVal;
+            orgName.InnerText = _org.nameVal;
+            repYear.InnerText = yearBox.Value.ToString();
+            packetNum.InnerText = listID.ToString();
+            docCount.InnerText = table.Rows.Count.ToString();
+
+            root.AppendChild(orgRegnum);
+            root.AppendChild(orgName);
+            root.AppendChild(repYear);
+            root.AppendChild(packetNum);
+            root.AppendChild(docCount);
+
+            foreach(DataRow docRow in table.Rows)
+            {
+                XmlElement item = xmlRes.CreateElement("item");
+                XmlElement col1 = xmlRes.CreateElement("col1");
+                XmlElement col2 = xmlRes.CreateElement("col2");
+                XmlElement col3 = xmlRes.CreateElement("col3");
+                XmlElement col4 = xmlRes.CreateElement("col4");
+                XmlElement col5 = xmlRes.CreateElement("col5");
+                XmlElement col6 = xmlRes.CreateElement("col6");
+                XmlElement col7 = xmlRes.CreateElement("col7");
+
+                col1.InnerText = docRow[PersonSalarySums.socNumber] as string;
+                col2.InnerText = docRow[PersonSalarySums.fio] as string;
+                col3.InnerText = docRow[PersonSalarySums.col1].ToString();
+                col4.InnerText = docRow[PersonSalarySums.col2].ToString();
+                col5.InnerText = docRow[PersonSalarySums.col3].ToString();
+                col6.InnerText = docRow[PersonSalarySums.col4].ToString();
+                col7.InnerText = docRow[PersonSalarySums.col5].ToString();
+
+                item.AppendChild(col1);
+                item.AppendChild(col2);
+                item.AppendChild(col3);
+                item.AppendChild(col4);
+                item.AppendChild(col5);
+                item.AppendChild(col6);
+                item.AppendChild(col7);
+                root.AppendChild(item);
+            }
+            xmlRes.AppendChild(root);
+            ///////////////////////////////////////////////////
+
+            _wbFIOSumsList.Tag = xmlRes;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_docs_list);
+            _wbFIOSumsList.Navigate(file);
+        }
+
+        void _wbFIOSumsList_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if(xml == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setXml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void copyToYearListStripButton_Click(object sender, EventArgs e)
@@ -1202,9 +1421,50 @@ namespace Pers_uchet_org.Forms
 
         private void printDocStripButton_Click(object sender, EventArgs e)
         {
-            //PrintStajForm printStajForm = new PrintStajForm();
-            //if (printStajForm.ShowDialog() == DialogResult.OK)
-            //{ }
+            List<long> docs = GetSelectedDocIds();
+            if(docs == null || docs.Count == 0)
+            {
+                MainForm.ShowWarningMessage("Необходимо сначала выбрать записи!", "Внимание");
+                return;
+            }
+            if (_wbSZV1Print == null)
+            {
+                _wbSZV1Print = new WebBrowser();
+                _wbSZV1Print.Parent = this;
+                _wbSZV1Print.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbSZV1Print_DocumentCompleted);
+                _wbSZV1Print.ScriptErrorsSuppressed = true;
+            }
+            _wbSZV1Print.Tag = docs;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv1);
+            _wbSZV1Print.Navigate(file);
+        }
+
+        void _wbSZV1Print_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            XmlDocument szv1Xml;
+            StringBuilder htmlStr = new StringBuilder();
+            List<long> docs = wb.Tag as List<long>;
+            string xmlStrLArr;
+            int i;
+            for (i = 0; i < docs.Count; i++)
+            {
+                szv1Xml = Szv1Xml.GetXml(docs[i], _org, _connection);
+                xmlStrLArr = szv1Xml.InnerXml;
+                htmlDoc.InvokeScript("setSzv1Xml", new object[] { xmlStrLArr });
+                htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+                htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+                string str = htmlDoc.Body.InnerHtml;
+                htmlStr.Append(str);
+            }
+            htmlDoc.Body.InnerHtml = htmlStr.ToString();
+
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void previewDocStripButton_Click(object sender, EventArgs e)
@@ -1214,12 +1474,39 @@ namespace Pers_uchet_org.Forms
                 if (_docsBS.Current == null)
                     return;
                 long docId = (long)(_docsBS.Current as DataRowView)[DocsView.id];
-                MyPrinter.ShowWebPage(Szv1Xml.GetHtml(docId, _organization, _connection));
+                XmlDocument szv1Xml = Szv1Xml.GetXml(docId, _org, _connection);
+                WebBrowser wbSZV1 = new WebBrowser();
+                wbSZV1 = new WebBrowser();
+                wbSZV1.ScriptErrorsSuppressed = true;
+                wbSZV1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(wbSZV1_DocumentCompleted);
+                wbSZV1.Tag = szv1Xml;
+                string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv1);
+                wbSZV1.Navigate(file);
             }
             catch (Exception exception)
             {
                 MainForm.ShowErrorFlexMessage(exception.Message, "Ошибка открытия предварительного просмотра");
             }
+        }
+
+        void wbSZV1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setSzv1Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            MyPrinter.ShowWebPage(wb);
+            //MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void copyToListDocStripButton_Click(object sender, EventArgs e)
@@ -1243,7 +1530,7 @@ namespace Pers_uchet_org.Forms
 
                 string listFio = GetFioForSelectedDocIds(docIdList);
 
-                CopyDocumentForm copyDocForm = new CopyDocumentForm(_organization, _repYear, _connection);
+                CopyDocumentForm copyDocForm = new CopyDocumentForm(_org, _repYear, _connection);
                 if (copyDocForm.ShowDialog() == DialogResult.OK)
                 {
                     int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
@@ -1308,7 +1595,7 @@ namespace Pers_uchet_org.Forms
                 //    return;
                 //docId = (long)row[Docs.id];
 
-                MoveDocumentForm moveDocForm = new MoveDocumentForm(_organization, _repYear, _connection);
+                MoveDocumentForm moveDocForm = new MoveDocumentForm(_org, _repYear, _connection);
                 if (moveDocForm.ShowDialog() == DialogResult.OK)
                 {
                     int docCount = DocsView.GetCountDocsInList(NewListId, _connection);
@@ -1366,7 +1653,6 @@ namespace Pers_uchet_org.Forms
                 MainForm.ShowErrorFlexMessage(ex.Message, "Ошибка перемещения документа");
             }
         }
-
         #endregion
 
         #region Методы - свои
@@ -1401,7 +1687,7 @@ namespace Pers_uchet_org.Forms
             _listsBS.RaiseListChangedEvents = false;
 
             _listsTable.Clear();
-            string commandStr = ListsView.GetSelectText(_organization.idVal, _repYear);
+            string commandStr = ListsView.GetSelectText(_org.idVal, _repYear);
             _listsAdapter = new SQLiteDataAdapter(commandStr, _connection);
             _listsAdapter.Fill(_listsTable);
 

@@ -15,5 +15,16 @@ namespace Pers_uchet_org.Forms
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        public string Performer {
+            get { return this.nameBox.Text; }
+            set { this.nameBox.Text = value; }
+        }
+
+        public DateTime PrintDate
+        {
+            get { return this.printDate.Value; }
+            set { this.printDate.Value = value; }
+        }
     }
 }
