@@ -85,7 +85,7 @@
 			children = $(sumRow.children());
 			for(j=0; j<sums.length; j++) {
 				var val = Math.floor(sums[j] * 100) / 100;
-				$(children[j+3]).text(val);
+				$(children[j+3]).text(val.toFixed(2));
 			}
 			children.css({'border-top-color': '#000', 'border-top-width': '2px'});
 		};
@@ -159,20 +159,20 @@
 				<tr>
 					<th rowspan=2 style="min-width:1em; width:1.5em; padding:5px;">№ п/п</th>
 					<th rowspan=2 style="width:8em;">Страховой номер</th>
-					<th rowspan=2>Фамилия И.О.</th>
+					<th rowspan=2 style="width:9em;">Фамилия И.О.</th>
 					<th rowspan=2 style="width:7em;">Сумма дохода, на который начислены страховые взносы</th>
 					<th rowspan=2 style="width:7em;">Сумма выплат, учитываемых для назначения пенсий</th>
 					<th colspan=2>Сумма единого социального налога</th>
 					<th rowspan=2 style="width:7em;">Сумма обязательных страховых взносов</th>
 				</tr>
 				<tr>
-					<th style="width:7em;">начисленных страхователем</th>
-					<th style="width:7em;">уплаченных страхователем</th>
+					<th>начисленных страхователем</th>
+					<th>уплаченных страхователем</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>&Sigma;</td><td></td><td class="fio"></td><td></td><td></td><td></td><td></td><td></td>
+					<td>&Sigma;</td><td></td><td class="fio"></td><td style="text-align:right;"></td><td style="text-align:right;"></td><td style="text-align:right;"></td><td style="text-align:right;"></td><td style="text-align:right;"></td>
 				</tr>
 			</tbody>
 			</table>

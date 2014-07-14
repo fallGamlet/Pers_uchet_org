@@ -73,6 +73,7 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.changeTypeDocStripButton = new System.Windows.Forms.ToolStripButton();
             this.printDocStripButton = new System.Windows.Forms.ToolStripButton();
+            this.previewDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.docStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.copyToListDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,7 +115,6 @@
             this.moveToOtherListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.delDocMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.previewDocStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yearBox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -462,7 +462,7 @@
             this.docStripDropDownButton1});
             this.toolStripDocs.Location = new System.Drawing.Point(6, 16);
             this.toolStripDocs.Name = "toolStripDocs";
-            this.toolStripDocs.Size = new System.Drawing.Size(740, 25);
+            this.toolStripDocs.Size = new System.Drawing.Size(709, 25);
             this.toolStripDocs.TabIndex = 0;
             this.toolStripDocs.TabStop = true;
             this.toolStripDocs.Text = "toolStrip1";
@@ -517,6 +517,14 @@
             this.printDocStripButton.Size = new System.Drawing.Size(137, 22);
             this.printDocStripButton.Text = "Печать форм СЗВ-1";
             this.printDocStripButton.Click += new System.EventHandler(this.printDocStripButton_Click);
+            // 
+            // previewDocStripButton
+            // 
+            this.previewDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
+            this.previewDocStripButton.Name = "previewDocStripButton";
+            this.previewDocStripButton.Size = new System.Drawing.Size(194, 25);
+            this.previewDocStripButton.Text = "Предварительный просмотр";
+            this.previewDocStripButton.Click += new System.EventHandler(this.previewDocStripButton_Click);
             // 
             // toolStripSeparator9
             // 
@@ -915,14 +923,6 @@
             this.delDocMenuItem.Size = new System.Drawing.Size(233, 22);
             this.delDocMenuItem.Text = "Удалить";
             this.delDocMenuItem.Click += new System.EventHandler(this.delDocMenuItem_Click);
-            // 
-            // previewDocStripButton
-            // 
-            this.previewDocStripButton.Image = global::Pers_uchet_org.Properties.Resources.visible_16;
-            this.previewDocStripButton.Name = "previewDocStripButton";
-            this.previewDocStripButton.Size = new System.Drawing.Size(194, 25);
-            this.previewDocStripButton.Text = "Предварительный просмотр";
-            this.previewDocStripButton.Click += new System.EventHandler(this.previewDocStripButton_Click);
             // 
             // StajDohodForm
             // 

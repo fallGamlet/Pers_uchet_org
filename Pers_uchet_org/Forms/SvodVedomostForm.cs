@@ -24,7 +24,7 @@ namespace Pers_uchet_org.Forms
         private const string ViewStateText = "Просмотреть";
         private const string EditStateText = "Изменить";
 
-        // веб браезер для формирования отчета СЗВ-3
+        // веб браузер для формирования отчета СЗВ-3
         WebBrowser _wb;
         #endregion
 

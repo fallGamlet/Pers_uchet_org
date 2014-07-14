@@ -18,7 +18,7 @@ namespace Pers_uchet_org.Forms
         private DataTable _svodTable; // таблица для взаимодействия с формой
         private DataTable _mergeInfoTable; // таблица для взаимодействия с БД
         private BindingSource _svodBS; // бинд для таблицы для отображения в пользовательском интерфейсе
-
+        private WebBrowser _wb; // веб браузер для формирования отчета СЗВ-3
         #endregion
 
         #region Конструкторы и инициализатор
@@ -290,12 +290,38 @@ namespace Pers_uchet_org.Forms
 
         private void printButton_Click(object sender, EventArgs e)
         {
+            if (_wb == null)
+            {
+                _wb = new WebBrowser();
+                _wb.Visible = false;
+                _wb.Parent = this;
+                _wb.ScriptErrorsSuppressed = true;
+                _wb.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wb_DocumentCompleted);
+            }
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_szv3);
+            _wb.Navigate(file);
+        }
+
+        void _wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
             DataRow mergeRow = _mergeRow ?? Mergies.CreateRow();
             mergeRow[MergiesView.listCount] = (int)packetcountBox.Value;
             mergeRow[MergiesView.docCount] = (int)documentcountBox.Value;
-
             XmlDocument xml = Szv3Xml.GetXml(mergeRow, _svodTable);
-            MyPrinter.ShowWebPage(Szv3Xml.GetHtml(xml));
+
+            HtmlDocument htmlDoc = wb.Document;
+            string repYear = this.yearBox.Text;
+            htmlDoc.InvokeScript("setRegnum", new object[] { _org.regnumVal });
+            htmlDoc.InvokeScript("setOrgName", new object[] { _org.nameVal });
+            htmlDoc.InvokeScript("setYear", new object[] { repYear });
+            htmlDoc.InvokeScript("setSzv3Xml", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setChiefPost", new object[] { _org.chiefpostVal });
+            MyPrinter.ShowPrintPreviewWebPage(wb);
         }
 
         private void saveButton_Click(object sender, EventArgs e)

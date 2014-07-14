@@ -28,7 +28,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkSubset>Client</TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -495,6 +494,9 @@
     </Content>
     <Content Include="Libs\Ionic.Zip.dll" />
     <Content Include="Libs\mathdll.dll" />
+    <Content Include="Libs\Microsoft.VisualStudio.OLE.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Libs\OpenMcdf.dll" />
     <None Include="Resources\plus2-16.png" />
     <None Include="Resources\edit-16.png" />

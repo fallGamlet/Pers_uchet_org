@@ -888,7 +888,7 @@ namespace Pers_uchet_org.Forms
             long docCount = Docs.Count(markedPacked, _connection);
             /////////////////////////////////////////////////            
             long[] doctypes = { 21, 22, 23, 24 };
-            double[,] evolument = new double[13,5];
+            double[,] evolument = new double[13, 5];
             DataTable salaryInfoTranspose = SalaryInfoTranspose.CreateTableWithRows();
             if (markedPacked.Length > 0)
             {
@@ -904,27 +904,27 @@ namespace Pers_uchet_org.Forms
             {
                 for (col = 0; col < 5; col++)
                 {
-                    object val = salaryInfoTranspose.Rows[row][col+1];
-                    evolument[row,col] = Math.Round((double)val, 2);
+                    object val = salaryInfoTranspose.Rows[row][col + 1];
+                    evolument[row, col] = Math.Round((double)val, 2);
                 }
             }
             for (col = 0; col < 5; col++)
             {
                 sum = 0.0;
                 for (row = 0; row < 12; row++)
-                    sum += evolument[row,col];
-                evolument[12,col] = sum;
+                    sum += evolument[row, col];
+                evolument[12, col] = sum;
             }
             StringBuilder arrStr = new StringBuilder();
             for (row = 0; row < 13; row++)
             {
                 for (col = 0; col < 5; col++)
                 {
-                    arrStr.Append( evolument[row,col].ToString() );
+                    arrStr.Append(evolument[row, col].ToString());
                     if (col != 4)
                         arrStr.Append("_");
                 }
-                if(row != 12) 
+                if (row != 12)
                     arrStr.Append("*");
             }
             arrStr.Replace(',', '.');
@@ -952,7 +952,7 @@ namespace Pers_uchet_org.Forms
                 return;
             }
             long listID = (long)curListRow[ListsView.id];
-            long[] docTypeID = { 21,22,23,24 };
+            long[] docTypeID = { 21, 22, 23, 24 };
             DataTable table = PersonSalarySums.GetSums(listID, docTypeID, _connection, true);
             if (table.Rows.Count == 0)
             {
@@ -988,7 +988,7 @@ namespace Pers_uchet_org.Forms
             root.AppendChild(packetNum);
             root.AppendChild(docCount);
 
-            foreach(DataRow docRow in table.Rows)
+            foreach (DataRow docRow in table.Rows)
             {
                 XmlElement item = xmlRes.CreateElement("item");
                 XmlElement col1 = xmlRes.CreateElement("col1");
@@ -1001,11 +1001,11 @@ namespace Pers_uchet_org.Forms
 
                 col1.InnerText = docRow[PersonSalarySums.socNumber] as string;
                 col2.InnerText = docRow[PersonSalarySums.fio] as string;
-                col3.InnerText = docRow[PersonSalarySums.col1].ToString();
-                col4.InnerText = docRow[PersonSalarySums.col2].ToString();
-                col5.InnerText = docRow[PersonSalarySums.col3].ToString();
-                col6.InnerText = docRow[PersonSalarySums.col4].ToString();
-                col7.InnerText = docRow[PersonSalarySums.col5].ToString();
+                col3.InnerText = ((double)docRow[PersonSalarySums.col1]).ToString("F2");
+                col4.InnerText = ((double)docRow[PersonSalarySums.col2]).ToString("F2");
+                col5.InnerText = ((double)docRow[PersonSalarySums.col3]).ToString("F2");
+                col6.InnerText = ((double)docRow[PersonSalarySums.col4]).ToString("F2");
+                col7.InnerText = ((double)docRow[PersonSalarySums.col5]).ToString("F2");
 
                 item.AppendChild(col1);
                 item.AppendChild(col2);
@@ -1032,7 +1032,7 @@ namespace Pers_uchet_org.Forms
                 return;
             }
             XmlDocument xml = wb.Tag as XmlDocument;
-            if(xml == null)
+            if (xml == null)
             {
                 return;
             }
@@ -1437,7 +1437,7 @@ namespace Pers_uchet_org.Forms
             docView.Refresh();
 
             List<long> docs = GetSelectedDocIds();
-            if(docs == null || docs.Count == 0)
+            if (docs == null || docs.Count == 0)
             {
                 MainForm.ShowWarningMessage("Необходимо сначала выбрать записи!", "Внимание");
                 return;
@@ -1814,6 +1814,6 @@ namespace Pers_uchet_org.Forms
             return newListId;
         }
 
-        #endregion  
+        #endregion
     }
 }
