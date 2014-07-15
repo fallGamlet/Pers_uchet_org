@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
@@ -62,12 +63,39 @@ namespace Pers_uchet_org
                     return;
             }
 
+            //AppDomain.CurrentDomain.AppendPrivatePath("Libs");
+            //Если <probing privatePath="Libs"/> в app.config не срабатывает пытаемся разрешить программно
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromSameFolder);
+
+            //Console.WriteLine("Waiting for debugger to attach");
+            //while (!Debugger.IsAttached)
+            //{
+            //    Thread.Sleep(100);
+            //}
+            //Console.WriteLine("Debugger attached");
+
+            //Debugger.Launch();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.CurrentCulture = culture;
             Application.Run(new MainForm());
 
             CreateBackup();
+        }
+
+        public static Assembly LoadFromSameFolder(object sender, ResolveEventArgs args)
+        {
+            string folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string assemblyPath = Path.Combine(folderPath, string.Format("Libs\\{0}.dll", new AssemblyName(args.Name).Name));
+            if (!File.Exists(assemblyPath))
+            {
+                MessageBox.Show("Not found " + assemblyPath);
+                return null;
+            }
+            Assembly assembly = Assembly.LoadFrom(assemblyPath);
+            return assembly;
         }
 
         public static Process RunningInstance()

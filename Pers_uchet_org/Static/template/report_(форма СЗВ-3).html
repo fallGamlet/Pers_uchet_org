@@ -51,7 +51,7 @@
 			for(var i=0; i < tr.length && i < arr.length; i++) {
 				var j, cells = $(tr[i]).children();
 				for(j=0; j < arr[i].length-1 && j*2+1 < cells.length-1; j++) {
-					var rubkol = arr[i][j].toString().split('.');
+					var rubkol = parseFloat(arr[i][j]).toFixed(2).split('.');
 					var rub, kop;
 					if(rubkol.length == 1) {
 						rub = rubkol[0];
@@ -102,6 +102,7 @@
 					sums[j] += parseFloat(arr[i][j]);
 				}
 			}
+			sums[sums.length-1] = 0;
 			arr.push(sums);
 			setEvolument(arr);
 		}
@@ -240,7 +241,7 @@
 					<th rowspan=2 colspan=2 >Сумма выплат, учитываемых для назначения пенсий</th>
 					<th colspan=4>Сумма единого социального налога</th>
 					<th rowspan=2 colspan=2>Сумма обязательных страховых взносов</th>
-					<th rowspan=3  class="cvartal" style="width:4em;">Средняя численность работников (застрахованных лиц)</th>
+					<th rowspan=3  class="cvartal" style="width:8em;">Средняя численность работников (застрахованных лиц)</th>
 				</tr>
 				<tr>
 					<th colspan=2>начисленных страхователем</th>

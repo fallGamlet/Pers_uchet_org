@@ -12,7 +12,7 @@ using System.Resources;
 [assembly: AssemblyCompany("ЕГФСС")]
 [assembly: AssemblyProduct("Персонифицированный учет для организаций")]
 [assembly: AssemblyCopyright("Copyright © ЕГФСС 2013")]
-[assembly: AssemblyTrademark("123")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 

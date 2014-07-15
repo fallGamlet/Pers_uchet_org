@@ -35,9 +35,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -47,6 +48,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>MainLogo.ico</ApplicationIcon>
@@ -492,12 +494,18 @@
     <Content Include="History.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Libs\Ionic.Zip.dll" />
-    <Content Include="Libs\mathdll.dll" />
-    <Content Include="Libs\Microsoft.VisualStudio.OLE.Interop.dll">
+    <Content Include="Ionic.Zip.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Libs\OpenMcdf.dll" />
+    <Content Include="mathdll.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.VisualStudio.OLE.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenMcdf.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\plus2-16.png" />
     <None Include="Resources\edit-16.png" />
     <None Include="Resources\delete-16.png" />
@@ -515,7 +523,9 @@
     <None Include="Resources\geography-16.png" />
     <None Include="Resources\wired_network-16.png" />
     <None Include="Resources\help-16.png" />
-    <Content Include="Libs\System.Data.SQLite.dll" />
+    <Content Include="System.Data.SQLite.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="MainLogo.ico" />
     <None Include="Resources\MainLogo.png" />
     <Content Include="Static\template\lib\jquery.min.js">
@@ -579,7 +589,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -604,7 +614,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
-      <ProductName>Установщик Windows 3.1</ProductName>
+      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -626,8 +636,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(ProjectDir)Libs\*.*" "$(ProjectDir)$(OutDir)Libs"
-move /y "$(ProjectDir)$(OutDir)*.dll" "$(ProjectDir)$(OutDir)Libs"</PostBuildEvent>
+    <PostBuildEvent>echo xcopy /y "$(ProjectDir)Libs\*.*" "$(ProjectDir)$(OutDir)Libs"
+echo move /y "$(ProjectDir)$(OutDir)*.dll" "$(ProjectDir)$(OutDir)Libs"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
