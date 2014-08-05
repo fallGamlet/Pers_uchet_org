@@ -498,7 +498,7 @@ namespace Pers_uchet_org.Forms
             XmlDocument xml = wb.Tag as XmlDocument;
             if (xml == null)
             {
-                MainForm.ShowInfoMessage("Отчет не может быть отображен, та как нет входных данных данных!", "Внимание");
+                MainForm.ShowInfoMessage("Отчет не может быть отображен, та как нет входных данных!", "Внимание");
                 return;
             }
             HtmlDocument htmlDoc = wb.Document;

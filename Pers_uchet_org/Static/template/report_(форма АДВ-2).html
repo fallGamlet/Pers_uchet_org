@@ -19,6 +19,20 @@
 					liArray[i].innerText  = "";
 			};
 		};
+		
+		var setOldSocnum = function(socnumStr) {
+			setArrayValues('#soc_num_old li', socnumStr);
+		};
+		var setOldFName = function(fnameStr) {
+			setArrayValues('#f_name_old li', fnameStr);
+		};
+		var setOldMName = function(mnameStr) {
+			setArrayValues('#m_name_old li', mnameStr);
+		};
+		var setOldLName = function(lnameStr) {
+			setArrayValues('#l_name_old li', lnameStr);
+		};
+		
 		var setFName = function(fnameStr) {
 			setArrayValues('#f_name li', fnameStr);
 		};
@@ -28,9 +42,8 @@
 		var setMName = function(mnameStr) {
 			setArrayValues("#m_name li", mnameStr);
 		};
-		var setSex = function(sexStr){
-			var sex = $("#sex li");
-			sex.text(sexStr.toUpperCase());
+		var setSex = function(sexStr) {
+			setArrayValues('#sex li', sexStr);
 		};
 		var setBornDate = function(dateStr) {
 			var darr = dateStr.split(".");
@@ -100,6 +113,36 @@
 			$("#print_day").text(darr[0]);
 			$("#print_month").text(months[parseInt(darr[1])-1]);
 			$("#print_year").text(darr[2]);
+		};
+		var setAllData = function(xmlStr) {
+			var doc = $($.parseXML(xmlStr));
+			var person = $(doc.find("person"));
+			
+			setOldSocnum($(person.find('old_socnum')).text());
+			setOldFName(person.find('old_fname').text());
+			setOldMName(person.find('old_mname').text());
+			setOldLName(person.find('old_lname').text());
+			
+			setLName(person.find('lname').text());
+			setFName(person.find('fname').text());
+			setMName(person.find('mname').text());
+			setSex(person.find('sex').text());
+			setBornDate(person.find('birthday').text());
+			setBornPlace(person.find('borncity').text());
+			setBornRegion(person.find('bornregion').text());
+			setBornArea(person.find('bornarea').text());
+			setBornCountry(person.find('borncountry').text());
+			setRegIndex(person.find('regaddress_zipcode').text());
+			setRegAddress(person.find('regaddress').text());
+			setFactIndex(person.find('factaddress_zipcode').text());
+			setFactAddress(person.find('factaddress').text());
+			setDocType(person.find('doctype').text());
+			setDocSeries(person.find('docseries').text());
+			setDocNumber(person.find('docnumber').text());
+			setDocOrg(person.find('docorg').text());
+			setDocDate(person.find('docdate').text());
+			setCitizen1(person.find('citizen first name').text());
+			setCitizen1(person.find('citizen second name').text());
 		};
 	</script>
 	<style type="text/css">
@@ -219,7 +262,7 @@
 		<div id="data";>
 			<div id="data0" style="border:none; margin:2px 0.1in;">
 				Номер лицевого счета
-				<ul id="soc_num" class="numlist">
+				<ul id="soc_num_old" class="numlist">
 					<li/><li/> <li style="border:none; margin">&#151</li> </li> <li/><li/><li/><li/><li/><li/><li/><li/>
 				</ul>
 			</div>
@@ -355,7 +398,7 @@
 				</ul>
 			</div>
 		
-			<div id="print_date" style="position:relative; top:-10px; margin:0 1em;";>
+			<div id="print_date" style="position:relative; margin:0em 1em 1.5em;";>
 				<span style="margin-right:1em;">Дата заполнения</span>
 				"<div id="print_day" class="field_underline" style="min-width: 3em;"></div>" 
 				<div id="print_month" class="field_underline" style="min-width: 10em;"></div> 

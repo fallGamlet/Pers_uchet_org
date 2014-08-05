@@ -102,6 +102,7 @@
             this.label29 = new System.Windows.Forms.Label();
             this.docorgBox = new System.Windows.Forms.TextBox();
             this.docnumBox = new System.Windows.Forms.TextBox();
+            this.printButton = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.bornplaceGroupBox.SuspendLayout();
             this.adressGroupBox.SuspendLayout();
@@ -797,11 +798,23 @@
             this.docnumBox.Size = new System.Drawing.Size(189, 20);
             this.docnumBox.TabIndex = 3;
             // 
+            // printButton
+            // 
+            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.printButton.Location = new System.Drawing.Point(10, 537);
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(296, 23);
+            this.printButton.TabIndex = 8;
+            this.printButton.Text = "Печатать заявление об изменении анкетных данных";
+            this.printButton.UseVisualStyleBackColor = true;
+            this.printButton.Click += new System.EventHandler(this.printButton_Click);
+            // 
             // EditPersonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 572);
+            this.Controls.Add(this.printButton);
             this.Controls.Add(this.adressrealCheckBox);
             this.Controls.Add(this.documentGroupBox);
             this.Controls.Add(this.dataGroupBox);
@@ -908,5 +921,6 @@
         private System.Windows.Forms.TextBox docorgBox;
         private System.Windows.Forms.TextBox docnumBox;
         private System.Windows.Forms.MaskedTextBox socNumBox;
+        private System.Windows.Forms.Button printButton;
     }
 }

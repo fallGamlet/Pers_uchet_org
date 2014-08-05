@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
@@ -18,6 +20,11 @@ namespace Pers_uchet_org.Forms
         private long _factadrID; // ID записи фактического адреса
         private long _bornadrID; // ID записи адреса рождения рождения
 
+        private string _oldSocnum;
+        private string _oldFName;
+        private string _oldMName;
+        private string _oldLName;
+
         private DataTable _doctypeTable; // таблица с типами документов
         private DataTable _citizenTable; // таблица с странами (для гражданства)
 
@@ -25,6 +32,8 @@ namespace Pers_uchet_org.Forms
         private BindingSource _citizen1BS;
         private BindingSource _citizen2BS;
 
+        // Браузер для формирования оточета на изменение анкетных данных
+        WebBrowser _wbAnketaChenged;
         #endregion
 
         #region Конструктор и инициализатор
@@ -49,6 +58,8 @@ namespace Pers_uchet_org.Forms
                 _operName = "Mr.Unknown";
             }
             _orgID = orgId;
+            // Отключение кнопки для печати, так как нет исходных данных для редактирования
+            this.printButton.Enabled = false;
         }
 
         private void EditPersonForm_Load(object sender, EventArgs e)
@@ -68,14 +79,16 @@ namespace Pers_uchet_org.Forms
             _citizen2BS = new BindingSource();
             _citizen2BS.DataSource = _citizenTable;
 
-            SQLiteDataAdapter countryAdapter = new SQLiteDataAdapter(Country.GetSelectText(), _connection);
-            SQLiteDataAdapter doctypeAdapter = new SQLiteDataAdapter(IDocType.GetSelectText(), _connection);
-
             if (_doctypeTable.Rows.Count <= 0)
+            {
+                SQLiteDataAdapter doctypeAdapter = new SQLiteDataAdapter(IDocType.GetSelectText(), _connection);
                 doctypeAdapter.Fill(_doctypeTable);
+            }
             if (_citizenTable.Rows.Count <= 0)
+            {
+                SQLiteDataAdapter countryAdapter = new SQLiteDataAdapter(Country.GetSelectText(), _connection);
                 countryAdapter.Fill(_citizenTable);
-
+            }
             doctypeBox.DataSource = _doctypeBS;
             doctypeBox.DisplayMember = IDocType.name;
 
@@ -124,6 +137,12 @@ namespace Pers_uchet_org.Forms
                         fNameBox.Text = reader[PersonInfo.fname] as string;
                         mNameBox.Text = reader[PersonInfo.mname] as string;
                         lNameBox.Text = reader[PersonInfo.lname] as string;
+
+                        _oldSocnum = socNumBox.Text.Trim('-', ' ');
+                        _oldFName = fNameBox.Text;
+                        _oldMName = mNameBox.Text;
+                        _oldLName = lNameBox.Text;
+
                         object sexCode = reader[PersonInfo.sex];
                         sexBox.SelectedIndex = sexCode is DBNull ? -1 : (int)sexCode;
                         string dateStr = reader[PersonInfo.birthday] as string;
@@ -165,7 +184,7 @@ namespace Pers_uchet_org.Forms
                             docorgBox.Text = reader[IDocInfo.org] as string;
                         }
                         reader.Close();
-
+                        // заполнение полей формы данными Адреса прописки
                         command.CommandText = Adress.GetSelectCommandText(_regadrID);
                         reader = command.ExecuteReader();
                         if (reader.Read())
@@ -180,7 +199,7 @@ namespace Pers_uchet_org.Forms
                             regAppartmentBox.Text = reader[Adress.appartment] as string;
                         }
                         reader.Close();
-
+                        // заполнение полей формы данными Адреса проживания
                         if (_factadrID != -1 && _factadrID != _regadrID)
                         {
                             command.CommandText = Adress.GetSelectCommandText(_factadrID);
@@ -198,6 +217,7 @@ namespace Pers_uchet_org.Forms
                             }
                             reader.Close();
                         }
+                        // заполнение полей формы данными Места рождения
                         command.CommandText = Adress.GetSelectCommandText(_bornadrID);
                         reader = command.ExecuteReader();
                         if (reader.Read())
@@ -212,8 +232,10 @@ namespace Pers_uchet_org.Forms
                     else
                     {
                         MessageBox.Show("Персона с указанным идентификатором не найдена!", "Неверный идентификатор",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
+                    // Включение кнопки для печати, так как есть исходные данные для редактирования
+                    this.printButton.Enabled = true;
                 }
                 finally
                 {
@@ -376,7 +398,6 @@ namespace Pers_uchet_org.Forms
             command.Parameters[PersonInfo.pRegadrID].Value = _regadrID;
             command.Parameters[PersonInfo.pFactadrID].Value = _factadrID;
             command.Parameters[PersonInfo.pBornplaceID].Value = _bornadrID;
-
             command.Parameters[PersonInfo.pSex].Value = sexBox.SelectedIndex;
         }
 
@@ -595,6 +616,124 @@ namespace Pers_uchet_org.Forms
             adressrealGroupBox.Enabled = adressrealCheckBox.Checked;
         }
 
+        private void printButton_Click(object sender, EventArgs e)
+        {
+            if ((_oldSocnum == null && _oldFName == null && _oldMName == null && _oldLName == null) ||
+                (_oldSocnum.Length == 0 && _oldFName.Length == 0 && _oldMName.Length == 0 && _oldLName.Length == 0))
+            {
+                MainForm.ShowInfoMessage("Нет исходных данных для оформления заявления об изменении анкетных данных", "Внимание");
+                return;
+            }
+
+            string regAddress = "";
+            if (this.regCountryBox.Text.Length > 0)
+                regAddress = this.regCountryBox.Text + " ";
+            if (this.regAreaBox.Text.Length > 0)
+                regAddress += this.regAreaBox.Text + " ";
+            if (this.regRegionBox.Text.Length > 0)
+                regAddress += this.regRegionBox.Text + " ";
+            if (this.regCityBox.Text.Length > 0)
+                regAddress += this.regCityBox.Text + " ";
+            if (this.regStreetBox.Text.Length > 0)
+                regAddress += "ул." + this.regStreetBox.Text + " ";
+            if (this.regBuildingBox.Text.Length > 0)
+                regAddress += "д." + this.regBuildingBox.Text + " ";
+            if (this.regAppartmentBox.Text.Length > 0)
+                regAddress += "кв." + this.regAppartmentBox.Text;
+
+            string factAddress = "";
+            if (this.adressrealCheckBox.Checked)
+            {
+                if (this.factCountryBox.Text.Length > 0)
+                    factAddress = this.factCountryBox.Text + " ";
+                if (this.factAreaBox.Text.Length > 0)
+                    factAddress += this.factAreaBox.Text + " ";
+                if (this.factRegionBox.Text.Length > 0)
+                    factAddress += this.factRegionBox.Text + " ";
+                if (this.factCityBox.Text.Length > 0)
+                    factAddress += this.factCityBox.Text + " ";
+                if (this.factStreetBox.Text.Length > 0)
+                    factAddress += "ул." + this.factStreetBox.Text + " ";
+                if (this.factBuildingBox.Text.Length > 0)
+                    factAddress += "д." + this.factBuildingBox.Text + " ";
+                if (this.factAppartmentBox.Text.Length > 0)
+                    factAddress += "кв." + this.factAppartmentBox.Text;
+            }
+            DataRowView citizen1Row = _citizen1BS.Current as DataRowView;
+            DataRowView citizen2Row = _citizen1BS.Current as DataRowView;
+            DataRowView doctypeRow = _doctypeBS.Current as DataRowView;
+
+
+            // Формирования XML для отчета для заявления об изменении анкетных данных
+            Dictionary<string, string> personDict = new Dictionary<string,string>(30);
+            personDict["old_socnum"] = _oldSocnum;
+            personDict["old_fname"] = _oldFName;
+            personDict["old_mname"] = _oldMName;
+            personDict["old_lname"] = _oldLName;
+
+            personDict[PersonView.lName] = this.lNameBox.Text;
+            personDict[PersonView.fName] = this.fNameBox.Text;
+            personDict[PersonView.mName] = this.mNameBox.Text;
+            personDict[PersonView.socNumber] = this.socNumBox.Text;
+            personDict[PersonView.birthday] = this.birthdayBox.Value.ToString("dd.MM.yyyy");
+            personDict[PersonView.sex] = this.sexBox.Text;
+            if (doctypeRow != null) personDict[PersonView.docType] = doctypeRow[DocTypes.name] as string;
+            personDict[PersonView.docSeries] = this.docseriesBox.Text;
+            personDict[PersonView.docNumber] = this.docnumBox.Text;
+            personDict[PersonView.docDate] = this.docdateBox.Value.ToString("dd.MM.yyyy");
+            personDict[PersonView.docOrg] = this.docorgBox.Text;
+            personDict[PersonView.regAdressZipcode] = this.regIndexBox.Text;
+            personDict[PersonView.regAdress] = regAddress;
+            personDict[PersonView.factAdressZipcode] = this.factIndexBox.Text;
+            personDict[PersonView.factAdress] = factAddress;
+            personDict[PersonView.bornAdressCountry] = this.bornCountryBox.Text;
+            personDict[PersonView.bornAdressArea] = this.bornAreaBox.Text;
+            personDict[PersonView.bornAdressRegion] = this.bornAreaBox.Text;
+            personDict[PersonView.bornAdressCity] = this.bornCityBox.Text;
+            if (citizen1Row != null)
+            {
+                personDict["citizen1_id"] = citizen1Row[Country.id].ToString();
+                personDict["citizen1"] = citizen1Row[Country.name] as string;
+            }
+            if (citizen2Row != null)
+            {
+                personDict["citizen2_id"] = citizen2Row[Country.id].ToString();
+                personDict["citizen2"] = citizen2Row[Country.name] as string;
+            }
+
+            XmlDocument xml = XmlData.Adv2Xml(personDict);
+            ////////
+            if (_wbAnketaChenged == null)
+            {
+                _wbAnketaChenged = new WebBrowser();
+                _wbAnketaChenged.Visible = false;
+                _wbAnketaChenged.Parent = this;
+                _wbAnketaChenged.ScriptErrorsSuppressed = true;
+                _wbAnketaChenged.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbAnketaChenged_DocumentCompleted);
+            }
+            _wbAnketaChenged.Tag = xml;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_adv2);
+            _wbAnketaChenged.Navigate(file);
+        }
+
+        void _wbAnketaChenged_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                MainForm.ShowInfoMessage("Отчет не может быть отображен, та как нет входных данных!", "Внимание");
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setAllData", new object[] { xml.InnerXml });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
+        }
         #endregion
     }
 }

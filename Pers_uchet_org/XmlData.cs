@@ -224,6 +224,113 @@ namespace Pers_uchet_org
             return xml;
         }
 
+        public static XmlDocument Adv2Xml(Dictionary<string, string> personDict)
+        {
+            XmlDocument xml = new XmlDocument();
+            XmlElement person = xml.CreateElement("person");
+            XmlElement oldSocnum = xml.CreateElement("old_socnum");
+            XmlElement oldFname = xml.CreateElement("old_fname");
+            XmlElement oldMname = xml.CreateElement("old_mname");
+            XmlElement oldLname = xml.CreateElement("old_lname");
+            XmlElement fname = xml.CreateElement("fname");
+            XmlElement mname = xml.CreateElement("mname");
+            XmlElement lname = xml.CreateElement("lname");
+            XmlElement regnum = xml.CreateElement("regnum");
+            XmlElement birthday = xml.CreateElement("birthday");
+            XmlElement sex = xml.CreateElement("sex");
+            XmlElement doctype = xml.CreateElement("doctype");
+            XmlElement docseries = xml.CreateElement("docseries");
+            XmlElement docnumber = xml.CreateElement("docnumber");
+            XmlElement docdate = xml.CreateElement("docdate");
+            XmlElement docorg = xml.CreateElement("docorg");
+            XmlElement regaddressZipcode = xml.CreateElement("regaddress_zipcode");
+            XmlElement regaddress = xml.CreateElement("regaddress");
+            XmlElement factaddressZipcode = xml.CreateElement("factaddress_zipcode");
+            XmlElement factaddress = xml.CreateElement("factaddress");
+            XmlElement bornaddress = xml.CreateElement("bornaddress");
+            XmlElement bornCountry = xml.CreateElement("borncountry");
+            XmlElement bornArea = xml.CreateElement("bornarea");
+            XmlElement bornRegion = xml.CreateElement("bornregion");
+            XmlElement bornCity = xml.CreateElement("borncity");
+            XmlElement bornZipcode = xml.CreateElement("bornzipcode");
+            XmlElement citizen = xml.CreateElement("citizen");
+            XmlElement citizen1 = xml.CreateElement("first");
+            XmlElement citizen2 = xml.CreateElement("second");
+            XmlElement citizen1ID = xml.CreateElement("id");
+            XmlElement citizen2ID = (XmlElement)citizen1ID.Clone();
+            XmlElement citizen1Name = xml.CreateElement("name");
+            XmlElement citizen2Name = (XmlElement)citizen1Name.Clone();
+
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "windows-1251", null));
+            xml.AppendChild(person);
+
+            person.AppendChild(oldSocnum);
+            person.AppendChild(oldFname);
+            person.AppendChild(oldMname);
+            person.AppendChild(oldLname);
+
+            person.AppendChild(lname);
+            person.AppendChild(fname);
+            person.AppendChild(mname);
+            person.AppendChild(regnum);
+            person.AppendChild(birthday);
+            person.AppendChild(sex);
+            person.AppendChild(doctype);
+            person.AppendChild(docseries);
+            person.AppendChild(docnumber);
+            person.AppendChild(docdate);
+            person.AppendChild(docorg);
+            person.AppendChild(regaddressZipcode);
+            person.AppendChild(regaddress);
+            person.AppendChild(factaddressZipcode);
+            person.AppendChild(factaddress);
+            bornaddress.AppendChild(bornCountry);
+            bornaddress.AppendChild(bornArea);
+            bornaddress.AppendChild(bornRegion);
+            bornaddress.AppendChild(bornCity);
+            bornaddress.AppendChild(bornZipcode);
+            person.AppendChild(bornaddress);
+            person.AppendChild(citizen);
+            citizen.AppendChild(citizen1);
+            citizen.AppendChild(citizen2);
+            citizen1.AppendChild(citizen1ID);
+            citizen1.AppendChild(citizen1Name);
+            citizen2.AppendChild(citizen2ID);
+            citizen2.AppendChild(citizen2Name);
+
+            oldSocnum.InnerText = personDict["old_socnum"];
+            oldFname.InnerText = personDict["old_fname"];
+            oldMname.InnerText = personDict["old_mname"];
+            oldLname.InnerText = personDict["old_lname"];
+
+            lname.InnerText = personDict[PersonView.lName];
+            fname.InnerText = personDict[PersonView.fName];
+            mname.InnerText = personDict[PersonView.mName];
+            regnum.InnerText = personDict[PersonView.socNumber];
+            birthday.InnerText = personDict[PersonView.birthday];
+            sex.InnerText = personDict[PersonView.sex];
+            doctype.InnerText = personDict[PersonView.docType];
+            docseries.InnerText = personDict[PersonView.docSeries];
+            docnumber.InnerText = personDict[PersonView.docNumber];
+            docdate.InnerText = personDict[PersonView.docDate];
+            docorg.InnerText = personDict[PersonView.docOrg];
+            regaddressZipcode.InnerText = personDict[PersonView.regAdressZipcode];
+            regaddress.InnerText = personDict[PersonView.regAdress];
+            factaddressZipcode.InnerText = personDict[PersonView.factAdressZipcode];
+            factaddress.InnerText = personDict[PersonView.factAdress];
+            bornCountry.InnerText = personDict[PersonView.bornAdressCountry];
+            bornArea.InnerText = personDict[PersonView.bornAdressArea];
+            bornRegion.InnerText = personDict[PersonView.bornAdressRegion];
+            bornCity.InnerText = personDict[PersonView.bornAdressCity];
+            //bornZipcode.InnerText = personDict[PersonView.bornAdressZipcode];
+            citizen1ID.InnerText = personDict["citizen1_id"];
+            citizen2ID.InnerText = personDict["citizen2_id"];
+            citizen1Name.InnerText = personDict["citizen1"];
+            citizen2Name.InnerText = personDict["citizen2"];
+            //
+            return xml;
+        }
+
         public static string FormatXml(String xml)
         {
             try
