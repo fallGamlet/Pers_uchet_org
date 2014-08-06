@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnketadataForm));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.countLabel = new System.Windows.Forms.Label();
@@ -95,13 +95,17 @@
             this.addPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.dismissPersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorePersonMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.printMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printAnketsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printUnregisteredMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printADV3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printADV3MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printADV4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printADV4MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personView)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -112,8 +116,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.countLabel);
             this.groupBox2.Controls.Add(this.countTextLabel);
             this.groupBox2.Controls.Add(this.personView);
@@ -157,32 +161,32 @@
             this.personView.AllowUserToDeleteRows = false;
             this.personView.AllowUserToOrderColumns = true;
             this.personView.AllowUserToResizeRows = false;
-            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.personView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.personView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.personView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.personView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.personView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkColumn,
             this.numColumn,
             this.fioColumn,
             this.dismissdateColumn});
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.personView.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.personView.DefaultCellStyle = dataGridViewCellStyle7;
             this.personView.Location = new System.Drawing.Point(4, 56);
             this.personView.MultiSelect = false;
             this.personView.Name = "personView";
@@ -190,17 +194,17 @@
             this.personView.RowHeadersVisible = false;
             this.personView.RowHeadersWidth = 15;
             this.personView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle36.BackColor = System.Drawing.Color.White;
-            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            this.personView.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.personView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.personView.Size = new System.Drawing.Size(385, 375);
             this.personView.TabIndex = 4;
-            this.personView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellClick);
             this.personView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellDoubleClick);
+            this.personView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.personView_MouseClick);
             this.personView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.personView_CellMouseDown);
+            this.personView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personView_CellClick);
             this.personView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.personView_KeyDown);
             this.personView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.personView_KeyPress);
-            this.personView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.personView_MouseClick);
             // 
             // checkColumn
             // 
@@ -235,9 +239,9 @@
             // dismissdateColumn
             // 
             this.dismissdateColumn.DataPropertyName = "dismiss_date";
-            dataGridViewCellStyle34.Format = "d";
-            dataGridViewCellStyle34.NullValue = null;
-            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            this.dismissdateColumn.DefaultCellStyle = dataGridViewCellStyle6;
             this.dismissdateColumn.HeaderText = "Дата увольнения";
             this.dismissdateColumn.MaxInputLength = 25;
             this.dismissdateColumn.MinimumWidth = 50;
@@ -283,8 +287,8 @@
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -366,7 +370,9 @@
             // 
             this.printStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printAnketsToolStripMenuItem,
-            this.printUnregisteredToolStripMenuItem});
+            this.printUnregisteredToolStripMenuItem,
+            this.printADV3ToolStripMenuItem,
+            this.printADV4ToolStripMenuItem});
             this.printStripDropDownButton.Image = global::Pers_uchet_org.Properties.Resources.print_16;
             this.printStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printStripDropDownButton.Name = "printStripDropDownButton";
@@ -376,14 +382,14 @@
             // printAnketsToolStripMenuItem
             // 
             this.printAnketsToolStripMenuItem.Name = "printAnketsToolStripMenuItem";
-            this.printAnketsToolStripMenuItem.Size = new System.Drawing.Size(319, 22);
-            this.printAnketsToolStripMenuItem.Text = "Печать выбранных анкет";
+            this.printAnketsToolStripMenuItem.Size = new System.Drawing.Size(465, 22);
+            this.printAnketsToolStripMenuItem.Text = "Печать выбранных анкет (АДВ-1)";
             this.printAnketsToolStripMenuItem.Click += new System.EventHandler(this.printAnketsToolStripMenuItem_Click);
             // 
             // printUnregisteredToolStripMenuItem
             // 
             this.printUnregisteredToolStripMenuItem.Name = "printUnregisteredToolStripMenuItem";
-            this.printUnregisteredToolStripMenuItem.Size = new System.Drawing.Size(319, 22);
+            this.printUnregisteredToolStripMenuItem.Size = new System.Drawing.Size(465, 22);
             this.printUnregisteredToolStripMenuItem.Text = "Печать списка анкет без страховых номеров";
             this.printUnregisteredToolStripMenuItem.Click += new System.EventHandler(this.printUnregisteredToolStripMenuItem_Click);
             // 
@@ -411,9 +417,9 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.attachToOrgButton);
             this.groupBox6.Controls.Add(this.groupBox1);
             this.groupBox6.Controls.Add(this.operatorBox);
@@ -458,8 +464,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.documentBox);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.docseriaBox);
@@ -478,8 +484,8 @@
             // 
             // documentBox
             // 
-            this.documentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.documentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.documentBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.documentBox.Location = new System.Drawing.Point(6, 19);
             this.documentBox.MaxLength = 200;
@@ -556,8 +562,8 @@
             // 
             // docvidanBox
             // 
-            this.docvidanBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.docvidanBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.docvidanBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.docvidanBox.Location = new System.Drawing.Point(6, 97);
             this.docvidanBox.MaxLength = 200;
@@ -631,8 +637,8 @@
             // 
             // adressprojivBox
             // 
-            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.adressprojivBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.adressprojivBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.adressprojivBox.Location = new System.Drawing.Point(4, 218);
             this.adressprojivBox.MaxLength = 500;
@@ -644,8 +650,8 @@
             // 
             // adrespropiskiBox
             // 
-            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.adrespropiskiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.adrespropiskiBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.adrespropiskiBox.Location = new System.Drawing.Point(4, 165);
             this.adrespropiskiBox.MaxLength = 500;
@@ -657,8 +663,8 @@
             // 
             // mestorojdBox
             // 
-            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mestorojdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.mestorojdBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.mestorojdBox.Location = new System.Drawing.Point(4, 108);
             this.mestorojdBox.MaxLength = 500;
@@ -670,8 +676,8 @@
             // 
             // grajdanstvoBox
             // 
-            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grajdanstvoBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.grajdanstvoBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.grajdanstvoBox.Location = new System.Drawing.Point(179, 69);
             this.grajdanstvoBox.MaxLength = 200;
@@ -702,8 +708,8 @@
             // 
             // fioBox
             // 
-            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fioBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.fioBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.fioBox.Location = new System.Drawing.Point(4, 30);
             this.fioBox.MaxLength = 200;
@@ -787,7 +793,7 @@
             this.toolStripSeparator3,
             this.printMenuItem});
             this.cmsPerson.Name = "cmsPerson";
-            this.cmsPerson.Size = new System.Drawing.Size(150, 148);
+            this.cmsPerson.Size = new System.Drawing.Size(153, 170);
             // 
             // addPersonMenuItem
             // 
@@ -813,15 +819,10 @@
             this.delPersonMenuItem.Text = "Удалить";
             this.delPersonMenuItem.Click += new System.EventHandler(this.delPersonMenuItem_Click);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // dismissPersonMenuItem
             // 
@@ -837,11 +838,18 @@
             this.restorePersonMenuItem.Text = "Восстановить";
             this.restorePersonMenuItem.Click += new System.EventHandler(this.restorePersonMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            // 
             // printMenuItem
             // 
             this.printMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printAnketsMenuItem,
-            this.printUnregisteredMenuItem});
+            this.printUnregisteredMenuItem,
+            this.printADV3MenuItem,
+            this.printADV4MenuItem});
             this.printMenuItem.Image = global::Pers_uchet_org.Properties.Resources.print_16;
             this.printMenuItem.Name = "printMenuItem";
             this.printMenuItem.Size = new System.Drawing.Size(152, 22);
@@ -850,16 +858,44 @@
             // printAnketsMenuItem
             // 
             this.printAnketsMenuItem.Name = "printAnketsMenuItem";
-            this.printAnketsMenuItem.Size = new System.Drawing.Size(279, 22);
-            this.printAnketsMenuItem.Text = "Выбранных";
+            this.printAnketsMenuItem.Size = new System.Drawing.Size(374, 22);
+            this.printAnketsMenuItem.Text = "Выбранных анкет";
             this.printAnketsMenuItem.Click += new System.EventHandler(this.printAnketsMenuItem_Click);
             // 
             // printUnregisteredMenuItem
             // 
             this.printUnregisteredMenuItem.Name = "printUnregisteredMenuItem";
-            this.printUnregisteredMenuItem.Size = new System.Drawing.Size(279, 22);
+            this.printUnregisteredMenuItem.Size = new System.Drawing.Size(374, 22);
             this.printUnregisteredMenuItem.Text = "Списка анкет без страховых номеров";
             this.printUnregisteredMenuItem.Click += new System.EventHandler(this.printUnregisteredMenuItem_Click);
+            // 
+            // printADV3ToolStripMenuItem
+            // 
+            this.printADV3ToolStripMenuItem.Name = "printADV3ToolStripMenuItem";
+            this.printADV3ToolStripMenuItem.Size = new System.Drawing.Size(465, 22);
+            this.printADV3ToolStripMenuItem.Text = "Печать заявления о восстановлении страхового свидетельства (АДВ-3)";
+            this.printADV3ToolStripMenuItem.Click += new System.EventHandler(this.printADV3ToolStripMenuItem_Click);
+            // 
+            // printADV3MenuItem
+            // 
+            this.printADV3MenuItem.Name = "printADV3MenuItem";
+            this.printADV3MenuItem.Size = new System.Drawing.Size(374, 22);
+            this.printADV3MenuItem.Text = "Заявление о восстановлении страхового свидетельста";
+            this.printADV3MenuItem.Click += new System.EventHandler(this.printADV3ToolStripMenuItem_Click);
+            // 
+            // printADV4ToolStripMenuItem
+            // 
+            this.printADV4ToolStripMenuItem.Name = "printADV4ToolStripMenuItem";
+            this.printADV4ToolStripMenuItem.Size = new System.Drawing.Size(465, 22);
+            this.printADV4ToolStripMenuItem.Text = "Печать листка исправлений (АДВ-4)";
+            this.printADV4ToolStripMenuItem.Click += new System.EventHandler(this.printADV4ToolStripMenuItem_Click);
+            // 
+            // printADV4MenuItem
+            // 
+            this.printADV4MenuItem.Name = "printADV4MenuItem";
+            this.printADV4MenuItem.Size = new System.Drawing.Size(374, 22);
+            this.printADV4MenuItem.Text = "Листок исправлений";
+            this.printADV4MenuItem.Click += new System.EventHandler(this.printADV4ToolStripMenuItem_Click);
             // 
             // AnketadataForm
             // 
@@ -959,5 +995,9 @@
         private System.Windows.Forms.ToolStripMenuItem printMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printAnketsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printUnregisteredMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printADV3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printADV3MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printADV4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printADV4MenuItem;
     }
 }

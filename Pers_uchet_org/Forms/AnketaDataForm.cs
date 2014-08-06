@@ -33,6 +33,7 @@ namespace Pers_uchet_org.Forms
         private const string Check = "check";
         // Браузер для формирования оточета по незарегистрированным персонам
         WebBrowser _wbUnregisteredPewrsons;
+        WebBrowser _wbADV3, _wbADV4;
         #endregion
 
         #region Конструктор и инициализатор
@@ -503,6 +504,140 @@ namespace Pers_uchet_org.Forms
             }
             HtmlDocument htmlDoc = wb.Document;
             htmlDoc.InvokeScript("setAllData", new object[] { xml.InnerXml });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
+        }
+
+        private void printADV3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataRowView curPerson = _personBS.Current as DataRowView;
+            if (curPerson == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо сначала выбрать персону!","Внимание");
+                return;
+            }
+            Dictionary<string, string> adv3Dict = new Dictionary<string, string>();
+
+            string borndate = string.Format("{0:dd.MM.yyyy}",curPerson[PersonView.birthday]);
+            string sex = (int)curPerson[PersonView.sex] == 1? "м":"ж";
+            string docDate = string.Format("{0:dd.MM.yyyy}", curPerson[PersonView.docDate]);
+
+            adv3Dict.Add(PersonView.socNumber, curPerson[PersonView.socNumber] as string);
+            adv3Dict.Add(PersonView.fName, curPerson[PersonView.fName] as string);
+            adv3Dict.Add(PersonView.mName, curPerson[PersonView.mName] as string);
+            adv3Dict.Add(PersonView.lName, curPerson[PersonView.lName] as string);
+            adv3Dict.Add(PersonView.birthday, borndate);
+            adv3Dict.Add(PersonView.sex,  sex);
+            adv3Dict.Add(PersonView.docType, curPerson[PersonView.docType] as string);
+            adv3Dict.Add(PersonView.docSeries, curPerson[PersonView.docSeries] as string);
+            adv3Dict.Add(PersonView.docNumber, curPerson[PersonView.docNumber] as string);
+            adv3Dict.Add(PersonView.docDate, docDate);
+            adv3Dict.Add(PersonView.docOrg, curPerson[PersonView.docOrg] as string);
+            adv3Dict.Add(PersonView.bornAdressCity, curPerson[PersonView.bornAdressCity] as string);
+            adv3Dict.Add(PersonView.bornAdressArea, curPerson[PersonView.bornAdressArea] as string);
+            adv3Dict.Add(PersonView.bornAdressRegion, curPerson[PersonView.bornAdressRegion] as string);
+            adv3Dict.Add(PersonView.bornAdressCountry, curPerson[PersonView.bornAdressCountry] as string);
+            adv3Dict.Add(PersonView.citizen1ID, curPerson[PersonView.citizen1ID] as string);
+            adv3Dict.Add(PersonView.citizen1, curPerson[PersonView.citizen1] as string);
+            adv3Dict.Add(PersonView.citizen2ID, curPerson[PersonView.citizen2ID] as string);
+            adv3Dict.Add(PersonView.citizen2, curPerson[PersonView.citizen2] as string);
+
+            XmlDocument xml = XmlData.Adv3Xml(adv3Dict);
+            if (_wbADV3 == null)
+            {
+                _wbADV3 = new WebBrowser();
+                _wbADV3.Visible = false;
+                _wbADV3.Parent = this;
+                _wbADV3.ScriptErrorsSuppressed = true;
+                _wbADV3.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbADV3_DocumentCompleted);
+            }
+            _wbADV3.Tag = xml;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_adv3);
+            _wbADV3.Navigate(file);
+        }
+        void _wbADV3_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                MainForm.ShowInfoMessage("Отчет не может быть отображен, та как нет входных данных!", "Внимание");
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setAllData", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
+            //MyPrinter.ShowWebPage(wb);
+            MyPrinter.ShowPrintPreviewWebPage(wb);
+        }
+
+        private void printADV4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataRowView curPerson = _personBS.Current as DataRowView;
+            if (curPerson == null)
+            {
+                MainForm.ShowInfoMessage("Необходимо сначала выбрать персону!", "Внимание");
+                return;
+            }
+            Dictionary<string, string> adv4Dict = new Dictionary<string, string>();
+
+            string borndate = string.Format("{0:dd.MM.yyyy}", curPerson[PersonView.birthday]);
+            string sex = (int)curPerson[PersonView.sex] == 1 ? "м" : "ж";
+            string docDate = string.Format("{0:dd.MM.yyyy}", curPerson[PersonView.docDate]);
+
+            //adv4Dict.Add(PersonView.socNumber, curPerson[PersonView.socNumber] as string);
+            adv4Dict.Add(PersonView.fName, curPerson[PersonView.fName] as string);
+            adv4Dict.Add(PersonView.mName, curPerson[PersonView.mName] as string);
+            adv4Dict.Add(PersonView.lName, curPerson[PersonView.lName] as string);
+            adv4Dict.Add(PersonView.birthday, borndate);
+            adv4Dict.Add(PersonView.sex, sex);
+            adv4Dict.Add(PersonView.docType, curPerson[PersonView.docType] as string);
+            adv4Dict.Add(PersonView.docSeries, curPerson[PersonView.docSeries] as string);
+            adv4Dict.Add(PersonView.docNumber, curPerson[PersonView.docNumber] as string);
+            adv4Dict.Add(PersonView.docDate, docDate);
+            adv4Dict.Add(PersonView.docOrg, curPerson[PersonView.docOrg] as string);
+            adv4Dict.Add(PersonView.bornAdressCity, curPerson[PersonView.bornAdressCity] as string);
+            adv4Dict.Add(PersonView.bornAdressArea, curPerson[PersonView.bornAdressArea] as string);
+            adv4Dict.Add(PersonView.bornAdressRegion, curPerson[PersonView.bornAdressRegion] as string);
+            adv4Dict.Add(PersonView.bornAdressCountry, curPerson[PersonView.bornAdressCountry] as string);
+            adv4Dict.Add(PersonView.citizen1ID, curPerson[PersonView.citizen1ID] as string);
+            adv4Dict.Add(PersonView.citizen1, curPerson[PersonView.citizen1] as string);
+            adv4Dict.Add(PersonView.citizen2ID, curPerson[PersonView.citizen2ID] as string);
+            adv4Dict.Add(PersonView.citizen2, curPerson[PersonView.citizen2] as string);
+
+            XmlDocument xml = XmlData.Adv4Xml(adv4Dict);
+            if (_wbADV4 == null)
+            {
+                _wbADV4 = new WebBrowser();
+                _wbADV4.Visible = false;
+                _wbADV4.Parent = this;
+                _wbADV4.ScriptErrorsSuppressed = true;
+                _wbADV4.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(_wbADV4_DocumentCompleted);
+            }
+            _wbADV4.Tag = xml;
+            string file = System.IO.Path.GetFullPath(Properties.Settings.Default.report_adv4);
+            _wbADV4.Navigate(file);
+        }
+        void _wbADV4_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser wb = sender as WebBrowser;
+            if (wb == null)
+            {
+                return;
+            }
+            XmlDocument xml = wb.Tag as XmlDocument;
+            if (xml == null)
+            {
+                MainForm.ShowInfoMessage("Отчет не может быть отображен, та как нет входных данных!", "Внимание");
+                return;
+            }
+            HtmlDocument htmlDoc = wb.Document;
+            htmlDoc.InvokeScript("setAllData", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
             //MyPrinter.ShowWebPage(wb);
             MyPrinter.ShowPrintPreviewWebPage(wb);
         }
