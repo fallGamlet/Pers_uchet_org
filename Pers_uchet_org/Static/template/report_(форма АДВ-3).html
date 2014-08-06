@@ -18,6 +18,9 @@
 					liArray[i].innerText  = "";
 			};
 		};
+		var setSocnum = function(socnumStr) {
+			setArrayValues('#soc_num li', socnumStr);
+		};
 		var setFName = function(fnameStr) {
 			setArrayValues('#f_name li', fnameStr);
 		};
@@ -27,9 +30,8 @@
 		var setMName = function(mnameStr) {
 			setArrayValues("#m_name li", mnameStr);
 		};
-		var setSex = function(sexStr){
-			var sex = $("#sex li");
-			sex.text(sexStr.toUpperCase());
+		var setSex = function(sexStr) {
+			setArrayValues('#sex li', sexStr);
 		};
 		var setBornDate = function(dateStr) {
 			var darr = dateStr.split(".");
@@ -50,25 +52,6 @@
 		};
 		var setBornCountry = function(valStr) {
 			$("#born_country").text(valStr);
-		};
-		var setRegIndex = function(valStr) {
-			setArrayValues("#reg_index li", valStr);
-		};
-		var setRegAddress = function(valStr) {
-			var i = valStr.lastIndexOf(' ', 45)
-			$("#reg_address1").text(valStr.slice(0, i));
-			$("#reg_address2").text(valStr.slice(i));
-		};
-		var setRegPhones = function(valStr) {
-			$("#reg_phones").text(valStr);
-		};
-		var setFactIndex = function(valStr) {
-			setArrayValues("#fact_index li", valStr);
-		};
-		var setFactAddress = function(valStr) {
-			var i = valStr.lastIndexOf(' ', 45)
-			$("#fact_address1").text(valStr.slice(0, i));
-			$("#fact_address2").text(valStr.slice(i));
 		};
 		var setDocType = function(valStr) {
 			$("#doc_type").text(valStr);
@@ -95,10 +78,36 @@
 			$("#citizen2").text(valStr);
 		};
 		var setPrintDate = function(dateStr) {
-			var darr = dateStr.split(".");
+			var darr = dateStr.split(".");			
 			$("#print_day").text(darr[0]);
-			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_month").text(months[parseInt(darr[1], 10)-1]);
 			$("#print_year").text(darr[2]);
+		};
+		var setAllData = function(xmlStr) {
+			var doc = $($.parseXML(xmlStr));
+			var person = $(doc.find("person"));
+			
+			setSocnum($(person.find('socnum')).text());
+			setLName(person.find('lname').text());
+			setFName(person.find('fname').text());
+			setMName(person.find('mname').text());
+			setSex(person.find('sex').text());
+			setBornDate(person.find('birthday').text());
+			setBornPlace(person.find('borncity').text());
+			setBornRegion(person.find('bornregion').text());
+			setBornArea(person.find('bornarea').text());
+			setBornCountry(person.find('borncountry').text());
+			//tRegIndex(person.find('regaddress_zipcode').text());
+			//setRegAddress(person.find('regaddress').text());
+			//tFactIndex(person.find('factaddress_zipcode').text());
+			//FactAddress(person.find('factaddress').text());
+			setDocType(person.find('doctype').text());
+			setDocSeries(person.find('docseries').text());
+			setDocNumber(person.find('docnumber').text());
+			setDocOrg(person.find('docorg').text());
+			setDocDate(person.find('docdate').text());
+			setCitizen1(person.find('citizen first name').text());
+			setCitizen2(person.find('citizen second name').text());
 		};
 	</script>
 	<style type="text/css">
@@ -319,7 +328,7 @@
 				<span style="display:block; position:relative; margin:1.5em 1em 0;">
 					Заверяю, что застрахованное лицо имело страховое свидетельство с номером лицевого счета
 					<ul id="soc_num" class="numlist">
-						<li/><li/> <li style="border:none; margin">&#151</li> </li> <li/><li/><li/><li/><li/><li/><li/><li/>
+						<li/><li/> <li style="border:none; margin">&#151</li> <li/><li/><li/><li/><li/><li/><li/><li/>
 					</ul>
 					, на основании которого сведения о его стаже и доходе предоставлялись (будут предоставлены) в Фонд.
 				</span>

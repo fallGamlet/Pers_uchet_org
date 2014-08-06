@@ -18,6 +18,20 @@
 					liArray[i].innerText  = "";
 			};
 		};
+		
+		var setOldSocnum = function(socnumStr) {
+			setArrayValues('#soc_num_old li', socnumStr);
+		};
+		var setOldFName = function(fnameStr) {
+			$('#f_name_old').text(fnameStr);
+		};
+		var setOldMName = function(mnameStr) {
+			$('#m_name_old').text(mnameStr);
+		};
+		var setOldLName = function(lnameStr) {
+			$('#l_name_old').text(lnameStr);
+		};
+				
 		var setFName = function(fnameStr) {
 			setArrayValues('#f_name li', fnameStr);
 		};
@@ -27,9 +41,8 @@
 		var setMName = function(mnameStr) {
 			setArrayValues("#m_name li", mnameStr);
 		};
-		var setSex = function(sexStr){
-			var sex = $("#sex li");
-			sex.text(sexStr.toUpperCase());
+		var setSex = function(sexStr) {
+			setArrayValues('#sex li', sexStr);
 		};
 		var setBornDate = function(dateStr) {
 			var darr = dateStr.split(".");
@@ -50,25 +63,6 @@
 		};
 		var setBornCountry = function(valStr) {
 			$("#born_country").text(valStr);
-		};
-		var setRegIndex = function(valStr) {
-			setArrayValues("#reg_index li", valStr);
-		};
-		var setRegAddress = function(valStr) {
-			var i = valStr.lastIndexOf(' ', 45)
-			$("#reg_address1").text(valStr.slice(0, i));
-			$("#reg_address2").text(valStr.slice(i));
-		};
-		var setRegPhones = function(valStr) {
-			$("#reg_phones").text(valStr);
-		};
-		var setFactIndex = function(valStr) {
-			setArrayValues("#fact_index li", valStr);
-		};
-		var setFactAddress = function(valStr) {
-			var i = valStr.lastIndexOf(' ', 45)
-			$("#fact_address1").text(valStr.slice(0, i));
-			$("#fact_address2").text(valStr.slice(i));
 		};
 		var setDocType = function(valStr) {
 			$("#doc_type").text(valStr);
@@ -97,8 +91,29 @@
 		var setPrintDate = function(dateStr) {
 			var darr = dateStr.split(".");
 			$("#print_day").text(darr[0]);
-			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_month").text(months[parseInt(darr[1],10)-1]);
 			$("#print_year").text(darr[2]);
+		};
+		var setAllData = function(xmlStr) {
+			var doc = $($.parseXML(xmlStr));
+			var person = $(doc.find("person"));
+			
+			setLName(person.find('lname').text());
+			setFName(person.find('fname').text());
+			setMName(person.find('mname').text());
+			setSex(person.find('sex').text());
+			setBornDate(person.find('birthday').text());
+			setBornPlace(person.find('borncity').text());
+			setBornRegion(person.find('bornregion').text());
+			setBornArea(person.find('bornarea').text());
+			setBornCountry(person.find('borncountry').text());
+			setDocType(person.find('doctype').text());
+			setDocSeries(person.find('docseries').text());
+			setDocNumber(person.find('docnumber').text());
+			setDocOrg(person.find('docorg').text());
+			setDocDate(person.find('docdate').text());
+			setCitizen1(person.find('citizen first name').text());
+			setCitizen2(person.find('citizen second name').text());
 		};
 	</script>
 	<style type="text/css">
@@ -164,6 +179,7 @@
 			display:inline-block;
 			width:4.5em;
 		}
+		#f_name_old,#m_name_old,#l_name_old {text-align:left;}
 	</style>
 	<style media="print">
     .main_container {
@@ -233,11 +249,11 @@
 			
 			<div id="data2" style="padding:5px 0.5em; border-top:none;">
 				<span style="font-weight:bold;">Ф.И.О. застрахованного лица и номер лицевого счета, содержащиеся в ошибочном документе:</span><br/>
-				<span class="label">Фамилия </span> <div class="field_underline" style="width:40em;"></div> <br/>
-				<span class="label">Имя     </span> <div class="field_underline" style="width:40em;"></div> <br/>
-				<span class="label">Отчество</span> <div class="field_underline" style="width:40em;"></div> <br/>
+				<span class="label">Фамилия </span> <div id="l_name_old" class="field_underline" style="width:40em;"></div> <br/>
+				<span class="label">Имя     </span> <div id="f_name_old" class="field_underline" style="width:40em;"></div> <br/>
+				<span class="label">Отчество</span> <div id="m_name_old" class="field_underline" style="width:40em;"></div> <br/>
 				Номер лицевого счета
-				<ul id="soc_num" class="numlist">
+				<ul id="soc_num_old" class="numlist">
 					<li/><li/> <li style="border:none; margin"> &#151 </li> <li/><li/><li/><li/><li/><li/><li/><li/>
 				</ul> <br/>
 				Листок исправлений заполнил: <i>страхователь / застрахованное лицо</i> <small>(нужное подчеркнуть)</small><br/>
