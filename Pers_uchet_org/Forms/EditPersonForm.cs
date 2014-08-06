@@ -731,6 +731,7 @@ namespace Pers_uchet_org.Forms
             }
             HtmlDocument htmlDoc = wb.Document;
             htmlDoc.InvokeScript("setAllData", new object[] { xml.InnerXml });
+            htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
             //MyPrinter.ShowWebPage(wb);
             MyPrinter.ShowPrintPreviewWebPage(wb);
         }
