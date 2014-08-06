@@ -1530,6 +1530,7 @@ namespace Pers_uchet_org
             {
                 string xmlStr = XmlData.Adv1Xml(personRow).InnerXml;
                 htmlDoc.InvokeScript("setAllData", new object[] { xmlStr });
+                htmlDoc.InvokeScript("setPrintDate", new object[] { DateTime.Now.ToString("dd.MM.yyyy") });
                 htmlDivList.Add(htmlDoc.Body.InnerHtml);
             }
             if (htmlDivList.Count > 0)
