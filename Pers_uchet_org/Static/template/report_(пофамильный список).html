@@ -27,7 +27,7 @@
 		var setPrintDate = function(dateStr) {
 			var darr = dateStr.split(".");
 			$("#print_day").text(darr[0]);
-			$("#print_month").text(months[parseInt(darr[1])-1]);
+			$("#print_month").text(months[parseInt(darr[1],10)-1]);
 			$("#print_year").text(darr[2]);
 		};
 		var setPerformer = function(valStr) {
